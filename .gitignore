@@ -18,8 +18,11 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-#/vendor
-
+/vendor
+/vendorOld1
+/vendor_2
+/api1
+/BACKUP
 # composer itself is not needed
 composer.phar
 

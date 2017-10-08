@@ -18,7 +18,7 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
-    /**
+     /**
      * @inheritdoc
      */
     public function behaviors()
@@ -26,15 +26,14 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        // Author: -ptr.nov- : Permission Allow No Login |index|error|login 
+                        'actions' => ['index', 'error','login','validasi'],
                         'allow' => true,
-                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,9 +71,40 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+		/* Yii::$app->mailer->compose()
+		 ->setFrom('postman@lukison.com')
+		 ->setTo('piter@lukison.com')
+		 ->setSubject('Minggu - Email sent from Yii2-Swiftmailer')
+		 ->send(); */
+		 
+		if (\Yii::$app->user->isGuest) {
+            $model = new LoginForm();
+            return $this->render('indexNoLogin', [
+                'model' => $model,
+            ]);
+        } else {
+			//return $this->render('index');
+			$this->redirect(array('/dashboard'));
+		}
+		
+		
     }
 
+	public function beforeAction($action)
+	{		
+		if ( !Yii::$app->user->isGuest)  {
+			if (Yii::$app->session['userSessionTimeout'] < time()) {
+				Yii::$app->user->logout();
+				return $this->goHome(); 
+			} else {
+				Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);				
+				return true; // benar maka login
+			}
+		} else {
+			return true;
+		}
+	} 
+	
     /**
      * Logs in a user.
      *
@@ -82,7 +112,8 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
+		Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+        if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
@@ -90,12 +121,38 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
+            //return $this->render('login', [
+            //    'model' => $model,
+           // ]);
+            $js='$("#modal_login").modal("show")';
+            $this->getView()->registerJs($js);
+            return $this->render('login',['model' => $model]);
         }
     }
 
+	protected  function afterLogin(){
+		//Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+		
+	} 
+	
+	public function actionAlert(){
+        if (\Yii::$app->user->isGuest) {
+            return $this->goHome();
+        } else {
+			if (Yii::$app->session['userSessionTimeout']< time() ) {
+				// timeout
+				Yii::$app->user->logout();
+				return $this->goHome();
+			}else{
+				$js='$("#confirm-permission-alert").modal("show")';
+				$this->getView()->registerJs($js);
+				return $this->render('index');
+			}
+			
+        }
+
+    }
+	
     /**
      * Logs out the current user.
      *
@@ -124,7 +181,7 @@ class SiteController extends Controller
             }
 
             return $this->refresh();
-        } else {
+        }else {
             return $this->render('contact', [
                 'model' => $model,
             ]);
@@ -160,8 +217,42 @@ class SiteController extends Controller
         return $this->render('signup', [
             'model' => $model,
         ]);
+		
     }
 
+	/**
+     * Ajax
+     * Signs user up.
+     * @return mixed
+     */
+    public function actionSignupFront()
+    {
+        $model = new SignupForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->goHome();
+                }
+            }
+        }
+
+        return $this->renderAjax('signup', [
+            'model' => $model,
+        ]);
+	}
+	
+    /**
+     * Ajax
+     * Signs user up.
+     * @return mixed
+     */
+    public function actionHomeFront()
+    {
+        return $this->renderAjax('home');
+    }
+	
+	
+	
     /**
      * Requests password reset.
      *

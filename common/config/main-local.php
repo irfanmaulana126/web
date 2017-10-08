@@ -1,24 +1,51 @@
 <?php
 return [
     'components' => [
-	    'db' => [
+	    'production_api' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=yii2',
+            'dsn' => 'mysql:host=localhost;dbname=kg',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+        ], 
+		'db' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=kasir',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
         ],
-		/*
+		'api_dbkg' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=kasir',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+        ],
+		'dbkg' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=localhost;dbname=kasir',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
-        ],
-		*/
-		
+            'useFileTransport' => false,
+			'transport' => [
+				'class' => 'Swift_SmtpTransport',
+				'host' => 'mail.lukison.com',
+				'username'   => 'postman@lukison.com',
+                'password'   => 'asd123',
+				//'port' => '25',
+				//'port' => '465',
+				//'encryption' => 'ssl'
+			],
+        ]		
 		/**
 		  * Email Modul Sending
 		  * @author ptrnov  <piter@lukison.com>

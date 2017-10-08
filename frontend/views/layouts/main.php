@@ -1,82 +1,63 @@
 <?php
-
-/* @var $this \yii\web\View */
-/* @var $content string */
-
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
 use common\widgets\Alert;
-
+use frontend\assets\AppAsset;
 AppAsset::register($this);
+
+	
 ?>
 <?php $this->beginPage() ?>
-<!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
-<head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
-<body>
-<?php $this->beginBody() ?>
-
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
-
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
-
-<?php $this->endBody() ?>
-</body>
-</html>
+	<!DOCTYPE html>
+	<html lang="<?= Yii::$app->language ?>">
+		<head>
+			<meta charset="<?= Yii::$app->charset ?>">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<?= Html::csrfMetaTags() ?>
+			<title><?= Html::encode($this->title) ?></title>
+			<?php $this->head() ?>
+		</head>
+		<!-- 
+			Default collapse ~ptr.nov~ 
+			skin-blue sidebar-mini sidebar-collapse
+		!-->
+		<!--<body class="skin-blue sidebar-collapse" style="min-height:680px"> 	!-->	
+		<body class="skin-blue " style="min-height:80px"> 		
+			<! - NOT LOGIN- Author : -ptr.nov- >
+			<?php if (Yii::$app->user->isGuest) { ?>
+				<?php $this->beginBody(['id'=>'page-top','class'=>'index']) ?>
+					<div class="wrap"  style="background-color:powderblue;">
+						<!-- NAV BAR !-->
+						<?php //=$this->render('main-navbarNologin')?>
+						<!-- BODY CONTAINER !-->
+						<div style="padding-top:20px;background-color:powderblue;">
+							<?= $content ?>
+						</div>
+					</div>
+					<!-- FOOTER !-->
+					<?=$this->render('main-footer_noLogin')?>
+				<?php $this->endBody() ?>
+			<?php }; ?>
+			<! -LOGIN- Author : -ptr.nov- >
+			<?php if (!Yii::$app->user->isGuest) { ?>
+				<?php $this->beginBody(['id'=>'page-top','class'=>'index']) ?>
+					<div class="wrap">
+						<!-- TOP NAV BAR !-->
+						<?=$this->render('main-navbar')?>
+						<!-- LEFT MENU !-->
+						<aside class="main-sidebar " style="min-height:680px">						
+						<?=$this->render('mainLeft'); ?>
+						</aside>
+						<!-- BODY CONTAINER !-->	
+						<?=$this->render('mainContent',['content'=>$content]); ?>	
+						<!-- FOOTER !-->
+						<?php //=$this->render('main-footer')?>						
+					</div>
+					
+				<?php $this->endBody() ?>
+			<?php }; ?>
+		</body>
+	</html>
 <?php $this->endPage() ?>

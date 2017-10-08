@@ -13,6 +13,7 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+		//'/template/login/fb/style.css',
     ];
     public $js = [
     ];
