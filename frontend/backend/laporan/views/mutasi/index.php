@@ -41,39 +41,26 @@ $this->registerCss("
 			height: 300px;
 		}
 		.kv-grid-container{
-			height:550px
+			height:570px
 		}
 		.tmp-button-delete a:hover {
 			color:red;
 		}
 	");
 $this->title = 'Trans Opencloses';
-/* $this->params['breadcrumbs'][] = $this->title;
-		'ID',
-            'ACCESS_GROUP',
-            'STORE_ID',
-            'ACCESS_ID',
-            'OPENCLOSE_ID',
-            // 'TGL_OPEN',
-            // 'TGL_CLOSE',
-            // 'CASHINDRAWER',
-            // 'ADDCASH',
-            // 'SELLCASH',
-            // 'TOTALCASH',
-            // 'TOTALCASH_ACTUAL',
-            // 'CREATE_BY',
-            // 'CREATE_AT',
-            // 'UPDATE_BY',
-            // 'UPDATE_AT',
-            // 'STATUS',
-            // 'DCRP_DETIL:ntext',
-            // 'YEAR_AT',
-            // 'MONTH_AT', */
+$this->params['breadcrumbs'][] = $this->title;
+	$aryStt= [
+		['STATUS' => 0, 'STT_NM' => 'OPEN'],		  
+		['STATUS' => 1, 'STT_NM' => 'CLOSE'],
+		['STATUS' => 2, 'STT_NM' => 'ACTIVE']
+	];	
+	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
+	
 	$aryFieldTmp= [		  
-		['ID' =>0, 'ATTR' =>['FIELD'=>'StoreNm','SIZE' => '180px','label'=>'Toko','align'=>'left','mergeHeader'=>false,'FILTER'=>true]],		  
-		['ID' =>1, 'ATTR' =>['FIELD'=>'TGL_OPEN','SIZE' => '6px','label'=>'Waktu Buka','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>2, 'ATTR' =>['FIELD'=>'TGL_CLOSE','SIZE' => '6px','label'=>'Waktu Tutup','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],
-		['ID' =>3, 'ATTR' =>['FIELD'=>'STATUS','SIZE' => '6px','label'=>'Status','align'=>'center','mergeHeader'=>true,'FILTER'=>true]]			
+		['ID' =>0, 'ATTR' =>['FIELD'=>'storeNm','SIZE' => '180px','label'=>'Toko','align'=>'left','mergeHeader'=>false,'FILTER'=>true,'filterColspn'=>0]],		  
+		['ID' =>1, 'ATTR' =>['FIELD'=>'TGL_OPEN','SIZE' => '6px','label'=>'Waktu Buka','align'=>'center','mergeHeader'=>false,'FILTER'=>true,'filterColspn'=>2]],	
+		['ID' =>2, 'ATTR' =>['FIELD'=>'TGL_CLOSE','SIZE' => '6px','label'=>'Waktu Tutup','align'=>'center','mergeHeader'=>true,'FILTER'=>false,'filterColspn'=>0]],
+		//['ID' =>3, 'ATTR' =>['FIELD'=>'STATUS','SIZE' => '6px','label'=>'Status','align'=>'center','mergeHeader'=>true,'FILTER'=>true]]			
 		// ['ID' =>3, 'ATTR' =>['FIELD'=>'CASHINDRAWER','SIZE' => '6px','label'=>'Kas Laci','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
 		// ['ID' =>4, 'ATTR' =>['FIELD'=>'ADDCASH','SIZE' => '6px','label'=>'Kas Tambahan','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
 		// ['ID' =>5, 'ATTR' =>['FIELD'=>'SELLCASH','SIZE' => '6px','label'=>'Penjualan','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],
@@ -121,11 +108,30 @@ $this->title = 'Trans Opencloses';
 			}else{
 				$filterInputOpt=['placeholder'=>'-- Pilih --'];
 			}			
+		}elseif($value[$key]['FIELD']=='TGL_OPEN'){
+			$gvfilterType=GridView::FILTER_DATE;
+			$filterWidgetOpt=[	
+				'pluginOptions' => [				
+						'format' => 'yyyy-mm-dd',					 
+						'autoclose' => true,
+						'todayHighlight' => true,
+						//'format' => 'dd-mm-yyyy hh:mm',
+						'autoWidget' => false,
+						//'todayBtn' => true,
+				]
+			];
+			$filterOptions=[				
+				'style'=>'background-color:rgba(255, 255, 255, 1); align:center',
+				'colspan'=>$value[$key]['filterColspn']
+			];	
 		}else{
 			$gvfilterType=false;
 			//$gvfilter=true;
 			$filterWidgetOpt=[];		
-			$filterInputOpt=['class'=>"form-control"];					
+			$filterInputOpt=['class'=>"form-control"];	
+			$filterOptions=[				
+				'style'=>'background-color:rgba(255, 255, 255, 1); align:center'
+			];	
 		}; 
 		
 		$attLapOpenClosing[]=[		
@@ -134,14 +140,24 @@ $this->title = 'Trans Opencloses';
 			'filter'=>$value[$key]['FILTER'],
 			'filterType'=>$gvfilterType,
 			'filterWidgetOptions'=>$filterWidgetOpt,	
-			'filterInputOptions'=>$filterInputOpt,								
+			'filterInputOptions'=>$filterInputOpt,
+			'filterOptions'=>$filterOptions,
 			'hAlign'=>'right',
-			'vAlign'=>'middle',
+			'vAlign'=>'top',
 			//'mergeHeader'=>true,
 			'noWrap'=>false,	
 			'value'=>function($data)use($key,$value){
 				$x=$value[$key]['FIELD'];
-				return $data->$x;
+				if($x=='TGL_CLOSE'){
+					if($data->TGL_CLOSE==''){
+						return 'Belum Close';
+					}else{
+						return $data->$x;
+					}
+				}else{
+					return $data->$x;
+				}
+				
 			},
 			'noWrap'=>false,	
 			'mergeHeader'=>$value[$key]['mergeHeader'],
@@ -179,6 +195,33 @@ $this->title = 'Trans Opencloses';
 			],	
 		];	
 	};
+	$attLapOpenClosing[]=[
+		'attribute'=>'STATUS',
+		'filterType'=>GridView::FILTER_SELECT2,
+		'filterWidgetOptions'=>[
+			'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+		],
+		'filterInputOptions'=>['placeholder'=>'Select'],
+		'filter'=>$valStt,//Yii::$app->gv->gvStatusArray(),
+		'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px',$bColor),
+		'hAlign'=>'right',
+		'vAlign'=>'middle',
+		'mergeHeader'=>false,
+		'noWrap'=>false,
+		'format' => 'raw',	
+		'value'=>function($model){
+			if($model->STATUS==0){
+				return 'OPEN';
+			}elseif($model->STATUS==1){
+				return 'CLOSE';
+			}elseif($model->STATUS==2){
+				return 'ACTIVE';
+			}				 
+		},
+		//gvContainHeader($align,$width,$bColor)
+		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50',$bColor),
+		'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
+	];
 /* ==================================
  * GridViews Body
  *

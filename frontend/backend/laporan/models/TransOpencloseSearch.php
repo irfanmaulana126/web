@@ -68,7 +68,7 @@ class TransOpencloseSearch extends TransOpenclose
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
-            'TGL_OPEN' => $this->TGL_OPEN,
+            //'TGL_OPEN' => $this->TGL_OPEN,
             'TGL_CLOSE' => $this->TGL_CLOSE,
             'CASHINDRAWER' => $this->CASHINDRAWER,
             'ADDCASH' => $this->ADDCASH,
@@ -83,6 +83,8 @@ class TransOpencloseSearch extends TransOpenclose
         ]);
 
         $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+			// ->andFilterWhere(['between', 'IN_TGL', $modelPrd->TGL_START, $modelPrd->TGL_END])
+            ->andFilterWhere(['like', 'TGL_OPEN', $this->TGL_OPEN])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'ACCESS_ID', $this->ACCESS_ID])
             ->andFilterWhere(['like', 'OPENCLOSE_ID', $this->OPENCLOSE_ID])
