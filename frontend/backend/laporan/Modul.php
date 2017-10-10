@@ -1,10 +1,10 @@
 <?php
 
-namespace frontend\backend\accounting;
+namespace frontend\backend\laporan;
 
 class Modul extends \yii\base\Module
 {
-    public $controllerNamespace = 'frontend\backend\accounting\controllers';
+    public $controllerNamespace = 'frontend\backend\laporan\controllers';
 
     public function init()
     {

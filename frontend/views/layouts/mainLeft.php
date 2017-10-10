@@ -4,23 +4,23 @@ use common\models\User;
 use common\models\UserloginSearch;
 use frontend\assets\AppAsset;
 AppAsset::register($this);
-
+$base64 ='data:image/jpg;charset=utf-8;base64,'.Yii::$app->getUserOpt->user()['IMG64'];
 ?>
 	<section class="sidebar " >
 		<!-- User Login -->
 			<div class="user-panel" >
 				<div class="pull-left" style="text-align: left,font-family: tahoma ;font-size: 9pt;">
-					<img src="<?='data:image/jpg;charset=utf-8;base64,'.Yii::$app->getUserOpt->user()['IMG64']?>" class="img-circle" alt="Cinque Terre" width="80" height="80"/>
+					<img src="<?=$base64?>" class="img-circle" alt="Cinque Terre" width="80" height="80"/>
 				</div>
 				<div class="pull-left info" style="font-family: tahoma ;font-size: 9pt;margin-left: 30px;margin-top:15px" >
 					<p><?=Yii::$app->getUserOpt->user()['PROFILE_NM']?></p>
 				
-					<!--<a href="#"><i class="fa fa-circle text-success" style="text-align: left,font-family: tahoma ;font-size: 9pt;"></i> Online</a>!-->
+					<a href="#"><i class="fa fa-circle text-success" style="text-align: left,font-family: tahoma ;font-size: 9pt;"> Setting</i> </a>
 				</div>
 			</div>
 		<div class="user-panel" style="margin-top:20px;background-color:rgba(19, 105, 144, 1)">
 			<!-- /.Company Select Dashboard -->
-			 <p style="color:white">
+			 <p style="color:white;font-family:tahoma;font-size:11pt;text-align:center">
 				<?=Yii::$app->getUserOpt->user()['CORP_NM']?>
 			 </p>
 		</div>

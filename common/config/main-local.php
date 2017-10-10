@@ -11,11 +11,19 @@ return [
 		'db' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=kg',
+<<<<<<< HEAD
             'username' => 'kg',
             'password' => '4dm1n15tr41t0R',
             'charset' => 'utf8',
         ],
 		'/* api_dbkg' => [
+=======
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+        ],
+		/*'api_dbkg' => [
+>>>>>>> a40fe189cc5783ce725d1f41d15a0b07d92be806
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=kg',
             'username' => 'root',

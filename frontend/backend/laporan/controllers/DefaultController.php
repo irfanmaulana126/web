@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\backend\accounting\controllers;
+namespace frontend\backend\laporan\controllers;
 
 use yii\web\Controller;
 
