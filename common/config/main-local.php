@@ -4,31 +4,31 @@ return [
 	    'production_api' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=kg',
-            'username' => 'root',
-            'password' => '',
+            'username' => 'kg',
+            'password' => '4dm1n15tr41t0R',
             'charset' => 'utf8',
         ], 
 		'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=kasir',
-            'username' => 'root',
-            'password' => '',
+            'dsn' => 'mysql:host=localhost;dbname=kg',
+            'username' => 'kg',
+            'password' => '4dm1n15tr41t0R',
             'charset' => 'utf8',
         ],
-		'api_dbkg' => [
+		'/* api_dbkg' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=kasir',
+            'dsn' => 'mysql:host=localhost;dbname=kg',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
         ],
 		'dbkg' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=kasir',
+            'dsn' => 'mysql:host=localhost;dbname=kg',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
-        ],
+        ], */
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@common/mail',
