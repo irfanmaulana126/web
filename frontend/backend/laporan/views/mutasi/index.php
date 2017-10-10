@@ -283,24 +283,18 @@ $this->params['breadcrumbs'][] = $this->title;
 	$model= TransOpenclose::find()->where(['ID'=>$paramCari])->one();
 	if($model){
 		$modelStoran= TransStoran::find()->where(['OPENCLOSE_ID'=>$model->OPENCLOSE_ID])->one();
-		$detailMutasi= Yii::$app->controller->renderPartial('_detailMutasi',[
-			'modelToko'=>$model
-		]);
-		$detailStoran= Yii::$app->controller->renderPartial('_detailStoran',[
-			'modelStoran'=>$modelStoran
-		]);
 	}else{
 		$model=$dataProvider->getModels()[0];
-		$detailMutasi= Yii::$app->controller->renderPartial('_detailMutasi',[
+		
+	};
+	
+	$detailMutasi= Yii::$app->controller->renderPartial('_detailMutasi',[
 			'modelToko'=>$model
 		]);
 		$modelStoran= TransStoran::find()->where(['OPENCLOSE_ID'=>$model->OPENCLOSE_ID])->one();
 		$detailStoran= Yii::$app->controller->renderPartial('_detailStoran',[
 			'modelStoran'=>$modelStoran
 		]);
-	};
-	
-	
 	//print_r($model);
 
 ?>

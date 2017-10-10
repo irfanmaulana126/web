@@ -44,7 +44,7 @@ class MutasiController extends Controller
 			// return true;
 			// $model = new \yii\base\DynamicModel(['tanggal']);
 			// $model->addRule(['tanggal'], 'safe');
-			$modelStoran= TransStoran::find()->where(['OPENCLOSE_ID'=>$id])->one();
+			$modelStoran= TransStoran::find()->where(['ID'=>$id])->one();
 			return $this->renderAjax('_viewImageModal',[
 				'model'=>$modelStoran
 			]);

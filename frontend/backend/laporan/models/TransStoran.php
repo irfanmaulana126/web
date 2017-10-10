@@ -92,7 +92,7 @@ class TransStoran extends \yii\db\ActiveRecord
     }
 	
 	public function getImageTbl(){
-		return $this->hasOne(TransStoranImage::className(), ['STORE_ID' => 'STORE_ID']);
+		return $this->hasOne(TransStoranImage::className(), ['OPENCLOSE_ID' => 'OPENCLOSE_ID']);
 	}	
 	public function getImageNm(){
 		$rslt = $this->imageTbl['STORAN_IMAGE'];
