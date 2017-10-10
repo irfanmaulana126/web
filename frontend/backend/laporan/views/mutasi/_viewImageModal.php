@@ -51,7 +51,7 @@ use dosamigos\gallery\Gallery;
 	}; */			
 
 	 $items[] = [
-					'src'=>$model['imageNm']!=''?$model['imageNm']:$gambarkosong,
+					'src'=>$model['imageNm']!=''?$model['imageNm']:'data:image/jpg;charset=utf-8;base64,'.$gambarkosong,
 					'imageOptions'=>[
 						'width'=>"840px",
 						'height'=>"800px",
