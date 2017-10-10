@@ -10,12 +10,12 @@ return [
         ], 
 		'db' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=localhost;dbname=kasir',
+            'dsn' => 'mysql:host=localhost;dbname=kg',
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
         ],
-		'api_dbkg' => [
+		/*'api_dbkg' => [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=kasir',
             'username' => 'root',

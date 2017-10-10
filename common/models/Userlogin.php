@@ -50,12 +50,12 @@ class Userlogin extends \yii\db\ActiveRecord
 	
 	public function getUserImageTbl()
 	{
-		return $this->hasOne(UserImage::className(), ['ACCESS_UNIX' => 'ACCESS_ID']);
+		return $this->hasOne(UserImage::className(), ['ACCESS_ID' => 'ACCESS_ID']);
 	}	
 		
 	public function getUserProfilTbl()
 	{
-		return $this->hasOne(UserProfil::className(), ['ACCESS_UNIX' => 'ACCESS_ID']);
+		return $this->hasOne(UserProfil::className(), ['ACCESS_ID' => 'ACCESS_ID']);
 	}
 	
 	public function getCorpTbl()
@@ -102,10 +102,11 @@ class Userlogin extends \yii\db\ActiveRecord
 				return $model->UUID;
 			},	
 			'IMG64'=>function(){
-				return $this->userImageTbl!=''?$this->userImageTbl->IMG_64:$this->noimage;
+				return $this->userImageTbl!=''?$this->userImageTbl->ACCESS_IMAGE:$this->noimage;
 			},	
 			'PROFILE_NM'=>function(){
-				return $this->userProfilTbl!=''?$this->userProfilTbl->NM_DEPAN:$this->username;
+				$nm=$this->userProfilTbl->NM_DEPAN.' '.$this->userProfilTbl->NM_TENGAH;
+				return $this->userProfilTbl!=''?$nm:$this->username;
 			},	
 			'CORP_NM'=>function(){
 				//return $this->corpTbl!=''?$this->corpTbl->CORP_NM:'Nama Perusahaan';

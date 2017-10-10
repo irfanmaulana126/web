@@ -5,24 +5,38 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "user_64".
+ * This is the model class for table "user_image".
  *
- * @property string $ACCESS_UNIX
- * @property string $USER_NM
- * @property string $IMG_64
+ * @property string $ID
+ * @property string $ACCESS_ID
+ * @property string $ACCESS_IMAGE
  * @property string $CREATE_BY
  * @property string $CREATE_AT
  * @property string $UPDATE_BY
  * @property string $UPDATE_AT
+ * @property integer $STATUS
+ * @property string $DCRP_DETIL
+ * @property integer $YEAR_AT
+ * @property integer $MONTH_AT
  */
 class UserImage extends \yii\db\ActiveRecord
 {
+	const SCENARIO_CREATE = 'create';
+	const SCENARIO_UPDATE = 'update';
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'user_64';
+        return 'user_image';
+    }
+
+    /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('production_api');
     }
 
     /**
@@ -31,11 +45,12 @@ class UserImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_UNIX'], 'required'],
-            [['IMG_64'], 'string'],
+			[['ACCESS_ID','ACCESS_IMAGE'], 'required','on'=>self::SCENARIO_CREATE],
+			[['ACCESS_ID','ACCESS_IMAGE'], 'required','on'=>self::SCENARIO_UPDATE],
+            [['ACCESS_IMAGE', 'DCRP_DETIL'], 'string'],
             [['CREATE_AT', 'UPDATE_AT'], 'safe'],
-            [['ACCESS_UNIX', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
-            [['USER_NM'], 'string', 'max' => 255],
+            [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['ACCESS_ID', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
         ];
     }
 
@@ -45,13 +60,42 @@ class UserImage extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ACCESS_UNIX' => 'Access  Unix',
-            'USER_NM' => 'User  Nm',
-            'IMG_64' => 'Corp 64',
+            'ID' => 'ID',
+            'ACCESS_ID' => 'Access  ID',
+            'ACCESS_IMAGE' => 'Access  Image',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
             'UPDATE_AT' => 'Update  At',
+            'STATUS' => 'Status',
+            'DCRP_DETIL' => 'Dcrp  Detil',
+            'YEAR_AT' => 'Year  At',
+            'MONTH_AT' => 'Month  At',
         ];
     }
+	
+	public function fields()
+	{
+		return [			
+			'ID'=>function($model){
+				return $model->ID;
+			},
+			'ACCESS_ID'=>function($model){
+				return $model->ACCESS_ID;
+			},			
+			'STATUS'=>function($model){
+				return $model->STATUS;
+			},
+			'DCRP_DETIL'=>function($model){
+				if($model->DCRP_DETIL){
+					return $model->DCRP_DETIL;
+				}else{
+					return 'none';
+				}
+			},
+			'ACCESS_IMAGE'=>function($model){
+				return $model->ACCESS_IMAGE;
+			},
+		];
+	}
 }

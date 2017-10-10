@@ -4,6 +4,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
+use kartik\icons\Icon;
 
 dmstr\web\AdminLteAsset::register($this);
 ?>
@@ -52,14 +53,20 @@ dmstr\web\AdminLteAsset::register($this);
 		
 			//$menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
 		} else {
-			$menuItems[] = '<li>'
+			/* $menuItems[] = '<li>'
 				. Html::beginForm(['/site/logout'], 'post')
 				. Html::submitButton(
 					'Logout (' . Yii::$app->user->identity->username . ')',
 					['class' => 'btn btn-link logout']
 				)
 				. Html::endForm()
-				. '</li>';
+				. '</li>'; */
+			$menuItems[] = [
+				'label' => Icon::show('power-off') ,//. 'Logout',// (' . Yii::$app->user->identity->username . ')',
+				//'label' => Icon::showStack('twitter', 'square-o', ['class'=>'fa-lg']) . 'Logout (' . Yii::$app->user->identity->username . ')',
+				'url' => ['/site/logout'],
+				'linkOptions' => ['data-method' => 'post']
+			];
 		}
 		?>
 		 <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">!-->
@@ -67,6 +74,7 @@ dmstr\web\AdminLteAsset::register($this);
 			echo Nav::widget([
 				'options' => ['class' => 'navbar-nav  navbar-left'],
 				'items' => $menuItems,
+				'encodeLabels' => false,
 			]);
 		
 		?>
