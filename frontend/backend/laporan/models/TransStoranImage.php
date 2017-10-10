@@ -1,15 +1,17 @@
 <?php
 
-namespace common\models;
+namespace frontend\backend\laporan\models;
 
 use Yii;
 
 /**
- * This is the model class for table "user_image".
+ * This is the model class for table "trans_storan_image".
  *
  * @property string $ID
- * @property string $ACCESS_ID
- * @property string $ACCESS_IMAGE
+ * @property string $ACCESS_GROUP
+ * @property string $STORE_ID
+ * @property string $OPENCLOSE_ID
+ * @property string $STORAN_IMAGE
  * @property string $CREATE_BY
  * @property string $CREATE_AT
  * @property string $UPDATE_BY
@@ -19,16 +21,14 @@ use Yii;
  * @property integer $YEAR_AT
  * @property integer $MONTH_AT
  */
-class UserImage extends \yii\db\ActiveRecord
+class TransStoranImage extends \yii\db\ActiveRecord
 {
-	const SCENARIO_CREATE = 'create';
-	const SCENARIO_UPDATE = 'update';
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'user_image';
+        return 'trans_storan_image';
     }
 
     /**
@@ -45,12 +45,13 @@ class UserImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-			[['ACCESS_ID','ACCESS_IMAGE'], 'required','on'=>self::SCENARIO_CREATE],
-			[['ACCESS_ID','ACCESS_IMAGE'], 'required','on'=>self::SCENARIO_UPDATE],
-            [['ACCESS_IMAGE', 'DCRP_DETIL'], 'string'],
+            [['STORE_ID', 'OPENCLOSE_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
+            [['STORAN_IMAGE', 'DCRP_DETIL'], 'string'],
             [['CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_ID', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
+            [['ACCESS_GROUP'], 'string', 'max' => 15],
+            [['STORE_ID'], 'string', 'max' => 20],
+            [['OPENCLOSE_ID', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
         ];
     }
 
@@ -61,8 +62,10 @@ class UserImage extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
-            'ACCESS_ID' => 'Access  ID',
-            'ACCESS_IMAGE' => 'Access  Image',
+            'ACCESS_GROUP' => 'Access  Group',
+            'STORE_ID' => 'Store  ID',
+            'OPENCLOSE_ID' => 'Openclose  ID',
+            'STORAN_IMAGE' => 'Storan  Image',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
@@ -73,29 +76,4 @@ class UserImage extends \yii\db\ActiveRecord
             'MONTH_AT' => 'Month  At',
         ];
     }
-	
-	public function fields()
-	{
-		return [			
-			'ID'=>function($model){
-				return $model->ID;
-			},
-			'ACCESS_ID'=>function($model){
-				return $model->ACCESS_ID;
-			},			
-			'STATUS'=>function($model){
-				return $model->STATUS;
-			},
-			'DCRP_DETIL'=>function($model){
-				if($model->DCRP_DETIL){
-					return $model->DCRP_DETIL;
-				}else{
-					return 'none';
-				}
-			},
-			'ACCESS_IMAGE'=>function($model){
-				return $model->ACCESS_IMAGE;
-			},
-		];
-	}
 }
