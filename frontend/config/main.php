@@ -76,8 +76,8 @@ return [
 		'inventory' => [
             'class' => 'frontend\backend\inventory\Modul',
         ],
-		'accounting' => [
-            'class' => 'frontend\backend\accounting\Modul',
+		'laporan' => [
+            'class' => 'frontend\backend\laporan\Modul',
         ],
 		'hris' => [
             'class' => 'frontend\backend\hris\Modul',

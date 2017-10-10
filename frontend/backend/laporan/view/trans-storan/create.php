@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\backend\master\models\Item */
+/* @var $model frontend\backend\laporan\models\TransStoran */
 
-$this->title = 'Create Item';
-$this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];
+$this->title = 'Create Trans Storan';
+$this->params['breadcrumbs'][] = ['label' => 'Trans Storans', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="item-create">
+<div class="trans-storan-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
