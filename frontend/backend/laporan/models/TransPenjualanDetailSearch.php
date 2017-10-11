@@ -12,14 +12,13 @@ use frontend\backend\laporan\models\TransPenjualanDetail;
  */
 class TransPenjualanDetailSearch extends TransPenjualanDetail
 {
-	public function attributes()
+	/* public function attributes()
 	{
-		/*Author -ptr.nov- add related fields to searchable attributes */
 		return array_merge(parent::attributes(), [
 			'opencloseId','ppn','totalHarga','merchantId','typaPayId','typePayNm','bankId','typePayNm','bankId','bankNm',
 			'merchantNm','merchantNo','customerId','customerNm','customerEmail','customerPhone','storeNm'
 		]);
-	}
+	} */
     /**
      * @inheritdoc
      */
@@ -29,8 +28,8 @@ class TransPenjualanDetailSearch extends TransPenjualanDetail
             [['ID', 'GOLONGAN', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['ACCESS_GROUP', 'STORE_ID', 'ACCESS_ID', 'TRANS_ID', 'OFLINE_ID', 'TRANS_DATE', 'PRODUCT_ID', 'PRODUCT_NM', 'PRODUCT_PROVIDER', 'PRODUCT_PROVIDER_NO', 'PRODUCT_PROVIDER_NM', 'UNIT_ID', 'UNIT_NM', 'PROMO', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
             [['PRODUCT_QTY', 'HARGA_JUAL', 'DISCOUNT'], 'number'],
-			[['opencloseId','ppn','totalHarga','merchantId','typaPayId','typePayNm','bankId','typePayNm','bankId','bankNm',
-			'merchantNm','merchantNo','customerId','customerNm','customerEmail','customerPhone','storeNm'],'safe'],
+			// [['opencloseId','ppn','totalHarga','merchantId','typaPayId','typePayNm','bankId','typePayNm','bankId','bankNm',
+			// 'merchantNm','merchantNo','customerId','customerNm','customerEmail','customerPhone','storeNm'],'safe'],
         ];
     }
 
@@ -71,8 +70,10 @@ class TransPenjualanDetailSearch extends TransPenjualanDetail
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
+            'TRANS_ID' => $this->TRANS_ID,
             'GOLONGAN' => $this->GOLONGAN,
-            'TRANS_DATE' => $this->TRANS_DATE,
+            'ACCESS_GROUP' => $this->ACCESS_GROUP,
+            'STORE_ID' => $this->STORE_ID,
             'PRODUCT_QTY' => $this->PRODUCT_QTY,
             'HARGA_JUAL' => $this->HARGA_JUAL,
             'DISCOUNT' => $this->DISCOUNT,
@@ -83,10 +84,9 @@ class TransPenjualanDetailSearch extends TransPenjualanDetail
             'MONTH_AT' => $this->MONTH_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
-            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
-            ->andFilterWhere(['like', 'ACCESS_ID', $this->ACCESS_ID])
-            ->andFilterWhere(['like', 'TRANS_ID', $this->TRANS_ID])
+        $query->andFilterWhere(['like', 'ACCESS_ID', $this->ACCESS_ID])
+           ->andFilterWhere(['like', 'TRANS_DATE', date("Y-m-d",strtotime($this->TRANS_DATE))])
+            // ->andFilterWhere(['like', 'TRANS_DATE', $this->TRANS_DATE])
             ->andFilterWhere(['like', 'OFLINE_ID', $this->OFLINE_ID])
             ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])
             ->andFilterWhere(['like', 'PRODUCT_NM', $this->PRODUCT_NM])

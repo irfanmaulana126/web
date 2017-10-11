@@ -4,8 +4,6 @@ namespace frontend\backend\laporan\controllers;
 
 use Yii;
 use yii\web\Controller;
-use frontend\backend\laporan\models\TransPenjualanDetail;
-use frontend\backend\laporan\models\TransPenjualanDetailSearch;
 use frontend\backend\laporan\models\TransPenjualanHeader;
 use frontend\backend\laporan\models\TransPenjualanHeaderSearch;
 

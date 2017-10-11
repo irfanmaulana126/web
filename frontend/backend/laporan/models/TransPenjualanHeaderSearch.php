@@ -74,12 +74,12 @@ class TransPenjualanHeaderSearch extends TransPenjualanHeader
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
-            'TRANS_DATE' => $this->TRANS_DATE,
+            //'TRANS_DATE' => $this->TRANS_DATE,
             'TOTAL_PRODUCT' => $this->TOTAL_PRODUCT,
             'SUB_TOTAL_HARGA' => $this->SUB_TOTAL_HARGA,
             'PPN' => $this->PPN,
             'TOTAL_HARGA' => $this->TOTAL_HARGA,
-            'TYPE_PAY_ID' => $this->TYPE_PAY_ID,
+            //'TYPE_PAY_ID' => $this->TYPE_PAY_NM,
             'BANK_ID' => $this->BANK_ID,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
@@ -89,13 +89,13 @@ class TransPenjualanHeaderSearch extends TransPenjualanHeader
         ]);
 
         $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
-            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
+            ->andFilterWhere(['like', 'STORE_ID', $this->storeNm])
             ->andFilterWhere(['like', 'ACCESS_ID', $this->ACCESS_ID])
             ->andFilterWhere(['like', 'TRANS_ID', $this->TRANS_ID])
             ->andFilterWhere(['like', 'OFLINE_ID', $this->OFLINE_ID])
             ->andFilterWhere(['like', 'OPENCLOSE_ID', $this->OPENCLOSE_ID])
             ->andFilterWhere(['like', 'MERCHANT_ID', $this->MERCHANT_ID])
-            ->andFilterWhere(['like', 'TYPE_PAY_NM', $this->TYPE_PAY_NM])
+            //->andFilterWhere(['like', 'TYPE_PAY_NM', $this->TYPE_PAY_NM])
             ->andFilterWhere(['like', 'BANK_NM', $this->BANK_NM])
             ->andFilterWhere(['like', 'MERCHANT_NM', $this->MERCHANT_NM])
             ->andFilterWhere(['like', 'MERCHANT_NO', $this->MERCHANT_NO])
@@ -103,9 +103,9 @@ class TransPenjualanHeaderSearch extends TransPenjualanHeader
             ->andFilterWhere(['like', 'CONSUMER_NM', $this->CONSUMER_NM])
             ->andFilterWhere(['like', 'CONSUMER_EMAIL', $this->CONSUMER_EMAIL])
             ->andFilterWhere(['like', 'CONSUMER_PHONE', $this->CONSUMER_PHONE])
-            ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
-
+            ->andFilterWhere(['like', 'TYPE_PAY_ID', $this->TYPE_PAY_NM])
+            ->andFilterWhere(['like', 'TRANS_DATE',$this->tgl]);
+           
         return $dataProvider;
     }
 }

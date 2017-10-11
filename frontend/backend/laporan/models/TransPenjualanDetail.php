@@ -105,7 +105,7 @@ class TransPenjualanDetail extends \yii\db\ActiveRecord
             'DCRP_DETIL' => 'Dcrp  Detil',
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
-			'opencloseId'=>'opencloseId',
+			/* 'opencloseId'=>'opencloseId',
 			'ppn'=>'ppn',
 			'totalHarga'=>'totalHarga',
 			'merchantId'=>'merchantId',
@@ -121,64 +121,64 @@ class TransPenjualanDetail extends \yii\db\ActiveRecord
 			'customerNm'=>'customerNm',
 			'customerEmail'=>'customerEmail',
 			'customerPhone'=>'customerPhone',
-			'storeNm'=>'storeNm'
+			'storeNm'=>'storeNm' */
         ];
     }
 		
-	public function getTranHeaderTbl(){		
-		return $this->hasOne(TransPenjualanHeader::className(), ['TRANS_ID' => 'TRANS_ID']);
-	}
-	public function getOpencloseId(){
-		return $this->tranHeaderTbl->OPENCLOSE_ID;
-	}	
-	public function getPpn(){
-		return $this->tranHeaderTbl->PPN;
-	}
-	public function getTotalHarga(){
-		return $this->tranHeaderTbl->TOTAL_HARGA;
-	}
-	public function getMerchantId(){
-		return $this->tranHeaderTbl->MERCHANT_ID;
-	}
-	public function getTypaPayId(){
-		return $this->tranHeaderTbl->TYPE_PAY_ID;
-	}
-	public function getTypePayNm(){
-		return $this->tranHeaderTbl->TYPE_PAY_NM;
-	}
-	public function getBankId(){
-		return $this->tranHeaderTbl->BANK_ID;
-	}
-	public function getBankNm(){
-		return $this->tranHeaderTbl->BANK_NM;
-	}
-	public function getMerchantNm(){
-		return $this->tranHeaderTbl->MERCHANT_NM;
-	}
-	public function getMerchantNo(){
-		return $this->tranHeaderTbl->MERCHANT_NO;
-	}
-	public function getCustomerId(){
-		return $this->tranHeaderTbl->CONSUMER_ID;
-	}
-	public function getCustomerNm(){
-		return $this->tranHeaderTbl->CONSUMER_NM;
-	}
-	public function getCustomerEmail(){
-		return $this->tranHeaderTbl->CONSUMER_EMAIL;
-	}
-	public function getCustomerPhone(){
-		return $this->tranHeaderTbl->CONSUMER_PHONE;
-	}
-	public function getStoreTbl(){
-		return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
-	}	
-	public function getStoreNm(){
-		$rslt = $this->storeTbl['STORE_NM'];
-		if ($rslt){
-			return $rslt;
-		}else{
-			return "none";
-		}; 
-	}
+	// public function getTranHeaderTbl(){		
+		// return $this->hasOne(TransPenjualanHeader::className(), ['TRANS_ID' => 'TRANS_ID']);
+	// }
+	// public function getOpencloseId(){
+		// return $this->tranHeaderTbl->OPENCLOSE_ID;
+	// }	
+	// public function getPpn(){
+		// return $this->tranHeaderTbl->PPN;
+	// }
+	// public function getTotalHarga(){
+		// return $this->tranHeaderTbl->TOTAL_HARGA;
+	// }
+	// public function getMerchantId(){
+		// return $this->tranHeaderTbl->MERCHANT_ID;
+	// }
+	// public function getTypaPayId(){
+		// return $this->tranHeaderTbl->TYPE_PAY_ID;
+	// }
+	// public function getTypePayNm(){
+		// return $this->tranHeaderTbl->TYPE_PAY_NM;
+	// }
+	// public function getBankId(){
+		// return $this->tranHeaderTbl->BANK_ID;
+	// }
+	// public function getBankNm(){
+		// return $this->tranHeaderTbl->BANK_NM;
+	// }
+	// public function getMerchantNm(){
+		// return $this->tranHeaderTbl->MERCHANT_NM;
+	// }
+	// public function getMerchantNo(){
+		// return $this->tranHeaderTbl->MERCHANT_NO;
+	// }
+	// public function getCustomerId(){
+		// return $this->tranHeaderTbl->CONSUMER_ID;
+	// }
+	// public function getCustomerNm(){
+		// return $this->tranHeaderTbl->CONSUMER_NM;
+	// }
+	// public function getCustomerEmail(){
+		// return $this->tranHeaderTbl->CONSUMER_EMAIL;
+	// }
+	// public function getCustomerPhone(){
+		// return $this->tranHeaderTbl->CONSUMER_PHONE;
+	// }
+	// public function getStoreTbl(){
+		// return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
+	// }	
+	// public function getStoreNm(){
+		// $rslt = $this->storeTbl['STORE_NM'];
+		// if ($rslt){
+			// return $rslt;
+		// }else{
+			// return "none";
+		// }; 
+	// }
 }
