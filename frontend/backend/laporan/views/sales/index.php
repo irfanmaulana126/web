@@ -39,7 +39,7 @@ $this->registerCss("
 			height: 300px;
 		}
 		.kv-grid-container{
-			height:600px
+			height:550px
 		}
 		.tmp-button-delete a:hover {
 			color:red;
@@ -62,18 +62,18 @@ $this->registerCss("
  // * @property string $CONSUMER_EMAIL
  // * @property string $CONSUMER_PHONE
 	$aryFieldDTrans= [		  
-		['ID' =>0, 'ATTR' =>['FIELD'=>'storeNm','SIZE' => '180px','label'=>'Toko','align'=>'left','mergeHeader'=>false,'FILTER'=>true]],		  
-		['ID' =>1, 'ATTR' =>['FIELD'=>'tgl','SIZE' => '6px','label'=>'TRANS DATE','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],
-		['ID' =>2, 'ATTR' =>['FIELD'=>'waktu','SIZE' => '6px','label'=>'WAKTU','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>3, 'ATTR' =>['FIELD'=>'username','SIZE' => '6px','label'=>'USER','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>4, 'ATTR' =>['FIELD'=>'TOTAL_PRODUCT','SIZE' => '6px','label'=>'QTY','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>5, 'ATTR' =>['FIELD'=>'PPN','SIZE' => '6px','label'=>'PPN','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>6, 'ATTR' =>['FIELD'=>'SUB_TOTAL_HARGA','SIZE' => '6px','label'=>'SUB TOTAL.HARGA','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>7, 'ATTR' =>['FIELD'=>'TOTAL_HARGA','SIZE' => '6px','label'=>'TOTAL HARGA','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>8, 'ATTR' =>['FIELD'=>'TYPE_PAY_NM','SIZE' => '6px','label'=>'TIPE BAYAR','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>9, 'ATTR' =>['FIELD'=>'BANK_NM','SIZE' => '6px','label'=>'NAMA BANK','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>10, 'ATTR' =>['FIELD'=>'CONSUMER_NM','SIZE' => '6px','label'=>'CONSUMER','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		//['ID' =>11, 'ATTR' =>['FIELD'=>'OPENCLOSE_ID','SIZE' => '6px','label'=>'BOOK.ID','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>0, 'ATTR' =>['FIELD'=>'storeNm','SIZE' => '150px','label'=>'Toko','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>true]],		  
+		['ID' =>1, 'ATTR' =>['FIELD'=>'tgl','SIZE' => '6px','label'=>'TRANS DATE','align'=>'center','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>2,'pageSummary'=>false,'group'=>false]],
+		['ID' =>2, 'ATTR' =>['FIELD'=>'waktu','SIZE' => '6px','label'=>'WAKTU','align'=>'center','vAlign'=>'top','mergeHeader'=>true,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>3, 'ATTR' =>['FIELD'=>'username','SIZE' => '6px','label'=>'USER','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>4, 'ATTR' =>['FIELD'=>'TOTAL_PRODUCT','SIZE' => '6px','label'=>'QTY','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>0,'pageSummary'=>true,'group'=>false]],	
+		['ID' =>5, 'ATTR' =>['FIELD'=>'PPN','SIZE' => '6px','label'=>'PPN','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>6, 'ATTR' =>['FIELD'=>'SUB_TOTAL_HARGA','SIZE' => '6px','label'=>'SUB TOTAL HARGA','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>0,'pageSummary'=>true,'group'=>false]],	
+		['ID' =>7, 'ATTR' =>['FIELD'=>'TOTAL_HARGA','SIZE' => '6px','label'=>'TOTAL HARGA','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>0,'pageSummary'=>true,'group'=>false]],	
+		['ID' =>8, 'ATTR' =>['FIELD'=>'TYPE_PAY_NM','SIZE' => '6px','label'=>'TIPE BAYAR','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>9, 'ATTR' =>['FIELD'=>'BANK_NM','SIZE' => '6px','label'=>'NAMA BANK','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>10, 'ATTR' =>['FIELD'=>'CONSUMER_NM','SIZE' => '6px','label'=>'CONSUMER','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		//['ID' =>11, 'ATTR' =>['FIELD'=>'OPENCLOSE_ID','SIZE' => '6px','label'=>'BOOK.ID','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
 		
 	];	
 	$valFieldsDTrans = ArrayHelper::map($aryFieldDTrans, 'ID', 'ATTR'); 
@@ -104,10 +104,9 @@ $this->registerCss("
 	];
 	/*OTHER ATTRIBUTE*/
 	foreach($valFieldsDTrans as $key =>$value[]){	
-		if ($value[$key]['FIELD']=='DEP_NM' OR $value[$key]['FIELD']=='HARI'){				
+		//==== CUSTIMUZE ====
+		if ($value[$key]['FIELD']=='storeNm' OR $value[$key]['FIELD']=='TYPE_PAY_NM'){				
 			$gvfilterType=GridView::FILTER_SELECT2;
-			//$gvfilterType=false;
-			//$gvfilter =$aryDeptId;
 			$filterWidgetOpt=[				
 				'pluginOptions'=>['allowClear'=>true],		
 			]; 
@@ -115,28 +114,98 @@ $this->registerCss("
 				$filterInputOpt=['placeholder'=>'-Pilih-'];
 			}else{
 				$filterInputOpt=['placeholder'=>'-- Pilih --'];
-			}			
+			};			
+			$filterOptions=[				
+				'style'=>'background-color:rgba(255, 255, 255, 1); align:center',
+				'colspan'=>$value[$key]['filterColspn']
+			];
+		}elseif($value[$key]['FIELD']=='tgl'){
+			//DATE FORMAT FILTER
+			$gvfilterType=GridView::FILTER_DATE;
+			$filterWidgetOpt=[	
+				'pluginOptions' => [				
+						'format' => 'yyyy-mm-dd',					 
+						'autoclose' => true,
+						'todayHighlight' => true,
+						//'format' => 'dd-mm-yyyy hh:mm',
+						'autoWidget' => false,
+						//'todayBtn' => true,
+				]
+			];
+			$filterOptions=[				
+				'style'=>'background-color:rgba(255, 255, 255, 1); align:center',
+				'colspan'=>$value[$key]['filterColspn']
+			];			
+		}elseif($value[$key]['FIELD']=='storeNm'){
+			$groupFooter="function($model, $key, $index, $widget){ 
+				return [
+					'mergeColumns'=>[[1,11]], 
+					'content'=>[             // content to show in each summary cell
+						1=>'Group ' . $model->storeNm,
+						//6=>'100',
+						// 5=>GridView::F_SUM,
+						// 6=>GridView::F_SUM,
+					],
+					'contentOptions'=>[      // content html attributes for each summary cell
+						1>['style'=>'font-variant:small-caps'],
+						1=>['style'=>'text-align:left'],
+						//5=>['style'=>'text-align:right'],
+						//6=>['style'=>'text-align:right'],
+					],
+					'options'=>['class'=>'info','style'=>'font-weight:bold;']
+				];
+			}"; 
 		}else{
 			$gvfilterType=false;
 			//$gvfilter=true;
 			$filterWidgetOpt=[];		
-			$filterInputOpt=['class'=>"form-control"];					
+			$filterInputOpt=['class'=>"form-control"];	
+			$filterOptions=[				
+				'style'=>'background-color:rgba(255, 255, 255, 1); align:center',
+				'colspan'=>$value[$key]['filterColspn']
+			];
+			$groupFooter='false';			
 		}; 
 		
 		$attTransDetail[]=[		
 			'attribute'=>$value[$key]['FIELD'],
 			'label'=>$value[$key]['label'],
+			'group'=>$value[$key]['group'],
 			'filter'=>$value[$key]['FILTER'],
 			'filterType'=>$gvfilterType,
 			'filterWidgetOptions'=>$filterWidgetOpt,	
-			'filterInputOptions'=>$filterInputOpt,								
+			'filterInputOptions'=>$filterInputOpt,	
+			'filterOptions'=>$filterOptions,			
 			'hAlign'=>'right',
-			'vAlign'=>'middle',
+			'vAlign'=>$value[$key]['vAlign'],
 			//'mergeHeader'=>true,
 			'noWrap'=>true,	
 			'value'=>function($data)use($key,$value){
 				$x=$value[$key]['FIELD'];
 				return $data->$x;
+			},			
+			'groupFooter'=>function($model, $key, $index, $widget){ 
+				return [
+					'mergeColumns'=>[[1,2]], 
+					'content'=>[             // content to show in each summary cell
+						1=>'Group ' . $model->storeNm,
+						5=>GridView::F_SUM,
+						7=>GridView::F_SUM,
+						8=>GridView::F_SUM,
+					],
+					'contentFormats'=>[      // content html attributes for each summary cell
+						5=>['format'=>'number', 'decimals'=>2],
+						7=>['format'=>'number', 'decimals'=>2],
+						8=>['format'=>'number', 'decimals'=>2],
+					],
+					'contentOptions'=>[      // content html attributes for each summary cell
+						1=>['style'=>'text-align:right;color:#243852'],
+						5=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
+						7=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
+						8=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
+					],
+					'options'=>['class'=>'danger','style'=>'font-weight:bold;']
+				];
 			},
 			'noWrap'=>false,	
 			'mergeHeader'=>$value[$key]['mergeHeader'],
@@ -158,18 +227,21 @@ $this->registerCss("
 					//'background-color'=>'rgba(13, 127, 3, 0.1)',
 				]
 			],
-			//'pageSummaryFunc'=>GridView::F_SUM,
-			//'pageSummary'=>true,
+			'format'=>$value[$key]['format'],
+			'pageSummaryFunc'=>GridView::F_SUM,
+			'pageSummary'=>$value[$key]['pageSummary'],
 			'pageSummaryOptions' => [
 				'style'=>[
-						'text-align'=>'right',		
-						//'width'=>'12px',
-						'font-family'=>'tahoma',
-						'font-size'=>'8pt',	
-						'text-decoration'=>'underline',
-						'font-weight'=>'bold',
-						'border-left-color'=>'transparant',		
-						'border-left'=>'0px',									
+					'text-align'=>'right',		
+					//'width'=>'12px',
+					'font-family'=>'tahoma',
+					'font-size'=>'8pt',	
+					'text-decoration'=>'underline',
+					'font-weight'=>'bold',
+					'border-left-color'=>'transparant',		
+					'border-left'=>'0px',
+					'background-color'=>'rgba(76, 22, 11, 0.36)',
+					'color'=>'white',
 				]
 			],	
 		];	
@@ -219,6 +291,7 @@ $this->registerCss("
 	// 'floatHeaderOptions'=>['scrollingTop'=>'200'] 
 	// 'floatOverflowContainer'=>true,
 	'floatHeader'=>true,
+	'showPageSummary' => true,
 ]);	
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
