@@ -38,8 +38,8 @@ $this->registerCss("
 			//min-height: 340px;
 			height: 300px;
 		}
-		.kv-grid-container{
-			height:600px
+		#detail-sales-trans .kv-grid-container{
+			height:200px
 		}
 		.tmp-button-delete a:hover {
 			color:red;
@@ -73,18 +73,15 @@ $this->title = 'Trans Opencloses';
             // 'DCRP_DETIL:ntext',
             // 'YEAR_AT',
             // 'MONTH_AT', */
-	$aryFieldDTrans= [		  
-		['ID' =>0, 'ATTR' =>['FIELD'=>'StoreNm','SIZE' => '180px','label'=>'Toko','align'=>'left','mergeHeader'=>false,'FILTER'=>true]],		  
-		['ID' =>1, 'ATTR' =>['FIELD'=>'TRANS_DATE','SIZE' => '6px','label'=>'TRANS_DATE','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],
-		['ID' =>2, 'ATTR' =>['FIELD'=>'ACCESS_ID','SIZE' => '6px','label'=>'ACCESS_ID','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>3, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '6px','label'=>'PROVIDER','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>4, 'ATTR' =>['FIELD'=>'PRODUCT_QTY','SIZE' => '6px','label'=>'QTY','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>5, 'ATTR' =>['FIELD'=>'UNIT_NM','SIZE' => '6px','label'=>'UNIT_NM','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>6, 'ATTR' =>['FIELD'=>'PROMO','SIZE' => '6px','label'=>'PROMO','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+	$aryFieldDTransDetail= [		  
+		['ID' =>0, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '6px','label'=>'PROVIDER','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_QTY','SIZE' => '6px','label'=>'QTY','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>2, 'ATTR' =>['FIELD'=>'UNIT_NM','SIZE' => '6px','label'=>'UNIT_NM','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>3, 'ATTR' =>['FIELD'=>'PROMO','SIZE' => '6px','label'=>'PROMO','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
 
 	];	
-	$valFieldsDTrans = ArrayHelper::map($aryFieldDTrans, 'ID', 'ATTR'); 
-	$bColor='rgba(87,114,111, 1)';
+	$valFieldsDTransDetail = ArrayHelper::map($aryFieldDTransDetail, 'ID', 'ATTR'); 
+	$bColorDetail='rgba(247, 199, 136, 0.6)';
 	$attTransDetail[] =[			
 		'class'=>'kartik\grid\SerialColumn',
 		'contentOptions'=>['class'=>'kartik-sheet-style'],
@@ -96,7 +93,7 @@ $this->title = 'Trans Opencloses';
 				'width'=>'10px',
 				'font-family'=>'verdana, arial, sans-serif',
 				'font-size'=>'9pt',
-				'background-color'=>$bColor,
+				'background-color'=>$bColorDetail,
 				'color'=>'white',
 			]
 		],
@@ -110,7 +107,7 @@ $this->title = 'Trans Opencloses';
 		],					
 	];
 	/*OTHER ATTRIBUTE*/
-	foreach($valFieldsDTrans as $key =>$value[]){	
+	foreach($valFieldsDTransDetail as $key =>$value[]){	
 		if ($value[$key]['FIELD']=='DEP_NM' OR $value[$key]['FIELD']=='HARI'){				
 			$gvfilterType=GridView::FILTER_SELECT2;
 			//$gvfilterType=false;
@@ -133,6 +130,8 @@ $this->title = 'Trans Opencloses';
 		$attTransDetail[]=[		
 			'attribute'=>$value[$key]['FIELD'],
 			'label'=>$value[$key]['label'],
+			'group'=>false,
+			'groupFooter'=>false,
 			'filter'=>$value[$key]['FILTER'],
 			'filterType'=>$gvfilterType,
 			'filterWidgetOptions'=>$filterWidgetOpt,	
@@ -153,7 +152,7 @@ $this->title = 'Trans Opencloses';
 					'width'=>$value[$key]['SIZE'],
 					'font-family'=>'tahoma, arial, sans-serif',
 					'font-size'=>'8pt',
-					'background-color'=>$bColor,
+					'background-color'=>$bColorDetail,
 				]
 			],  
 			'contentOptions'=>[
@@ -188,9 +187,9 @@ $this->title = 'Trans Opencloses';
  */			
  $gvTransDetail= GridView::widget([
 	'id'=>'detail-sales-trans',
-	'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-	'filterRowOptions'=>['style'=>'background-color:'.$bColor.'; align:center'],
+	'dataProvider' => $dataProviderDetail,
+    //'filterModel' => $searchModelDetail,
+	'filterRowOptions'=>['style'=>'background-color:'.$bColorDetail.'; align:center'],
 	'columns' =>$attTransDetail,	
 	'toolbar' => [
 		'{export}',
@@ -198,6 +197,7 @@ $this->title = 'Trans Opencloses';
 	'panel'=>[
 		//'heading'=>$pageNm.'  '.tombolCreate().' '.tombolExportFormat($paramUrl).' '.tombolUpload().' '.tombolSync(),					
 		//'heading'=>tombolRefresh().' '.tombolClear().' '.tombolCreateTmp().' '.tombolCreatePeriode().' '.tombolExportFormat($paramUrl).' -> '.tombolUpload().' -> '.tombolSync().' '.$perode,					
+		'heading'=>false,
 		'type'=>'info',
 		'after'=>false,
 		'before'=>false,
@@ -206,7 +206,7 @@ $this->title = 'Trans Opencloses';
 	'pjax'=>true,
 	'pjaxSettings'=>[
 		'options'=>[
-			'enablePushState'=>true,
+			'enablePushState'=>false,
 			'id'=>'detail-sales-trans',
 		],
 	],
@@ -222,16 +222,12 @@ $this->title = 'Trans Opencloses';
 	'showConfirmAlert'=>false,
 	'target'=>GridView::TARGET_BLANK
 	],
+	'showPageSummary' => false,
 	//'floatHeader'=>false,
 	// 'floatHeaderOptions'=>['scrollingTop'=>'200'] 
 	// 'floatOverflowContainer'=>true,
-	'floatHeader'=>true,
+	//'floatHeader'=>true,
 ]);	
 ?>
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
-		<div class="row">		
+	wqeqweqw
 		<?=$gvTransDetail?>
-		</div>
-	</div>
-</div>
