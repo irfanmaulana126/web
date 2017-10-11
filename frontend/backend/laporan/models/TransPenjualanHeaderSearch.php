@@ -12,6 +12,13 @@ use frontend\backend\laporan\models\TransPenjualanHeader;
  */
 class TransPenjualanHeaderSearch extends TransPenjualanHeader
 {
+	public function attributes()
+	{
+		/*Author -ptr.nov- add related fields to searchable attributes */
+		return array_merge(parent::attributes(), [
+			'storeNm','tgl','waktu','username'
+		]);
+	}
     /**
      * @inheritdoc
      */
@@ -21,6 +28,7 @@ class TransPenjualanHeaderSearch extends TransPenjualanHeader
             [['ID', 'TYPE_PAY_ID', 'BANK_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['ACCESS_GROUP', 'STORE_ID', 'ACCESS_ID', 'TRANS_ID', 'OFLINE_ID', 'TRANS_DATE', 'OPENCLOSE_ID', 'MERCHANT_ID', 'TYPE_PAY_NM', 'BANK_NM', 'MERCHANT_NM', 'MERCHANT_NO', 'CONSUMER_ID', 'CONSUMER_NM', 'CONSUMER_EMAIL', 'CONSUMER_PHONE', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
             [['TOTAL_PRODUCT', 'SUB_TOTAL_HARGA', 'PPN', 'TOTAL_HARGA'], 'number'],
+            [['storeNm','tgl','waktu','username'], 'safe'],
         ];
     }
 
@@ -43,11 +51,16 @@ class TransPenjualanHeaderSearch extends TransPenjualanHeader
     public function search($params)
     {
         $query = TransPenjualanHeader::find();
-
+		$cnt=$query->count('TRANS_ID');
+		// print_r($cnt);
+		// die();
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+			'pagination' => [
+				 'pageSize' => $cnt,
+			]
         ]);
 
         $this->load($params);
