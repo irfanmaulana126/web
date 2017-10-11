@@ -45,43 +45,36 @@ $this->registerCss("
 			color:red;
 		}
 	");
-$this->title = 'Trans Opencloses';
-/* $this->params['breadcrumbs'][] = $this->title;
-		' 'ID',
-            'ACCESS_GROUP',
-            'STORE_ID',
-            'ACCESS_ID',
-            'GOLONGAN',
-            // 'TRANS_ID',
-            // 'OFLINE_ID',
-            // 'TRANS_DATE',
-            // 'PRODUCT_ID',
-            // 'PRODUCT_NM',
-            // 'PRODUCT_PROVIDER',
-            // 'PRODUCT_PROVIDER_NO',
-            // 'PRODUCT_PROVIDER_NM',
-            // 'PRODUCT_QTY',
-            // 'UNIT_ID',
-            // 'UNIT_NM',
-            // 'HARGA_JUAL',
-            // 'DISCOUNT',
-            // 'PROMO',
-            // 'CREATE_AT',
-            // 'UPDATE_BY',
-            // 'UPDATE_AT',
-            // 'STATUS',
-            // 'DCRP_DETIL:ntext',
-            // 'YEAR_AT',
-            // 'MONTH_AT', */
+// $this->title = 'Trans Opencloses';
+// $this->params['breadcrumbs'][] = $this->title;
+		
+		// * @property string $PPN
+ // * @property string $
+ // * @property string $MERCHANT_ID
+ // * @property string $TYPE_PAY_ID
+ // * @property string $TYPE_PAY_NM
+ // * @property string $BANK_ID
+ // * @property string $BANK_NM
+ // * @property string $MERCHANT_NM
+ // * @property string $MERCHANT_NO
+ // * @property string $CONSUMER_ID
+ // * @property string $CONSUMER_NM
+ // * @property string $CONSUMER_EMAIL
+ // * @property string $CONSUMER_PHONE
 	$aryFieldDTrans= [		  
-		['ID' =>0, 'ATTR' =>['FIELD'=>'StoreNm','SIZE' => '180px','label'=>'Toko','align'=>'left','mergeHeader'=>false,'FILTER'=>true]],		  
-		['ID' =>1, 'ATTR' =>['FIELD'=>'TRANS_DATE','SIZE' => '6px','label'=>'TRANS_DATE','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],
-		['ID' =>2, 'ATTR' =>['FIELD'=>'ACCESS_ID','SIZE' => '6px','label'=>'ACCESS_ID','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>3, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '6px','label'=>'PROVIDER','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>4, 'ATTR' =>['FIELD'=>'PRODUCT_QTY','SIZE' => '6px','label'=>'QTY','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>5, 'ATTR' =>['FIELD'=>'UNIT_NM','SIZE' => '6px','label'=>'UNIT_NM','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-		['ID' =>6, 'ATTR' =>['FIELD'=>'PROMO','SIZE' => '6px','label'=>'PROMO','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
-
+		['ID' =>0, 'ATTR' =>['FIELD'=>'storeNm','SIZE' => '180px','label'=>'Toko','align'=>'left','mergeHeader'=>false,'FILTER'=>true]],		  
+		['ID' =>1, 'ATTR' =>['FIELD'=>'tgl','SIZE' => '6px','label'=>'TRANS DATE','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],
+		['ID' =>2, 'ATTR' =>['FIELD'=>'waktu','SIZE' => '6px','label'=>'WAKTU','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>3, 'ATTR' =>['FIELD'=>'username','SIZE' => '6px','label'=>'USER','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>4, 'ATTR' =>['FIELD'=>'TOTAL_PRODUCT','SIZE' => '6px','label'=>'QTY','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>5, 'ATTR' =>['FIELD'=>'PPN','SIZE' => '6px','label'=>'PPN','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>6, 'ATTR' =>['FIELD'=>'SUB_TOTAL_HARGA','SIZE' => '6px','label'=>'SUB TOTAL.HARGA','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>7, 'ATTR' =>['FIELD'=>'TOTAL_HARGA','SIZE' => '6px','label'=>'TOTAL HARGA','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>8, 'ATTR' =>['FIELD'=>'TYPE_PAY_NM','SIZE' => '6px','label'=>'TIPE BAYAR','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>9, 'ATTR' =>['FIELD'=>'BANK_NM','SIZE' => '6px','label'=>'NAMA BANK','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		['ID' =>10, 'ATTR' =>['FIELD'=>'CONSUMER_NM','SIZE' => '6px','label'=>'CONSUMER','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		//['ID' =>11, 'ATTR' =>['FIELD'=>'OPENCLOSE_ID','SIZE' => '6px','label'=>'BOOK.ID','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
+		
 	];	
 	$valFieldsDTrans = ArrayHelper::map($aryFieldDTrans, 'ID', 'ATTR'); 
 	$bColor='rgba(87,114,111, 1)';
@@ -229,9 +222,9 @@ $this->title = 'Trans Opencloses';
 ]);	
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
-		<div class="row">		
-		<?=$gvTransDetail?>
+	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
+		<div class="row" style="font-family: tahoma ;font-size: 8pt;">		
+			<?=$gvTransDetail?>
 		</div>
 	</div>
 </div>

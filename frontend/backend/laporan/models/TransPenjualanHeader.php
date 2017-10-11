@@ -3,6 +3,8 @@
 namespace frontend\backend\laporan\models;
 
 use Yii;
+use common\models\Store;
+use common\models\Userlogin;
 
 /**
  * This is the model class for table "trans_penjualan_header".
@@ -75,6 +77,7 @@ class TransPenjualanHeader extends \yii\db\ActiveRecord
             [['TYPE_PAY_NM', 'BANK_NM', 'CONSUMER_PHONE'], 'string', 'max' => 150],
             [['CONSUMER_ID', 'CONSUMER_NM'], 'string', 'max' => 100],
             [['CONSUMER_EMAIL'], 'string', 'max' => 200],
+            [['storeNm','tgl','waktu','username'], 'safe'],
         ];
     }
 
@@ -114,6 +117,33 @@ class TransPenjualanHeader extends \yii\db\ActiveRecord
             'DCRP_DETIL' => 'Dcrp  Detil',
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
+			'tgl'=>'Tanggal',
         ];
     }
+	//=== STORE ==
+	public function getStoreTbl(){
+		return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
+	}	
+	public function getStoreNm(){
+		$rslt = $this->storeTbl['STORE_NM'];
+		if ($rslt){
+			return $rslt;
+		}else{
+			return "none";
+		}; 
+	}
+	//=== STORE ==
+	public function getUserTbl(){
+		return $this->hasOne(Userlogin::className(), ['ACCESS_ID' => 'ACCESS_ID']);
+	}	
+	public function getUsername(){
+		return $this->userTbl['username'];		
+	}
+	//=== SPLIT SELF ==
+	public function getTgl(){
+		return date("Y-m-d",strtotime($this->TRANS_DATE));
+	}
+	public function getWaktu(){
+		return date("H:i:s",strtotime($this->TRANS_DATE));
+	}
 }
