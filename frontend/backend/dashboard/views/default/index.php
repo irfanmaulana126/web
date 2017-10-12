@@ -41,6 +41,5 @@ ChartAsset::register($this);
 <div id="loaderPtr"></div>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt;">
 		
-			<?=$_indexChart1?>			
-		
+			<?=$_indexChart1?>
 </div>

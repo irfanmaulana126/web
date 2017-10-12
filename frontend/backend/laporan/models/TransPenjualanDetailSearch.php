@@ -51,7 +51,7 @@ class TransPenjualanDetailSearch extends TransPenjualanDetail
      */
     public function search($params)
     {
-        $query = TransPenjualanDetail::find();
+        $query = TransPenjualanDetail::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']]);
 
         // add conditions that should always apply here
 

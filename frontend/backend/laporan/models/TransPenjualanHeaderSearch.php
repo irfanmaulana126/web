@@ -50,7 +50,7 @@ class TransPenjualanHeaderSearch extends TransPenjualanHeader
      */
     public function search($params)
     {
-        $query = TransPenjualanHeader::find();
+        $query = TransPenjualanHeader::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']]);
 		$cnt=$query->count('TRANS_ID');
 		// print_r($cnt);
 		// die();

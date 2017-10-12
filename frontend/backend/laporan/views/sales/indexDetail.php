@@ -1,27 +1,27 @@
 <?php
 $this->registerCss("
-table thead { display: table-header-group; }
-table tr { page-break-inside: avoid; }	");
-
+.table {
+          display: table;
+      }
+      .tr {
+          display: table-row;
+      }
+      .highlight {
+          background-color: greenyellow;
+          display: table-cell;
+      }
+")
 ?>
-
 <table>
-  <thead>
-	<tbody>
-		<tr>
-			<table>
-			 	<tbody>
-					
-					<tr>
-						<td colspan="2">text</td>
-						<td colspan="2">text</td>
-						
-					</tr>
-				</tbody>
-			</table>
-			
-		</tr>
-	</tbody>
+ <tr >
+	<div>asd</div>
+	<div>asd</div>
+
+ </tr> <tr >
+ asd
+
+ </tr> <tr >
+ asd
+
+ </tr>
 </table>
-		
-  
