@@ -66,4 +66,17 @@ class ArrayBantuan extends Component{
 		}
 		return $rslt;
 	}
+	
+	function ArrayPaletteColors(){
+		$hexColor="#0B1234,#68acff,#00fd83,#e700c4,#8900ff,#fb0909,#0000ff,#ff4040,#7fff00,#ff7f24,#ff7256,#ffb90f,#006400,#030303,#ff69b4,#8b814c,#3f6b52,#744f4f,#6fae93,#858006,#426506,#055c5a,#a7630d,#4d8a9c,#449f9c,#8da9ab,#c4dfdd,#bf7793,#559e96,#afca84,#608e97,#806d88,#688b94,#b5dfe7,#b29cba,#83adb5,#c7bbc9,#2d5867,#e1e9b7,#bcd2d0,#f96161,#c9bbbb,#bfc5ce,#8f6d4d,#a87f99,#62909b,#a0acc0,#94b9b8";		
+		return $hexColor;
+	}
+	function ArrayRowPaletteColors(){
+		$hexColor=["#0B1234","#68acff","#00fd83","#e700c4","#8900ff","#fb0909","#0000ff","#ff4040","#7fff00","#ff7f24","#ff7256","#ffb90f","#006400","#030303","#ff69b4","#8b814c","#3f6b52","#744f4f","#6fae93","#858006","#426506","#055c5a","#a7630d","#4d8a9c","#449f9c","#8da9ab","#c4dfdd","#bf7793","#559e96","#afca84","#608e97","#806d88","#688b94","#b5dfe7","#b29cba","#83adb5","#c7bbc9","#2d5867","#e1e9b7","#bcd2d0","#f96161","#c9bbbb","#bfc5ce","#8f6d4d","#a87f99","#62909b","#a0acc0","#94b9b8"];		
+		return $hexColor;
+		// foreach($hexColor as $rows => $value){
+			// $rslt[]=[$rows =>$value];
+		// };
+		// return $rslt;
+	}
 }

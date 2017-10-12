@@ -57,18 +57,18 @@ $this->registerCss("
 	$aryTypeTrans=ArrayHelper::map(MerchantType::find()->all(), 'TYPE_PAY_ID','TYPE_PAY_NM');
 	
 	$aryFieldDTransHeader= [		  
-		['ID' =>0, 'ATTR' =>['FIELD'=>'storeNm','SIZE' => '150px','label'=>'Toko','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>$aryStore,'format'=>'raw','filterColspn'=>1,'pageSummary'=>false,'group'=>true]],		  
+		['ID' =>0, 'ATTR' =>['FIELD'=>'storeNm','SIZE' => '150px','label'=>'Toko','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>$aryStore,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>true]],		  
 		['ID' =>1, 'ATTR' =>['FIELD'=>'tgl','SIZE' => '6px','label'=>'TRANS DATE','align'=>'center','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>2,'pageSummary'=>false,'group'=>false]],
-		['ID' =>2, 'ATTR' =>['FIELD'=>'waktu','SIZE' => '6px','label'=>'WAKTU','align'=>'center','vAlign'=>'top','mergeHeader'=>true,'FILTER'=>true,'format'=>'raw','filterColspn'=>1,'pageSummary'=>false,'group'=>false]],	
-		['ID' =>3, 'ATTR' =>['FIELD'=>'username','SIZE' => '6px','label'=>'USER','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>1,'pageSummary'=>false,'group'=>false]],	
-		['ID' =>4, 'ATTR' =>['FIELD'=>'TOTAL_PRODUCT','SIZE' => '6px','label'=>'QTY','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>1,'pageSummary'=>true,'group'=>false]],	
-		['ID' =>5, 'ATTR' =>['FIELD'=>'PPN','SIZE' => '6px','label'=>'PPN','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>1,'pageSummary'=>false,'group'=>false]],	
-		['ID' =>6, 'ATTR' =>['FIELD'=>'SUB_TOTAL_HARGA','SIZE' => '6px','label'=>'SUB TOTAL HARGA','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>1,'pageSummary'=>true,'group'=>false]],	
-		['ID' =>7, 'ATTR' =>['FIELD'=>'TOTAL_HARGA','SIZE' => '6px','label'=>'TOTAL HARGA','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>1,'pageSummary'=>true,'group'=>false]],	
-		['ID' =>8, 'ATTR' =>['FIELD'=>'TYPE_PAY_NM','SIZE' => '6px','label'=>'TIPE BAYAR','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>$aryTypeTrans,'format'=>'raw','filterColspn'=>1,'pageSummary'=>false,'group'=>false]],	
-		['ID' =>9, 'ATTR' =>['FIELD'=>'BANK_NM','SIZE' => '6px','label'=>'NAMA BANK','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>1,'pageSummary'=>false,'group'=>false]],	
-		['ID' =>10, 'ATTR' =>['FIELD'=>'CONSUMER_NM','SIZE' => '6px','label'=>'CONSUMER','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>1,'pageSummary'=>false,'group'=>false]],	
-		//['ID' =>11, 'ATTR' =>['FIELD'=>'OPENCLOSE_ID','SIZE' => '6px','label'=>'BOOK.ID','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>1,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>2, 'ATTR' =>['FIELD'=>'waktu','SIZE' => '6px','label'=>'WAKTU','align'=>'center','vAlign'=>'top','mergeHeader'=>true,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>3, 'ATTR' =>['FIELD'=>'username','SIZE' => '6px','label'=>'USER','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>4, 'ATTR' =>['FIELD'=>'TOTAL_PRODUCT','SIZE' => '6px','label'=>'QTY','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>0,'pageSummary'=>true,'group'=>false]],	
+		['ID' =>5, 'ATTR' =>['FIELD'=>'PPN','SIZE' => '6px','label'=>'PPN','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>6, 'ATTR' =>['FIELD'=>'SUB_TOTAL_HARGA','SIZE' => '6px','label'=>'SUB TOTAL HARGA','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>0,'pageSummary'=>true,'group'=>false]],	
+		['ID' =>7, 'ATTR' =>['FIELD'=>'TOTAL_HARGA','SIZE' => '6px','label'=>'TOTAL HARGA','align'=>'right','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>['decimal', 2],'filterColspn'=>0,'pageSummary'=>true,'group'=>false]],	
+		['ID' =>8, 'ATTR' =>['FIELD'=>'TYPE_PAY_NM','SIZE' => '6px','label'=>'TIPE BAYAR','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>$aryTypeTrans,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>9, 'ATTR' =>['FIELD'=>'BANK_NM','SIZE' => '6px','label'=>'NAMA BANK','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		['ID' =>10, 'ATTR' =>['FIELD'=>'CONSUMER_NM','SIZE' => '6px','label'=>'CONSUMER','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
+		//['ID' =>11, 'ATTR' =>['FIELD'=>'OPENCLOSE_ID','SIZE' => '6px','label'=>'BOOK.ID','align'=>'left','vAlign'=>'middle','mergeHeader'=>false,'FILTER'=>true,'format'=>'raw','filterColspn'=>0,'pageSummary'=>false,'group'=>false]],	
 		
 	];	
 	$valFieldsDTransHeader = ArrayHelper::map($aryFieldDTransHeader, 'ID', 'ATTR'); 
@@ -117,30 +117,6 @@ $this->registerCss("
 				'style'=>'background-color:rgba(255, 255, 255, 1); align:center',
 				'colspan'=>$value[$key]['filterColspn']
 			];
-			//if($value[$key]['FIELD']=='TYPE_PAY_NM'){
-				$groupFooter=[
-					'mergeColumns'=>[[1,5]], 
-					'content'=>[             // content to show in each summary cell
-						1=>'SUB TOTAL TOKO "' . $model->storeNm .'"',
-						6=>GridView::F_SUM,
-						8=>GridView::F_SUM,
-						9=>GridView::F_SUM,
-					],
-					'contentFormats'=>[      // content html attributes for each summary cell
-						6=>['format'=>'number', 'decimals'=>2],
-						8=>['format'=>'number', 'decimals'=>2],
-						9=>['format'=>'number', 'decimals'=>2],
-					],
-					'contentOptions'=>[      // content html attributes for each summary cell
-						1=>['style'=>'text-align:left;color:#243852'],
-						6=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
-						8=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
-						9=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
-					],
-					'options'=>['class'=>'danger','style'=>'id:header-sales-trans-x1,font-weight:bold;'	]
-				];
-		
-			//};
 		}elseif($value[$key]['FIELD']=='tgl'){
 			//DATE FORMAT FILTER
 			$gvHdfilterType=GridView::FILTER_DATE;
@@ -157,7 +133,7 @@ $this->registerCss("
 			$gvHdfilterOptions=[				
 				'style'=>'background-color:rgba(255, 255, 255, 1); align:center',
 				'colspan'=>$value[$key]['filterColspn']
-			];
+			];			
 		}else{
 			$gvHdfilterType=false;
 			//$gvfilter=true;
@@ -167,8 +143,7 @@ $this->registerCss("
 				'style'=>'background-color:rgba(255, 255, 255, 1); align:center',
 				'colspan'=>$value[$key]['filterColspn']
 			];
-			$gvHdgroupFooter=false;	
-			$groupFooter='';	
+			$gvHdgroupFooter=false;			
 		}; 
 		
 		$attTransHeader[]=[		
@@ -188,36 +163,29 @@ $this->registerCss("
 				$x=$value[$key]['FIELD'];
 				return $data->$x;
 			},			
-			'groupFooter'=> $groupFooter,
-				
-				//function(){ 
-				//return '';//false;
-					// [
-					//'mergeColumns'=>[[1,5]], 
-					// 'content'=>[             // content to show in each summary cell
-						// 1=>'SUB TOTAL TOKO "' . $model->storeNm .'"',
-						// 6=>GridView::F_SUM,
-						// 8=>GridView::F_SUM,
-						// 9=>GridView::F_SUM,
-					// ],
-					// 'contentFormats'=>[      // content html attributes for each summary cell
-						// 6=>['format'=>'number', 'decimals'=>2],
-						// 8=>['format'=>'number', 'decimals'=>2],
-						// 9=>['format'=>'number', 'decimals'=>2],
-					// ],
-					// 'contentOptions'=>[      // content html attributes for each summary cell
-						// 1=>['style'=>'text-align:left;color:#243852'],
-						// 6=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
-						// 8=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
-						// 9=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
-					// ],
-					// 'options'=>[
-						// 'class'=>'danger',
-						// 'style'=>'id:header-sales-trans-x1,font-weight:bold;',
-						// 'colspan'=>5
-					// ]
-				// ];
-			//},
+			'groupFooter'=>function($model, $key, $index, $widget){ 
+				return [
+					'mergeColumns'=>[[1,5]], 
+					'content'=>[             // content to show in each summary cell
+						1=>'SUB TOTAL TOKO "' . $model->storeNm .'"',
+						6=>GridView::F_SUM,
+						8=>GridView::F_SUM,
+						9=>GridView::F_SUM,
+					],
+					'contentFormats'=>[      // content html attributes for each summary cell
+						6=>['format'=>'number', 'decimals'=>2],
+						8=>['format'=>'number', 'decimals'=>2],
+						9=>['format'=>'number', 'decimals'=>2],
+					],
+					'contentOptions'=>[      // content html attributes for each summary cell
+						1=>['style'=>'text-align:right;color:#243852'],
+						6=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
+						8=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
+						9=>['style'=>'font-variant:small-caps;text-align:right;color:white'],
+					],
+					'options'=>['class'=>'danger','style'=>'id:header-sales-trans-x1,font-weight:bold;']
+				];
+			},
 			'noWrap'=>false,	
 			'mergeHeader'=>$value[$key]['mergeHeader'],
 			'headerOptions'=>[		
@@ -260,48 +228,6 @@ $this->registerCss("
 		];	
 	};
 	
-	$attTransHeader[]=[	
-			'class'=>'kartik\grid\ExpandRowColumn',
-			'width'=>'50px',
-			'header'=>'Detail',
-			'value'=>function ($model, $key, $index, $column) {
-				return GridView::ROW_COLLAPSED;
-			},
-			'detail'=>function ($model, $key, $index, $column){
-				$paramSelf=['TransPenjualanDetailSearch'=>[
-									'ACCESS_GROUP'=>$model->ACCESS_GROUP,
-									'STORE_ID'=>$model->STORE_ID,
-									'TRANS_ID'=>$model->TRANS_ID,
-									'TRANS_DATE'=>$model->TRANS_DATE
-								]
-							];
-				$searchModelDetail = new TransPenjualanDetailSearch();
-				$dataProviderDetail = $searchModelDetail->search($paramSelf);				
-				
-				// return Yii::$app->controller->renderPartial('_indexDetail',[
-					// 'searchModelDetail'=>$searchModelDetail,
-					// 'dataProviderDetail'=>$dataProviderDetail
-				// ]); 
-			},
-			'headerOptions'=>[
-				'style'=>[
-					'text-align'=>'center',
-					'width'=>'10px',
-					'font-family'=>'verdana, arial, sans-serif',
-					'font-size'=>'9pt',
-					'background-color'=>$bColor,
-					'color'=>'white',
-				]
-			],
-			'contentOptions'=>[
-				'style'=>[
-					'text-align'=>'center',
-					'width'=>'10px',
-					'font-family'=>'tahoma, arial, sans-serif',
-					'font-size'=>'9pt',
-				]
-			],			
-	];
 /* ==================================
  * GridViews Body
  *
