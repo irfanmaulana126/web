@@ -40,7 +40,7 @@ echo $this->render('modal_item'); //echo difinition
 	$bColor='rgba(87,114,111, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span> Outlet ['.$dataProvider->getModels()[0]['OUTLET_CODE'].']
+				</span> Outlet ['.$dataProvider->getModels()[0]['STORE_ID'].']
 	';
 	
 	$gvAttributeItem=[
@@ -54,7 +54,7 @@ echo $this->render('modal_item'); //echo difinition
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'ITEM_ID',
+			'attribute'=>'STORE_NM',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
 			'hAlign'=>'right',
@@ -68,7 +68,7 @@ echo $this->render('modal_item'); //echo difinition
 		],		
 		//ITEM NAME
 		[
-			'attribute'=>'ITEM_NM',
+			'attribute'=>'STORE_NM',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -83,7 +83,7 @@ echo $this->render('modal_item'); //echo difinition
 		],		
 		//SATUAN
 		[
-			'attribute'=>'SATUAN',
+			'attribute'=>'STORE_NM',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),

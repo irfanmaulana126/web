@@ -5,7 +5,7 @@ namespace frontend\backend\hris\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Karyawan;
+use frontend\backend\hris\models\Karyawan;
 
 /**
  * KaryawanSearch represents the model behind the search form about `frontend\models\Karyawan`.
