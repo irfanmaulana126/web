@@ -79,4 +79,17 @@ class ArrayBantuan extends Component{
 		// };
 		// return $rslt;
 	}
+	
+	//Yii::$app->arrayBantuan->strJson($strJson)
+	public function strJson($json){
+		$json = preg_replace('~(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|([\s\t]//.*)|(^//.*)~', '', $json);
+    	//	trailing commas
+    	$json=preg_replace('~,\s*([\]}])~mui', '$1', $json);
+    	//	empty cells
+    	$json = preg_replace('~(.+?:)(\s*)?([\]},])~mui', '$1null$3', $json);
+    	// $json = preg_replace('~.+?({.+}).+~', '$1', $json);
+    	//	codes	//	@TODO: add \x
+    	$json = str_replace(["\n","\r","\t","\0"], '', $json);
+		return $json;
+	}
 }
