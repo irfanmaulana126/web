@@ -102,7 +102,7 @@ class Userlogin extends \yii\db\ActiveRecord
 				return $model->UUID;
 			},	
 			'IMG64'=>function(){
-				return $this->userImageTbl!=''?$this->userImageTbl->ACCESS_IMAGE:$this->noimage;
+				return $this->userImageTbl!=''?substr($this->userImageTbl->ACCESS_IMAGE,34):$this->noimage;
 			},	
 			'PROFILE_NM'=>function(){
 				$nm=$this->userProfilTbl->NM_DEPAN.' '.$this->userProfilTbl->NM_TENGAH;
