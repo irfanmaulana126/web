@@ -1,10 +1,10 @@
 <?php
 
-namespace frontend\controllers;
+namespace frontend\backend\hris\controllers;
 
 use Yii;
-use frontend\models\Karyawan;
-use frontend\models\KaryawanSearch;
+use frontend\backend\hris\models\Karyawan;
+use frontend\backend\hris\models\KaryawanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

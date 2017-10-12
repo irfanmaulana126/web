@@ -3,14 +3,14 @@
 namespace frontend\backend\payment\controllers;
 
 use Yii;
-use frontend\backend\payment\models\Item;
-use frontend\backend\payment\models\ItemSearch;
+use frontend\backend\payment\models\StorePayment;
+use frontend\backend\payment\models\StorePaymentSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ItemController implements the CRUD actions for Item model.
+ * StorePaymentController implements the CRUD actions for StorePayment model.
  */
 class StatusController extends Controller
 {
@@ -30,12 +30,12 @@ class StatusController extends Controller
     }
 
     /**
-     * Lists all Item models.
+     * Lists all StorePayment models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ItemSearch();
+        $searchModel = new StorePaymentSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Displays a single Item model.
+     * Displays a single StorePayment model.
      * @param string $id
      * @return mixed
      */
@@ -57,13 +57,13 @@ class StatusController extends Controller
     }
 
     /**
-     * Creates a new Item model.
+     * Creates a new StorePayment model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Item();
+        $model = new StorePayment();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->ID]);
@@ -75,7 +75,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Updates an existing Item model.
+     * Updates an existing StorePayment model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -94,7 +94,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Deletes an existing Item model.
+     * Deletes an existing StorePayment model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -107,15 +107,15 @@ class StatusController extends Controller
     }
 
     /**
-     * Finds the Item model based on its primary key value.
+     * Finds the StorePayment model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Item the loaded model
+     * @return StorePayment the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Item::findOne($id)) !== null) {
+        if (($model = StorePayment::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

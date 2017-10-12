@@ -8,7 +8,7 @@ use yii\data\ActiveDataProvider;
 use frontend\backend\payment\models\StorePayment;
 
 /**
- * StorePaymentSearch represents the model behind the search form about `frontend\backend\payment\models\StorePayment`.
+ * StorePaymentSearch represents the model behind the search form of `frontend\backend\payment\models\StorePayment`.
  */
 class StorePaymentSearch extends StorePayment
 {
@@ -19,7 +19,7 @@ class StorePaymentSearch extends StorePayment
     {
         return [
             [['ID', 'STATUS', 'STORE_STATUS', 'FAKTURE_TEMPO', 'PAY_DURATION_ACTIVE', 'PAY_DURATION_BONUS'], 'integer'],
-            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ACCESS_ID', 'STORE_ID', 'STORE_NM', 'FAKTURE', 'FAKTURE_DATE', 'PAY_PAKAGE', 'PAY_DATE'], 'safe'],
+            [['CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'ACCESS_UNIX', 'OUTLET_CODE', 'OUTLET_NM', 'FAKTURE', 'FAKTURE_DATE', 'PAY_PAKAGE', 'PAY_DATE'], 'safe'],
             [['PAY_TOTAL'], 'number'],
         ];
     }
@@ -76,9 +76,9 @@ class StorePaymentSearch extends StorePayment
 
         $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'ACCESS_ID', $this->ACCESS_ID])
-            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
-            ->andFilterWhere(['like', 'STORE_NM', $this->STORE_NM])
+            ->andFilterWhere(['like', 'ACCESS_UNIX', $this->ACCESS_UNIX])
+            ->andFilterWhere(['like', 'OUTLET_CODE', $this->OUTLET_CODE])
+            ->andFilterWhere(['like', 'OUTLET_NM', $this->OUTLET_NM])
             ->andFilterWhere(['like', 'FAKTURE', $this->FAKTURE]);
 
         return $dataProvider;
