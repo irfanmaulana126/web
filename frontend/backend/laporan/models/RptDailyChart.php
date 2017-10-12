@@ -38,10 +38,10 @@ class RptDailyChart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Val_Cnt'], 'integer'],
+            [['Val_Cnt'], 'safe'],
             [['Val_Json'], 'string'],
             [['UPDT'], 'safe'],
-            [['Val_Nm'], 'string', 'max' => 100],
+            [['Val_Nm'],'safe'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
         ];
     }
