@@ -18,8 +18,9 @@ class RptDailyChartSearch extends RptDailyChart
     public function rules()
     {
         return [
-            [['Id', 'Val_Cnt'], 'integer'],
-            [['Val_Nm', 'Val_Json', 'ACCESS_GROUP', 'UPDT'], 'safe'],
+            [['Id'], 'integer'],
+			[['Val_Cnt','Val_Nm'], 'safe'],
+            [['Val_Json', 'ACCESS_GROUP', 'UPDT'], 'safe'],
         ];
     }
 
