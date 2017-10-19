@@ -277,7 +277,7 @@ $this->registerJs("
 						<div class="col-lg-9 text-left .small">
 							<dl>
 								<dt class="jumlah-toko-aktif" style="font-size:18px;color:#7e7e7e;float:left;padding-right:10px"><?=$model[4]->Val_Cnt?></dt> 
-								<div style="font-size:18px;color:#7e7e7e;"> of <?=$model[3]->Val_Cnt?></div>
+								<div style="font-size:18px;color:#7e7e7e;font-weight: bold;"> of <?=(int)$model[3]->Val_Cnt?></div>
 								<dd style="font-size:10px;color:#7e7e7e">JUMLAH TOKO</dd>
 							</dl>
 							

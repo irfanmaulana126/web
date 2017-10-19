@@ -1,7 +1,5 @@
 <?php
-
 namespace frontend\backend\dashboard\controllers;
-
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -14,7 +12,6 @@ use yii\filters\ContentNegotiator;
 use yii\web\Response;
 use frontend\backend\laporan\models\RptDailyChart;
 use frontend\backend\laporan\models\RptDailyChartSearch;
-
 /**
  * FoodtownController implements the CRUD actions for Foodtown model.
  */
@@ -56,6 +53,7 @@ class DataController extends Controller
     public function actionDailyTransaksi()
     {
 	   $model=RptDailyChart::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user(),'Val_Nm'=>'TRANSAKSI_HARIAN'])->one();
+	   // $model=RptDailyChart::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user(),'Val_Nm'=>'test'])->one();
        $data['chart']='
 		"chart":{"caption": " HARIAN TRANSAKSI ",
 				"subCaption": "'.$model->UPDT.'",
@@ -78,7 +76,7 @@ class DataController extends Controller
 				"vDivLineDashed": "0",
 				"numVDivLines": "6",
 				"vDivLineThickness": "1",
-				"xAxisName": "Hour",
+				"xAxisName": "24 Hour",
 				"yAxisName": "Jumlah Transaction",
 				"anchorradius": "3",
 				"plotHighlightEffect": "fadeout|color=#f6f5fd, alpha=60",
@@ -103,6 +101,21 @@ class DataController extends Controller
 			"categories":[
 				{
 					"category":[
+						{
+							"label": "01"
+						},
+						{
+							"label": "02"
+						},
+						{
+							"label": "03"
+						},
+						{
+							"label": "04"
+						},
+						{
+							"label": "05"
+						},
 						{
 							"label": "06"
 						},
@@ -159,21 +172,6 @@ class DataController extends Controller
 						},
 						{
 							"label": "24"
-						},
-						{
-							"label": "01"
-						},
-						{
-							"label": "02"
-						},
-						{
-							"label": "03"
-						},
-						{
-							"label": "04"
-						},
-						{
-							"label": "05"
 						}						
 					]
 				}
@@ -236,7 +234,6 @@ class DataController extends Controller
 					FROM so_t2 x2 
 					LEFT JOIN b0001 x4 on x4.KD_BARANG=x2.KD_BARANG
 					WHERE x2.SO_TYPE=3 #AND (x2.TGL) IN ('2017-01-21','2016-03-20','2016-08-31','2016-10-22','2016-11-19','2016-12-24')
-
 					GROUP BY MONTH(x2.TGL) #x2.TGL
 					ORDER BY x2.TGL
 			")->queryAll(), 
