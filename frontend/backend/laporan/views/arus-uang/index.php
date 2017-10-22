@@ -28,11 +28,12 @@ $this->registerCss("
 		'columns' => [
 			[	
 				'attribute'=>'BULAN_NM',
+				'label'=>'Bulan',	
 				'noWrap'=>false,	
 				'headerOptions'=>[		
 						'style'=>[									
 						'text-align'=>'center',
-						'width'=>'100px',
+						'width'=>'80px',
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'8pt'
 					]
@@ -52,7 +53,81 @@ $this->registerCss("
 				'headerOptions'=>[		
 						'style'=>[									
 						'text-align'=>'center',
-						'width'=>'100px',
+						'width'=>'80px',
+						'font-family'=>'tahoma, arial, sans-serif',
+						'font-size'=>'8pt'
+					]
+				],  
+				'contentOptions'=>[
+					'style'=>[
+						'text-align'=>'right',
+						'font-family'=>'tahoma, arial, sans-serif',
+						'font-size'=>'8pt',						
+					]
+				],
+				'format'=>['decimal', 2],
+				'pageSummaryFunc'=>GridView::F_SUM,
+				'pageSummary'=>true,
+				'pageSummaryOptions' => [
+					'style'=>[
+						'text-align'=>'right',		
+						//'width'=>'12px',
+						'font-family'=>'tahoma',
+						'font-size'=>'8pt',	
+						'text-decoration'=>'underline',
+						'font-weight'=>'bold',
+						'border-left-color'=>'transparant',		
+						'border-left'=>'0px',
+						//'background-color'=>'rgba(76, 22, 11, 0.36)',
+						//'color'=>'white',
+					]
+				],	
+			],
+			[
+				'attribute'=>'PENJUALAN_TUNAI',
+				'label'=>'Penjualan Tunai',				
+				'noWrap'=>false,	
+				'headerOptions'=>[		
+						'style'=>[									
+						'text-align'=>'center',
+						'width'=>'80px',
+						'font-family'=>'tahoma, arial, sans-serif',
+						'font-size'=>'8pt'
+					]
+				],  
+				'contentOptions'=>[
+					'style'=>[
+						'text-align'=>'right',
+						'font-family'=>'tahoma, arial, sans-serif',
+						'font-size'=>'8pt',						
+					]
+				],
+				'format'=>['decimal', 2],
+				'pageSummaryFunc'=>GridView::F_SUM,
+				'pageSummary'=>true,
+				'pageSummaryOptions' => [
+					'style'=>[
+						'text-align'=>'right',		
+						//'width'=>'12px',
+						'font-family'=>'tahoma',
+						'font-size'=>'8pt',	
+						'text-decoration'=>'underline',
+						'font-weight'=>'bold',
+						'border-left-color'=>'transparant',		
+						'border-left'=>'0px',
+						//'background-color'=>'rgba(76, 22, 11, 0.36)',
+						//'color'=>'white',
+					]
+				],	
+			],
+			[
+				'attribute'=>'PENJUALAN_EDC',
+				'label'=>'Penjualan EDC',				
+				'noWrap'=>false,	
+				'headerOptions'=>[		
+						'style'=>[									
+						'text-align'=>'center',
+						'width'=>'80px',
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'8pt'
 					]
