@@ -407,7 +407,7 @@ $this->registerCss("
 						'font-family'=>'tahoma',
 						'font-size'=>'8pt',	
 						'text-decoration'=>'underline',
-						'font-weight'=>'bold',
+						'fon	t-weight'=>'bold',
 						'border-left-color'=>'transparant',		
 						'border-left'=>'0px',
 						//'background-color'=>'rgba(76, 22, 11, 0.36)',
@@ -484,6 +484,11 @@ $this->registerCss("
 	]); 
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
+		<div style="height:40px;text-align:center;font-family: tahoma ;font-size: 10pt;">	
+				RINGKASAN ARUS KEUANGAN				
+		</div>
+	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">	
 			<div class="col-xs-12 col-sm-5 col-lg-5" style="font-family: tahoma ;font-size: 8pt;">
