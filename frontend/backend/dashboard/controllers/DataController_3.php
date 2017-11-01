@@ -311,7 +311,7 @@ class DataController extends Controller
 		
 		$model=RptDailyChart::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user(),'Val_Nm'=>'TRANSAKSI_BULANAN'])->one();
 		$modelMonthly= TransPenjualanHeaderSummaryMonthly::find()
-		->select('STORE_NM,STORE_ID,TAHUN,
+		->select('STORE_ID,TAHUN,
 			SUM(CASE WHEN BULAN=1 THEN TOTAL_SALES ELSE 0 END) AS BLN1,
 			SUM(CASE WHEN BULAN=2 THEN TOTAL_SALES ELSE 0 END) AS BLN2,
 			SUM(CASE WHEN BULAN=3 THEN TOTAL_SALES ELSE 0 END) AS BLN3,
@@ -323,31 +323,20 @@ class DataController extends Controller
 			SUM(CASE WHEN BULAN=9 THEN TOTAL_SALES ELSE 0 END) AS BLN9,
 			SUM(CASE WHEN BULAN=10 THEN TOTAL_SALES ELSE 0 END) AS BLN10,
 			SUM(CASE WHEN BULAN=11 THEN TOTAL_SALES ELSE 0 END) AS BLN11,
-			SUM(CASE WHEN BULAN=12 THEN TOTAL_SALES ELSE 0 END) AS BLN12,
-			UPDATE_AT
+			SUM(CASE WHEN BULAN=12 THEN TOTAL_SALES ELSE 0 END) AS BLN12
 			')
 		->where(['TAHUN'=>date("Y"),'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->groupBy('STORE_ID')
 		->orderBy(['STORE_ID'=>SORT_ASC])
 		->all();	
-		foreach($modelMonthly as $row1 => $val1){
-			$rsltMonth[]=$val1['BLN10'];
-			$dataval1='';
-			for( $i= 1 ; $i <= 12 ; $i++ ) {
-				$dataval1[]=['label'=>$i,'value'=>$val1['BLN'.$i]];
-			}
-			$rslt1['seriesname']=$val1['STORE_NM'];
-			$rslt1['data']=$dataval1;	
-			$rsltDataSet1[]=$rslt1;	
-			$tglWaktu=$val1['UPDATE_AT'];
+		foreach($modelMonthly as $row => $val){
+			$rslt[]=$val['BLN10'];
 		}
-		
-		
-		// print_r($rsltDataSet1);
-		// die();
+		print_r($rslt);
+		die();
 		$data['chart']='
 			"chart": {
 				"caption": "RINGKASAN PENJUALAN BULANAN",
-				"subCaption": "TAHUN '.date("Y",strtotime($tglWaktu)).'",
+				"subCaption": "TAHUN '.date("Y",strtotime($modelMonthly->TAHUN)).'",
 				"captionFontSize": "12",
 				"subcaptionFontSize": "10",
 				"subcaptionFontBold": "0",
@@ -387,7 +376,7 @@ class DataController extends Controller
 				"showHoverEffect":"1",
 				"animation": "1" ,
 				"exportEnabled": "1",
-				"exportFileName":"RINGKASAN-BULANAN",
+				"exportFileName":"SALES-PO",
 				"exportAtClientSide":"1",
 				"showValues":"1"				
 			}
@@ -450,11 +439,11 @@ class DataController extends Controller
 			]				
 		'; 
 		
-		$dataset1='"dataset":'.json::encode($rsltDataSet1);
+		
 		
 		// return json::decode("{".$data['chart'].','.$data['categories'].','.$data['dataset']."}");
-		//$rsltDataSet='"dataset":'.Yii::$app->arrayBantuan->strJson($model->Val_Json);
-		return json::decode("{".$data['chart'].','.$data['categories'].','.$dataset1."}");
+		$rsltDataSet='"dataset":'.Yii::$app->arrayBantuan->strJson($model->Val_Json);
+		return json::decode("{".$data['chart'].','.$data['categories'].','.$rsltDataSet."}");
 		// return $model;
 	}	
 	

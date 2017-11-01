@@ -20,7 +20,9 @@ use frontend\backend\laporan\models\RptDailyChartSearch;
 		
 		// $searchModelDaily = new TransPenjualanHeaderSummaryDailySearch();
         // $dataProviderDaily = $searchModelDaily->search(['TGL'=>'2017-11-01']);
-		$modelDaily= TransPenjualanHeaderSummaryDaily::find()->where(['TGL'=>'2017-10-19'])->one();
+		$modelDaily= TransPenjualanHeaderSummaryDaily::find()
+		->select('SUM(TOTAL_SALES) AS TOTAL_SALES,SUM(JUMLAH_TRANSAKSI) AS JUMLAH_TRANSAKSI,SUM(TOTAL_PRODUCT) AS TOTAL_PRODUCT')
+		->where(['TGL'=>date("Y-m-d"),'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->groupBy('ACCESS_GROUP')->one();
 		// $modelDaily=$dataProviderDaily->getModels();
 		// print_r($modelDaily);
 		// die();
@@ -143,7 +145,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format($modelDaily->TOTAL_SALES/$modelDaily->JUMLAH_TRANSAKSI)."');	//RATA_RATA_PENJUALAN
+				$(this).text('".number_format($modelDaily->TOTAL_SALES)."');	//RATA_RATA_PENJUALAN
 			}
 		});
 	});
