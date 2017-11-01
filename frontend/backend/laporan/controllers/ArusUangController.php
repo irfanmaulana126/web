@@ -42,6 +42,7 @@ class ArusUangController extends Controller
     {
 		
 		$paramCari=Yii::$app->getRequest()->getQueryParam('id');
+		$paramBln=Yii::$app->getRequest()->getQueryParam('bln');
 		if ($paramCari!=''){
 			$cari=['thn'=>$paramCari];			
 		}else{
@@ -51,7 +52,7 @@ class ArusUangController extends Controller
 		/*==========================
 		* ARUS KAS MASUK & KELUAR
 		*===========================*/
-        $searchModel = new TransPenjualanHeaderSummaryMonthlySearch($cari);
+        $searchModel = new TransPenjualanHeaderSummaryMonthlySearch(['thn'=>$cari['thn'],'BULAN'=>$paramBln]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		//Kas-Keluar		
 		$searchModelKeluar = new TransPengeluaranSummaryMonthlySearch();
@@ -61,7 +62,8 @@ class ArusUangController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderKeluar' => $dataProviderKeluar,
-			'cari'=>$cari
+			'cari'=>$cari,
+			'paramBln'=>$paramBln
         ]);
     }	
 }

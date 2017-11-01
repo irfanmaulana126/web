@@ -13,6 +13,7 @@ use yii\web\View;
 
 $this->title = 'Trans Penjualan Header Summary Monthlies';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <?php
 $this->registerCss("
@@ -206,6 +207,15 @@ $this->registerJs("
 		['ID' =>1, 'ATTR' =>['FIELD'=>'BULAN','SIZE' => '80px','label'=>'BULAN','align'=>'center','mergeHeader'=>false,'FILTER'=>false,'format'=>'raw','pageSummary'=>false]],
 		['ID' =>2, 'ATTR' =>['FIELD'=>'storeNm','SIZE' => '80px','label'=>'STORE','align'=>'left','mergeHeader'=>false,'FILTER'=>false,'format'=>'raw','pageSummary'=>false]],		
 		['ID' =>3, 'ATTR' =>['FIELD'=>'totalPengeluaran','SIZE' => '80px','label'=>'Pengeluaran','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
+		['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_1','SIZE' => '80px','label'=>'Langanan','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
+		['ID' =>5, 'ATTR' =>['FIELD'=>'TTL_2','SIZE' => '80px','label'=>'Deposit','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
+		['ID' =>6, 'ATTR' =>['FIELD'=>'TTL_3','SIZE' => '80px','label'=>'Modal.Kasir','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
+		['ID' =>7, 'ATTR' =>['FIELD'=>'TTL_4','SIZE' => '80px','label'=>'Payroll','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
+		['ID' =>8, 'ATTR' =>['FIELD'=>'TTL_5','SIZE' => '80px','label'=>'Pembelian ','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
+		['ID' =>9, 'ATTR' =>['FIELD'=>'TTL_6','SIZE' => '80px','label'=>'Ops.Listrik','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
+		['ID' =>10, 'ATTR' =>['FIELD'=>'TTL_7','SIZE' => '80px','label'=>'Ops.Air','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
+		['ID' =>11, 'ATTR' =>['FIELD'=>'TTL_8','SIZE' => '80px','label'=>'Ops.Transport','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
+		['ID' =>12, 'ATTR' =>['FIELD'=>'TTL_9','SIZE' => '80px','label'=>'Lain.Lain','align'=>'right','mergeHeader'=>false,'FILTER'=>false,'format'=>['decimal', 2],'pageSummary'=>true]],		
 	];	
 	$valFieldsKeluar = ArrayHelper::map($aryFieldKeluar, 'ID', 'ATTR'); 
 	
@@ -279,8 +289,8 @@ $this->registerJs("
 			'0'=>[					
 				'columns'=>[
 					['content'=>'DATA INFO','options'=>['colspan'=>3,'class'=>'text-center info','style'=>'font-family: tahoma ;font-size: 6pt;']],
-					['content'=>'TOTAL','options'=>['colspan'=>5,'class'=>'text-center success','style'=>'font-family: tahoma ;font-size: 6pt;']],
-					//['content'=>'JUMLAH','options'=>['colspan'=>6,'class'=>'text-center danger','style'=>'font-family: tahoma ;font-size: 6pt;']],
+					['content'=>'TOTAL','options'=>['colspan'=>1,'class'=>'text-center success','style'=>'font-family: tahoma ;font-size: 6pt;']],
+					['content'=>'DETAIl PENGELUARAN','options'=>['colspan'=>10,'class'=>'text-center danger','style'=>'font-family: tahoma ;font-size: 6pt;']],
 								
 				],					
 			],								
@@ -309,6 +319,26 @@ $this->registerJs("
 		'striped'=>false,
 		'showPageSummary' => true,
 	]);  
+	
+	
+	function tombolBack(){
+		$title = Yii::t('app', 'Back');
+		$url =  Url::toRoute(['/laporan/arus-uang']);
+		$options = ['id'=>'laporan-lv1-back',
+				  'data-pjax' => 0,
+				  //'class'=>"btn btn-info btn-xs",
+				 // 'style'=>'margin-left:50px'
+				];
+		$icon = '
+				<span class="fa-stack fa-sm text-left">
+				  <i class="fa fa-circle fa-stack-2x" style="color:#ffffff"></i>
+				  <i class="fa fa-mail-reply fa-stack-1x" style="color:#CA0605"></i>
+				</span>		
+		';
+		$label = $icon . ' ' . $title;
+		return $content = Html::a($label,$url,$options);
+	}
+	
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
@@ -318,13 +348,14 @@ $this->registerJs("
 					$model=$dataProvider->getModels();				
 					echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$model[0]['BULAN'].' '.$cari['thn'].'</b>';				
 				?>	
-				<?=$btn_srchBulan?>						
+									
 			</div>
 			
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">	
+			<?php echo tombolBack().' '.$btn_srchBulan?>
 			<?=$arusMasukBulanan?>				
 			<?=$arusKeluarBulanan?>						
 		</div>
