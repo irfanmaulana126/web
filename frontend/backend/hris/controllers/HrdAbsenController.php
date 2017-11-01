@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use frontend\backend\hris\models\AbsensiSearch;
 /**
  * HrdAbsenController implements the CRUD actions for HrdAbsen model.
  */
@@ -35,7 +36,10 @@ class HrdAbsenController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new HrdAbsenSearch();
+        // $searchModel = new HrdAbsenSearch();
+        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		
+		$searchModel = new AbsensiSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

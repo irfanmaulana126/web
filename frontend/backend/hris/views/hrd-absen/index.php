@@ -24,11 +24,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'ID',
-            'ABSEN_ID',
-            'OFLINE_ID',
-            'ACCESS_GROUP',
-            'STORE_ID',
+            // 'BULAN',
+            // 'ACCESS_GROUP',
+            // 'STORE_ID',
+            'KARYAWAN_ID',
+            'KARYAWAN',
+            'TGL',
+            'MASUK',
+            'KELUAR',
+            'LONGITUDE',
+            'LATITUDE',
             // 'KARYAWAN_ID',
             // 'TGL',
             // 'WAKTU',
@@ -42,7 +47,17 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'DCRP_DETIL:ntext',
             // 'YEAR_AT',
             // 'MONTH_AT',
-
+// public $TAHUN;
+	// public $BULAN;
+	// public $ACCESS_GROUP;
+	// public $STORE_ID;
+	// public $KARYAWAN_ID;
+	// public $KARYAWAN;
+	// public $TGL;
+	// public $MASUK;
+	// public $KELUAR;
+	// public $LONGITUDE;
+	// public $LATITUDE;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
