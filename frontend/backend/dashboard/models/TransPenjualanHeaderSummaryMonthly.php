@@ -3,16 +3,15 @@
 namespace frontend\backend\dashboard\models;
 
 use Yii;
-
+use common\models\Store;
 /**
- * This is the model class for table "trans_penjualan_header_summary_daily".
+ * This is the model class for table "trans_penjualan_header_summary_monthly".
  *
  * @property string $ID
  * @property string $ACCESS_GROUP
  * @property string $STORE_ID
  * @property string $TAHUN
  * @property integer $BULAN
- * @property string $TGL
  * @property string $TOTAL_HPP
  * @property string $TOTAL_SALES
  * @property integer $TOTAL_PRODUCT
@@ -33,14 +32,15 @@ use Yii;
  * @property string $UPDATE_AT
  * @property string $KETERANGAN
  */
-class TransPenjualanHeaderSummaryDaily extends \yii\db\ActiveRecord
+class TransPenjualanHeaderSummaryMonthly extends \yii\db\ActiveRecord
 {
+	public $BLN1,$BLN2,$BLN3,$BLN4,$BLN5,$BLN6,$BLN7,$BLN8,$BLN9,$BLN10,$BLN11,$BLN12;
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'trans_penjualan_header_summary_daily';
+        return 'trans_penjualan_header_summary_monthly';
     }
 
     /**
@@ -51,6 +51,10 @@ class TransPenjualanHeaderSummaryDaily extends \yii\db\ActiveRecord
         return Yii::$app->get('production_api');
     }
 
+	public function attributes()
+	{
+		return array_merge(parent::attributes(), ['storeNm']);
+	}
     /**
      * @inheritdoc
      */
@@ -58,8 +62,8 @@ class TransPenjualanHeaderSummaryDaily extends \yii\db\ActiveRecord
     {
         return [
             [['BULAN', 'TOTAL_PRODUCT', 'JUMLAH_TRANSAKSI', 'CNT_TUNAI', 'CNT_DEBET', 'CNT_KREDIT', 'CNT_EMONEY', 'CNT_BCA', 'CNT_MANDIRI', 'CNT_BNI', 'CNT_BRI'], 'integer'],
-            [['TGL', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['TOTAL_HPP', 'TOTAL_SALES', 'TTL_TUNAI', 'TTL_DEBET', 'TTL_KREDIT', 'TTL_EMONEY'], 'number'],
+            [['CREATE_AT', 'UPDATE_AT','storeNm'], 'safe'],
             [['KETERANGAN'], 'string'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 20],
@@ -78,7 +82,6 @@ class TransPenjualanHeaderSummaryDaily extends \yii\db\ActiveRecord
             'STORE_ID' => 'Store  ID',
             'TAHUN' => 'Tahun',
             'BULAN' => 'Bulan',
-            'TGL' => 'Tgl',
             'TOTAL_HPP' => 'Total  Hpp',
             'TOTAL_SALES' => 'Total  Sales',
             'TOTAL_PRODUCT' => 'Total  Product',
@@ -100,4 +103,36 @@ class TransPenjualanHeaderSummaryDaily extends \yii\db\ActiveRecord
             'KETERANGAN' => 'Keterangan',
         ];
     }
+	public function fields()
+	{
+		return [		
+			'TAHUN'=>function($model){
+				return $model->TAHUN;
+			},
+			'BULAN'=>function($model){
+				return $model->BULAN;
+			},
+			'TGL'=>function($model){
+				return $model->TGL;
+			},
+			'STORE_NM'=>function($model){
+				return $this->storeNm;
+			},
+			'TOTAL_SALES'=>function($model){
+				return $model->TOTAL_SALES;
+			}			
+		];
+	}
+	
+	public function getStoreTbl(){
+		return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
+	}	
+	public function getStoreNm(){
+		$rslt = $this->storeTbl['STORE_NM'];
+		if ($rslt){
+			return $rslt;
+		}else{
+			return "none";
+		}; 
+	}
 }
