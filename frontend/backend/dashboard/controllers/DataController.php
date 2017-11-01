@@ -91,7 +91,6 @@ class DataController extends Controller
 				"ValuePadding": "0",
 				"yAxisValuesStep": "1",
 				"xAxisValuesStep": "0",
-				"yAxisMaxvalue": "200",
 				"yAxisMinValue": "0",
 				"numDivLines": "10",
 				"xAxisNamePadding": "30",
