@@ -54,6 +54,20 @@ echo $this->render('modal_item'); //echo difinition
 		],
 		//PRODUCT_ID
 		[
+			'attribute'=>'storeNm',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'group'=>true,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
+			
+		],		//PRODUCT_ID
+		[
 			'attribute'=>'NAMA_DPN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -68,7 +82,7 @@ echo $this->render('modal_item'); //echo difinition
 		],		
 		//ITEM NAME
 		[
-			'attribute'=>'NAMA_DPN',
+			'attribute'=>'NAMA_TGH',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -83,7 +97,36 @@ echo $this->render('modal_item'); //echo difinition
 		],		
 		//SATUAN
 		[
-			'attribute'=>'NAMA_DPN',
+			'attribute'=>'NAMA_BLK',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
+			
+		],
+		//SATUAN
+		[
+			'attribute'=>'KTP',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
+			
+		],//SATUAN
+		[
+			'attribute'=>'GENDER',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),

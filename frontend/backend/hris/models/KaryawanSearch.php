@@ -12,6 +12,10 @@ use frontend\backend\hris\models\Karyawan;
  */
 class KaryawanSearch extends Karyawan
 {
+	public function attributes()
+	{
+		return array_merge(parent::attributes(), ['storeNm']);
+	}
     /**
      * @inheritdoc
      */
@@ -19,7 +23,7 @@ class KaryawanSearch extends Karyawan
     {
         return [
             [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'KARYAWAN_ID', 'NAMA_DPN', 'NAMA_TGH', 'NAMA_BLK', 'KTP', 'TMP_LAHIR', 'TGL_LAHIR', 'GENDER', 'ALAMAT', 'STS_NIKAH', 'TLP', 'HP', 'EMAIL', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
+            [['ACCESS_GROUP', 'STORE_ID', 'KARYAWAN_ID', 'NAMA_DPN', 'NAMA_TGH', 'NAMA_BLK', 'KTP', 'TMP_LAHIR', 'TGL_LAHIR', 'GENDER', 'ALAMAT', 'STS_NIKAH', 'TLP', 'HP', 'EMAIL', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL','storeNm'], 'safe'],
         ];
     }
 
@@ -85,7 +89,7 @@ class KaryawanSearch extends Karyawan
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
-
+		$query->orderBy(['STORE_ID'=>sort_asc]);
         return $dataProvider;
     }
 }
