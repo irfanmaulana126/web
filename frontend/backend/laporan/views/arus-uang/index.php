@@ -2,6 +2,10 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use yii\helpers\Url;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\TransPenjualanHeaderSummaryMonthlySearch */
@@ -20,6 +24,52 @@ $this->registerCss("
 		height:452px
 	}
 ");
+
+$this->registerJs("
+	 // var x = document.getElementById('tahun').value;
+	 // console.log(x);
+	 document.getElementById('tahun').onchange = function() { 
+		var x = document.getElementById('tahun').value;
+			$.pjax.reload({
+				url:'/laporan/arus-uang/index?id='+x, 
+				container: '#arus-masuk-monthofyear',
+				timeout: 1000,
+			}).done(function () {
+				$.pjax.reload({container: '#arus-keluar-monthofyear'});
+			});
+		
+		console.log('Changed!'+x); 
+	 }
+",View::POS_READY);
+
+	$aryHari= [
+	  ['ID' => 2017, 'HARI' => '2017'],		  
+	  ['ID' => 2018, 'HARI' => '2018'],
+	  ['ID' => 2019, 'HARI' => '2019'],
+	  ['ID' => 2020, 'HARI' => '2020'],
+	  ['ID' => 2021, 'HARI' => '2021'],
+	  ['ID' => 2022, 'HARI' => '2022'],
+	  ['ID' => 2023, 'HARI' => '2023']
+	];	
+	$valHari = ArrayHelper::map($aryHari, 'ID', 'HARI');
+	
+	// Multiple select without model
+	$btn_srchChart1=Select2::widget([
+			'name' => 'state_2',
+			//'value' => '',
+			'size' => Select2::SMALL,
+			'data' => $valHari,
+			'hideSearch' => false,
+			'theme' => Select2::THEME_KRAJEE,//THEME_DEFAULT,//THEME_CLASSIC,//THEME_BOOTSTRAP,//THEME_KRAJEE,
+			'pluginOptions' => [
+				'allowClear' => true
+			],
+			'options' => [
+				'id'=>'tahun',
+				'multiple' => false, 'placeholder'=>'pilih tahun...'
+			]
+		]);
+	$btn_srchChart="<div style='padding-bottom:3px;float:right'> Periode Tahun".$btn_srchChart1."</div>";
 	
 	$arusMasuk= GridView::widget([
 		'id'=>'arus-masuk-monthofyear',
@@ -48,7 +98,7 @@ $this->registerCss("
 			],
 			[
 				'attribute'=>'TOTAL_SALES',
-				'label'=>'Total Penjualan',				
+				'label'=>'Total.Penjualan',				
 				'noWrap'=>false,	
 				'headerOptions'=>[		
 						'style'=>[									
@@ -161,6 +211,13 @@ $this->registerCss("
 				'class' => 'kartik\grid\ActionColumn',
 				'template' => '{view}',
 				'header'=>'Rincian',
+				'buttons' => [
+				'view' => function ($url, $model) {
+						return Html::a('<span class="glyphicon glyphicon-info-sign"></span>', '/laporan/arus-uang/detail-lev1?id=2018', [
+									'title' => Yii::t('app', 'Detail'),
+						]);
+					}
+				],
 							
 			]
 		],
@@ -343,7 +400,7 @@ $this->registerCss("
 			],
 			[
 				'attribute'=>'PAYROLL',
-				'label'=>'Pengajian',				
+				'label'=>'Penggajian',				
 				'noWrap'=>false,	
 				'headerOptions'=>[		
 						'style'=>[									
@@ -417,7 +474,7 @@ $this->registerCss("
 			],
 			[
 				'attribute'=>'LAIN_LAIN',
-				'label'=>'Lain.lain',				
+				'label'=>'Lain2',				
 				'noWrap'=>false,	
 				'headerOptions'=>[		
 						'style'=>[									
@@ -485,8 +542,15 @@ $this->registerCss("
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
-		<div style="height:40px;text-align:center;font-family: tahoma ;font-size: 10pt;">	
-				RINGKASAN ARUS KEUANGAN				
+		<div class="row">	
+			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;">	
+					<?php								
+						echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$cari['thn'].'</b>';				
+					?>		
+			</div>
+			<div>
+				<?=$btn_srchChart?>
+			</div>
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">

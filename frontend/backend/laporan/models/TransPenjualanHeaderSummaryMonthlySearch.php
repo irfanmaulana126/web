@@ -17,11 +17,17 @@ class TransPenjualanHeaderSummaryMonthlySearch extends TransPenjualanHeaderSumma
     /**
      * @inheritdoc
      */
+	 
+	public function attributes()
+	{
+		return array_merge(parent::attributes(), ['storeNm']);
+	}
+	
     public function rules()
     {
         return [
             [['ID', 'BULAN', 'TOTAL_PRODUCT', 'JUMLAH_TRANSAKSI', 'CNT_TUNAI', 'CNT_DEBET', 'CNT_KREDIT', 'CNT_EMONEY', 'CNT_BCA', 'CNT_MANDIRI', 'CNT_BNI', 'CNT_BRI'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'TAHUN', 'CREATE_AT', 'UPDATE_AT', 'KETERANGAN','thn'], 'safe'],
+            [['ACCESS_GROUP', 'STORE_ID', 'TAHUN', 'CREATE_AT', 'UPDATE_AT', 'KETERANGAN','thn','storeNm'], 'safe'],
             [['TOTAL_HPP', 'TOTAL_SALES', 'TTL_TUNAI', 'TTL_DEBET', 'TTL_KREDIT', 'TTL_EMONEY'], 'number'],
         ];
     }
@@ -129,5 +135,6 @@ class TransPenjualanHeaderSummaryMonthlySearch extends TransPenjualanHeaderSumma
 		
 		return $provider;
 	}
+	
 	
 }

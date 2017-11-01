@@ -3,7 +3,7 @@
 namespace frontend\backend\laporan\models;
 
 use Yii;
-
+use common\models\Store;
 /**
  * This is the model class for table "trans_pengeluaran_summary_monthly".
  *
@@ -62,7 +62,7 @@ class TransPengeluaranSummaryMonthly extends \yii\db\ActiveRecord
             [['BULAN', 'STATUS'], 'integer'],
             [['TTL_1', 'TTL_2', 'TTL_3', 'TTL_4', 'TTL_5', 'TTL_6', 'TTL_7', 'TTL_8', 'TTL_9', 'CNT_1', 'CNT_2', 'CNT_3', 'CNT_4', 'CNT_5', 'CNT_6', 'CNT_7', 'CNT_8', 'CNT_9'], 'number'],
             [['KETERANGAN'], 'string'],
-            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT','storeNm','totalPengeluaran'], 'safe'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 20],
             [['TAHUN'], 'string', 'max' => 5],
@@ -104,4 +104,17 @@ class TransPengeluaranSummaryMonthly extends \yii\db\ActiveRecord
             'UPDATE_AT' => 'Update  At',
         ];
     }
+	
+	public function getStoreTbl(){
+		return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
+	}
+	
+	public function getStoreNm(){
+		return $this->storeTbl->STORE_NM;
+	}
+	
+	public function getTotalPengeluaran(){
+		 $rslt= $this->TTL_1 + $this->TTL_2 + $this->TTL_3 + $this->TTL_4 + $this->TTL_5 + $this->TTL_6 + $this->TTL_7 + $this->TTL_8 + $this->TTL_9;
+		 return $rslt;
+	}
 }
