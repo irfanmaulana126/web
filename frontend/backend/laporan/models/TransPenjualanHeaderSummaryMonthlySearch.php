@@ -14,6 +14,8 @@ use frontend\backend\laporan\models\TransPenjualanHeaderSummaryMonthly;
 class TransPenjualanHeaderSummaryMonthlySearch extends TransPenjualanHeaderSummaryMonthly
 {
 	public $thn;
+	public $TAHUN;
+	public $BULAN;
     /**
      * @inheritdoc
      */
@@ -114,7 +116,8 @@ class TransPenjualanHeaderSummaryMonthlySearch extends TransPenjualanHeaderSumma
 					(CASE WHEN x3.TTL_3 IS NOT NULL THEN x3.TTL_3 ELSE 0 END) AS MODAL_KASIR,
 					(CASE WHEN x3.TTL_4 IS NOT NULL THEN x3.TTL_4 ELSE 0 END) AS PAYROLL,
 					(CASE WHEN x3.TTL_6 IS NOT NULL THEN (x3.TTL_6 + x3.TTL_7 + x3.TTL_8) ELSE 0 END) AS OPS,
-					(CASE WHEN x3.TTL_9 IS NOT NULL THEN x3.TTL_9 ELSE 0 END) AS LAIN_LAIN 
+					(CASE WHEN x3.TTL_9 IS NOT NULL THEN x3.TTL_9 ELSE 0 END) AS LAIN_LAIN,
+					x1.TAHUN
 				FROM 
 				( SELECT BULAN,TOTAL_SALES,TAHUN,TTL_TUNAI AS PENJUALAN_TUNAI, (TTL_DEBET + TTL_KREDIT + TTL_EMONEY) AS PENJUALAN_EDC
 					FROM trans_penjualan_header_summary_monthly 

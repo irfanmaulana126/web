@@ -209,13 +209,26 @@ $this->registerJs("
 			],
 		    [
 				'class' => 'kartik\grid\ActionColumn',
-				'template' => '{view}',
+				'template' => '{review}',
 				'header'=>'Rincian',
 				'buttons' => [
-				'view' => function ($url, $model) {
-						return Html::a('<span class="glyphicon glyphicon-info-sign"></span>', '/laporan/arus-uang/detail-lev1?id=2018', [
-									'title' => Yii::t('app', 'Detail'),
-						]);
+				'review' =>function ($url,$model)use($cari){
+						// return Html:button('<span class="glyphicon glyphicon-info-sign"></span>',['/laporan/arus-uang/detail-lev1','id'=>$model->TAHUN], [
+									// 'title' => Yii::t('app', 'Detail'),
+						// ]);
+						$title1 = Yii::t('app', ' Detail');
+						$url = Url::toRoute(['/laporan/arus-uang/detail-lev1','id'=>$cari['thn'],'bln'=>$model['BULAN_ID']]);
+						$options1 = [
+									'id'=>'import-button-export-excel',
+									'data-pjax' => true,
+									//'class'=>"btn btn-info btn-sm"  
+						];
+						$icon1 = '';//'<span class="fa fa-clone fa-lg"></span>';
+						$label1 = $icon1 . ' ' . $title1;
+						$content = Html::a($label1,$url,$options1);
+						return $content;
+						
+						
 					}
 				],
 							
