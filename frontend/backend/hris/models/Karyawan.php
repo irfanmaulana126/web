@@ -3,7 +3,7 @@
 namespace frontend\backend\hris\models;
 
 use Yii;
-
+use common\models\Store;
 /**
  * This is the model class for table "karyawan".
  *
@@ -57,7 +57,7 @@ class Karyawan extends \yii\db\ActiveRecord
     {
         return [
             [['STORE_ID', 'KARYAWAN_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
-            [['TGL_LAHIR', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['TGL_LAHIR', 'CREATE_AT', 'UPDATE_AT','storeNm'], 'safe'],
             [['ALAMAT', 'DCRP_DETIL'], 'string'],
             [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
@@ -79,15 +79,15 @@ class Karyawan extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'ACCESS_GROUP' => 'Access  Group',
-            'STORE_ID' => 'Store  ID',
-            'KARYAWAN_ID' => 'Karyawan  ID',
-            'NAMA_DPN' => 'Nama  Dpn',
-            'NAMA_TGH' => 'Nama  Tgh',
-            'NAMA_BLK' => 'Nama  Blk',
-            'KTP' => 'Ktp',
+            'STORE_ID' => 'STORE_ID',
+            'KARYAWAN_ID' => 'KARYAWAN.ID',
+            'NAMA_DPN' => 'NAMA.DEPAN',
+            'NAMA_TGH' => 'NAMA.TENGAH',
+            'NAMA_BLK' => 'NAMA.BELAKANG',
+            'KTP' => 'KTP',
             'TMP_LAHIR' => 'Tmp  Lahir',
             'TGL_LAHIR' => 'Tgl  Lahir',
-            'GENDER' => 'Gender',
+            'GENDER' => 'GENDER',
             'ALAMAT' => 'Alamat',
             'STS_NIKAH' => 'Sts  Nikah',
             'TLP' => 'Tlp',
@@ -103,4 +103,16 @@ class Karyawan extends \yii\db\ActiveRecord
             'MONTH_AT' => 'Month  At',
         ];
     }
+	
+	public function getStoreTbl(){
+		return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
+	}	
+	public function getStoreNm(){
+		$rslt = $this->storeTbl['STORE_NM'];
+		if ($rslt){
+			return $rslt;
+		}else{
+			return "none";
+		}; 
+	}
 }
