@@ -10,11 +10,20 @@ use ptrnov\fusionchart\Chart;
 use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
 
+use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDailySearch;
+use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDaily;
 use frontend\backend\laporan\models\RptDailyChartSearch;
 
 		$searchModel = new RptDailyChartSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$model=$dataProvider->getModels();
+		
+		// $searchModelDaily = new TransPenjualanHeaderSummaryDailySearch();
+        // $dataProviderDaily = $searchModelDaily->search(['TGL'=>'2017-11-01']);
+		$modelDaily= TransPenjualanHeaderSummaryDaily::find()->where(['TGL'=>'2017-10-19'])->one();
+		// $modelDaily=$dataProviderDaily->getModels();
+		// print_r($modelDaily);
+		// die();
 
 // $xaxis=0;
 // $canvasEndY=200;
@@ -106,7 +115,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format($model[0]->Val_Cnt)."');	//TOTAL_PENJUALAN
+				$(this).text('".number_format($modelDaily->TOTAL_SALES)."');	//TOTAL_PENJUALAN
 			}
 		});
 	});
@@ -120,7 +129,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format($model[1]->Val_Cnt)."');	//JUMLAH_TRANSAKSI
+				$(this).text('".number_format($modelDaily->JUMLAH_TRANSAKSI)."');	//JUMLAH_TRANSAKSI
 			}
 		});
 	});
@@ -134,7 +143,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format($model[2]->Val_Cnt)."');	//RATA_RATA_PENJUALAN
+				$(this).text('".number_format($modelDaily->TOTAL_SALES/$modelDaily->JUMLAH_TRANSAKSI)."');	//RATA_RATA_PENJUALAN
 			}
 		});
 	});
@@ -148,7 +157,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format($model[5]->Val_Cnt)."');	//JUMLAH_PRODAK
+				$(this).text('".number_format($modelDaily->TOTAL_PRODUCT)."');	//JUMLAH_PRODAK
 			}
 		});
 	});
