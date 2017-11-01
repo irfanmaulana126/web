@@ -12,6 +12,7 @@ use yii\filters\ContentNegotiator;
 use yii\web\Response;
 use frontend\backend\laporan\models\RptDailyChart;
 use frontend\backend\laporan\models\RptDailyChartSearch;
+use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDailyHourSearch;
 /**
  * FoodtownController implements the CRUD actions for Foodtown model.
  */
@@ -219,10 +220,27 @@ class DataController extends Controller
 		 * == FROM DATABASE ==
 		 * ===================*/	
 		//return json::decode("{".$data['chart'].','.$data['categories'].','.$data['dataset']."}");
-		$rsltDataSet='"dataset":'.Yii::$app->arrayBantuan->strJson($model->Val_Json);		
-		return json::decode("{".$data['chart'].','.$data['categories'].','.$rsltDataSet."}");
+		// $rsltDataSet='"dataset":'.Yii::$app->arrayBantuan->strJson($model->Val_Json);		
+		//return json::decode("{".$data['chart'].','.$data['categories'].','.$rsltDataSet."}");
 		
-    }
+		
+		$searchModel = new TransPenjualanHeaderSummaryDailyHourSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		
+		$modelHour=$dataProvider->getModels();
+		//$i=0;
+		foreach ($modelHour as $row => $val){
+			$i=0;
+			for( $i= 1 ; $i <= 24 ; $i++ ) {
+				$dataval[]=['label'=>$i,'value'=>$val['VAL'.$i],'anchorBgColor'=>'#00fd83'];
+			}
+			$rslt['seriesname']=$val['storeNm'];
+			$rslt['data']=$dataval;	
+			$rsltDataSet[]=$rslt;	
+		}
+		$dataset='"dataset":'.json::encode($rsltDataSet);
+		return json::decode("{".$data['chart'].','.$data['categories'].','.$dataset."}");
+	  }
 	
 	public function actionMonthySales(){
 		/* $_distributorStockGudang= new ArrayDataProvider([

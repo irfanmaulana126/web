@@ -3,7 +3,7 @@
 namespace frontend\backend\laporan\models;
 
 use Yii;
-
+use common\models\Store;
 /**
  * This is the model class for table "trans_penjualan_header_summary_monthly".
  *
@@ -58,7 +58,7 @@ class TransPenjualanHeaderSummaryMonthly extends \yii\db\ActiveRecord
         return [
             [['BULAN', 'TOTAL_PRODUCT', 'JUMLAH_TRANSAKSI', 'CNT_TUNAI', 'CNT_DEBET', 'CNT_KREDIT', 'CNT_EMONEY', 'CNT_BCA', 'CNT_MANDIRI', 'CNT_BNI', 'CNT_BRI'], 'integer'],
             [['TOTAL_HPP', 'TOTAL_SALES', 'TTL_TUNAI', 'TTL_DEBET', 'TTL_KREDIT', 'TTL_EMONEY'], 'number'],
-            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT','storeNm'], 'safe'],
             [['KETERANGAN'], 'string'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 20],
@@ -98,4 +98,12 @@ class TransPenjualanHeaderSummaryMonthly extends \yii\db\ActiveRecord
             'KETERANGAN' => 'Keterangan',
         ];
     }
+	
+	public function getStoreTbl(){
+		return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
+	}
+	
+	public function getStoreNm(){
+		return $this->storeTbl->STORE_NM;
+	}
 }

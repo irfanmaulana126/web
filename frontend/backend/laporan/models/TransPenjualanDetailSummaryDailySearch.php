@@ -5,27 +5,22 @@ namespace frontend\backend\laporan\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\backend\laporan\models\TransPengeluaranSummaryMonthly;
+use frontend\backend\laporan\models\TransPenjualanDetailSummaryDaily;
 
 /**
- * TransPengeluaranSummaryMonthlySearch represents the model behind the search form about `frontend\backend\laporan\models\TransPengeluaranSummaryMonthly`.
+ * TransPenjualanDetailSummaryDailySearch represents the model behind the search form about `frontend\backend\laporan\models\TransPenjualanDetailSummaryDaily`.
  */
-class TransPengeluaranSummaryMonthlySearch extends TransPengeluaranSummaryMonthly
+class TransPenjualanDetailSummaryDailySearch extends TransPenjualanDetailSummaryDaily
 {
-	public function attributes()
-	{
-		return array_merge(parent::attributes(), ['storeNm','totalPengeluaran']);
-	}
-	
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['ID', 'BULAN', 'STATUS'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'TAHUN', 'KETERANGAN', 'CREATE_AT', 'UPDATE_AT','storeNm','totalPengeluaran'], 'safe'],
-            [['TTL_1', 'TTL_2', 'TTL_3', 'TTL_4', 'TTL_5', 'TTL_6', 'TTL_7', 'TTL_8', 'TTL_9', 'CNT_1', 'CNT_2', 'CNT_3', 'CNT_4', 'CNT_5', 'CNT_6', 'CNT_7', 'CNT_8', 'CNT_9'], 'number'],
+            [['ID', 'BULAN'], 'integer'],
+            [['ACCESS_GROUP', 'STORE_ID', 'TAHUN', 'TGL', 'PRODUCT_ID', 'PRODUCT_NM', 'PRODUCT_PROVIDER', 'PRODUCT_PROVIDER_NO', 'PRODUCT_PROVIDER_NM', 'CREATE_AT', 'UPDATE_AT', 'KETERANGAN'], 'safe'],
+            [['PRODUCT_QTY', 'HPP', 'HARGA_JUAL', 'SUB_TOTAL'], 'number'],
         ];
     }
 
@@ -47,7 +42,7 @@ class TransPengeluaranSummaryMonthlySearch extends TransPengeluaranSummaryMonthl
      */
     public function search($params)
     {
-        $query = TransPengeluaranSummaryMonthly::find();
+        $query = TransPenjualanDetailSummaryDaily::find();
 
         // add conditions that should always apply here
 
@@ -67,25 +62,11 @@ class TransPengeluaranSummaryMonthlySearch extends TransPengeluaranSummaryMonthl
         $query->andFilterWhere([
             'ID' => $this->ID,
             'BULAN' => $this->BULAN,
-            'TTL_1' => $this->TTL_1,
-            'TTL_2' => $this->TTL_2,
-            'TTL_3' => $this->TTL_3,
-            'TTL_4' => $this->TTL_4,
-            'TTL_5' => $this->TTL_5,
-            'TTL_6' => $this->TTL_6,
-            'TTL_7' => $this->TTL_7,
-            'TTL_8' => $this->TTL_8,
-            'TTL_9' => $this->TTL_9,
-            'CNT_1' => $this->CNT_1,
-            'CNT_2' => $this->CNT_2,
-            'CNT_3' => $this->CNT_3,
-            'CNT_4' => $this->CNT_4,
-            'CNT_5' => $this->CNT_5,
-            'CNT_6' => $this->CNT_6,
-            'CNT_7' => $this->CNT_7,
-            'CNT_8' => $this->CNT_8,
-            'CNT_9' => $this->CNT_9,
-            'STATUS' => $this->STATUS,
+            'TGL' => $this->TGL,
+            'PRODUCT_QTY' => $this->PRODUCT_QTY,
+            'HPP' => $this->HPP,
+            'HARGA_JUAL' => $this->HARGA_JUAL,
+            'SUB_TOTAL' => $this->SUB_TOTAL,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
         ]);
@@ -93,6 +74,11 @@ class TransPengeluaranSummaryMonthlySearch extends TransPengeluaranSummaryMonthl
         $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'TAHUN', $this->TAHUN])
+            ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])
+            ->andFilterWhere(['like', 'PRODUCT_NM', $this->PRODUCT_NM])
+            ->andFilterWhere(['like', 'PRODUCT_PROVIDER', $this->PRODUCT_PROVIDER])
+            ->andFilterWhere(['like', 'PRODUCT_PROVIDER_NO', $this->PRODUCT_PROVIDER_NO])
+            ->andFilterWhere(['like', 'PRODUCT_PROVIDER_NM', $this->PRODUCT_PROVIDER_NM])
             ->andFilterWhere(['like', 'KETERANGAN', $this->KETERANGAN]);
 
         return $dataProvider;
