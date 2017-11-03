@@ -124,9 +124,13 @@ class SiteController extends Controller
             //return $this->render('login', [
             //    'model' => $model,
            // ]);
-            $js='$("#modal_login").modal("show")';
-            $this->getView()->registerJs($js);
-            return $this->render('login',['model' => $model]);
+            // $js='$("#modal_login").modal("show")';
+            // $this->getView()->registerJs($js);
+            // return $this->render('login',['model' => $model]);
+			$model = new LoginForm();
+            return $this->render('indexNoLogin', [
+                'model' => $model,
+            ]);
         }
     }
 
