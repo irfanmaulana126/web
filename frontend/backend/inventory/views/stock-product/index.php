@@ -11,6 +11,9 @@ use kartik\builder\Form;
 use yii\helpers\Url;
 use yii\web\View;
 
+// print_r($dataProvider->getModels()[0]['SISA_2017-11-03']);
+// die();
+
 	$colorHeader='rgba(230, 230, 230, 1)';
 	$colorHeader1='rgba(140, 140, 140, 1)';
 	$colorHeader2='rgba(230, 230, 230, 1)';
@@ -44,9 +47,9 @@ use yii\web\View;
 	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left']];
 	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '12px','label'=>'PRODUK','align'=>'left']];
 	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
-	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'QTY_OUT','SIZE' => '12px','label'=>'MASUK','align'=>'left']];
-	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'QTY_OUT','SIZE' => '12px','label'=>'TERJUAL','align'=>'left']];
-	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'QTY_OUT','SIZE' => '12px','label'=>'SISA','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'TTL_IN','SIZE' => '12px','label'=>'MASUK','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'TTL_OUT','SIZE' => '12px','label'=>'TERJUAL','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_OUT','SIZE' => '12px','label'=>'SISA','align'=>'left']];
 	$headerContent1[]=['content'=>'TOTAL QTY STOCK','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
 				
 	$inc=5;
@@ -58,14 +61,26 @@ use yii\web\View;
 			//unset($splt);
 			//$ambilField[]=$rows; 		
 			$splt=explode('_',$rows);	
-			if($splt[0]=='QTY'){
+			if($splt[0]=='IN'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE' => '6px','label'=>date('d', strtotime($splt[1])),'align'=>'center','BCOLOR'=>$colorHeader]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE' => '6px','label'=>'Masuk','align'=>'center','BCOLOR'=>$colorHeader]];
 				$inc=$inc+1;
 			}
+			if($splt[0]=='OUT'){
+				$nmField1[]=$rows;		//FULL FIELD NAME
+				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE' => '6px','label'=>'Keluar','align'=>'center','BCOLOR'=>$colorHeader]];
+				$inc=$inc+1;
+			}
+			if($splt[0]=='SISA'){
+				$nmField1[]=$rows;		//FULL FIELD NAME
+				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE' => '6px','label'=>'Sisa','align'=>'center','BCOLOR'=>$colorHeader]];
+				$inc=$inc+1;
+				$headerContent1[]=['content'=>date('Y-m-d', strtotime($splt[1])),'options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
+			}
 		};
-		$headerContent1[]=['content'=>'STOK TERJUAL','options'=>['colspan'=>$inc,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
 	 }else{
 		 for ($i=1;$i<=31;$i++){
 			$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$i,'SIZE' => '6px','label'=>$i,'align'=>'center','BCOLOR'=>$colorHeader]];
@@ -117,7 +132,21 @@ use yii\web\View;
 				'hAlign'=>'right',
 				'vAlign'=>'middle',
 				//'mergeHeader'=>true,
-				'noWrap'=>true,			
+				'noWrap'=>true,	
+				'value'=>function($data)use($key,$value){
+					$x=$value[$key]['FIELD'];
+					$splt=explode('_',$x);	
+					// if($splt[0]=='SISA'){
+						// $l+=$l+12;
+						// return $l;
+					// }else{						
+						if($data[$x]){
+							return $data[$x];
+						}else{
+							return 0;
+						}						
+					// }		
+				},				
 				'headerOptions'=>[		
 						'style'=>[									
 						'text-align'=>'center',
@@ -128,6 +157,7 @@ use yii\web\View;
 					]
 				],  
 				//'format'=>['decimal', 2],
+				'format' => 'raw',
 				'contentOptions'=>[
 					'style'=>[
 						'text-align'=>'right',
