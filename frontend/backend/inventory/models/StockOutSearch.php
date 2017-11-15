@@ -19,12 +19,13 @@ class StockOutSearch extends \yii\base\DynamicModel
 	public $BULAN;
 	public $PRODUCT_ID;
 	public $PRODUCT_NM;
+	public $TTL_QTY;
 
 	
 	public function rules()
     {
         return [
-           [['ACCESS_GROUP','STORE_ID','STORE_NM','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM'], 'safe'],
+           [['ACCESS_GROUP','STORE_ID','STORE_NM','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','TTL_QTY'], 'safe'],
 		];	
 
     }	
@@ -74,7 +75,7 @@ class StockOutSearch extends \yii\base\DynamicModel
 		
 		$qrySql= Yii::$app->production_api->createCommand("
 			#select @fildText;
-				SELECT inv.ACCESS_GROUP,inv.STORE_ID,st.STORE_NM,inv.TAHUN,inv.BULAN,inv.PRODUCT_ID,inv.PRODUCT_NM,".$rsltField."
+				SELECT inv.ACCESS_GROUP,inv.STORE_ID,st.STORE_NM,inv.TAHUN,inv.BULAN,inv.PRODUCT_ID,inv.PRODUCT_NM,SUM(inv.PRODUCT_QTY) AS QTY_OUT,".$rsltField."
 				FROM
 				(SELECT
 						(CASE WHEN x1.ACCESS_GROUP<>'' THEN x1.ACCESS_GROUP ELSE x2.ACCESS_GROUP END) AS  ACCESS_GROUP,
@@ -121,6 +122,7 @@ class StockOutSearch extends \yii\base\DynamicModel
  		$this->addCondition($filter, 'BULAN', true);	
  		$this->addCondition($filter, 'PRODUCT_ID', true);	
  		$this->addCondition($filter, 'PRODUCT_NM', true);	 		
+ 		$this->addCondition($filter, 'TTL_QTY', true);	 		
  		$dataProvider->allModels = $filter->filter($qrySql);
         return $dataProvider;
 	} 
