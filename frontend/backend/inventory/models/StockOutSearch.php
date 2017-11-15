@@ -51,11 +51,25 @@ class StockOutSearch extends \yii\base\DynamicModel
 				WHERE a.Date BETWEEN  '".$tglIN."' AND '".$tglOUT."' ORDER BY a.Date ASC
 			);
 			SELECT				
-				GROUP_CONCAT(DISTINCT
+				GROUP_CONCAT(DISTINCT					
 					CONCAT(
 						\"MAX(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') = '\",
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
-						\"' THEN inv.PRODUCT_QTY ELSE 0 END) AS 'QTY_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"'\"												
+						\"' THEN inv.INPUT_STOCK ELSE 0 END) AS 'IN_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"',\"												
+					),
+					CONCAT(
+						\"MAX(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') = '\",
+						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
+						\"' THEN inv.PRODUCT_QTY ELSE 0 END) AS 'OUT_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"',\"												
+					),
+					CONCAT('(100) +',
+						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$tglIN."' AND '\",
+						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
+						\"' THEN  inv.INPUT_STOCK END) -\",
+						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$tglIN."' AND '\",
+						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
+						\"' THEN inv.PRODUCT_QTY ELSE 0 END) \"						
+						\" AS 'SISA_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"'\"												
 					)
 				) into @fildText
 			FROM	
@@ -74,8 +88,7 @@ class StockOutSearch extends \yii\base\DynamicModel
 		$rsltField=$dpFieldtext->getModels()[0]['@fildText'];
 		
 		$qrySql= Yii::$app->production_api->createCommand("
-			#select @fildText;
-				SELECT inv.ACCESS_GROUP,inv.STORE_ID,st.STORE_NM,inv.TAHUN,inv.BULAN,inv.PRODUCT_ID,inv.PRODUCT_NM,SUM(inv.PRODUCT_QTY) AS QTY_OUT,".$rsltField."
+				SELECT inv.ACCESS_GROUP,inv.STORE_ID,st.STORE_NM,inv.TAHUN,inv.BULAN,inv.PRODUCT_ID,inv.PRODUCT_NM,SUM(inv.PRODUCT_QTY) AS TTL_IN,SUM(inv.PRODUCT_QTY) AS TTL_OUT,".$rsltField."
 				FROM
 				(SELECT
 						(CASE WHEN x1.ACCESS_GROUP<>'' THEN x1.ACCESS_GROUP ELSE x2.ACCESS_GROUP END) AS  ACCESS_GROUP,
@@ -85,7 +98,8 @@ class StockOutSearch extends \yii\base\DynamicModel
 						(CASE WHEN x1.TGL<>'' THEN x1.TGL ELSE x1.TGL END) AS  TGL,
 						(CASE WHEN x1.PRODUCT_ID<>'' THEN x1.PRODUCT_ID ELSE x2.PRODUCT_ID END) AS  PRODUCT_ID,
 						(CASE WHEN x1.PRODUCT_NM<>'' THEN x1.PRODUCT_NM ELSE x2.PRODUCT_NM END) AS  PRODUCT_NM,
-						(CASE WHEN x1.PRODUCT_QTY<>'' THEN x1.PRODUCT_QTY ELSE '0' END) AS  PRODUCT_QTY
+						(CASE WHEN x1.PRODUCT_QTY<>'' THEN x1.PRODUCT_QTY ELSE '0' END) AS  PRODUCT_QTY,
+						(CASE WHEN x3.INPUT_STOCK<>'' THEN x3.INPUT_STOCK ELSE '0' END) AS  INPUT_STOCK
 					FROM
 					(
 						SELECT ACCESS_GROUP,STORE_ID,TAHUN,BULAN,TGL,PRODUCT_ID,PRODUCT_NM,PRODUCT_QTY
@@ -98,7 +112,12 @@ class StockOutSearch extends \yii\base\DynamicModel
 						FROM product 
 						#WHERE ACCESS_GROUP='170726220936' AND STORE_ID='170726220936.0001'	#PER-STORE
 						WHERE ACCESS_GROUP='".$accessGroup."'	
-					)x2 on x2.PRODUCT_ID=x1.PRODUCT_ID
+					)x2 ON x2.PRODUCT_ID=x1.PRODUCT_ID LEFT JOIN
+					(
+						SELECT PRODUCT_ID,INPUT_DATE,INPUT_STOCK
+						FROM product_stock
+						WHERE ACCESS_GROUP='".$accessGroup."' AND  (INPUT_DATE BETWEEN '".$tglIN."' AND '".$tglOUT."')
+					)x3 ON x3.PRODUCT_ID=x2.PRODUCT_ID AND x3.INPUT_DATE=x1.TGL
 				) inv LEFT JOIN store st on st.STORE_ID=inv.STORE_ID
 				GROUP BY inv.STORE_ID,inv.PRODUCT_ID,inv.BULAN
 				ORDER BY inv.PRODUCT_ID,inv.TGL
