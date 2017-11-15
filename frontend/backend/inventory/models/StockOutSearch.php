@@ -62,7 +62,8 @@ class StockOutSearch extends \yii\base\DynamicModel
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
 						\"' THEN inv.PRODUCT_QTY ELSE 0 END) AS 'OUT_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"',\"												
 					),
-					CONCAT('(100) +',
+					CONCAT(
+						#'(100) +',
 						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$tglIN."' AND '\",
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
 						\"' THEN  inv.INPUT_STOCK END) -\",
@@ -112,12 +113,13 @@ class StockOutSearch extends \yii\base\DynamicModel
 						FROM product 
 						#WHERE ACCESS_GROUP='170726220936' AND STORE_ID='170726220936.0001'	#PER-STORE
 						WHERE ACCESS_GROUP='".$accessGroup."'	
-					)x2 ON x2.PRODUCT_ID=x1.PRODUCT_ID LEFT JOIN
+					)x2 ON x2.ACCESS_GROUP=x1.ACCESS_GROUP AND x2.STORE_ID=x1.STORE_ID AND x2.PRODUCT_ID=x1.PRODUCT_ID LEFT JOIN
 					(
-						SELECT PRODUCT_ID,INPUT_DATE,INPUT_STOCK
+						SELECT ACCESS_GROUP,STORE_ID,PRODUCT_ID,INPUT_DATE,sum(INPUT_STOCK) as INPUT_STOCK
 						FROM product_stock
 						WHERE ACCESS_GROUP='".$accessGroup."' AND  (INPUT_DATE BETWEEN '".$tglIN."' AND '".$tglOUT."')
-					)x3 ON x3.PRODUCT_ID=x2.PRODUCT_ID AND x3.INPUT_DATE=x1.TGL
+						GROUP BY STORE_ID,PRODUCT_ID,INPUT_DATE
+					)x3 ON x3.ACCESS_GROUP=x1.ACCESS_GROUP AND x3.STORE_ID=x1.STORE_ID AND x3.PRODUCT_ID=x1.PRODUCT_ID AND x3.INPUT_DATE=x1.TGL
 				) inv LEFT JOIN store st on st.STORE_ID=inv.STORE_ID
 				GROUP BY inv.STORE_ID,inv.PRODUCT_ID,inv.BULAN
 				ORDER BY inv.PRODUCT_ID,inv.TGL

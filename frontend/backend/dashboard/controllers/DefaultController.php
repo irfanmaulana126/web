@@ -14,7 +14,7 @@ class DefaultController extends Controller
 {
 	
 	public function beforeAction($action){
-		 $modulIndentify=2; //OUTLET
+		 $modulIndentify=3; //OUTLET
 		// Check only when the user is logged in.
 		// Author piter Novian [ptr.nov@gmail.com].
 		if (!Yii::$app->user->isGuest){

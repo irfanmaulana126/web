@@ -19,12 +19,6 @@ AppAsset::register($this);
 			<title><?= Html::encode($this->title) ?></title>
 			<?php $this->head() ?>
 			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-			<script>
-			  (adsbygoogle = window.adsbygoogle || []).push({
-				google_ad_client: "ca-pub-7250519319538863",
-				enable_page_level_ads: true
-			  });
-			</script>
 		</head>
 		<!-- 
 			Default collapse ~ptr.nov~ 
