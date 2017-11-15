@@ -36,16 +36,20 @@ use yii\web\View;
 					'text-align'=>'center',
 					'width'=>'10px',
 					'font-family'=>'tahoma, arial, sans-serif',
-					'font-size'=>'8px',
+					'font-size'=>'9px',
 				]
 			],					
 	];
 	
-	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'STORE_NM','align'=>'left']];
-	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '12px','label'=>'PRODUCT_NM','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '12px','label'=>'PRODUK','align'=>'left']];
 	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
+	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'QTY_OUT','SIZE' => '12px','label'=>'MASUK','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'QTY_OUT','SIZE' => '12px','label'=>'TERJUAL','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'QTY_OUT','SIZE' => '12px','label'=>'SISA','align'=>'left']];
+	$headerContent1[]=['content'=>'TOTAL QTY STOCK','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
 				
-	$inc=2;
+	$inc=5;
 	/* ==================
 	 * QTY STOCK COLUMN
 	 * ================== */
@@ -61,13 +65,13 @@ use yii\web\View;
 				$inc=$inc+1;
 			}
 		};
-		$headerContent1[]=['content'=>'STOK','options'=>['colspan'=>$inc,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
+		$headerContent1[]=['content'=>'STOK TERJUAL','options'=>['colspan'=>$inc,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
 	 }else{
 		 for ($i=1;$i<=31;$i++){
 			$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$i,'SIZE' => '6px','label'=>$i,'align'=>'center','BCOLOR'=>$colorHeader]];
 			$inc=$inc+1;
 		 }
-		 $headerContent1[]=['content'=>'STOK','options'=>['colspan'=>$i,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];			
+		 $headerContent1[]=['content'=>'STOK TERJUAL','options'=>['colspan'=>$i,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];			
 	 };
 	 
 	$valFields = ArrayHelper::map($aryFieldColomn, 'ID', 'ATTR');
@@ -95,11 +99,10 @@ use yii\web\View;
 				],
 				'contentOptions'=>[
 					'style'=>[
-						'text-align'=>$value[$key]['align'],
-						//'width'=>'12px',
+						'text-align'=>'left',
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'7pt',
-						//'background-color'=>'rgba(13, 127, 3, 0.1)',
+						'font-weight'=>'bold',
 					]
 				],
 			];
@@ -120,16 +123,17 @@ use yii\web\View;
 						'text-align'=>'center',
 						'width'=>'20px',
 						'font-family'=>'tahoma, arial, sans-serif',
-						'font-size'=>'7pt',
+						'font-size'=>'8px',
 						'background-color'=>$value[$key]['BCOLOR'],
 					]
 				],  
-				'format'=>['decimal', 2],
+				//'format'=>['decimal', 2],
 				'contentOptions'=>[
 					'style'=>[
-						'text-align'=>$value[$key]['align'],
+						'text-align'=>'right',
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'7px',
+						'font-weight'=>'bold',
 						]
 				],
 				//'pageSummaryFunc'=>GridView::F_SUM,
