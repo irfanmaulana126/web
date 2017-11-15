@@ -18,6 +18,7 @@ AppAsset::register($this);
 			<?= Html::csrfMetaTags() ?>
 			<title><?= Html::encode($this->title) ?></title>
 			<?php $this->head() ?>
+			<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 		</head>
 		<!-- 
 			Default collapse ~ptr.nov~ 
