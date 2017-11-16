@@ -55,21 +55,21 @@ class StockOutSearch extends \yii\base\DynamicModel
 					CONCAT(
 						\"MAX(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') = '\",
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
-						\"' THEN inv.INPUT_STOCK ELSE 0 END) AS 'IN_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"',\"												
+						\"' THEN inv.STOCK_BARU ELSE 0 END) AS 'IN_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"',\"												
 					),
 					CONCAT(
 						\"MAX(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') = '\",
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
-						\"' THEN inv.PRODUCT_QTY ELSE 0 END) AS 'OUT_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"',\"												
+						\"' THEN inv.STOCK_TERJUAL ELSE 0 END) AS 'OUT_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"',\"												
 					),
 					CONCAT(
-						#'(100) +',
+						'inv.STOCK_AWAL + ',
 						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$tglIN."' AND '\",
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
-						\"' THEN  inv.INPUT_STOCK END) -\",
+						\"' THEN  inv.STOCK_BARU END) -\",
 						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$tglIN."' AND '\",
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
-						\"' THEN inv.PRODUCT_QTY ELSE 0 END) \"						
+						\"' THEN inv.STOCK_TERJUAL ELSE 0 END) \"						
 						\" AS 'SISA_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"'\"												
 					)
 				) into @fildText
@@ -89,7 +89,11 @@ class StockOutSearch extends \yii\base\DynamicModel
 		$rsltField=$dpFieldtext->getModels()[0]['@fildText'];
 		
 		$qrySql= Yii::$app->production_api->createCommand("
-				SELECT inv.ACCESS_GROUP,inv.STORE_ID,st.STORE_NM,inv.TAHUN,inv.BULAN,inv.PRODUCT_ID,inv.PRODUCT_NM,SUM(inv.PRODUCT_QTY) AS TTL_IN,SUM(inv.PRODUCT_QTY) AS TTL_OUT,".$rsltField."
+				SELECT inv.ACCESS_GROUP,inv.STORE_ID,st.STORE_NM,inv.TAHUN,inv.BULAN,inv.PRODUCT_ID,inv.PRODUCT_NM,
+					    SUM(inv.STOCK_BARU) AS TTL_STOCK_BARU,SUM(inv.STOCK_TERJUAL) AS TTL_STOCK_TERJUAL,
+					    (inv.STOCK_AWAL + SUM(inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL)) AS TTL_STOCK_SISA,
+						inv.STOCK_AWAL,inv.STOCK_AKHIR,inv.STOCK_AKHIR_ACTUAL,
+						".$rsltField."
 				FROM
 				(SELECT
 						(CASE WHEN x1.ACCESS_GROUP<>'' THEN x1.ACCESS_GROUP ELSE x2.ACCESS_GROUP END) AS  ACCESS_GROUP,
@@ -99,8 +103,9 @@ class StockOutSearch extends \yii\base\DynamicModel
 						(CASE WHEN x1.TGL<>'' THEN x1.TGL ELSE x1.TGL END) AS  TGL,
 						(CASE WHEN x1.PRODUCT_ID<>'' THEN x1.PRODUCT_ID ELSE x2.PRODUCT_ID END) AS  PRODUCT_ID,
 						(CASE WHEN x1.PRODUCT_NM<>'' THEN x1.PRODUCT_NM ELSE x2.PRODUCT_NM END) AS  PRODUCT_NM,
-						(CASE WHEN x1.PRODUCT_QTY<>'' THEN x1.PRODUCT_QTY ELSE '0' END) AS  PRODUCT_QTY,
-						(CASE WHEN x3.INPUT_STOCK<>'' THEN x3.INPUT_STOCK ELSE '0' END) AS  INPUT_STOCK
+						(CASE WHEN x1.PRODUCT_QTY<>'' THEN x1.PRODUCT_QTY ELSE '0' END) AS  STOCK_TERJUAL,
+						(CASE WHEN x3.INPUT_STOCK<>'' THEN x3.INPUT_STOCK ELSE '0' END) AS  STOCK_BARU,
+						 x4.STOCK_AWAL,x4.STOCK_AKHIR,x4.STOCK_AKHIR_ACTUAL
 					FROM
 					(
 						SELECT ACCESS_GROUP,STORE_ID,TAHUN,BULAN,TGL,PRODUCT_ID,PRODUCT_NM,PRODUCT_QTY
@@ -119,7 +124,15 @@ class StockOutSearch extends \yii\base\DynamicModel
 						FROM product_stock
 						WHERE ACCESS_GROUP='".$accessGroup."' AND  (INPUT_DATE BETWEEN '".$tglIN."' AND '".$tglOUT."')
 						GROUP BY STORE_ID,PRODUCT_ID,INPUT_DATE
-					)x3 ON x3.ACCESS_GROUP=x1.ACCESS_GROUP AND x3.STORE_ID=x1.STORE_ID AND x3.PRODUCT_ID=x1.PRODUCT_ID AND x3.INPUT_DATE=x1.TGL
+					)x3 ON x3.ACCESS_GROUP=x1.ACCESS_GROUP AND x3.STORE_ID=x1.STORE_ID AND x3.PRODUCT_ID=x1.PRODUCT_ID AND x3.INPUT_DATE=x1.TGL LEFT JOIN
+					(
+						SELECT ACCESS_GROUP,STORE_ID,PRODUCT_ID,
+							(CASE WHEN STOCK_AWAL<>STOCK_AWAL_ACTUAL THEN STOCK_AWAL_ACTUAL ELSE STOCK_AWAL END) AS STOCK_AWAL,
+							STOCK_AKHIR,STOCK_AKHIR_ACTUAL
+						FROM product_stock_closing
+						WHERE ACCESS_GROUP='".$accessGroup."' AND TAHUN=YEAR('".$tglIN."') AND BULAN=MONTH('".$tglIN."')
+						#GROUP BY ACCESS_GROUP,STORE_ID,TAHUN,BULAN,PRODUCT_ID
+					)x4 ON x4.ACCESS_GROUP=x1.ACCESS_GROUP AND x4.STORE_ID=x1.STORE_ID AND x4.PRODUCT_ID=x1.PRODUCT_ID AND TAHUN=year('".$tglIN."') AND BULAN=month('".$tglIN."')
 				) inv LEFT JOIN store st on st.STORE_ID=inv.STORE_ID
 				GROUP BY inv.STORE_ID,inv.PRODUCT_ID,inv.BULAN
 				ORDER BY inv.PRODUCT_ID,inv.TGL

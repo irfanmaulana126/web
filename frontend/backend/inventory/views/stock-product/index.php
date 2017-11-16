@@ -14,6 +14,12 @@ use yii\web\View;
 // print_r($dataProvider->getModels()[0]['SISA_2017-11-03']);
 // die();
 
+	$this->registerCss("
+		#prodak-inv .kv-grid-container{
+			height:560px
+		}
+	");
+	
 	$colorHeader='rgba(230, 230, 230, 1)';
 	$colorHeader1='rgba(140, 140, 140, 1)';
 	$colorHeader2='rgba(230, 230, 230, 1)';
@@ -47,12 +53,13 @@ use yii\web\View;
 	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left']];
 	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '12px','label'=>'PRODUK','align'=>'left']];
 	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
-	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'TTL_IN','SIZE' => '12px','label'=>'MASUK','align'=>'left']];
-	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'TTL_OUT','SIZE' => '12px','label'=>'TERJUAL','align'=>'left']];
-	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_OUT','SIZE' => '12px','label'=>'SISA','align'=>'left']];
-	$headerContent1[]=['content'=>'TOTAL QTY STOCK','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
+	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'STOCK_AWAL','SIZE' => '12px','label'=>'AWAL','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'TTL_STOCK_BARU','SIZE' => '12px','label'=>'BARU','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_STOCK_TERJUAL','SIZE' => '12px','label'=>'TERJUAL','align'=>'left']];
+	$aryFieldColomn[]=['ID' =>5, 'ATTR' =>['FIELD'=>'TTL_STOCK_SISA','SIZE' => '12px','label'=>'SISA','align'=>'left']];
+	$headerContent1[]=['content'=>'TOTAL QTY STOCK','options'=>['colspan'=>4,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
 				
-	$inc=5;
+	$inc=6;
 	/* ==================
 	 * QTY STOCK COLUMN
 	 * ================== */
@@ -83,12 +90,18 @@ use yii\web\View;
 		};
 	 }else{
 		 for ($i=1;$i<=31;$i++){
-			$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$i,'SIZE' => '6px','label'=>$i,'align'=>'center','BCOLOR'=>$colorHeader]];
-			$inc=$inc+1;
+			$aryFieldColomn[]=['ID' =>$incTmp, 'ATTR' =>['FIELD'=>$i,'SIZE' => '6px','label'=>$i,'align'=>'center','BCOLOR'=>$colorHeader]];
+			$incTmp=$incTmp+1;
 		 }
 		 $headerContent1[]=['content'=>'STOK TERJUAL','options'=>['colspan'=>$i,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];			
 	 };
 	 
+	 //OPNAME
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR','SIZE' => '6px','label'=>'Closing','align'=>'center','BCOLOR'=>$colorHeader]];
+	 $inc=$inc+1;
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR_ACTUAL','SIZE' => '6px','label'=>'Actual','align'=>'center','BCOLOR'=>$colorHeader]];
+	 $headerContent1[]=['content'=>'STOCK OPNAME','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
+
 	$valFields = ArrayHelper::map($aryFieldColomn, 'ID', 'ATTR');
 	foreach($valFields as $key =>$value[]){	
 		if ($value[$key]['FIELD']=='PRODUCT_NM' OR $value[$key]['FIELD']=='STORE_NM'){
@@ -185,7 +198,7 @@ use yii\web\View;
 	
 	
 	$gvInvOut= GridView::widget([
-		'id'=>'inv-out',
+		'id'=>'prodak-inv',
 		'dataProvider' => $dataProvider,
 		//'filterModel' => $searchModelDetail,
 		'filterRowOptions'=>['style'=>'background-color:'.$colorHeader.'; align:center'],
@@ -210,7 +223,7 @@ use yii\web\View;
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'inv-out',
+				'id'=>'prodak-inv',
 			],
 		],
 		'hover'=>true, //cursor select
@@ -226,6 +239,10 @@ use yii\web\View;
 			'target'=>GridView::TARGET_BLANK
 		],
 		'summary'=>false,
+		//'floatHeader'=>false,
+		// 'floatHeaderOptions'=>['scrollingTop'=>'200'] 
+		// 'floatOverflowContainer'=>true,
+		//'floatHeader'=>true,
 	]);
 ?>
 <?=$gvInvOut?>
