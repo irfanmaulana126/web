@@ -19,7 +19,11 @@ use yii\web\View;
 			height:560px
 		}
 	");
-	
+	$pageNm='<span class="fa-stack fa-xs text-left">
+			  <b class="fa fa-list-alt fa-stack-2x" style="color:#000000"></b>
+			 </span> <b>PRODUK STOK</b>
+			 ';
+				
 	$colorHeader='rgba(230, 230, 230, 1)';
 	$colorHeader1='rgba(140, 140, 140, 1)';
 	$colorHeader2='rgba(230, 230, 230, 1)';
@@ -123,6 +127,7 @@ use yii\web\View;
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'8px',
 						'background-color'=>$value[$key]['BCOLOR'],
+						//'color'=>'#5a96e7'
 					]
 				],
 				'contentOptions'=>[
@@ -211,14 +216,13 @@ use yii\web\View;
 		'toolbar' => [
 			'{export}',
 		],	
-		'panel'=>false,
-		// 'panel'=>[
-			// 'type'=>'info',
-			// 'heading'=>false,
-			// 'before'=>false,
-			// 'after'=>false,
-			// 'footer'=>false,
-		// ],
+		'panel'=>[
+			'type'=>'info',
+			'heading'=>$pageNm,
+			'before'=>false,
+			'after'=>false,
+			'footer'=>false,
+		],
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[
@@ -245,4 +249,10 @@ use yii\web\View;
 		//'floatHeader'=>true,
 	]);
 ?>
-<?=$gvInvOut?>
+<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
+		<div class="row">		
+		<?=$gvInvOut?>
+		</div>
+	</div>
+</div>
