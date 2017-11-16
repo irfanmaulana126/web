@@ -91,7 +91,8 @@ class StockOutSearch extends \yii\base\DynamicModel
 		$qrySql= Yii::$app->production_api->createCommand("
 					SELECT inv.ACCESS_GROUP,inv.STORE_ID,st.STORE_NM,inv.TAHUN,inv.BULAN,inv.PRODUCT_ID,inv.PRODUCT_NM,
 							SUM(inv.STOCK_BARU) AS TTL_STOCK_BARU,SUM(inv.STOCK_TERJUAL) AS TTL_STOCK_TERJUAL,
-							(inv.STOCK_AWAL + SUM(inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL)) AS TTL_STOCK_SISA,
+							(CASE WHEN inv.STOCK_AWAL IS NOT NULL THEN (inv.STOCK_AWAL + SUM(inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL)) 
+							ELSE (SUM(inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL)) END) AS TTL_STOCK_SISA,
 							inv.STOCK_AWAL,inv.STOCK_AKHIR,inv.STOCK_AKHIR_ACTUAL,
 							".$rsltField."
 					FROM
