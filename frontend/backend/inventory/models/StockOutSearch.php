@@ -63,7 +63,7 @@ class StockOutSearch extends \yii\base\DynamicModel
 						\"' THEN inv.STOCK_TERJUAL ELSE 0 END) AS 'OUT_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"',\"												
 					),
 					CONCAT(
-						'inv.STOCK_AWAL + ',
+						'(CASE WHEN inv.STOCK_AWAL IS NOT NULL THEN inv.STOCK_AWAL ELSE 0 END) + ',
 						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$tglIN."' AND '\",
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
 						\"' THEN  inv.STOCK_BARU END) -\",
