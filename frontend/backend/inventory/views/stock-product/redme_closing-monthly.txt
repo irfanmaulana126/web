@@ -1,0 +1,17 @@
+============================
+WHY MONTHY CLOSING & OPNAME
+============================
+1. SET BUFFER STOCK AND NOTIFY STOCK BUFFER.
+   a. bisa melakukan setting buffer stock.
+   b. Notify remainder stock berdasarka buffer stock.
+2. INPUT STOCK (STOCK BARU).
+   a. menambahkan stock baru sebelum proses closing dan opname.
+   b. Kontrol Stock harian, mingguan, bulanan.
+   c. Prodak yang tidak memiliki contorl stock, dapat setting dalam stock bulanan, prediksi penjualan.
+3. SAFE CONTINUENITAS()
+   a. menjaga kesetabilan dan rata-rata penambahan stock atau pembelian stock dalam bulanan.
+   b. tidak merepotkan operational dalam menjaga sock harian dan stock mingguan.
+   c. Analisa kebutuhan bulanan operational.   
+4. SAFE OPERATIONAL
+   a. mengurangi beban operational karyawan.
+ 
