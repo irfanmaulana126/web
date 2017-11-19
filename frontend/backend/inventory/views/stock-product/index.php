@@ -31,6 +31,7 @@ use yii\web\View;
 	$colorHeader1='rgba(140, 140, 140, 1)';
 	$colorHeader2='rgba(230, 230, 230, 1)';
 	$dinamikField=$dataProvider->getModels();
+	//$tanggal=$dinamikField[0]['TAHUN'].'-'.$dinamikField[0]['BULAN'].'-01';
 	
 	
 	$attDinamikField[] =[			
@@ -288,7 +289,7 @@ use yii\web\View;
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolExportExcel().'</div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolExportExcel($paramCari).'</div> ',
 			'before'=>false,
 			'after'=>false			
 		],

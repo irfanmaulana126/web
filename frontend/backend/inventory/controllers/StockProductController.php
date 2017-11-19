@@ -63,6 +63,7 @@ class StockProductController extends Controller
 		return $this->render('index', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
+			'paramCari'=>$paramCari
 		]);	       
     }
 	
@@ -94,9 +95,9 @@ class StockProductController extends Controller
 	* @since 1.2
 	* ====================================
 	*/
-	public function actionExport(){
+	public function actionExport($id){
 		//DINAMIK MODEL PARAMS
-		$searchModel = new StockOutSearch(['thn'=>'2017-11-01']);
+		$searchModel = new StockOutSearch(['thn'=>$id]);
         $dataProvider = $searchModel->searchPrint(Yii::$app->request->queryParams);
 		$dinamikField=$dataProvider->allModels;
 		

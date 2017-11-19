@@ -40,9 +40,9 @@ use yii\base\DynamicModel;
 	/*
 	 * LINK EXPORT EXCEL.
 	*/
-	function tombolExportExcel(){
+	function tombolExportExcel($tanggal){
 		$title1 = Yii::t('app', ' Export Excel');
-		$url = Url::toRoute(['/inventory/stock-product/export']);
+		$url = Url::toRoute(['/inventory/stock-product/export','id'=>$tanggal]);
 		$options1 = [
 					'id'=>'stockproduct-export-excel',
 					'data-pjax' => true,
