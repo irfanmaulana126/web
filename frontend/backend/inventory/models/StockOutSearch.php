@@ -3,6 +3,8 @@
 namespace frontend\backend\inventory\models;
 
 use Yii;
+use yii\base\Model;
+use yii\base\DynamicModel;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\web\Response;
@@ -10,7 +12,7 @@ use yii\data\ArrayDataProvider;
 use yii\debug\components\search\Filter;
 use yii\debug\components\search\matchers;
 
-class StockOutSearch extends \yii\base\DynamicModel
+class StockOutSearch extends DynamicModel
 {
 	public $ACCESS_GROUP;
 	public $STORE_ID;
@@ -25,7 +27,7 @@ class StockOutSearch extends \yii\base\DynamicModel
 	public function rules()
     {
         return [
-           [['ACCESS_GROUP','STORE_ID','STORE_NM','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','TTL_QTY'], 'safe'],
+           [['ACCESS_GROUP','STORE_ID','STORE_NM','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','TTL_QTY','thn'], 'safe'],
 		];	
 
     }	
@@ -33,22 +35,24 @@ class StockOutSearch extends \yii\base\DynamicModel
 	//WHERE a.MONTH_AT='".date("Y-m-d", strtotime($this->BULAN))."' AND a.ACCESS_GROUP='".$this->ACCESS_GROUP."' AND a.STORE_ID='".$this->STORE_ID."'
 	 //$query = TransPenjualanDetail::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']]);
 	public function search($params){
-
-		$accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
-		$tglIN='2017-11-01';
-		$tglOUT='2017-11-30';
+		
+      	$accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
+		$TGL=$this->thn!=''?$this->thn:date('Y-m-d');
+		//$tglOUT='2017-11-30';
 		$sql="
 			SET SESSION GROUP_CONCAT_MAX_LEN = 1000000;
+			SET @tglIN=concat(date_format(LAST_DAY('".$TGL."' - interval 0 month),'%Y-%m-'),'01');
+			SET @tglOUT=LAST_DAY('".$TGL."');
 			DROP TEMPORARY TABLE IF EXISTS tmp_".$accessGroup.";
 			CREATE TEMPORARY TABLE tmp_".$accessGroup." as(
 				SELECT a.Date as TGL_RUN
 				FROM (
-					select '".$tglOUT."' - INTERVAL (a.a + (10 * b.a) + (100 * c.a)) DAY as Date
+					select @tglOUT - INTERVAL (a.a + (10 * b.a) + (100 * c.a)) DAY as Date
 					from (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as a
 					cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as b
 					cross join (select 0 as a union all select 1 union all select 2 union all select 3 union all select 4 union all select 5 union all select 6 union all select 7 union all select 8 union all select 9) as c
 				) a
-				WHERE a.Date BETWEEN  '".$tglIN."' AND '".$tglOUT."' ORDER BY a.Date ASC
+				WHERE a.Date BETWEEN @tglIN AND @tglOUT ORDER BY a.Date ASC
 			);
 			SELECT				
 				GROUP_CONCAT(DISTINCT					
@@ -112,7 +116,7 @@ class StockOutSearch extends \yii\base\DynamicModel
 							SELECT ACCESS_GROUP,STORE_ID,TAHUN,BULAN,TGL,PRODUCT_ID,PRODUCT_NM,PRODUCT_QTY
 							FROM trans_penjualan_detail_summary_daily
 							#WHERE ACCESS_GROUP='170726220936' AND STORE_ID='170726220936.0001' AND TGL BETWEEN '2017-11-01' AND '2017-11-30' #PER-STORE
-							WHERE ACCESS_GROUP='".$accessGroup."' AND  TGL BETWEEN '".$tglIN."' AND '".$tglOUT."'
+							WHERE ACCESS_GROUP='".$accessGroup."' AND  (TGL BETWEEN concat(date_format(LAST_DAY('".$TGL."' - interval 0 month),'%Y-%m-'),'01') AND LAST_DAY('".$TGL."'))
 						)x1 RIGHT JOIN
 						( 
 							SELECT ACCESS_GROUP,STORE_ID,PRODUCT_ID,PRODUCT_NM
@@ -123,7 +127,7 @@ class StockOutSearch extends \yii\base\DynamicModel
 						(
 							SELECT ACCESS_GROUP,STORE_ID,PRODUCT_ID,INPUT_DATE,sum(INPUT_STOCK) as INPUT_STOCK
 							FROM product_stock
-							WHERE ACCESS_GROUP='".$accessGroup."' AND  (INPUT_DATE BETWEEN '".$tglIN."' AND '".$tglOUT."')
+							WHERE ACCESS_GROUP='".$accessGroup."' AND  (INPUT_DATE BETWEEN concat(date_format(LAST_DAY('".$TGL."' - interval 0 month),'%Y-%m-'),'01') AND LAST_DAY('".$TGL."'))
 							GROUP BY STORE_ID,PRODUCT_ID,INPUT_DATE
 						)x3 ON x3.ACCESS_GROUP=x1.ACCESS_GROUP AND x3.STORE_ID=x1.STORE_ID AND x3.PRODUCT_ID=x1.PRODUCT_ID AND x3.INPUT_DATE=x1.TGL LEFT JOIN
 						(
@@ -131,9 +135,9 @@ class StockOutSearch extends \yii\base\DynamicModel
 								(CASE WHEN STOCK_AWAL<>STOCK_AWAL_ACTUAL THEN STOCK_AWAL_ACTUAL ELSE STOCK_AWAL END) AS STOCK_AWAL,
 								STOCK_AKHIR,STOCK_AKHIR_ACTUAL
 							FROM product_stock_closing
-							WHERE ACCESS_GROUP='".$accessGroup."' AND TAHUN=YEAR('".$tglIN."') AND BULAN=MONTH('".$tglIN."')
+							WHERE ACCESS_GROUP='".$accessGroup."' AND TAHUN=YEAR('".$TGL."') AND BULAN=MONTH('".$TGL."')
 							#GROUP BY ACCESS_GROUP,STORE_ID,TAHUN,BULAN,PRODUCT_ID
-						)x4 ON x4.ACCESS_GROUP=x1.ACCESS_GROUP AND x4.STORE_ID=x1.STORE_ID AND x4.PRODUCT_ID=x1.PRODUCT_ID AND TAHUN=year('".$tglIN."') AND BULAN=month('".$tglIN."')
+						)x4 ON x4.ACCESS_GROUP=x1.ACCESS_GROUP AND x4.STORE_ID=x1.STORE_ID AND x4.PRODUCT_ID=x1.PRODUCT_ID AND TAHUN=year('".$TGL."') AND BULAN=month('".$TGL."')
 					) inv LEFT JOIN store st on st.STORE_ID=inv.STORE_ID
 					GROUP BY inv.STORE_ID,inv.PRODUCT_ID,inv.BULAN
 					ORDER BY inv.PRODUCT_ID,inv.TGL
