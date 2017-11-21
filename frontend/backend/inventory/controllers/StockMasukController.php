@@ -42,4 +42,56 @@ class StockMasukController extends Controller
 			'paramCari'=>$paramCari
 		]);	       
     }
+	
+	/**====================================
+	* PENCARIAN INDEX VIEW
+	* @return mixed
+	* @author piter [ptr.nov@gmail.com]
+	* @since 1.2
+	* ====================================
+	*/
+	public function actionPencarianIndex(){
+		$modelPeriode = new \yii\base\DynamicModel([
+			'TAHUNBULAN','TAHUN','BULAN'
+		]);		
+		$modelPeriode->addRule(['TAHUNBULAN'], 'required')
+         ->addRule(['TAHUNBULAN','TAHUN','BULAN'], 'safe');
+		 
+		if (!$modelPeriode->load(Yii::$app->request->post())) {
+			return $this->renderAjax('form_cari',[
+				'modelPeriode' => $modelPeriode
+			]);
+		}
+	}
+	
+	/**====================================
+	* CARD STOCK
+	* @return mixed
+	* @author piter [ptr.nov@gmail.com]
+	* @since 1.2
+	* ====================================
+	*/
+	public function actionCardStock(){
+		$modelPeriode = new \yii\base\DynamicModel([
+			'TAHUNBULAN','TAHUN','BULAN'
+		]);		
+		$modelPeriode->addRule(['TAHUNBULAN'], 'required')
+         ->addRule(['TAHUNBULAN','TAHUN','BULAN'], 'safe');
+		 
+		if (!$modelPeriode->load(Yii::$app->request->post())) {
+			return $this->renderAjax('form_card',[
+				'modelPeriode' => $modelPeriode
+			]);
+		}
+	}
+	/**====================================
+	* EXPORT DATA
+	* @return mixed
+	* @author piter [ptr.nov@gmail.com]
+	* @since 1.2
+	* ====================================
+	*/
+	public function actionExport($id){
+		return true;
+	}
 }

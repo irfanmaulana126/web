@@ -19,9 +19,9 @@ use yii\web\View;
 			height:500px
 		}
 	");
-	// $this->registerJs($this->render('stockproduct_script.js'),View::POS_READY);
-	// echo $this->render('stockproduct_button'); //echo difinition
-	// echo $this->render('stockproduct_modal'); //echo difinition
+	$this->registerJs($this->render('stockopname_script.js'),View::POS_READY);
+	echo $this->render('stockopname_button'); //echo difinition
+	echo $this->render('stockopname_modal'); //echo difinition
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-edit fa-stack-2x" style="color:#000000"></b>
 			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>STOK OPNAME</b></div> 
@@ -250,7 +250,7 @@ use yii\web\View;
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">',//.tombolSearchPeriode().' '.tombolExportExcel($paramCari).'</div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolClosingStock().' '.tombolDownloadFormat().' '.tombolUploadFormat().' '.tombolExportExcel($paramCari).'</div> ',
 			'before'=>false,
 			'after'=>false			
 		],
