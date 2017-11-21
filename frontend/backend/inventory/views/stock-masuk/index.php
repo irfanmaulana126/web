@@ -15,16 +15,16 @@ use yii\web\View;
 // die();
 
 	$this->registerCss("
-		#prodak-inv .kv-grid-container{
+		#stok-masuk .kv-grid-container{
 			height:500px
 		}
 	");
-	$this->registerJs($this->render('stockproduct_script.js'),View::POS_READY);
-	echo $this->render('stockproduct_button'); //echo difinition
-	echo $this->render('stockproduct_modal'); //echo difinition
+	// $this->registerJs($this->render('stockproduct_script.js'),View::POS_READY);
+	// echo $this->render('stockproduct_button'); //echo difinition
+	// echo $this->render('stockproduct_modal'); //echo difinition
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
-			  <b class="fa fa-list-alt fa-stack-2x" style="color:#000000"></b>
-			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>PRODUK STOK</b></div> 
+			  <b class="fa fa-book fa-stack-2x" style="color:#000000"></b>
+			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>STOK MASUK</b></div> 
 			 ';
 				
 	$colorHeader='rgba(230, 230, 230, 1)';
@@ -58,17 +58,12 @@ use yii\web\View;
 			],					
 	];
 	
-	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','SIZE' => '10px','label'=>'TOKO','align'=>'left','group'=>true,'pageSummary'=>false]];
+	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','WIDTH'=>'100px','SIZE' => '10px','label'=>'TOKO','align'=>'left','group'=>true,'pageSummary'=>false]];
 	// $aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '7px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false]];
+	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','WIDTH'=>'100px','SIZE' => '7px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false]];
 	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
-	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'STOCK_AWAL','SIZE' => '7px','label'=>'LALU','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'TTL_STOCK_BARU','SIZE' => '7px','label'=>'MASUK','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_STOCK_TERJUAL','SIZE' => '7px','label'=>'TERJUAL','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>5, 'ATTR' =>['FIELD'=>'TTL_STOCK_SISA','SIZE' => '7px','label'=>'SISA','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$headerContent1[]=['content'=>'TOTAL STOCK','options'=>['colspan'=>4,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
 				
-	$inc=6;
+	$inc=2;
 	/* ==================
 	 * QTY STOCK COLUMN
 	 * ================== */
@@ -80,37 +75,20 @@ use yii\web\View;
 			if($splt[0]=='IN'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Masuk','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'QTY MASUK','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
 				$inc=$inc+1;
-			}
-			if($splt[0]=='OUT'){
-				$nmField1[]=$rows;		//FULL FIELD NAME
-				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Keluar','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
-				$inc=$inc+1;
-			}
-			if($splt[0]=='SISA'){
-				$nmField1[]=$rows;		//FULL FIELD NAME
-				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Sisa','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
-				$inc=$inc+1;
-				$headerContent1[]=['content'=>date('Y-m-d', strtotime($splt[1])),'options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
-			}
+				$headerContent1[]=['content'=>$splt[1],'options'=>['class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];			
+			}	
 		};
 	 }else{
 		 for ($i=1;$i<=31;$i++){
 			$aryFieldColomn[]=['ID' =>$incTmp, 'ATTR' =>['FIELD'=>$i,'SIZE' => '7px','label'=>$i,'align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
 			$incTmp=$incTmp+1;
 		 }
-		 $headerContent1[]=['content'=>'STOK TERJUAL','options'=>['colspan'=>$i,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];			
-	 };
+		$headerContent1[]=['content'=>$splt[1],'options'=>['class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];			
+	};
 	 
-	 //OPNAME
-	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR','SIZE' => '7px','label'=>'Closing','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
-	 $inc=$inc+1;
-	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR_ACTUAL','SIZE' => '7px','label'=>'Actual','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
-	 $headerContent1[]=['content'=>'STOK OPNAME','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
-
+	
 	$valFields = ArrayHelper::map($aryFieldColomn, 'ID', 'ATTR');
 	foreach($valFields as $key =>$value[]){	
 		if ($value[$key]['FIELD']=='PRODUCT_NM' OR $value[$key]['FIELD']=='STORE_NM'){
@@ -142,7 +120,7 @@ use yii\web\View;
 				'headerOptions'=>[		
 					'style'=>[									
 						'text-align'=>'center',
-						'width'=>$value[$key]['SIZE'],
+						'width'=>$value[$key]['WIDTH'],
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'8px',
 						'background-color'=>$value[$key]['BCOLOR'],
@@ -186,7 +164,7 @@ use yii\web\View;
 							// 8=>['style'=>'font-variant:small-caps;text-align:right;color:white','font-size'=>'8pt'],
 							// 9=>['style'=>'font-variant:small-caps;text-align:right;color:white','font-size'=>'8pt'],
 						],
-						'options'=>['class'=>'danger','style'=>'id:header-sales-trans-x1,font-weight:bold;font-size:8px;text-align:right;']
+						'options'=>['class'=>'success','style'=>'id:header-sales-trans-x1,font-weight:bold;font-size:8px;text-align:right;']
 					];
 				},
 				
@@ -264,7 +242,7 @@ use yii\web\View;
 							// 8=>['style'=>'font-variant:small-caps;text-align:right;color:white','font-size'=>'8pt'],
 							// 9=>['style'=>'font-variant:small-caps;text-align:right;color:white','font-size'=>'8pt'],
 						],
-						'options'=>['class'=>'danger','style'=>'id:header-sales-trans-x1,font-weight:bold;font-size:8px;text-align:right;']
+						'options'=>['class'=>'success','style'=>'id:header-sales-trans-x1,font-weight:bold;font-size:8px;text-align:right;']
 					];
 				},
 							
@@ -273,8 +251,8 @@ use yii\web\View;
 	};
 	
 	
-	$gvInvOut= GridView::widget([
-		'id'=>'prodak-inv',
+	$gvProdukStock= GridView::widget([
+		'id'=>'stok-masuk',
 		'dataProvider' => $dataProvider,
 		//'filterModel' => $searchModelDetail,
 		'filterRowOptions'=>['style'=>'background-color:'.$colorHeader.'; align:center'],
@@ -289,7 +267,7 @@ use yii\web\View;
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolExportExcel($paramCari).'</div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">',//.tombolSearchPeriode().' '.tombolExportExcel($paramCari).'</div> ',
 			'before'=>false,
 			'after'=>false			
 		],
@@ -297,7 +275,7 @@ use yii\web\View;
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'prodak-inv',
+				'id'=>'stok-masuk',
 			],
 		],
 		'hover'=>true, //cursor select
@@ -322,7 +300,7 @@ use yii\web\View;
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">		
-		<?=$gvInvOut?>
+		<?=$gvProdukStock?>
 		</div>
 	</div>
 </div>
