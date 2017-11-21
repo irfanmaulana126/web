@@ -9,14 +9,14 @@ use yii\web\NotFoundHttpException;
 use yii\data\ArrayDataProvider;
 use yii\base\DynamicModel;
 use yii\web\Response;
-use frontend\backend\inventory\models\StockOutSearch;
+use frontend\backend\inventory\models\StockMasukSearch;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
 
-class StockOpnameController extends Controller
+class StockMasukController extends Controller
 {
     public function actionIndex()
     {
-		//PencarianIndex
+        //PencarianIndex
 		$modelPeriode = new \yii\base\DynamicModel([
 			'TAHUNBULAN','TAHUN','BULAN'
 		]);		
@@ -31,9 +31,10 @@ class StockOpnameController extends Controller
 		$cari=['thn'=>$paramCari];	
 		
 		//DINAMIK MODEL PARAMS
-		$searchModel = new StockOutSearch($cari);
-        $dataProvider = $searchModel->searchOpname(Yii::$app->request->queryParams);
-		
+		$searchModel = new StockMasukSearch($cari);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		// print_r($dataProvider);
+		// die();
 		//LOAD DEFAULT INDEX
 		return $this->render('index', [
 			'searchModel' => $searchModel,

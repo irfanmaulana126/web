@@ -11,6 +11,7 @@ use yii\base\DynamicModel;
 use yii\web\Response;
 use frontend\backend\inventory\models\StockOutSearch;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
+
 class StockProductController extends Controller
 {
 	public function behaviors()
@@ -103,23 +104,23 @@ class StockProductController extends Controller
 		
 		$headerMerge[]=['DATA_PRODUK'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'15']];
 		$headerMerge[]=['DATA_PRODUK1'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'17']];
-		$headerMerge[]=['TOTAL_QTY_STOCK'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'3,0','width'=>'7']];
-		$headerMerge[]=['TOTAL_QTY_STOCK1'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'7']];
-		$headerMerge[]=['TOTAL_QTY_STOCK2'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'7']];
-		$headerMerge[]=['TOTAL_QTY_STOCK3'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'7']];
+		$headerMerge[]=['TOTAL_STOK'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'3,0','width'=>'7']];
+		$headerMerge[]=['TOTAL_STOK1'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'7']];
+		$headerMerge[]=['TOTAL_STOK2'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'7']];
+		$headerMerge[]=['TOTAL_STOK3'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'7']];
 			
 		$aryFieldColomn[]="NAMA_TOKO";
 		$aryFieldColomn[]="PRODUK";
-		$aryFieldColomn[]="AWAL";
-		$aryFieldColomn[]="BARU";
+		$aryFieldColomn[]="LALU";
+		$aryFieldColomn[]="MASUK";
 		$aryFieldColomn[]="TERJUAL";
 		$aryFieldColomn[]="SISA";
 		$aryFieldColomnHeader[]="DATA_PRODUK";
 		$aryFieldColomnHeader[]="DATA_PRODUK1";
-		$aryFieldColomnHeader[]="TOTAL_QTY_STOCK";
-		$aryFieldColomnHeader[]="TOTAL_QTY_STOCK1";
-		$aryFieldColomnHeader[]="TOTAL_QTY_STOCK2";
-		$aryFieldColomnHeader[]="TOTAL_QTY_STOCK3";
+		$aryFieldColomnHeader[]="TOTAL_STOK";
+		$aryFieldColomnHeader[]="TOTAL_STOK1";
+		$aryFieldColomnHeader[]="TOTAL_STOK2";
+		$aryFieldColomnHeader[]="TOTAL_STOK3";
 		if($dinamikField){
 			foreach($dinamikField[0] as $rows => $val){
 				//unset($splt);
@@ -197,8 +198,8 @@ class StockProductController extends Controller
 					[
 						'NAMA_TOKO' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
 						'PRODUK' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
-						'AWAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'BARU' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'LALU' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'MASUK' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
 						'TERJUAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
 						'SISA' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
 						'Masuk' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
@@ -212,8 +213,8 @@ class StockProductController extends Controller
 					[						
 						'NAMA_TOKO' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
 						'PRODUK'=>['font-size'=>'8','valign'=>'center','align'=>'left'],
-						'AWAL' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'BARU' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'LALU' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'MASUK' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
 						'TERJUAL' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
 						'SISA' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
 						'Masuk' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
