@@ -14,7 +14,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 //$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
 $(document).on('click','#stockproduct-button-periode', function(ehead){ 			  
 	$('#stockproduct-button-periode-modal').modal('show')
-	.find('#stockproduct-button-periode-modal-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	.find('#stockproduct-button-periode-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
