@@ -44,6 +44,24 @@ class KaryawanController extends Controller
         ]);
     }
 
+	/**=====================
+	* KARYAWAN CREATE
+	* @return mixed
+	=========================*/
+    public function actionCreate()
+    {
+        $model = new Karyawan();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'KARYAWAN_ID' => $model->KARYAWAN_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
+        } else {
+            return $this->renderAjax('form_create', [
+                'model' => $model,
+            ]);
+        }
+    }
+	
+	
     /**
      * Displays a single Karyawan model.
      * @param string $ID
@@ -60,23 +78,7 @@ class KaryawanController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Karyawan model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Karyawan();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'KARYAWAN_ID' => $model->KARYAWAN_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
+   
 
     /**
      * Updates an existing Karyawan model.
