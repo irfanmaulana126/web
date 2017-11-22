@@ -59,16 +59,49 @@ use yii\base\DynamicModel;
 		return $content;
 	}		
 	
-	/**
-	 * ===============================
-	 * Modal store
-	 * Author	: ptr.nov2gmail.com
-	 * Update	: 21/01/2017
-	 * Version	: 2.1
-	 * ==============================
+	/*
+	 *  BUTTON VIEW
 	*/
-	$modalHeaderColor='#fbfbfb';//' rgba(74, 206, 231, 1)';
+	function tombolView($url, $model){
+		$title1 = Yii::t('app',' View');
+		$options1 = [
+			'value'=>url::to(['/hris/karyawan/view','id'=>$model->ID]),
+			'id'=>'karyawan-button-row-view',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-eye fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
 	
+	/*
+	 * BUTTON EDIT
+	*/
+	function tombolEdit($url, $model){
+		$title1 = Yii::t('app',' Edit');
+		$options1 = [
+			'value'=>url::to(['/hris/karyawan/edit','id'=>$model->ID]),
+			'id'=>'karyawan-button-row-edit',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-edit fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
 	
 	
 ?>

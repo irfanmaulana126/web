@@ -71,10 +71,19 @@ class KaryawanController extends Controller
      * @param integer $MONTH_AT
      * @return mixed
      */
-    public function actionView($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT)
+    public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT),
+        $model= Karyawan::findOne(['ID' => $id]);
+        return $this->renderAjax('form_edit', [
+            'model' => $model,
+        ]);
+    }
+	
+	public function actionEdit($id)
+    {
+		$model= Karyawan::findOne(['ID' => $id]);
+        return $this->renderAjax('form_edit', [
+            'model' => $model,
         ]);
     }
 

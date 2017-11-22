@@ -197,11 +197,11 @@ echo $this->render('karyawan_modal'); //echo difinition
 			],
 			'buttons' => [
 				'view' =>function ($url, $model){
-				  //return  tombolView($url, $model);
+					return  tombolView($url, $model);
 				},
 				'edit' =>function($url, $model,$key){
 					//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-						//return  tombolReview($url, $model);
+						return  tombolEdit($url, $model);
 					//}					
 				},
 				'deny' =>function($url, $model,$key){
