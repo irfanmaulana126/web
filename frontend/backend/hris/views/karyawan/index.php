@@ -27,9 +27,15 @@ $this->registerCss("
 	a:active {
 		color: blue;
 	}
+	#gv-data-karyawan .kv-grid-container{
+			height:500px
+		}
 ");
-$this->registerJs($this->render('modal_item.js'),View::POS_READY);
-echo $this->render('modal_item'); //echo difinition
+
+
+$this->registerJs($this->render('karyawan_script.js'),View::POS_READY);
+echo $this->render('karyawan_button'); //echo difinition
+echo $this->render('karyawan_modal'); //echo difinition
 
 	$aryStt= [
 		  ['STATUS' => 0, 'STT_NM' => 'DISABLE'],		  
@@ -38,10 +44,10 @@ echo $this->render('modal_item'); //echo difinition
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
 	$bColor='rgba(87,114,111, 1)';
-	$pageNm='<span class="fa-stack fa-xs text-right">				  
-				  <i class="fa fa-share fa-1x"></i>
-				</span> Outlet ['.$dataProvider->getModels()[0]['STORE_ID'].']
-	';
+	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
+			  <b class="fa fa-users fa-stack-2x" style="color:#000000"></b>
+			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b> DATA KARYAWAN</b></div> 
+	 ';
 	
 	$gvAttributeItem=[
 		[
@@ -55,6 +61,7 @@ echo $this->render('modal_item'); //echo difinition
 		//PRODUCT_ID
 		[
 			'attribute'=>'storeNm',
+			'label'=>'NAMA TOKO',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
 			'hAlign'=>'right',
@@ -142,6 +149,7 @@ echo $this->render('modal_item'); //echo difinition
 		//'STATUS',
 		[
 			'attribute'=>'STATUS',
+			'label'=>'STATUS',
 			'filterType'=>GridView::FILTER_SELECT2,
 			'filterWidgetOptions'=>[
 				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
@@ -207,7 +215,7 @@ echo $this->render('modal_item'); //echo difinition
 	];
 
 $gvItem=GridView::widget([
-		'id'=>'gv-item',
+		'id'=>'gv-data-karyawan',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'columns'=>$gvAttributeItem,				
@@ -215,7 +223,7 @@ $gvItem=GridView::widget([
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'gv-item',
+				'id'=>'gv-data-karyawan',
 		    ],						  
 		],
 		'hover'=>true, //cursor select
@@ -230,7 +238,7 @@ $gvItem=GridView::widget([
 		'panel' => [
 			//'heading'=>false,
 			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-			'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel().' '.$pageNm,  
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolExportExcel().'</div>',  
 			'type'=>'info',
 			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
 			'before'=>false,
