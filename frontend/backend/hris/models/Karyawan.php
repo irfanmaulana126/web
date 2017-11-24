@@ -104,6 +104,81 @@ class Karyawan extends \yii\db\ActiveRecord
         ];
     }
 	
+	public function fields()
+	{
+		return [			
+			'NAMA_STORE'=>function($model){
+				return $this->StoreNm;
+			},
+			'ID'=>function($model){
+				return $model->ID;
+			},
+			'ACCESS_GROUP'=>function($model){
+				return $model->ACCESS_GROUP;
+			},
+			'STORE_ID'=>function($model){
+				return $model->STORE_ID;
+			},
+			'KARYAWAN_ID'=>function($model){
+				return $model->KARYAWAN_ID;
+			},
+			'NAMA_DPN'=>function($model){
+				return $model->NAMA_DPN;
+			},
+			'NAMA_TGH'=>function($model){
+				return $model->NAMA_TGH;
+			},					
+			'NAMA_BLK'=>function($model){
+				return $model->NAMA_BLK;
+			},					
+			'KTP'=>function($model){
+				return $model->KTP;
+			},
+			'TMP_LAHIR'=>function($model){
+				return $model->TMP_LAHIR;
+			},
+			'TGL_LAHIR'=>function($model){
+				return $model->TGL_LAHIR;
+			},
+			'GENDER'=>function($model){
+				return $model->GENDER;
+			},
+			'ALAMAT'=>function($model){
+				return $model->ALAMAT;
+			},
+			'STS_NIKAH'=>function($model){
+				return $model->STS_NIKAH;
+			},					
+			'TLP'=>function($model){
+				return $model->TLP;
+			},					
+			'HP'=>function($model){
+				return $model->HP;
+			},					
+			'EMAIL'=>function($model){
+				return $model->EMAIL;
+			},					
+			'CREATE_BY'=>function($model){
+				return $model->CREATE_BY;
+			},					
+			'CREATE_AT'=>function($model){
+				return $model->CREATE_AT;
+			},					
+			'UPDATE_BY'=>function($model){
+				return $model->UPDATE_BY;
+			},					
+			'CREATE_AT'=>function($model){
+				return $model->CREATE_AT;
+			},					
+			'STATUS'=>function($model){
+				return $model->STATUS;
+			},					
+			'DCRP_DETIL'=>function($model){
+				return $model->DCRP_DETIL;
+			}
+		];
+	}
+		
 	public function getStoreTbl(){
 		return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
 	}	
