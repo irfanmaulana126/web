@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
+//use kartik\grid\SideNav;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
 use kartik\widgets\Spinner;
@@ -156,13 +157,12 @@ echo $this->render('karyawan_column'); //echo difinition
 			},
 			'edit' =>function($url, $model,$key){
 				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-					return  tombolEdit($url, $model);
+				return  tombolEdit($url, $model);
 				//}					
 			},
 			'deny' =>function($url, $model,$key){
 				//return  tombolDeny($url, $model);
 			}
-
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
@@ -198,8 +198,8 @@ $gvItem=GridView::widget([
 		'before'=>false,
 		'showFooter'=>false,
 	],
-	// 'floatOverflowContainer'=>true,
-	// 'floatHeader'=>true,
+	'floatOverflowContainer'=>true,
+	'floatHeader'=>true,
 ]); 	
 ?>
 
@@ -207,6 +207,7 @@ $gvItem=GridView::widget([
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
 			<?=$gvItem?>
+			<?php //echo SideNav::widget(['items' => $items, 'headingOptions' => ['class'=>'head-style']]); ?>
 		</div>
 	</div>
 </div>
