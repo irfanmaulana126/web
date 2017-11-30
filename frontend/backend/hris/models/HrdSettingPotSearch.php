@@ -19,7 +19,7 @@ class HrdSettingPotSearch extends HrdSettingPot
     {
         return [
             [['ID', 'SHIFT_ID', 'STT_POTONGAN', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'POT_JAM', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
+            [['ACCESS_GROUP', 'STORE_ID', 'POT_JAM1', 'POT_JAM2', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
             [['POT_PERSEN', 'POT_RUPIAH'], 'number'],
         ];
     }
@@ -65,7 +65,8 @@ class HrdSettingPotSearch extends HrdSettingPot
             'STT_POTONGAN' => $this->STT_POTONGAN,
             'POT_PERSEN' => $this->POT_PERSEN,
             'POT_RUPIAH' => $this->POT_RUPIAH,
-            'POT_JAM' => $this->POT_JAM,
+            'POT_JAM1' => $this->POT_JAM1,
+            'POT_JAM2' => $this->POT_JAM2,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,

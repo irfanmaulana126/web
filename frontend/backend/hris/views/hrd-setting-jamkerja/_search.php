@@ -25,11 +25,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'SHIFT_NM') ?>
 
-    <?php // echo $form->field($model, 'JAM_IN') ?>
+    <?php // echo $form->field($model, 'RENTANG_BAWAH') ?>
 
-    <?php // echo $form->field($model, 'JAM_OUT') ?>
+    <?php // echo $form->field($model, 'RENTANG_ATAS') ?>
 
-    <?php // echo $form->field($model, 'SEQ') ?>
+    <?php // echo $form->field($model, 'RENTANG_TENGAH') ?>
+
+    <?php // echo $form->field($model, 'SHIFT_IN_BATAS_BAWAH') ?>
+
+    <?php // echo $form->field($model, 'SHIFT_IN_BATAS_SEQ') ?>
+
+    <?php // echo $form->field($model, 'SHIFT_IN_BATAS_ATAS') ?>
+
+    <?php // echo $form->field($model, 'SHIFT_IN') ?>
+
+    <?php // echo $form->field($model, 'SHIFT_OUT') ?>
+
+    <?php // echo $form->field($model, 'SHIFT_SEQ') ?>
 
     <?php // echo $form->field($model, 'RADIUS_KOORDINAT') ?>
 

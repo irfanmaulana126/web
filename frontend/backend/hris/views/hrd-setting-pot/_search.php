@@ -29,7 +29,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'POT_RUPIAH') ?>
 
-    <?php // echo $form->field($model, 'POT_JAM') ?>
+    <?php // echo $form->field($model, 'POT_JAM1') ?>
+
+    <?php // echo $form->field($model, 'POT_JAM2') ?>
 
     <?php // echo $form->field($model, 'CREATE_BY') ?>
 

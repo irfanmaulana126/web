@@ -12,6 +12,10 @@ use frontend\backend\hris\models\HrdAbsenRekap;
  */
 class HrdAbsenRekapSearch extends HrdAbsenRekap
 {
+	public function attributes()
+	{
+		return array_merge(parent::attributes(), ['storeNm']);
+	}
     /**
      * @inheritdoc
      */
@@ -19,8 +23,8 @@ class HrdAbsenRekapSearch extends HrdAbsenRekap
     {
         return [
             [['ID', 'SHIFT_ID', 'IZIN_STT', 'IZIN', 'ACTIVE_TELAT', 'ACTIVE_PULANG', 'ACTIVE_IZIN', 'IN_SEQ', 'SEQ_SHIFT', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'KARYAWAN_ID', 'KARYAWAN', 'TGL', 'WAKTU_MASUK', 'WAKTU_KELUAR', 'SHIFT_NM', 'SHIFT_IN', 'SHIFT_OUT', 'SHIFT_TELAT', 'SHIFT_PULANG', 'SELISIH_TELAT', 'SELISIH_AWALPULANG', 'KELEBIHAN_WAKTU', 'IZIN_STT_NM', 'IZIN_NM', 'POT_JAM_TELAT', 'POT_JAM_PULANG', 'ID_TELAT', 'ID_AWALPULANG', 'IN_ABSENID', 'OUT_ABSENID', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
-            [['SHIFT_RADIUS', 'MASUK_LAT', 'MASUK_LAG', 'MASUK_RADIUS', 'PULANG_LAT', 'PULANG_LAG', 'PULANG_RADIUS', 'POT_PERSEN_TELAT', 'POT_RUPIAH_TELAT', 'POT_PERSEN_PULANG', 'POT_RUPIAH_PULANG', 'UPAH_HARIAN'], 'number'],
+            [['ACCESS_GROUP', 'STORE_ID', 'KARYAWAN_ID', 'KARYAWAN', 'TGL', 'WAKTU_MASUK', 'WAKTU_KELUAR', 'SHIFT_NM', 'SHIFT_IN', 'SHIFT_OUT', 'SHIFT_TELAT', 'SHIFT_PULANG', 'SELISIH_TELAT', 'SELISIH_AWALPULANG', 'KELEBIHAN_WAKTU', 'IZIN_STT_NM', 'IZIN_NM', 'POT_JAM_TELAT', 'POT_JAM_PULANG', 'LEMBUR_JAM', 'ID_TELAT', 'ID_AWALPULANG', 'IN_ABSENID', 'OUT_ABSENID', 'ID_LEMBUR', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
+            [['SHIFT_RADIUS', 'MASUK_LAT', 'MASUK_LAG', 'MASUK_RADIUS', 'PULANG_LAT', 'PULANG_LAG', 'PULANG_RADIUS', 'POT_PERSEN_TELAT', 'POT_RUPIAH_TELAT', 'POT_PERSEN_PULANG', 'POT_RUPIAH_PULANG', 'LEMBUR_PERSEN', 'LEMBUR_RUPIAH', 'UPAH_HARIAN'], 'number'],
         ];
     }
 
@@ -90,6 +94,9 @@ class HrdAbsenRekapSearch extends HrdAbsenRekap
             'POT_PERSEN_PULANG' => $this->POT_PERSEN_PULANG,
             'POT_RUPIAH_PULANG' => $this->POT_RUPIAH_PULANG,
             'POT_JAM_PULANG' => $this->POT_JAM_PULANG,
+            'LEMBUR_PERSEN' => $this->LEMBUR_PERSEN,
+            'LEMBUR_RUPIAH' => $this->LEMBUR_RUPIAH,
+            'LEMBUR_JAM' => $this->LEMBUR_JAM,
             'UPAH_HARIAN' => $this->UPAH_HARIAN,
             'IN_SEQ' => $this->IN_SEQ,
             'SEQ_SHIFT' => $this->SEQ_SHIFT,
@@ -111,6 +118,7 @@ class HrdAbsenRekapSearch extends HrdAbsenRekap
             ->andFilterWhere(['like', 'ID_AWALPULANG', $this->ID_AWALPULANG])
             ->andFilterWhere(['like', 'IN_ABSENID', $this->IN_ABSENID])
             ->andFilterWhere(['like', 'OUT_ABSENID', $this->OUT_ABSENID])
+            ->andFilterWhere(['like', 'ID_LEMBUR', $this->ID_LEMBUR])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);

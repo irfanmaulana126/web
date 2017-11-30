@@ -20,11 +20,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'SHIFT_NM')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'JAM_IN')->textInput() ?>
+    <?= $form->field($model, 'RENTANG_BAWAH')->textInput() ?>
 
-    <?= $form->field($model, 'JAM_OUT')->textInput() ?>
+    <?= $form->field($model, 'RENTANG_ATAS')->textInput() ?>
 
-    <?= $form->field($model, 'SEQ')->textInput() ?>
+    <?= $form->field($model, 'RENTANG_TENGAH')->textInput() ?>
+
+    <?= $form->field($model, 'SHIFT_IN_BATAS_BAWAH')->textInput() ?>
+
+    <?= $form->field($model, 'SHIFT_IN_BATAS_SEQ')->textInput() ?>
+
+    <?= $form->field($model, 'SHIFT_IN_BATAS_ATAS')->textInput() ?>
+
+    <?= $form->field($model, 'SHIFT_IN')->textInput() ?>
+
+    <?= $form->field($model, 'SHIFT_OUT')->textInput() ?>
+
+    <?= $form->field($model, 'SHIFT_SEQ')->textInput() ?>
 
     <?= $form->field($model, 'RADIUS_KOORDINAT')->textInput() ?>
 

@@ -12,9 +12,15 @@ use Yii;
  * @property string $STORE_ID
  * @property integer $SHIFT_ID
  * @property string $SHIFT_NM
- * @property string $JAM_IN
- * @property string $JAM_OUT
- * @property integer $SEQ
+ * @property string $RENTANG_BAWAH
+ * @property string $RENTANG_ATAS
+ * @property string $RENTANG_TENGAH
+ * @property string $SHIFT_IN_BATAS_BAWAH
+ * @property integer $SHIFT_IN_BATAS_SEQ
+ * @property string $SHIFT_IN_BATAS_ATAS
+ * @property string $SHIFT_IN
+ * @property string $SHIFT_OUT
+ * @property integer $SHIFT_SEQ
  * @property integer $RADIUS_KOORDINAT
  * @property integer $TOLERANSI_TELAT
  * @property integer $TOLERANSI_PULANG
@@ -52,8 +58,8 @@ class HrdSettingJamkerja extends \yii\db\ActiveRecord
     {
         return [
             [['STORE_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
-            [['SHIFT_ID', 'SEQ', 'RADIUS_KOORDINAT', 'TOLERANSI_TELAT', 'TOLERANSI_PULANG', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['JAM_IN', 'JAM_OUT', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['SHIFT_ID', 'SHIFT_IN_BATAS_SEQ', 'SHIFT_SEQ', 'RADIUS_KOORDINAT', 'TOLERANSI_TELAT', 'TOLERANSI_PULANG', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['RENTANG_BAWAH', 'RENTANG_ATAS', 'RENTANG_TENGAH', 'SHIFT_IN_BATAS_BAWAH', 'SHIFT_IN_BATAS_ATAS', 'SHIFT_IN', 'SHIFT_OUT', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['DCRP_DETIL'], 'string'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 25],
@@ -72,9 +78,15 @@ class HrdSettingJamkerja extends \yii\db\ActiveRecord
             'STORE_ID' => 'Store  ID',
             'SHIFT_ID' => 'Shift  ID',
             'SHIFT_NM' => 'Shift  Nm',
-            'JAM_IN' => 'Jam  In',
-            'JAM_OUT' => 'Jam  Out',
-            'SEQ' => 'Seq',
+            'RENTANG_BAWAH' => 'Rentang  Bawah',
+            'RENTANG_ATAS' => 'Rentang  Atas',
+            'RENTANG_TENGAH' => 'Rentang  Tengah',
+            'SHIFT_IN_BATAS_BAWAH' => 'Shift  In  Batas  Bawah',
+            'SHIFT_IN_BATAS_SEQ' => 'Shift  In  Batas  Seq',
+            'SHIFT_IN_BATAS_ATAS' => 'Shift  In  Batas  Atas',
+            'SHIFT_IN' => 'Shift  In',
+            'SHIFT_OUT' => 'Shift  Out',
+            'SHIFT_SEQ' => 'Shift  Seq',
             'RADIUS_KOORDINAT' => 'Radius  Koordinat',
             'TOLERANSI_TELAT' => 'Toleransi  Telat',
             'TOLERANSI_PULANG' => 'Toleransi  Pulang',

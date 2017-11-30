@@ -3,7 +3,7 @@
 namespace frontend\backend\hris\models;
 
 use Yii;
-
+use common\models\Store;
 /**
  * This is the model class for table "hrd_absen_rekap".
  *
@@ -44,6 +44,9 @@ use Yii;
  * @property string $POT_PERSEN_PULANG
  * @property string $POT_RUPIAH_PULANG
  * @property string $POT_JAM_PULANG
+ * @property string $LEMBUR_PERSEN
+ * @property string $LEMBUR_RUPIAH
+ * @property string $LEMBUR_JAM
  * @property string $UPAH_HARIAN
  * @property string $ID_TELAT
  * @property string $ID_AWALPULANG
@@ -51,6 +54,7 @@ use Yii;
  * @property string $OUT_ABSENID
  * @property integer $IN_SEQ
  * @property integer $SEQ_SHIFT
+ * @property string $ID_LEMBUR
  * @property string $CREATE_BY
  * @property string $CREATE_AT
  * @property string $UPDATE_BY
@@ -85,15 +89,15 @@ class HrdAbsenRekap extends \yii\db\ActiveRecord
     {
         return [
             [['STORE_ID', 'KARYAWAN_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
-            [['TGL', 'WAKTU_MASUK', 'WAKTU_KELUAR', 'SHIFT_IN', 'SHIFT_OUT', 'SHIFT_TELAT', 'SHIFT_PULANG', 'SELISIH_TELAT', 'SELISIH_AWALPULANG', 'KELEBIHAN_WAKTU', 'POT_JAM_TELAT', 'POT_JAM_PULANG', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['TGL', 'WAKTU_MASUK', 'WAKTU_KELUAR', 'SHIFT_IN', 'SHIFT_OUT', 'SHIFT_TELAT', 'SHIFT_PULANG', 'SELISIH_TELAT', 'SELISIH_AWALPULANG', 'KELEBIHAN_WAKTU', 'POT_JAM_TELAT', 'POT_JAM_PULANG', 'LEMBUR_JAM', 'CREATE_AT', 'UPDATE_AT','storeNm'], 'safe'],
             [['SHIFT_ID', 'IZIN_STT', 'IZIN', 'ACTIVE_TELAT', 'ACTIVE_PULANG', 'ACTIVE_IZIN', 'IN_SEQ', 'SEQ_SHIFT', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['SHIFT_RADIUS', 'MASUK_LAT', 'MASUK_LAG', 'MASUK_RADIUS', 'PULANG_LAT', 'PULANG_LAG', 'PULANG_RADIUS', 'POT_PERSEN_TELAT', 'POT_RUPIAH_TELAT', 'POT_PERSEN_PULANG', 'POT_RUPIAH_PULANG', 'UPAH_HARIAN'], 'number'],
+            [['SHIFT_RADIUS', 'MASUK_LAT', 'MASUK_LAG', 'MASUK_RADIUS', 'PULANG_LAT', 'PULANG_LAG', 'PULANG_RADIUS', 'POT_PERSEN_TELAT', 'POT_RUPIAH_TELAT', 'POT_PERSEN_PULANG', 'POT_RUPIAH_PULANG', 'LEMBUR_PERSEN', 'LEMBUR_RUPIAH', 'UPAH_HARIAN'], 'number'],
             [['DCRP_DETIL'], 'string'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 25],
             [['KARYAWAN_ID'], 'string', 'max' => 30],
             [['KARYAWAN'], 'string', 'max' => 150],
-            [['SHIFT_NM', 'IZIN_STT_NM', 'IZIN_NM', 'ID_TELAT', 'ID_AWALPULANG', 'IN_ABSENID', 'OUT_ABSENID', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
+            [['SHIFT_NM', 'IZIN_STT_NM', 'IZIN_NM', 'ID_TELAT', 'ID_AWALPULANG', 'IN_ABSENID', 'OUT_ABSENID', 'ID_LEMBUR', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
         ];
     }
 
@@ -140,6 +144,9 @@ class HrdAbsenRekap extends \yii\db\ActiveRecord
             'POT_PERSEN_PULANG' => 'Pot  Persen  Pulang',
             'POT_RUPIAH_PULANG' => 'Pot  Rupiah  Pulang',
             'POT_JAM_PULANG' => 'Pot  Jam  Pulang',
+            'LEMBUR_PERSEN' => 'Lembur  Persen',
+            'LEMBUR_RUPIAH' => 'Lembur  Rupiah',
+            'LEMBUR_JAM' => 'Lembur  Jam',
             'UPAH_HARIAN' => 'Upah  Harian',
             'ID_TELAT' => 'Id  Telat',
             'ID_AWALPULANG' => 'Id  Awalpulang',
@@ -147,6 +154,7 @@ class HrdAbsenRekap extends \yii\db\ActiveRecord
             'OUT_ABSENID' => 'Out  Absenid',
             'IN_SEQ' => 'In  Seq',
             'SEQ_SHIFT' => 'Seq  Shift',
+            'ID_LEMBUR' => 'Id  Lembur',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
@@ -157,4 +165,16 @@ class HrdAbsenRekap extends \yii\db\ActiveRecord
             'MONTH_AT' => 'Month  At',
         ];
     }
+	
+	public function getStoreTbl(){
+		return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
+	}	
+	public function getStoreNm(){
+		$rslt = $this->storeTbl['STORE_NM'];
+		if ($rslt){
+			return $rslt;
+		}else{
+			return "none";
+		}; 
+	}
 }

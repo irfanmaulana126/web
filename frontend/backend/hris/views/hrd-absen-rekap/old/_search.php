@@ -89,6 +89,12 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'POT_JAM_PULANG') ?>
 
+    <?php // echo $form->field($model, 'LEMBUR_PERSEN') ?>
+
+    <?php // echo $form->field($model, 'LEMBUR_RUPIAH') ?>
+
+    <?php // echo $form->field($model, 'LEMBUR_JAM') ?>
+
     <?php // echo $form->field($model, 'UPAH_HARIAN') ?>
 
     <?php // echo $form->field($model, 'ID_TELAT') ?>
@@ -102,6 +108,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'IN_SEQ') ?>
 
     <?php // echo $form->field($model, 'SEQ_SHIFT') ?>
+
+    <?php // echo $form->field($model, 'ID_LEMBUR') ?>
 
     <?php // echo $form->field($model, 'CREATE_BY') ?>
 

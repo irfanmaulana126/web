@@ -145,6 +145,17 @@ return [
             'rules' => [
             ],
         ],
+		'authClientCollection' => [
+          'class' => 'yii\authclient\Collection',
+          'clients' => [
+              'facebook' => [
+                  'class' => 'yii\authclient\clients\Facebook',
+                  'clientId' => '131804267506621',
+                  'clientSecret' => 'b66867848761d1bce9e4707b6dcd06e7',
+				  'attributeNames' => ['name', 'email', 'first_name', 'last_name'],
+              ],
+          ],
+		]
     ],
     'params' => $params,
 ];

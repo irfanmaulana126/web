@@ -18,8 +18,8 @@ class HrdSettingJamkerjaSearch extends HrdSettingJamkerja
     public function rules()
     {
         return [
-            [['ID', 'SHIFT_ID', 'SEQ', 'RADIUS_KOORDINAT', 'TOLERANSI_TELAT', 'TOLERANSI_PULANG', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'SHIFT_NM', 'JAM_IN', 'JAM_OUT', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
+            [['ID', 'SHIFT_ID', 'SHIFT_IN_BATAS_SEQ', 'SHIFT_SEQ', 'RADIUS_KOORDINAT', 'TOLERANSI_TELAT', 'TOLERANSI_PULANG', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['ACCESS_GROUP', 'STORE_ID', 'SHIFT_NM', 'RENTANG_BAWAH', 'RENTANG_ATAS', 'RENTANG_TENGAH', 'SHIFT_IN_BATAS_BAWAH', 'SHIFT_IN_BATAS_ATAS', 'SHIFT_IN', 'SHIFT_OUT', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
         ];
     }
 
@@ -61,9 +61,15 @@ class HrdSettingJamkerjaSearch extends HrdSettingJamkerja
         $query->andFilterWhere([
             'ID' => $this->ID,
             'SHIFT_ID' => $this->SHIFT_ID,
-            'JAM_IN' => $this->JAM_IN,
-            'JAM_OUT' => $this->JAM_OUT,
-            'SEQ' => $this->SEQ,
+            'RENTANG_BAWAH' => $this->RENTANG_BAWAH,
+            'RENTANG_ATAS' => $this->RENTANG_ATAS,
+            'RENTANG_TENGAH' => $this->RENTANG_TENGAH,
+            'SHIFT_IN_BATAS_BAWAH' => $this->SHIFT_IN_BATAS_BAWAH,
+            'SHIFT_IN_BATAS_SEQ' => $this->SHIFT_IN_BATAS_SEQ,
+            'SHIFT_IN_BATAS_ATAS' => $this->SHIFT_IN_BATAS_ATAS,
+            'SHIFT_IN' => $this->SHIFT_IN,
+            'SHIFT_OUT' => $this->SHIFT_OUT,
+            'SHIFT_SEQ' => $this->SHIFT_SEQ,
             'RADIUS_KOORDINAT' => $this->RADIUS_KOORDINAT,
             'TOLERANSI_TELAT' => $this->TOLERANSI_TELAT,
             'TOLERANSI_PULANG' => $this->TOLERANSI_PULANG,

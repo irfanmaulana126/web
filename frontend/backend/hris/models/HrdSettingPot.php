@@ -14,7 +14,8 @@ use Yii;
  * @property integer $STT_POTONGAN
  * @property string $POT_PERSEN
  * @property string $POT_RUPIAH
- * @property string $POT_JAM
+ * @property string $POT_JAM1
+ * @property string $POT_JAM2
  * @property string $CREATE_BY
  * @property string $CREATE_AT
  * @property string $UPDATE_BY
@@ -51,7 +52,7 @@ class HrdSettingPot extends \yii\db\ActiveRecord
             [['STORE_ID', 'STT_POTONGAN', 'YEAR_AT', 'MONTH_AT'], 'required'],
             [['SHIFT_ID', 'STT_POTONGAN', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['POT_PERSEN', 'POT_RUPIAH'], 'number'],
-            [['POT_JAM', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['POT_JAM1', 'POT_JAM2', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['DCRP_DETIL'], 'string'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 25],
@@ -72,7 +73,8 @@ class HrdSettingPot extends \yii\db\ActiveRecord
             'STT_POTONGAN' => 'Stt  Potongan',
             'POT_PERSEN' => 'Pot  Persen',
             'POT_RUPIAH' => 'Pot  Rupiah',
-            'POT_JAM' => 'Pot  Jam',
+            'POT_JAM1' => 'Pot  Jam1',
+            'POT_JAM2' => 'Pot  Jam2',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',

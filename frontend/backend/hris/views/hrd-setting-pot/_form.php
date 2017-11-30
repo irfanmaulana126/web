@@ -24,7 +24,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'POT_RUPIAH')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'POT_JAM')->textInput() ?>
+    <?= $form->field($model, 'POT_JAM1')->textInput() ?>
+
+    <?= $form->field($model, 'POT_JAM2')->textInput() ?>
 
     <?= $form->field($model, 'CREATE_BY')->textInput(['maxlength' => true]) ?>
 

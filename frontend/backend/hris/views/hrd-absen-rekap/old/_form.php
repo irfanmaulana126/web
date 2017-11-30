@@ -84,6 +84,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'POT_JAM_PULANG')->textInput() ?>
 
+    <?= $form->field($model, 'LEMBUR_PERSEN')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'LEMBUR_RUPIAH')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'LEMBUR_JAM')->textInput() ?>
+
     <?= $form->field($model, 'UPAH_HARIAN')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'ID_TELAT')->textInput(['maxlength' => true]) ?>
@@ -97,6 +103,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'IN_SEQ')->textInput() ?>
 
     <?= $form->field($model, 'SEQ_SHIFT')->textInput() ?>
+
+    <?= $form->field($model, 'ID_LEMBUR')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'CREATE_BY')->textInput(['maxlength' => true]) ?>
 
