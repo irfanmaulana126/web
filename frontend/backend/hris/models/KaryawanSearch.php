@@ -92,4 +92,15 @@ class KaryawanSearch extends Karyawan
 		$query->orderBy(['STORE_ID'=>sort_asc]);
         return $dataProvider;
     }
+	
+	
+	public function searchPrint($params)
+    {
+		$sql="
+			SELECT x1.STORE_ID,x2.STORE_NM,x1.KARYAWAN_ID,x1.NAMA_DPN,x1.NAMA_TGH,x1.NAMA_BLK,
+				   x1.KTP,x1.GENDER,x1.TMP_LAHIR,x1.TGL_LAHIR,x1.ALAMAT,x1.STS_NIKAH,x1.TLP,x1.HP,x1.EMAIL,x1.STATUS,x1.DCRP_DETIL 
+			FROM karyawan x1 LEFT JOIN store x2 on x2.STORE_ID=x1.STORE_ID
+			WHERE x1.ACCESS_GROUP='170726220936';	
+		";
+	}
 }

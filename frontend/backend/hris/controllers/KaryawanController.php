@@ -3,23 +3,28 @@
 namespace frontend\backend\hris\controllers;
 
 use Yii;
-use frontend\backend\hris\models\Karyawan;
-use frontend\backend\hris\models\KaryawanSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ArrayDataProvider;
+use ptrnov\postman4excel\Postman4ExcelBehavior;
+use frontend\backend\hris\models\Karyawan;
+use frontend\backend\hris\models\KaryawanSearch;
 
 /**
  * KaryawanController implements the CRUD actions for Karyawan model.
  */
 class KaryawanController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
         return [
+			/*EXCEl IMPORT*/
+			'export4excel' => [
+				'class' => Postman4ExcelBehavior::className(),
+				'widgetType'=>'download',
+			], 
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -71,72 +76,95 @@ class KaryawanController extends Controller
      * @param integer $MONTH_AT
      * @return mixed
      */
-    public function actionView($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT)
+    public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT),
+        $model= Karyawan::findOne(['ID' => $id]);
+        return $this->renderAjax('form_edit', [
+            'model' => $model,
+        ]);
+    }
+	
+	public function actionEdit($id)
+    {
+		$model= Karyawan::findOne(['ID' => $id]);
+        return $this->renderAjax('form_edit', [
+            'model' => $model,
         ]);
     }
 
-   
-
-    /**
-     * Updates an existing Karyawan model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $ID
-     * @param string $STORE_ID
-     * @param string $KARYAWAN_ID
-     * @param integer $YEAR_AT
-     * @param integer $MONTH_AT
-     * @return mixed
-     */
-    public function actionUpdate($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT)
+   public function actionExport()
     {
-        $model = $this->findModel($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT);
+		$searchModel = new KaryawanSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$model=$dataProvider->getModels();
+		// $arDataProvider= new ArrayDataProvider([	
+			// 'allModels'=>$dt,	
+			// 'pagination' => [
+				// 'pageSize' =>10000,
+			// ],			
+		// ]);		
+		// $model=$arDataProvider->getModels();
+		// $model->attributes;
+		//$model=Karyawan::find()->asArray()->all();
+		//->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->asArray()->all();
+		//$model->attributes;
+		print_r($model);
+		die();
+		
+		$excel_dataKaryawan= Postman4ExcelBehavior::excelDataFormat($model);		
+        $excel_titleDatakaryawan = $excel_dataKaryawan['excel_title'];
+        $excel_ceilsDatakaryawan = $excel_dataKaryawan['excel_ceils'];
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'KARYAWAN_ID' => $model->KARYAWAN_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+		
+		//DATA IMPORT
+		$excel_content = [
+			[
+				'sheet_name' => 'data-karyawan',
+                'sheet_title' => [
+					$excel_titleDatakaryawan
+				],
+			    'ceils' => $excel_ceilsDatakaryawan,
+                //'freezePane' => 'A3',
+                'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
+                /* 'headerStyle'=>[	
+					[
+						'NAMA_TOKO' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'PRODUK' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
+						'LALU' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'MASUK' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'TERJUAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'SISA' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'Masuk' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'Keluar' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'Sisa' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'Closing' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'Actual' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+					]						
+				],
+				'contentStyle'=>[
+					[						
+						'NAMA_TOKO' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'PRODUK'=>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'LALU' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'MASUK' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'TERJUAL' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'SISA' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'Masuk' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'Keluar' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'Sisa' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'Closing' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'Actual' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+					]
+				], */
+               'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+               'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
+			],
+		];
+		// print_r($excel_content);
+		// die();
+		$excel_file = "data-karyawan";
+		$this->export4excel($excel_content, $excel_file,1); 
     }
 
-    /**
-     * Deletes an existing Karyawan model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $ID
-     * @param string $STORE_ID
-     * @param string $KARYAWAN_ID
-     * @param integer $YEAR_AT
-     * @param integer $MONTH_AT
-     * @return mixed
-     */
-    public function actionDelete($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT)
-    {
-        $this->findModel($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Karyawan model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $ID
-     * @param string $STORE_ID
-     * @param string $KARYAWAN_ID
-     * @param integer $YEAR_AT
-     * @param integer $MONTH_AT
-     * @return Karyawan the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT)
-    {
-        if (($model = Karyawan::findOne(['ID' => $ID, 'STORE_ID' => $STORE_ID, 'KARYAWAN_ID' => $KARYAWAN_ID, 'YEAR_AT' => $YEAR_AT, 'MONTH_AT' => $MONTH_AT])) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
+  
 }

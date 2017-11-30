@@ -185,7 +185,7 @@ class StockProductController extends Controller
 		//DATA IMPORT
 		$excel_content = [
 			[
-				'sheet_name' => 'Cabang-Mechine',
+				'sheet_name' => 'Produk-Stok',
                 'sheet_title' => [
 					$aryFieldColomnHeader,
 					$aryFieldColomn

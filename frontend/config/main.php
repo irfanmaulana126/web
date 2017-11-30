@@ -150,8 +150,13 @@ return [
           'clients' => [
               'facebook' => [
                   'class' => 'yii\authclient\clients\Facebook',
+<<<<<<< HEAD
                   'clientId' => '828647067297359',
                   'clientSecret' => 'cd97ef85291b7977196acb36079e0442',
+=======
+                  'clientId' => '131804267506621',
+                  'clientSecret' => 'b66867848761d1bce9e4707b6dcd06e7',
+>>>>>>> bae6fb050c624664d8b26548cbba95f484c96fd1
 				  'attributeNames' => ['name', 'email', 'first_name', 'last_name'],
               ],
           ],

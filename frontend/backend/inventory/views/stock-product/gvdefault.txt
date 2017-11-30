@@ -1,0 +1,79 @@
+<?php
+$H_FONT_COLOR1='white';
+$H_BG_COLOR1='rgba(87,114,111, 1)';
+$C_FONT_COLOR1='black';
+$C_BG_COLOR1=false;
+$aryFieldColomn[]=['ID' =>0, 'ATTR' =>[
+	'ATR_FIELD'=>'KAR_NM','ATR_LABEL'=>'Karyawan','ATR_HEADER_MERGE'=>false,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false',ATR_PAGESUMMARY'=>false,
+	'H_WIDTH'=>'50px','H_ALIGN'=>'center','H_FONT_SIZE' =>'10px','H_FONT_COLOR' =>$H_FONT_COLOR1,'H_BG_COLOR' =>$H_BG_COLOR1,
+	'C_FONT_SIZE' =>'10px','C_ALIGN'=>'left','C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,
+	'FILTER'=>false,'FILTER_TYPE'=>false,'FILTER_WIDGET_OPTION'=>[],'FILTER_INPUT_OPTION'=>['class'=>'form-control'],
+	//PENGUNAAN FILTER 
+	//'FILTER'=>false,'FILTER_TYPE'=>GridView::FILTER_SELECT2,
+	//'FILTER_WIDGET_OPTION'=>['pluginOptions'=>['allowClear'=>true]],
+	//'FILTER_INPUT_OPTION'=>['placeholder'=>'-Pilih-']		
+]],		  
+		
+$valFields = ArrayHelper::map($aryFieldColomn, 'ID', 'ATTR');
+
+function tombolSearchPeriode(){
+	foreach($valFields as $key =>$value[]){			
+		$attDinamikField[]=[
+			'attribute'=>$value[$key]['ATR_FIELD'],
+			'label'=>$value[$key]['ATR_LABEL'],
+			'filter'=>$value[$key]['FILTER'],
+			'filterType'=>$value[$key]['FILTER_TYPE'],
+			'filterWidgetOptions'=>$value[$key]['FILTER_WIDGET_OPTION'],	
+			'filterInputOptions'=>$value[$key]['FILTER_INPUT_OPTION'],			
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			//'hidden'=>false,
+			'noWrap'=>true,	
+			'value'=>function($data)use($key,$value){
+				$val=$value[$key]['FIELD'];	
+				$splt=explode('_',$val);
+				if($splt[0]=='SISA'){					
+					//return 'NAMA TOKO :  '.$data->$val;	 //USE ActiveData	
+					// return 'NAMA TOKO';						 //KONSTANTA
+					return 'NAMA TOKO :  '.$data[$val];		 //USE ArrayData
+				}elseif($val=='SISA'){
+					//return 'NAMA TOKO :  '.$data->$val;	 //USE ActiveData	
+					// return 'NAMA TOKO';						 //KONSTANTA
+					return 'NAMA TOKO :  '.$data[$val];		 //USE ArrayData
+				}else{						
+					if($data[$val]){					
+						//return $data->$val;	//USE ActiveData					
+						return $data[$val];		//USE ArrayData
+					}else{
+						return 0;
+					}						
+				}		
+			},							
+			'headerOptions'=>[		
+				'style'=>[		
+					'width'=>$value[$key]['H_WIDTH'],
+					'text-align'=>$value[$key]['H_ALIGN'],				
+					'font-size'=>$value[$key]['H_FONT_SIZE'],				
+					'color'=>$value[$key]['H_FONT_COLOR'],
+					'background-color'=>$value[$key]['H_BG_COLOR'],
+					'font-family'=>'tahoma, arial, sans-serif',	
+					'font-weight'=>'bold',				
+				]
+			],
+			'contentOptions'=>[
+				'style'=>[
+					'font-size'=>$value[$key]['C_FONT_SIZE'],
+					'text-align'=>$value[$key]['C_ALIGN'],
+					'color'=>$value[$key]['H_FONT_COLOR'],
+					'background-color'=>$value[$key]['H_BG_COLOR'],
+					'font-family'=>'tahoma, arial, sans-serif',						
+					'font-weight'=>'bold',
+				]
+			],				
+			'group'=>$value[$key]['ATR_GROUP'],
+			'groupedRow'=>$value[$key]['ATR_GROUPROW'],	
+		];
+	};
+	
+	return $attDinamikField;
+;
