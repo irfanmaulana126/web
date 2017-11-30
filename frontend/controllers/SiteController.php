@@ -69,10 +69,10 @@ class SiteController extends Controller
     }
 
 	public function oAuthSuccess($client) {
-	  // get user data from client
-	  $userAttributes = $client->getUserAttributes();
-
-	  // do some thing with user data. for example with $userAttributes['email']
+		// get user data from client
+		$userAttributes = $client->getUserAttributes();
+		return $this->action->redirect( Url::toRoute(['dashboard'],true) );
+		// do some thing with user data. for example with $userAttributes['email']
 	}
     /**
      * Displays homepage.
