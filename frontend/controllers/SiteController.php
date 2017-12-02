@@ -7,6 +7,7 @@ use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use common\models\LoginForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -29,7 +30,7 @@ class SiteController extends Controller
                 'rules' => [
                     [
                         // Author: -ptr.nov- : Permission Allow No Login |index|error|login 
-                        'actions' => ['index', 'error','login','validasi'],
+                        'actions' => ['index', 'error','login','validasi','auth','signup'],
                         'allow' => true,
                     ],
                     [
@@ -69,11 +70,55 @@ class SiteController extends Controller
     }
 
 	public function oAuthSuccess($client) {
-		// get user data from client
-		$userAttributes = $client->getUserAttributes();
-		return $this->action->redirect( Url::toRoute(['dashboard'],true) );
-		// do some thing with user data. for example with $userAttributes['email']
-	}
+  // get user data from client
+  //$userAttributes = $client->getUserAttributes();
+	// if (!$this->action instanceof \yii\authclient\AuthAction) {
+      // throw new \yii\base\InvalidCallException("successCallback is only meant to be executed by AuthAction!");
+    // }
+
+    $attributes = $client->getUserAttributes();
+	//return $this->action->redirect( Url::toRoute(['dashboard'],true) );
+	// print_r($attributes);
+	// die();
+	$user = \common\models\User::find()
+        ->where([
+            'ID_FB'=>$attributes['id'],
+        ])
+        ->one();
+    if(!empty($user)){
+        Yii::$app->user->login($user);
+    }
+    else{
+        //Simpen disession attribute user dari Google
+        $session = Yii::$app->session;
+        $session['attributes']=$attributes;
+        // redirect ke form signup, dengan mengset nilai variabell global successUrl
+        $this->successUrl = \yii\helpers\Url::to(['signup']);
+    }   
+	
+   /*  $externalUser = new AuthForm();
+    $externalUser->authProvider = $client->getName();
+    $externalUser->externalUserId = array_key_exists('id', $attributes) ? $attributes['id'] : null;
+    
+    if ($externalUser->validate())
+    {
+      if ($externalUser->isRegistered())
+      {
+        $externalUser->login();
+        return $this->action->redirect( Url::toRoute(['private/index'],true) );
+      }
+      else
+      {
+        Yii::$app->session->set( 'signup/authProvider', $externalUser->authProvider );
+        Yii::$app->session->set( 'signup/attributes'  , $attributes );
+        
+        return $this->action->redirect( Url::toRoute(['site/signup'],true) );
+      }    
+    } */
+  // do some thing with user data. for example with $userAttributes['email']
+}
+
+
     /**
      * Displays homepage.
      *
@@ -100,7 +145,7 @@ class SiteController extends Controller
 		
     }
 
-	public function beforeAction($action)
+	/* public function beforeAction($action)
 	{		
 		if ( !Yii::$app->user->isGuest)  {
 			if (Yii::$app->session['userSessionTimeout'] < time()) {
@@ -114,7 +159,7 @@ class SiteController extends Controller
 			return true;
 		}
 	} 
-	
+	 */
     /**
      * Logs in a user.
      *

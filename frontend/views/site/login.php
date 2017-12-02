@@ -55,8 +55,11 @@ $config = ['template'=>"{input}\n{error}\n{hint}"];
 	</div>	
 </div>
 <?= yii\authclient\widgets\AuthChoice::widget([
-     'baseAuthUrl' => ['site/auth']
+     'baseAuthUrl' => ['site/auth'],
+	 'popupMode' => true
 ]) ?>
 <?php ActiveForm::end(); ?>
+
+
 		
 
