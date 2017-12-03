@@ -64,7 +64,7 @@ use common\models\Store;
  * @property integer $YEAR_AT
  * @property integer $MONTH_AT
  */
-class HrdAbsenRekap extends \yii\db\ActiveRecord
+class AbsenRekap extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

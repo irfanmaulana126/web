@@ -5,12 +5,12 @@ namespace frontend\backend\hris\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\backend\hris\models\HrdAbsenRekap;
+use frontend\backend\hris\models\AbsenRekap;
 
 /**
  * HrdAbsenRekapSearch represents the model behind the search form about `frontend\backend\hris\models\HrdAbsenRekap`.
  */
-class HrdAbsenRekapSearch extends HrdAbsenRekap
+class AbsenRekapSearch extends AbsenRekap
 {
 	public function attributes()
 	{
@@ -46,7 +46,7 @@ class HrdAbsenRekapSearch extends HrdAbsenRekap
      */
     public function search($params)
     {
-        $query = HrdAbsenRekap::find();
+        $query = AbsenRekap::find();
 
         // add conditions that should always apply here
 

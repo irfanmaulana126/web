@@ -3,16 +3,16 @@
 namespace frontend\backend\hris\controllers;
 
 use Yii;
-use frontend\backend\hris\models\HrdAbsenRekap;
-use frontend\backend\hris\models\HrdAbsenRekapSearch;
+use frontend\backend\hris\models\AbsenRekap;
+use frontend\backend\hris\models\AbsenRekapSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * HrdAbsenRekapController implements the CRUD actions for HrdAbsenRekap model.
+ * AbsenRekapController implements the CRUD actions for AbsenRekap model.
  */
-class HrdAbsenRekapController extends Controller
+class AbsenRekapController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class HrdAbsenRekapController extends Controller
     }
 
     /**
-     * Lists all HrdAbsenRekap models.
+     * Lists all AbsenRekap models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new HrdAbsenRekapSearch();
+        $searchModel = new AbsenRekapSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class HrdAbsenRekapController extends Controller
     }
 
     /**
-     * Displays a single HrdAbsenRekap model.
+     * Displays a single AbsenRekap model.
      * @param string $ID
      * @param string $STORE_ID
      * @param string $KARYAWAN_ID
@@ -61,13 +61,13 @@ class HrdAbsenRekapController extends Controller
     }
 
     /**
-     * Creates a new HrdAbsenRekap model.
+     * Creates a new AbsenRekap model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new HrdAbsenRekap();
+        $model = new AbsenRekap();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'KARYAWAN_ID' => $model->KARYAWAN_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
@@ -79,7 +79,7 @@ class HrdAbsenRekapController extends Controller
     }
 
     /**
-     * Updates an existing HrdAbsenRekap model.
+     * Updates an existing AbsenRekap model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $ID
      * @param string $STORE_ID
@@ -102,7 +102,7 @@ class HrdAbsenRekapController extends Controller
     }
 
     /**
-     * Deletes an existing HrdAbsenRekap model.
+     * Deletes an existing AbsenRekap model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $ID
      * @param string $STORE_ID
@@ -119,19 +119,19 @@ class HrdAbsenRekapController extends Controller
     }
 
     /**
-     * Finds the HrdAbsenRekap model based on its primary key value.
+     * Finds the AbsenRekap model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $ID
      * @param string $STORE_ID
      * @param string $KARYAWAN_ID
      * @param integer $YEAR_AT
      * @param integer $MONTH_AT
-     * @return HrdAbsenRekap the loaded model
+     * @return AbsenRekap the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($ID, $STORE_ID, $KARYAWAN_ID, $YEAR_AT, $MONTH_AT)
     {
-        if (($model = HrdAbsenRekap::findOne(['ID' => $ID, 'STORE_ID' => $STORE_ID, 'KARYAWAN_ID' => $KARYAWAN_ID, 'YEAR_AT' => $YEAR_AT, 'MONTH_AT' => $MONTH_AT])) !== null) {
+        if (($model = AbsenRekap::findOne(['ID' => $ID, 'STORE_ID' => $STORE_ID, 'KARYAWAN_ID' => $KARYAWAN_ID, 'YEAR_AT' => $YEAR_AT, 'MONTH_AT' => $MONTH_AT])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

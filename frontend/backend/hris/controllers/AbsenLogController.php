@@ -9,11 +9,11 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
-use frontend\backend\hris\models\AbsensiSearch;
+use frontend\backend\hris\models\AbsensiLogSearch;
 /**
  * HrdAbsenController implements the CRUD actions for HrdAbsen model.
  */
-class HrdAbsenController extends Controller
+class AbsenLogController extends Controller
 {
     /**
      * @inheritdoc
@@ -39,7 +39,7 @@ class HrdAbsenController extends Controller
         // $searchModel = new HrdAbsenSearch();
         // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		
-		$searchModel = new AbsensiSearch();
+		$searchModel = new AbsensiLogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

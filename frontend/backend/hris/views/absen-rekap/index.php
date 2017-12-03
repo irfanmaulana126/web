@@ -188,7 +188,7 @@ $gvAbsenRekap=GridView::widget([
 						]
 					]
 				],
-				['content'=>'ABSENSI KARYAWAN', 'options'=>[
+				['content'=>'DAFTAR HADIR', 'options'=>[
 						'colspan'=>2,
 						'style'=>[
 							'width'=>'10px',
@@ -199,7 +199,7 @@ $gvAbsenRekap=GridView::widget([
 						]
 					]
 				],
-				['content'=>'IZIN KARYAWAN', 'options'=>[
+				['content'=>'KETIDAKHADIRAN', 'options'=>[
 						'colspan'=>2,
 						'style'=>[
 							'width'=>'10px',

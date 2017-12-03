@@ -10,7 +10,7 @@ use yii\data\ArrayDataProvider;
 use yii\debug\components\search\Filter;
 use yii\debug\components\search\matchers;
 
-class AbsensiSearch extends \yii\base\DynamicModel
+class AbsensiLogSearch extends \yii\base\DynamicModel
 {
 	public $TAHUN;
 	public $BULAN;
