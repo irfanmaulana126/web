@@ -6,10 +6,10 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use frontend\backend\hris\models\PayrollRekapSearch;
+use frontend\backend\hris\models\PenggajianRekapSearch;
 
 
-class PengajianRekapController extends Controller
+class PenggajianRekapController extends Controller
 {
 	/**
      * @inheritdoc
@@ -32,10 +32,10 @@ class PengajianRekapController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PayrollRekapSearch();
+        $searchModel = new PenggajianRekapSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		print_r($dataProvider);
-		die();
+		// print_r($dataProvider);
+		// die();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
