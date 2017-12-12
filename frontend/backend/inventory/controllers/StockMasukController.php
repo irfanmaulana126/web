@@ -16,6 +16,7 @@ class StockMasukController extends Controller
 {
     public function actionIndex()
     {
+		$paramCari='';
         //PencarianIndex
 		$modelPeriode = new \yii\base\DynamicModel([
 			'TAHUNBULAN','TAHUN','BULAN'

@@ -72,7 +72,7 @@ use yii\base\DynamicModel;
 	function tombolView($url, $model){
 		$title1 = Yii::t('app',' View');
 		$options1 = [
-			'value'=>url::to(['/hris/karyawan/view','id'=>$model->ID]),
+			'value'=>Url::to(['/hris/karyawan/view','id'=>$model['ID']]),
 			'id'=>'karyawan-button-row-view',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -94,7 +94,7 @@ use yii\base\DynamicModel;
 	function tombolEdit($url, $model){
 		$title1 = Yii::t('app',' Edit');
 		$options1 = [
-			'value'=>url::to(['/hris/karyawan/edit','id'=>$model->ID]),
+			'value'=>url::to(['/hris/karyawan/edit','id'=>$model['ID']]),
 			'id'=>'karyawan-button-row-edit',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],

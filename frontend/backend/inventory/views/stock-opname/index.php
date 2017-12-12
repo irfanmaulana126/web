@@ -45,7 +45,7 @@ use yii\web\View;
 					'width'=>'10px',
 					'font-family'=>'verdana, arial, sans-serif',
 					'font-size'=>'9px',
-					'background-color'=>$bColor,
+					//'background-color'=>$bColor,
 				]
 			],
 			'contentOptions'=>[
@@ -106,7 +106,7 @@ use yii\web\View;
 						'width'=>$value[$key]['WIDTH'],
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'8px',
-						'background-color'=>$value[$key]['BCOLOR'],
+						//'background-color'=>$value[$key]['BCOLOR'],
 						//'color'=>'#5a96e7'
 					]
 				],
@@ -136,11 +136,18 @@ use yii\web\View;
 							81=>GridView::F_SUM,82=>GridView::F_SUM,83=>GridView::F_SUM,84=>GridView::F_SUM,85=>GridView::F_SUM,86=>GridView::F_SUM,87=>GridView::F_SUM,88=>GridView::F_SUM,89=>GridView::F_SUM,90=>GridView::F_SUM,					
 							91=>GridView::F_SUM,92=>GridView::F_SUM,93=>GridView::F_SUM,94=>GridView::F_SUM,95=>GridView::F_SUM,96=>GridView::F_SUM,97=>GridView::F_SUM,98=>GridView::F_SUM,99=>GridView::F_SUM,100=>GridView::F_SUM,																	
 						],
-						// 'contentFormats'=>[      // content html attributes for each summary cell
-							// 6=>['format'=>'number', 'decimals'=>2],
-							// 8=>['format'=>'number', 'decimals'=>2],
-							// 9=>['format'=>'number', 'decimals'=>2],
-						// ],
+						'contentFormats'=>[      // content html attributes for each summary cell
+							3=>['format'=>'number','decimals'=>2], 4=>['format'=>'number','decimals'=>2], 5=>['format'=>'number','decimals'=>2], 6=>['format'=>'number','decimals'=>2], 7=>['format'=>'number','decimals'=>2],8=>['format'=>'number','decimals'=>2], 9=>['format'=>'number','decimals'=>2], 10=>['format'=>'number','decimals'=>2], 
+							11=>['format'=>'number','decimals'=>2], 12=>['format'=>'number','decimals'=>2],13=>['format'=>'number','decimals'=>2], 14=>['format'=>'number','decimals'=>2], 15=>['format'=>'number','decimals'=>2], 16=>['format'=>'number','decimals'=>2], 17=>['format'=>'number','decimals'=>2], 18=>['format'=>'number','decimals'=>2], 19=>['format'=>'number','decimals'=>2], 20=>['format'=>'number','decimals'=>2], 
+							21=>['format'=>'number','decimals'=>2], 22=>['format'=>'number','decimals'=>2],23=>['format'=>'number','decimals'=>2], 24=>['format'=>'number','decimals'=>2], 25=>['format'=>'number','decimals'=>2], 26=>['format'=>'number','decimals'=>2], 27=>['format'=>'number','decimals'=>2], 28=>['format'=>'number','decimals'=>2], 29=>['format'=>'number','decimals'=>2], 30=>['format'=>'number','decimals'=>2], 
+							31=>['format'=>'number','decimals'=>2], 32=>['format'=>'number','decimals'=>2],33=>['format'=>'number','decimals'=>2], 34=>['format'=>'number','decimals'=>2], 35=>['format'=>'number','decimals'=>2], 36=>['format'=>'number','decimals'=>2], 37=>['format'=>'number','decimals'=>2], 38=>['format'=>'number','decimals'=>2], 39=>['format'=>'number','decimals'=>2], 40=>['format'=>'number','decimals'=>2], 
+							41=>['format'=>'number','decimals'=>2], 42=>['format'=>'number','decimals'=>2],43=>['format'=>'number','decimals'=>2], 44=>['format'=>'number','decimals'=>2], 45=>['format'=>'number','decimals'=>2], 46=>['format'=>'number','decimals'=>2], 47=>['format'=>'number','decimals'=>2], 48=>['format'=>'number','decimals'=>2], 49=>['format'=>'number','decimals'=>2], 50=>['format'=>'number','decimals'=>2], 
+							51=>['format'=>'number','decimals'=>2], 52=>['format'=>'number','decimals'=>2],53=>['format'=>'number','decimals'=>2], 54=>['format'=>'number','decimals'=>2], 55=>['format'=>'number','decimals'=>2], 56=>['format'=>'number','decimals'=>2], 57=>['format'=>'number','decimals'=>2], 58=>['format'=>'number','decimals'=>2], 59=>['format'=>'number','decimals'=>2], 60=>['format'=>'number','decimals'=>2], 
+							61=>['format'=>'number','decimals'=>2], 62=>['format'=>'number','decimals'=>2],63=>['format'=>'number','decimals'=>2], 64=>['format'=>'number','decimals'=>2], 65=>['format'=>'number','decimals'=>2], 66=>['format'=>'number','decimals'=>2], 67=>['format'=>'number','decimals'=>2], 68=>['format'=>'number','decimals'=>2], 69=>['format'=>'number','decimals'=>2], 70=>['format'=>'number','decimals'=>2], 
+							71=>['format'=>'number','decimals'=>2], 72=>['format'=>'number','decimals'=>2],73=>['format'=>'number','decimals'=>2], 74=>['format'=>'number','decimals'=>2], 75=>['format'=>'number','decimals'=>2], 76=>['format'=>'number','decimals'=>2], 77=>['format'=>'number','decimals'=>2], 78=>['format'=>'number','decimals'=>2], 79=>['format'=>'number','decimals'=>2], 80=>['format'=>'number','decimals'=>2], 
+							81=>['format'=>'number','decimals'=>2], 82=>['format'=>'number','decimals'=>2],83=>['format'=>'number','decimals'=>2], 84=>['format'=>'number','decimals'=>2], 85=>['format'=>'number','decimals'=>2], 86=>['format'=>'number','decimals'=>2], 87=>['format'=>'number','decimals'=>2], 88=>['format'=>'number','decimals'=>2], 89=>['format'=>'number','decimals'=>2], 90=>['format'=>'number','decimals'=>2], 
+							91=>['format'=>'number','decimals'=>2], 92=>['format'=>'number','decimals'=>2],93=>['format'=>'number','decimals'=>2], 94=>['format'=>'number','decimals'=>2], 95=>['format'=>'number','decimals'=>2], 96=>['format'=>'number','decimals'=>2], 97=>['format'=>'number','decimals'=>2], 98=>['format'=>'number','decimals'=>2], 99=>['format'=>'number','decimals'=>2], 100=>['format'=>'number','decimals'=>2], 
+						] 	,
 						'contentOptions'=>[      // content html attributes for each summary cell
 							2=>['style'=>'text-align:right;font-size:9px;font-weight:bold;color:#243852'],
 							// 6=>['style'=>'font-variant:small-caps;text-align:right;color:white','font-size'=>'8pt'],
@@ -183,7 +190,7 @@ use yii\web\View;
 						'width'=>'20px',
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'8px',
-						'background-color'=>$value[$key]['BCOLOR'],
+						//'background-color'=>$value[$key]['BCOLOR'],
 					]
 				],  
 				//'format'=>['decimal', 2],
@@ -215,9 +222,16 @@ use yii\web\View;
 							91=>GridView::F_SUM,92=>GridView::F_SUM,93=>GridView::F_SUM,94=>GridView::F_SUM,95=>GridView::F_SUM,96=>GridView::F_SUM,97=>GridView::F_SUM,98=>GridView::F_SUM,99=>GridView::F_SUM,100=>GridView::F_SUM,																	
 						],
 						'contentFormats'=>[      // content html attributes for each summary cell
-							// 6=>['format'=>'number', 'decimals'=>2],
-							// 8=>['format'=>'number', 'decimals'=>2],
-							// 9=>['format'=>'number', 'decimals'=>2],
+							3=>['format'=>'number','decimals'=>2], 4=>['format'=>'number','decimals'=>2], 5=>['format'=>'number','decimals'=>2], 6=>['format'=>'number','decimals'=>2], 7=>['format'=>'number','decimals'=>2],8=>['format'=>'number','decimals'=>2], 9=>['format'=>'number','decimals'=>2], 10=>['format'=>'number','decimals'=>2], 
+							11=>['format'=>'number','decimals'=>2], 12=>['format'=>'number','decimals'=>2],13=>['format'=>'number','decimals'=>2], 14=>['format'=>'number','decimals'=>2], 15=>['format'=>'number','decimals'=>2], 16=>['format'=>'number','decimals'=>2], 17=>['format'=>'number','decimals'=>2], 18=>['format'=>'number','decimals'=>2], 19=>['format'=>'number','decimals'=>2], 20=>['format'=>'number','decimals'=>2], 
+							21=>['format'=>'number','decimals'=>2], 22=>['format'=>'number','decimals'=>2],23=>['format'=>'number','decimals'=>2], 24=>['format'=>'number','decimals'=>2], 25=>['format'=>'number','decimals'=>2], 26=>['format'=>'number','decimals'=>2], 27=>['format'=>'number','decimals'=>2], 28=>['format'=>'number','decimals'=>2], 29=>['format'=>'number','decimals'=>2], 30=>['format'=>'number','decimals'=>2], 
+							31=>['format'=>'number','decimals'=>2], 32=>['format'=>'number','decimals'=>2],33=>['format'=>'number','decimals'=>2], 34=>['format'=>'number','decimals'=>2], 35=>['format'=>'number','decimals'=>2], 36=>['format'=>'number','decimals'=>2], 37=>['format'=>'number','decimals'=>2], 38=>['format'=>'number','decimals'=>2], 39=>['format'=>'number','decimals'=>2], 40=>['format'=>'number','decimals'=>2], 
+							41=>['format'=>'number','decimals'=>2], 42=>['format'=>'number','decimals'=>2],43=>['format'=>'number','decimals'=>2], 44=>['format'=>'number','decimals'=>2], 45=>['format'=>'number','decimals'=>2], 46=>['format'=>'number','decimals'=>2], 47=>['format'=>'number','decimals'=>2], 48=>['format'=>'number','decimals'=>2], 49=>['format'=>'number','decimals'=>2], 50=>['format'=>'number','decimals'=>2], 
+							51=>['format'=>'number','decimals'=>2], 52=>['format'=>'number','decimals'=>2],53=>['format'=>'number','decimals'=>2], 54=>['format'=>'number','decimals'=>2], 55=>['format'=>'number','decimals'=>2], 56=>['format'=>'number','decimals'=>2], 57=>['format'=>'number','decimals'=>2], 58=>['format'=>'number','decimals'=>2], 59=>['format'=>'number','decimals'=>2], 60=>['format'=>'number','decimals'=>2], 
+							61=>['format'=>'number','decimals'=>2], 62=>['format'=>'number','decimals'=>2],63=>['format'=>'number','decimals'=>2], 64=>['format'=>'number','decimals'=>2], 65=>['format'=>'number','decimals'=>2], 66=>['format'=>'number','decimals'=>2], 67=>['format'=>'number','decimals'=>2], 68=>['format'=>'number','decimals'=>2], 69=>['format'=>'number','decimals'=>2], 70=>['format'=>'number','decimals'=>2], 
+							71=>['format'=>'number','decimals'=>2], 72=>['format'=>'number','decimals'=>2],73=>['format'=>'number','decimals'=>2], 74=>['format'=>'number','decimals'=>2], 75=>['format'=>'number','decimals'=>2], 76=>['format'=>'number','decimals'=>2], 77=>['format'=>'number','decimals'=>2], 78=>['format'=>'number','decimals'=>2], 79=>['format'=>'number','decimals'=>2], 80=>['format'=>'number','decimals'=>2], 
+							81=>['format'=>'number','decimals'=>2], 82=>['format'=>'number','decimals'=>2],83=>['format'=>'number','decimals'=>2], 84=>['format'=>'number','decimals'=>2], 85=>['format'=>'number','decimals'=>2], 86=>['format'=>'number','decimals'=>2], 87=>['format'=>'number','decimals'=>2], 88=>['format'=>'number','decimals'=>2], 89=>['format'=>'number','decimals'=>2], 90=>['format'=>'number','decimals'=>2], 
+							91=>['format'=>'number','decimals'=>2], 92=>['format'=>'number','decimals'=>2],93=>['format'=>'number','decimals'=>2], 94=>['format'=>'number','decimals'=>2], 95=>['format'=>'number','decimals'=>2], 96=>['format'=>'number','decimals'=>2], 97=>['format'=>'number','decimals'=>2], 98=>['format'=>'number','decimals'=>2], 99=>['format'=>'number','decimals'=>2], 100=>['format'=>'number','decimals'=>2], 
 						] 	,
 						'contentOptions'=>[      // content html attributes for each summary cell
 							2=>['style'=>'text-align:right;font-size:9px;font-weight:bold;color:#243852'],
