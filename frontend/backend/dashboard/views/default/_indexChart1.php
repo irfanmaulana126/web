@@ -196,7 +196,7 @@ $this->registerJs("
 ?>
 <div>  		
 	<!-- KIRI !-->
-	<div class="col-lg-3 col-md-3">
+	<div class="col-lg-3 col-md-3" style="margin-bottom:10px">
 		<div class="row">		
 			<div class="w3-card-2 w3-round w3-white w3-center">
 				<div class="panel-heading">
@@ -261,22 +261,25 @@ $this->registerJs("
 		</div>
 	</div>
 	<!-- TENGAH !-->
-	<div class="col-lg-7 col-md-7">
-		<div class="col-sm-12 col-md-12 col-lg-12">
-			<div class="w3-card-2 w3-round w3-white w3-center">
-					<div class="panel-heading">
-						<div class="row">
-							<div style="min-height:265px"><div style="height:265px"><?=$hourly3DaysTafik?></div></div><div class="clearfix"></div>
-						</div>
-					</div>	
+	<div class="col-lg-7 col-md-7" style="margin-bottom:15px" >
+		<div class="row">		
+			<div class="col-sm-12 col-md-12 col-lg-12" >			
+				<div class="row">	
+					<div class="w3-card-2 w3-round w3-white w3-center" style="margin-left:5px;margin-right:5px">				
+						<div class="panel-heading">
+							<div class="row">								
+								<div style="min-height:265px"><div style="height:265px"><?=$hourly3DaysTafik?></div></div><div class="clearfix"></div>
+							</div>
+						</div>	
+					</div>							
 				</div>				
-		</div>				
+			</div>				
+		</div>	
 	</div>	
 	<!-- KANAN !-->
-	<div class="col-lg-2 col-md-2" style="margin-top:-15px">
-		<div class="row">		
-			<br>			
-			<div class="w3-card-2 w3-round w3-white w3-center">
+	<div class="col-lg-2 col-md-2">
+		<div class="row">				
+			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:10px">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3">
@@ -290,8 +293,7 @@ $this->registerJs("
 								<dt class="jumlah-toko-aktif" style="font-size:18px;color:#7e7e7e;float:left;padding-right:10px"><?=$model[4]->Val_Cnt?></dt> 
 								<div style="font-size:18px;color:#7e7e7e;font-weight: bold;"> of <?=(int)$model[3]->Val_Cnt?></div>
 								<dd style="font-size:10px;color:#7e7e7e">JUMLAH TOKO</dd>
-							</dl>
-							
+							</dl>							
 						</div>
 					</div>
 				</div>	
