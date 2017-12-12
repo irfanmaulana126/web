@@ -117,7 +117,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format($modelDaily->TOTAL_SALES)."');	//TOTAL_PENJUALAN
+				$(this).text('".number_format($modelDaily['TOTAL_SALES'])."');	//TOTAL_PENJUALAN
 			}
 		});
 	});
@@ -131,7 +131,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format($modelDaily->JUMLAH_TRANSAKSI)."');	//JUMLAH_TRANSAKSI
+				$(this).text('".number_format($modelDaily['JUMLAH_TRANSAKSI'])."');	//JUMLAH_TRANSAKSI
 			}
 		});
 	});
@@ -145,7 +145,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format($modelDaily->TOTAL_SALES)."');	//RATA_RATA_PENJUALAN
+				$(this).text('".number_format($modelDaily['TOTAL_SALES'])."');	//RATA_RATA_PENJUALAN
 			}
 		});
 	});
@@ -159,7 +159,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format($modelDaily->TOTAL_PRODUCT)."');	//JUMLAH_PRODAK
+				$(this).text('".number_format($modelDaily['TOTAL_PRODUCT'])."');	//JUMLAH_PRODAK
 			}
 		});
 	});

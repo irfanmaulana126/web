@@ -63,7 +63,7 @@ class Useroption extends Component{
 			//$modelUser = Userlogin::find()->where(['id'=>Yii::$app->getUserOpt->user()['id']])->asArray()->one();
 			//Get Model data Menu, $param 'UserUnix'=>'20170404081602',
 			//$searchModel = new ModulMenuSearch(['UserUnix'=>$modelUser['ACCESS_UNIX']]);
-			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()['ACCESS_UNIX']]);
+			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()['ACCESS_ID']]);
 			//$searchModel = new ModulMenuSearch(['UserUnix'=>'20170404081602']);
 			$dataProvider = $searchModel->searchUserMenu(Yii::$app->request->queryParams);
 			$modelMenu=$dataProvider->getModels();
@@ -131,7 +131,7 @@ class Useroption extends Component{
 	*/
 	public function UserMenuPermission($valueMenu){
 		if (!Yii::$app->user->isGuest){
-			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()['ACCESS_UNIX']]);
+			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()['ACCESS_ID']]);
 			$dataProvider = $searchModel->searchUserMenu(Yii::$app->request->queryParams);
 			$modelMenu=$dataProvider->getModels();
 			$data=Yii::$app->arrayBantuan->array_find($modelMenu, 'ID',$valueMenu)[0];
@@ -215,7 +215,7 @@ class Useroption extends Component{
 	*/
 	public function UserStore(){
 		if (!Yii::$app->user->isGuest){
-			$searchModel = new StoreSearch(['ACCESS_UNIX'=>Yii::$app->getUserOpt->user()['ACCESS_UNIX']]);
+			$searchModel = new StoreSearch(['ACCESS_UNIX'=>Yii::$app->getUserOpt->user()['ACCESS_ID']]);
 			$dataProvider1 = $searchModel->searchUserStore(Yii::$app->request->queryParams);
 			$modelMenu=$dataProvider1->getModels();
 			return $modelMenu;			

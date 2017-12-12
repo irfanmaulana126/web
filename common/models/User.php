@@ -149,7 +149,9 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function getId()
     {
-        return $this->getPrimaryKey();
+		//ptr.nov "error Array to string conversion change to $this->id "
+       // return $this->getPrimaryKey();
+        return $this->id;		
     }
 	
 	/**
