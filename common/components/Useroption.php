@@ -58,12 +58,12 @@ class Useroption extends Component{
 	 * PARAM	: Yii::$app->getUserOpt->UserMenu() //set menuLeft.
 	 * Author	: Piter Novian [ptr.nov@gmail.com].
 	*/
-	public function UserMenu(){
+	public function UserMenu1(){
 		if (!Yii::$app->user->isGuest){
 			//$modelUser = Userlogin::find()->where(['id'=>Yii::$app->getUserOpt->user()['id']])->asArray()->one();
 			//Get Model data Menu, $param 'UserUnix'=>'20170404081602',
 			//$searchModel = new ModulMenuSearch(['UserUnix'=>$modelUser['ACCESS_UNIX']]);
-			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()['ACCESS_UNIX']]);
+			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()['ACCESS_ID']]);
 			//$searchModel = new ModulMenuSearch(['UserUnix'=>'20170404081602']);
 			$dataProvider = $searchModel->searchUserMenu(Yii::$app->request->queryParams);
 			$modelMenu=$dataProvider->getModels();
@@ -119,6 +119,72 @@ class Useroption extends Component{
 	}
 	
 	/*
+	 * TREE MENU - PERMISSION MODUL MENU.
+	 * STATUS	: PER-USER [Login Menu TTree Aksess].
+	 * ACCESS	: Base on function UserMenu(Show/hidden).
+	 *			1. Show/hidden Menu
+	 *			2. URL access Permission.
+	 * PARAM	: Yii::$app->getUserOpt->UserMenu() //set menuLeft.
+	 * Author	: Piter Novian [ptr.nov@gmail.com].
+	*/
+	public function UserMenu2(){
+		if (!Yii::$app->user->isGuest){
+			
+			//$modelUser = Userlogin::find()->where(['id'=>Yii::$app->getUserOpt->user()['id']])->asArray()->one();
+			//Get Model data Menu, $param 'UserUnix'=>'20170404081602',
+			//$searchModel = new ModulMenuSearch(['UserUnix'=>$modelUser['ACCESS_UNIX']]);
+			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()]);
+			//$searchModel = new ModulMenuSearch(['UserUnix'=>'20170404081602']);
+			$dataProvider = $searchModel->searchUserMenu(Yii::$app->request->queryParams);
+			$modelMenu=$dataProvider->getModels();
+			//Grouping Menu by field, MODUL_GRP
+			$groupingMenu= Yii::$app->arrayBantuan->array_group_by($modelMenu,'MODUL_GRP');
+			//print_r($modelMenu);
+			$getMenu='';
+			//$menuBegin='<ul class="sidebar-menu" >';
+			//$menuEnd='</ul>';
+			foreach($groupingMenu as $row0 => $val0){
+				if($val0[0]['MODUL_STS']==1 && $val0[0]['modulMenuTbl']['STATUS']==1){ //STATUS MENU 						
+					$menuHeader='';								
+					foreach($groupingMenu[$row0] as $row1 => $val1){
+						if((int)$val1['MODUL_ID']==(int)$val1['MODUL_GRP']){
+							//$iconHead=$val1['BTN_ICON']!=''?$val1['BTN_ICON']:'fa-circle-o';
+							$menuHeader['url']=$val1['BTN_URL'];
+							$menuHeader['label']=$val1['BTN_NM'];
+							$menuHeader['icon']=$val1['BTN_ICON'];								
+							//$menuHeader['options']=[];								
+						}elseif($val1['BTN_NM']<>''){
+							$strActive=0;									//default active MENU
+							$splitAry=explode("/",$val1['BTN_URL']);		//URL SPLIT
+							$idCntrl= Yii::$app->controller->id;			//get contoler id
+							if ($splitAry[0]!='#'){
+								if($splitAry[2]==$idCntrl){
+									$strActive=1;
+								}else{
+									$strActive=$splitAry[0];
+								}						
+							}							
+							//$iconSub2=$val1['BTN_ICON']!=''?$val1['BTN_ICON']:'fa-angle-double-right';
+							$menuHeader['items'][]=[
+								'icon'=>$val1['BTN_ICON'],
+								'label'=>$val1['BTN_NM'],								
+								'url'=>$val1['BTN_URL'],
+								'active' => ($strActive),
+								'options'=>['style'=>'background-color:rgba(255, 255, 255, 0);color:black']			
+							];
+						};
+					}					
+					$getMenu[]=$menuHeader;
+				};
+			};
+			// return json_encode($getMenu);
+			return $getMenu;
+		}
+	}
+	
+	
+	
+	/*
 	 * PERMISSION MODUL MENU.
 	 * STATUS	: PER-USER [Login Menu Aksess].
 	 * ACCESS	: Base on function UserMenu(Show/hidden).
@@ -131,7 +197,7 @@ class Useroption extends Component{
 	*/
 	public function UserMenuPermission($valueMenu){
 		if (!Yii::$app->user->isGuest){
-			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()['ACCESS_UNIX']]);
+			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()['ACCESS_ID']]);
 			$dataProvider = $searchModel->searchUserMenu(Yii::$app->request->queryParams);
 			$modelMenu=$dataProvider->getModels();
 			$data=Yii::$app->arrayBantuan->array_find($modelMenu, 'ID',$valueMenu)[0];
@@ -215,7 +281,7 @@ class Useroption extends Component{
 	*/
 	public function UserStore(){
 		if (!Yii::$app->user->isGuest){
-			$searchModel = new StoreSearch(['ACCESS_UNIX'=>Yii::$app->getUserOpt->user()['ACCESS_UNIX']]);
+			$searchModel = new StoreSearch(['ACCESS_UNIX'=>Yii::$app->getUserOpt->user()['ACCESS_ID']]);
 			$dataProvider1 = $searchModel->searchUserStore(Yii::$app->request->queryParams);
 			$modelMenu=$dataProvider1->getModels();
 			return $modelMenu;			

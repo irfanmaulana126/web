@@ -69,10 +69,10 @@ class StockOutSearch extends DynamicModel
 					),
 					CONCAT(
 						'(CASE WHEN inv.STOCK_AWAL IS NOT NULL THEN inv.STOCK_AWAL ELSE 0 END) + ',
-						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$tglIN."' AND '\",
+						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$TGL."' AND '\",
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
 						\"' THEN  inv.STOCK_BARU END) -\",
-						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$tglIN."' AND '\",
+						\"SUM(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') BETWEEN '".$TGL."' AND '\",
 						DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),
 						\"' THEN inv.STOCK_TERJUAL ELSE 0 END) \"						
 						\" AS 'SISA_\",DATE_FORMAT(str1.TGL_RUN,'%Y-%m-%d'),\"'\"												

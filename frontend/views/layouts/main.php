@@ -25,7 +25,7 @@ AppAsset::register($this);
 			skin-blue sidebar-mini sidebar-collapse
 		!-->
 		<!--<body class="skin-blue sidebar-collapse" style="min-height:680px"> 	!-->	
-		<body class="skin-blue " style="min-height:80px"> 		
+		<body class="hold-transition skin-blue " style="min-height:80px"> 		
 			<! - NOT LOGIN- Author : -ptr.nov- >
 			<?php if (Yii::$app->user->isGuest) { ?>
 				<?php $this->beginBody(['id'=>'page-top','class'=>'index']) ?>

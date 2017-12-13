@@ -9,13 +9,14 @@ use kartik\icons\Icon;
 dmstr\web\AdminLteAsset::register($this);
 ?>
  <header class="main-header"> <header class="main-header">
-	<div  class="logo">
+	<div  class="logo" style="background-color:#654321">
 		<?php
-	   // echo Html::img('http://lukisongroup.com/favicon.ico', ['width'=>'50']);
+		//#245F77,#1aa8bf
+	     echo Html::img('https://dashboard.kontrolgampang.com/logo-dashboard3.png', ['width'=>'150px','height'=>'50px']);
 		?>
 		<!-- LOGO 
 		LukisonGroup-->
-		<b>Kontrol Gampang</b>
+		
 	</div> 
 	<?php
 		NavBar::begin([
