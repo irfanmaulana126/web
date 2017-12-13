@@ -2,9 +2,28 @@
 use yii\helpers\Html;
 use common\models\User;
 use common\models\UserloginSearch;
-use frontend\assets\AppAsset;
-AppAsset::register($this);
+use yii\web\View;
+use kartik\sidenav\SideNav;
+// use frontend\assets\AppAsset;
+// AppAsset::register($this);
+// print_r( Yii::t('app', 'stock-product'));
+// print_r(Yii::$app->getUserOpt->UserMenu2());
+// die();
+
 $base64 ='data:image/jpg;charset=utf-8;base64,'.Yii::$app->getUserOpt->user()['IMG64'];
+
+
+$corp=Yii::$app->getUserOpt->user()['CORP_NM']!=''?Yii::$app->getUserOpt->user()['CORP_NM']:'NAMA PERUSAHAAN';
+$sideMenu=SideNav::widget([
+	'headingOptions' => ['style'=>"background-color:#1AA8BF"],
+	'containerOptions'=>['style'=>"background-color:#654321"],
+	//'type' => SideNav::TYPE_SUCCESS,
+	'encodeLabels' => false,
+	'heading' => '<b>'.$corp.'</b>',
+	'indItem'=>'',
+	'items' =>Yii::$app->getUserOpt->UserMenu2()
+]);
+
 ?>
 	<section class="sidebar " >
 		<!-- User Login -->
@@ -18,12 +37,12 @@ $base64 ='data:image/jpg;charset=utf-8;base64,'.Yii::$app->getUserOpt->user()['I
 					<a href="#"><i class="fa fa-circle text-success" style="text-align: left,font-family: tahoma ;font-size: 9pt;"> Setting</i> </a>
 				</div>
 			</div>
-		<div class="user-panel" style="margin-top:20px;background-color:rgba(19, 105, 144, 1)">
-			<!-- /.Company Select Dashboard -->
-			 <p style="color:white;font-family:tahoma;font-size:11pt;text-align:center">
-				<?=Yii::$app->getUserOpt->user()['CORP_NM']?>
+		<!--<div class="user-panel" style="margin-top:20px;background-color:rgba(19, 105, 144, 1)">
+			 /.Company Select Dashboard 
+			 <p style="color:white;font-family:tahoma;font-size:11pt;text-align:center">-->
+				<?php //Yii::$app->getUserOpt->user()['CORP_NM']?>
 			 </p>
-		</div>
+		<!--</div>-->
 		   
 		<!-- /.User Login -->
 		<!-- search form -->
@@ -77,7 +96,10 @@ $base64 ='data:image/jpg;charset=utf-8;base64,'.Yii::$app->getUserOpt->user()['I
 					]);
 				}; */
 			?>
-			<div id="side">
-			<?=Yii::$app->getUserOpt->UserMenu()?>
-			</div>
+			
+			<?php
+				//echo Yii::$app->getUserOpt->UserMenu();
+				echo $sideMenu;;
+			?>
+			
 	</section>

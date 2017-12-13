@@ -9,8 +9,9 @@ use kartik\icons\Icon;
 dmstr\web\AdminLteAsset::register($this);
 ?>
  <header class="main-header"> <header class="main-header">
-	<div  class="logo bg-blue"">
+	<div  class="logo" style="background-color:#654321">
 		<?php
+		//#245F77,#1aa8bf
 	     echo Html::img('https://dashboard.kontrolgampang.com/logo-dashboard3.png', ['width'=>'150px','height'=>'50px']);
 		?>
 		<!-- LOGO 

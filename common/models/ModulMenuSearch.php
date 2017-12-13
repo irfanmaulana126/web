@@ -37,6 +37,7 @@ class ModulMenuSearch extends ModulMenu
 	*/
     public function searchUserMenu($params)
     {
+       // $query = ModulMenu::find()->JoinWith('modulMenuTbl',true,'INNER JOIN')->orderBy(['SORT_PARENT'=>SORT_ASC]);//->where(['USER_UNIX' =>$params['UserUnix']]);
         $query = ModulMenu::find()->JoinWith('modulMenuTbl',true,'INNER JOIN')->orderBy(['SORT_PARENT'=>SORT_ASC]);//->where(['USER_UNIX' =>$params['UserUnix']]);
 
         $dataProvider = new ActiveDataProvider([
