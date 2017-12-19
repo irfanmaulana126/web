@@ -62,7 +62,7 @@ $form = ActiveForm::begin([
 ?>
 <div class="col-xs-12 col-sm-12 col-lg-12 col-lg-12" >
 		<div class="col-xs-12 col-sm-12 col-lg-12 col-lg-12" style="text-align:center;margin-bottom:20px;" >		
-				<img src="https://dashboard.kontrolgampang.com/logo-kg2.png"  style="width:180px; height:80px;"/>
+				<img src="<?php echo Yii::$app->request->baseUrl; ?>/logo-kg2.png"  style="width:180px; height:80px;"/>
 		</div>
 
 		<div class="row">
