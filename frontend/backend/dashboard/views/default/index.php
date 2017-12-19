@@ -6,6 +6,8 @@ use yii\helpers\Url;
 use ptrnov\fusionchart\Chart;
 use ptrnov\fusionchart\ChartAsset;
 ChartAsset::register($this);
+$this->title = 'Dashboard';
+$this->params['breadcrumbs'][] = $this->title;
 
 //print_r(Yii::$app->getUserOpt->user());
 	$_indexChart1=$this->render('_indexChart1',[

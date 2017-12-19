@@ -5,71 +5,122 @@
 /* @var $model \common\models\LoginForm */
 
 use yii\helpers\Html;
-use yii\bootstrap\ActiveForm;
+//use yii\bootstrap\ActiveForm;
+use kartik\widgets\ActiveForm;
 use kartik\label\LabelInPlace;
 use kartik\password\PasswordInput;
+use yii\web\View;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
-$config = ['template'=>"{input}\n{error}\n{hint}"];	
-
 
 $fbButton= yii\authclient\widgets\AuthChoice::widget([
      'baseAuthUrl' => ['site/auth'],
 	 'popupMode' => true
 ]);
 
+$this->registerJs("
+      $(document).ready(function() 
+      {
+         $('#showhide').click(function() 
+         {
+            if ($(this).data('val') == '1') 
+            {
+               $('#pwd').prop('type','text');
+               $('#eye').attr('class','glyphicon glyphicon-eye-close');
+               $(this).data('val','0');
+            }
+            else
+            {
+               $('#pwd').prop('type', 'password');
+               $('#eye').attr('class','glyphicon glyphicon-eye-open');
+               $(this).data('val','1');
+            }
+         });
+      });
+      
+$(document).ready(function()
 
+      {
+         $('#remove').click(function()
+         {
+           $('#uname').val('');
+         });
+         
+      });
+ 
+",View::POS_READY);
+	
+?>
+<?php
 $form = ActiveForm::begin([
-	'id' => 'login-form',
+	//'id' => 'login-form',
 	'action'=>'/site/login',
 	
-]); ?>
+]); 
 
-				<!-- LOGIN Section -->				
-<div class="row" style="align:left;">	
-	<div class="col-xs-12 col-sm-12 col-lg-12" >	
-		<div style="padding-top:5px;margin-left:25px;margin-bottom:40px">
-			<img src="https://dashboard.kontrolgampang.com/logo-kg2.png" class="navbar-header page-scroll" style="width:180px; height:80px; margin-left:20px; margin-top:0px"/>
+?>
+<div class="col-xs-12 col-sm-12 col-lg-12 col-lg-12" >
+		<div class="col-xs-12 col-sm-12 col-lg-12 col-lg-12" style="text-align:center;margin-bottom:20px;" >		
+				<img src="https://dashboard.kontrolgampang.com/logo-kg2.png"  style="width:180px; height:80px;"/>
 		</div>
-		<div style="padding-top:50px;margin-bottom:40px">
-			<?= $form->field($model, 'username', $config)->widget(LabelInPlace::classname(),[
-				 'label'=>'<i class="fa fa-user"></i> username',
-				 'encodeLabel'=> false
-			]);?>
-			<?php //= $form->field($model, 'username')->textInput() ?>
-			
-			<?php echo
-				$form->field($model, 'password')->widget(PasswordInput::classname(),[
-				'togglePlacement' => 'left',
-				'pluginOptions' => ['toggleMask' => true,'showMeter' => false],
-				'options'=>['style'=>'width:230px;align:left','placeholder'=>'Password...']
-				])->label('');
-			?>	
-			<?php //=$form->field($model, 'password', $config)->widget(LabelInPlace::classname())?>	
-			<?php //= $form->field($model, 'password')->passwordInput() ?>
 
-			<div class="form-group" style="text-align:left">
-				<?php //= $form->field($model, 'rememberMe')->checkbox() ?>
-			</div>
-			<!--<div style="color:#999;margin:1em 0">
-				lupa password <?php //= Html::a('reset it', ['site/request-password-reset']) ?>.
-			</div>!-->
-		</div>
-			<div class="form-group" style="text-align:right">
-				<div class="col-xs-12 col-sm-12 col-lg-12" >		
-					<div style="float:right; width:50px">
-						<?php echo Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-					</div>
-					<div style="float:right; width:80px">
-						<?php echo $fbButton; ?>
-					</div>
-				
+		<div class="row">
+			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="form-group">
+					<?php
+						echo $form->field($model, 'username', [
+							'addon' => [
+								'prepend' => ['content'=>'<span class="glyphicon glyphicon-user"></span>'],
+								'append' => [
+									'content' => Html::button('<span class="glyphicon glyphicon-remove"></span>', ['id'=>'remove','data-val'=>'1','class'=>'btn btn-danger']), 
+									'asButton' => true
+								],							
+							]
+						])->textInput(['id'=>"uname",'placeholder'=>'Username'])->label(false);
+					
+					?>
 				</div>
 			</div>
+		</div>		
+
+		<div class="row">
+			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<div class="form-group">
+					<?php
+						echo $form->field($model, 'password', [
+							'addon' => [
+								'prepend' => ['content'=>'<span class="glyphicon glyphicon-lock"></span>'],
+								'append' => [
+									'content' => Html::button('<span id="eye" class="glyphicon glyphicon-eye-open"></span>', ['id'=>'showhide','data-val'=>'1','class'=>'btn btn-warning']), 
+									'asButton' => true
+								],
+							
+							]
+						])->passwordInput(['id'=>"pwd",'placeholder'=>'Password'])->label(false);
+					
+					?>
+				</div>
+				
+				
+			</div>
+		</div>
 		
-	</div>	
+		<div class="form-group" style="text-align:right">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " >	
+				<div style="float:right; width:50px">
+					<?php echo Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+				</div>
+				<div style="float:right; width:80px">
+					<?php echo $fbButton; ?>
+				</div>				
+			</div>
+		</div>	
 </div>
+
+
+			
+		
 
 <?php ActiveForm::end(); ?>
 

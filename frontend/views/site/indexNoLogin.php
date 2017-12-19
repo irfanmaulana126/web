@@ -12,27 +12,43 @@ use yii\bootstrap\ActiveForm;
 	$colorTextIcon='#0f0202';
 ?>
 <!-- Header -->   
-<div class="col-xs-12 col-sm-12 col-lg-12" style="background-color:powderblue;padding-top:150px">	
-	<div align="center">
-		<div style="align:left;width:300px;">
-			<?php
-				if (Yii::$app->user->isGuest){
-					$xLogin= $this->render('login',[
-						'model'=>$model
-					]);
-					 echo Html::panel(
-						[	
-							'heading' =>false, 
-							'body' => $xLogin,
-							'footer'=>false
-						],
-						Html::TYPE_PRIMARY
-					);
-				}
-			?>		
+<div class="container" >
+  <div class="row" style="padding-top:80px">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+		<div class="panel panel-info" style=" background-color:rgba(140, 220, 227, 0.1);" >
+		  <!--<div class="panel-heading">Panel Header</div>!-->
+		  <div class="panel-body">
+			  <?php
+					if (Yii::$app->user->isGuest){
+						$xLogin= $this->render('login',[
+							'model'=>$model
+						]);
+						
+						 // echo Html::panel(
+							// [	
+								// 'heading' =>false, 
+								// 'body' => $xLogin,
+								// 'footer'=>false
+							// ],
+							// Html::TYPE_PRIMARY
+						// );
+						
+						echo $xLogin;
+						
+					}
+				?>		
+		  
+		  
+		  </div>
 		</div>
-	</div>
-</div>
+			
 	
+	</div>
+    <div class="col-lg-4"></div>
+  </div>
+</div>
+
+
 	
 
