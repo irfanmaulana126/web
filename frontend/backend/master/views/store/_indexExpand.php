@@ -100,7 +100,8 @@ use common\models\Userlogin;
 				]);
 			}elseif($id==5){
 				//== Detail User Operatioal==
-				$modalUser=Userlogin::find()->Where('FIND_IN_SET(ACCESS_ID,"'.$modelToko->ACCESS_ID.'")')->all();
+				// print_r($modelToko['ACCESS_ID']);die();
+				$modalUser=Userlogin::find()->Where('FIND_IN_SET(ACCESS_ID,"'.$modelToko['ACCESS_ID'].'")')->all();
 				$dataProviderUserOps= new ArrayDataProvider([
 					'allModels'=>$modalUser,	
 					'pagination' => [
@@ -197,11 +198,13 @@ use common\models\Userlogin;
 			'view' =>function ($url,$model){
 				$id=$model['id'];
 				$storeId=$model['STORE_ID']	;
-				if ($id==1){
+				if ($id == 1){
 					$urlPilih='/master/product?storeid=170726220936.0001';
-				}elseif($id==2){
+				}elseif($id == 2){
 					$urlPilih='/master/product?storeid='.$storeId;
-				}				
+				}else{
+					$urlPilih='';
+				}
 				return  tombolExpadDetail($urlPilih);
 			},
 			

@@ -7,6 +7,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use common\models\Store;
+use frontend\backend\master\models\Product;
+use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\AllStoreItemSearch;
 /**
  * ItemController implements the CRUD actions for Item model.
@@ -34,8 +37,9 @@ class DataBarangController extends Controller
      */
     public function actionIndex()
     {
-		$searchModel = new AllStoreItemSearch();
-		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);	
+        $searchModel = new AllStoreItemSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        // print_r($dataProvider);die;	
 		 return $this->render('index', [
 			'searchModel'=>$searchModel,
             'dataProvider' => $dataProvider,

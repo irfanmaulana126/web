@@ -4,31 +4,25 @@ namespace frontend\backend\master\models;
 
 use Yii;
 use yii\base\Model;
-use yii\data\ActiveDataProvider;
+//use yii\data\ActiveDataProvider;
 use yii\data\ArrayDataProvider;
 use yii\debug\components\search\Filter;
 use yii\debug\components\search\matchers;
 
 class AllStoreItemSearch extends Model
 {	
-	public $OUTLET_CODE;
-	public $ACCESS_UNIX_ITEM;
-	public $ITEM_ID;
-	public $OUTLET_NM;
-	public $ITEM_NM;
-	public $SATUAN;
-	public $DEFAULT_HARGA;
-	public $DEFAULT_STOCK;
-	
+	public $CURRENT_STOCK;
+	public $ACCESS_GROUP;
+	public $PRODUCT_ID;
+	public $STORE_ID;
     /**
      * @inheritdoc	
      */
     public function rules()
     {
         return [
-            [['OTLET_CODE','ACCESS_UNIX_ITEM','ITEM_ID'], 'safe'],
-            [['OUTLET_NM','ITEM_NM','SATUAN'], 'safe'],
-            [['DEFAULT_HARGA','DEFAULT_STOCK'], 'safe'],
+            [['STORE_ID','CURRENT_STOCK','ACCESS_GROUP','PRODUCT_ID'], 'safe'],
+            [['PRODUCT_NM'], 'safe'],
         ];
     }
 
@@ -36,10 +30,10 @@ class AllStoreItemSearch extends Model
     {
         return [
             'ID' => Yii::t('app', 'ID'),
-            'OUTLET_NM' => Yii::t('app', 'OUTLET'),
-            'ACCESS_UNIX_ITEM' => Yii::t('app', 'ACCESS_UNIX'),
-            'ITEM_ID' => Yii::t('app', 'ITEM_ID'),
-            'ITEM_NM' => Yii::t('app', 'ITEMS'),
+            'ACCESS_GROUP' => Yii::t('app', 'OUTLET'),
+            'PRODUCT_ID' => Yii::t('app', 'ACCESS_UNIX'),
+            'PRODUCT_NM' => Yii::t('app', 'ITEM_ID'),
+            'CURRENT_STOCK' => Yii::t('app', 'ITEMS'),
             
         ];
     }
@@ -47,8 +41,12 @@ class AllStoreItemSearch extends Model
     public function search($params){
 		
 		//$this->OUTLET_CODE='0001';
-		$this->ACCESS_UNIX_ITEM='20170404081601';
-		$qryAllStoreItems= Yii::$app->api_dbkg->createCommand("select * from VwStoreItem where ACCESS_UNIX_ITEM='".$this->ACCESS_UNIX_ITEM."'")->queryAll();
+		$this->ACCESS_GROUP=Yii::$app->user->identity->ACCESS_GROUP;
+        $qryAllStoreItems= Yii::$app->api_dbkg->createCommand("
+        
+            select * from product where ACCESS_GROUP='".$this->ACCESS_GROUP."'
+            order by store_id asc
+            ")->queryAll();
 		// $qryAllStoreItems= Yii::$app->db->createCommand("select * from VwStoreItem where ACCESS_UNIX_ITEM='".$this->ACCESS_UNIX_ITEM."' AND OUTLET_CODE='".$this->OUTLET_CODE."'")->queryAll();
 		
 		$dataProvider= new ArrayDataProvider([
@@ -62,11 +60,11 @@ class AllStoreItemSearch extends Model
  		}
 		
 		$filter = new Filter();
- 		$this->addCondition($filter, 'ACCESS_UNIX_ITEM', true);
- 		$this->addCondition($filter, 'OUTLET_CODE', true);	
- 		$this->addCondition($filter, 'ITEM_ID', true);	
- 		$this->addCondition($filter, 'OUTLET_NM', true);	
- 		$this->addCondition($filter, 'ITEM_NM', true);	
+ 		$this->addCondition($filter, 'ACCESS_GROUP', true);
+ 		$this->addCondition($filter, 'PRODUCT_ID', true);	
+ 		$this->addCondition($filter, 'PRODUCT_NM', true);	
+ 		$this->addCondition($filter, 'STOCK_LEVEL', true);	
+ 		$this->addCondition($filter, 'CURRENT_STOCK', true);	
  		$dataProvider->allModels = $filter->filter($qryAllStoreItems);
 		
 		return $dataProvider;

@@ -61,8 +61,8 @@ class KaryawanController extends Controller
             return $this->redirect(['index', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'KARYAWAN_ID' => $model->KARYAWAN_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
         } else {
             return $this->renderAjax('form_create', [
-                'model' => $model,
-            ]);
+				'model' => $model,
+			]);
         }
     }
 	

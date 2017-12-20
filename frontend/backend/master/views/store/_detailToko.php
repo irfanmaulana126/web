@@ -167,7 +167,7 @@ use kartik\widgets\ActiveForm;
 			'value'=>sttMsg($modelToko->STATUS),
 			'type'=>DetailView::INPUT_SELECT2,
 			'widgetOptions'=>[
-				'data'=>$valStt,//Yii::$app->gv->gvStatusArray(),
+				'data'=>Yii::$app->gv->gvStatusArray(),//$valStt
 				'options'=>['id'=>'status-review-id','placeholder'=>'Select ...'],
 				'pluginOptions'=>['allowClear'=>true],
 			],	

@@ -38,8 +38,8 @@ class StockMasukSearch extends DynamicModel
 	public function search($params){
 		
       	$accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
-		// $TGL=$this->thn!=''?$this->thn:date('Y-m-d');
-		 $TGL='2017-10-30';
+		$TGL=$this->thn!=''?$this->thn:date('Y-m-d');
+		//  $TGL='2017-10-30';
 		$sql="
 			SET SESSION GROUP_CONCAT_MAX_LEN = 1000000;
 			SET @tglIN=concat(date_format(LAST_DAY('".$TGL."' - interval 0 month),'%Y-%m-'),'01');

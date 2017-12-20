@@ -1,5 +1,6 @@
 <?php
 use kartik\helpers\Html;
+use kartik\detail\DetailView;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
 use kartik\widgets\Spinner;
@@ -140,7 +141,8 @@ $headerColor='rgba(128, 179, 178, 1)';
 	
 	$_indexExpand=$this->render('_indexExpand',[
 		'dataProviderMenu' => $dataProviderMenu,
-		'storeNm'=>$storeNm
+		'storeNm'=>$storeNm,
+		'model'=>$model
 	]);
 	
 

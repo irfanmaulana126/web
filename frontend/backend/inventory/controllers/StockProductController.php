@@ -60,6 +60,7 @@ class StockProductController extends Controller
 		//DINAMIK MODEL PARAMS
 		$searchModel = new StockOutSearch($cari);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		// print_r($dataProvider);die();
 		
 		//LOAD DEFAULT INDEX
 		return $this->render('index', [

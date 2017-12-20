@@ -38,11 +38,16 @@ class ArusUangController extends Controller
         ]);
     }	
 	
+	public function actionView($id)
+	{
+		return $this->render('view');
+	}
 	 public function actionDetailLev1()
     {
 		
 		$paramCari=Yii::$app->getRequest()->getQueryParam('id');
 		$paramBln=Yii::$app->getRequest()->getQueryParam('bln');
+		// print_r($paramCari);die();
 		if ($paramCari!=''){
 			$cari=['thn'=>$paramCari];			
 		}else{
@@ -57,13 +62,55 @@ class ArusUangController extends Controller
 		//Kas-Keluar		
 		$searchModelKeluar = new TransPengeluaranSummaryMonthlySearch();
         $dataProviderKeluar = $searchModelKeluar->search(Yii::$app->request->queryParams);
-	
+		
+		switch ($paramBln) {
+			case 1:
+				$bln="Januari";
+				break;
+			case 2:
+				$bln="Febuari";
+				break;
+			case 3:
+				$bln="Maret";
+				break;
+			case 4:
+				$bln="April";
+				break;
+			case 5:
+				$bln="Mei";
+				break;
+			case 6:
+				$bln="Juni";
+				break;
+			case 7:
+				$bln="Juli";
+				break;
+			case 8:
+				$bln="Agustus";
+				break;
+			case 9:
+				$bln="September";
+				break;
+			case 10:
+				$bln="Oktober";
+				break;
+			case 11:
+				$bln="November";
+				break;
+			case 12:
+				$bln="Desember";
+				break;
+			default:
+				$bln="Bulan tidak ada";
+				break;
+		}
+
         return $this->render('index1', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'dataProviderKeluar' => $dataProviderKeluar,
 			'cari'=>$cari,
-			'paramBln'=>$paramBln
+			'bln'=>$bln
         ]);
     }	
 }
