@@ -1,5 +1,6 @@
 <?php
 use kartik\helpers\Html;
+use kartik\detail\DetailView;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;

@@ -8,6 +8,7 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use kartik\builder\Form;
+use kartik\detail\DetailView;
 use yii\helpers\Url;
 use yii\web\View;
 use frontend\backend\laporan\models\TransOpenclose;

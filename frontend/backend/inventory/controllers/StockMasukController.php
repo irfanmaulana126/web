@@ -26,16 +26,13 @@ class StockMasukController extends Controller
 		if ($modelPeriode->load(Yii::$app->request->post())) {
 			$hsl = \Yii::$app->request->post();	
 			$paramCari=$hsl['DynamicModel']['TAHUNBULAN']."-01";
-		};		
-		
+		};				
 		//PUBLIC PARAMS	
 		$cari=['thn'=>$paramCari];	
 		
 		//DINAMIK MODEL PARAMS
 		$searchModel = new StockMasukSearch($cari);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		// print_r($dataProvider);
-		// die();
 		//LOAD DEFAULT INDEX
 		return $this->render('index', [
 			'searchModel' => $searchModel,

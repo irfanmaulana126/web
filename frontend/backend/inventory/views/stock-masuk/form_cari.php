@@ -16,7 +16,8 @@ use kartik\widgets\DateTimePicker;;
 			//'enableAjaxValidation'=>true,
 			//'method' => 'post',
 			//'validationUrl'=>Url::toRoute('/inventory/stock-opname/valid')
-			'action' =>['/inventory/stock-opname/index']
+			// 'action' =>['/inventory/stock-opname/index']
+			'action' =>['/inventory/stock-masuk/index']
    ]); ?>
 		<div style="height:100%;font-family: verdana, arial, sans-serif ;font-size: 6pt;">
 		<div class="row" >

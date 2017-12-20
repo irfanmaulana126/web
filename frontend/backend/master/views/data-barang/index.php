@@ -60,12 +60,15 @@ $this->registerCss("
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'OUTLET_NM',
+			'attribute'=>'STORE_ID',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
+			'value'=>function($model){
+				return $model['STORE_ID'];
+			},
 			'hAlign'=>'right',
-			'vAlign'=>'middle',
+			'vAlign'=>'top',
 			'mergeHeader'=>false,
 			'group'=>true,
 			'noWrap'=>false,

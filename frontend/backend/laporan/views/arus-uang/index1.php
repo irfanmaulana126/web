@@ -59,6 +59,7 @@ $this->registerJs("
 	];	
 	$valBulan = ArrayHelper::map($aryBln, 'ID', 'BLN');
 	
+	$bColor='rgba(87,114,111, 1)';
 	// Multiple select without model
 	$btn_srchBulan1=Select2::widget([
 			'name' => 'state_2',
@@ -345,8 +346,8 @@ $this->registerJs("
 		<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;">
 			<div class="row">
 				<?php
-					$model=$dataProvider->getModels();				
-					echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$model[0]['BULAN'].' '.$cari['thn'].'</b>';				
+					$model=$dataProvider->getModels();	
+					echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$bln.' '.$cari['thn'].'</b>';				
 				?>	
 									
 			</div>

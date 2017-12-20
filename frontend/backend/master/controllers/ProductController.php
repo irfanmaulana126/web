@@ -71,10 +71,12 @@ class ProductController extends Controller
     {
 		$paramCari=Yii::$app->getRequest()->getQueryParam('storeid');
 		//Get 
+		// print_r($paramCari);die();
 		$modelOutlet=Store::find()->where(['STORE_ID'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
-		if($modelOutlet){
-		    $searchModel = new ProductSearch(['STORE_ID'=>$paramCari]);
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);			
+        // print_r($modelOutlet);die();
+        if($modelOutlet){
+            $searchModel = new ProductSearch(['STORE_ID'=>$paramCari]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);			
 		
 			///OUTLET ID.		
 			return $this->render('index', [

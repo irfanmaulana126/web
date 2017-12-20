@@ -61,13 +61,14 @@ class StoreController extends Controller
 
 	public function actionIndex()
     {
-		
+		$model= new Store();
 		$searchModel = new StoreSearch();
         $dataProvider = $searchModel->searchUserStore(Yii::$app->request->queryParams);
-
+        // print_r($model);die();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model'=>$model
         ]);
        //return 'asd';
     }

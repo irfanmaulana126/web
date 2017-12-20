@@ -43,7 +43,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> TAMBAH KARYAWAN</b>
 		',	
-		'size' => 'modal-sm',
+		'size' => 'modal-md',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -69,7 +69,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> VIEW DATA KARYAWAN</b>
 		',	
-		'size' => 'modal-sm',
+		'size' => 'modal-md',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -94,7 +94,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> EDIT DATA KARYAWAN</b>
 		',	
-		'size' => 'modal-sm',
+		'size' => 'modal-md',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
