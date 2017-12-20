@@ -15,12 +15,12 @@ $base64 ='data:image/jpg;charset=utf-8;base64,'.Yii::$app->getUserOpt->user()['I
 
 $corp=Yii::$app->getUserOpt->user()['CORP_NM']!=''?Yii::$app->getUserOpt->user()['CORP_NM']:'NAMA PERUSAHAAN';
 $sideMenu=SideNav::widget([
-	'headingOptions' => ['style'=>"background-color:#1AA8BF"],
-	'containerOptions'=>['style'=>"background-color:#654321"],
+	'headingOptions' => ['style'=>Yii::$app->getTemplate->Template(Yii::$app->user->identity->TEMPLATE)['LifeMenu-Header']],
+	'containerOptions'=>['style'=>Yii::$app->getTemplate->Template(Yii::$app->user->identity->TEMPLATE)['LifeMenu-Content']],
 	//'type' => SideNav::TYPE_SUCCESS,
 	'encodeLabels' => false,
 	'heading' => '<b>'.$corp.'</b>',
-	'indItem'=>'',
+	//'indItem'=>'',
 	'items' =>Yii::$app->getUserOpt->UserMenu2()
 ]);
 

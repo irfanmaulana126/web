@@ -9,7 +9,7 @@ use kartik\icons\Icon;
 dmstr\web\AdminLteAsset::register($this);
 ?>
  <header class="main-header"> <header class="main-header">
-	<div  class="logo" style="background-color:#654321">
+	<div  class="logo" style="<?php echo Yii::$app->getTemplate->Template(Yii::$app->user->identity->TEMPLATE)['Navbar-Left']?>">
 		<?php
 		//#245F77,#1aa8bf
 	     echo Html::img('https://dashboard.kontrolgampang.com/logo-dashboard3.png', ['width'=>'150px','height'=>'50px']);
