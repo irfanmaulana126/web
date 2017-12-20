@@ -129,22 +129,41 @@ class Useroption extends Component{
 	*/
 	public function UserMenu2(){
 		if (!Yii::$app->user->isGuest){
-			
-			//$modelUser = Userlogin::find()->where(['id'=>Yii::$app->getUserOpt->user()['id']])->asArray()->one();
+			/*
+			$modelUser = Userlogin::find()->where(['id'=>Yii::$app->getUserOpt->user()['id']])->asArray()->one();
 			//Get Model data Menu, $param 'UserUnix'=>'20170404081602',
 			//$searchModel = new ModulMenuSearch(['UserUnix'=>$modelUser['ACCESS_UNIX']]);
+			
 			$searchModel = new ModulMenuSearch(['UserUnix'=>Yii::$app->getUserOpt->user()]);
 			//$searchModel = new ModulMenuSearch(['UserUnix'=>'20170404081602']);
 			$dataProvider = $searchModel->searchUserMenu(Yii::$app->request->queryParams);
 			$modelMenu=$dataProvider->getModels();
 			//Grouping Menu by field, MODUL_GRP
+			$groupingMenu= Yii::$app->arrayBantuan->array_group_by($modelMenu,'MODUL_GRP'); */
+			
+			//MEMCACHED USED
+			$adpMenu= new ArrayDataProvider([
+				'allModels'=>Yii::$app->db->cache(function ($db) {
+					return $db->createCommand("
+						SELECT * FROM modul x1 LEFT JOIN modul_permission x2 on x2.MODUL_ID=x1.MODUL_ID
+						WHERE x2.USER_UNIX='".Yii::$app->getUserOpt->user()['ACCESS_ID']."'
+						ORDER BY MODUL_GRP,SORT_PARENT,SORT;
+					")->queryAll();
+				}, 60),
+				'pagination' => [
+					'pageSize' => 200,
+				]
+			]);		
+			$modelMenu= $adpMenu->getModels();
 			$groupingMenu= Yii::$app->arrayBantuan->array_group_by($modelMenu,'MODUL_GRP');
+			
+			
 			//print_r($modelMenu);
 			$getMenu='';
 			//$menuBegin='<ul class="sidebar-menu" >';
 			//$menuEnd='</ul>';
 			foreach($groupingMenu as $row0 => $val0){
-				if($val0[0]['MODUL_STS']==1 && $val0[0]['modulMenuTbl']['STATUS']==1){ //STATUS MENU 						
+				if($val0[0]['MODUL_STS']==1 && $val0[0]['STATUS']==1){ //STATUS MENU 						
 					$menuHeader='';								
 					foreach($groupingMenu[$row0] as $row1 => $val1){
 						if((int)$val1['MODUL_ID']==(int)$val1['MODUL_GRP']){
@@ -166,11 +185,14 @@ class Useroption extends Component{
 							}							
 							//$iconSub2=$val1['BTN_ICON']!=''?$val1['BTN_ICON']:'fa-angle-double-right';
 							$menuHeader['items'][]=[
-								'icon'=>$val1['BTN_ICON'],
+								'icon'=>'',//$val1['BTN_ICON'],
 								'label'=>$val1['BTN_NM'],								
 								'url'=>$val1['BTN_URL'],
 								'active' => ($strActive),
-								'options'=>['style'=>'background-color:rgba(255, 255, 255, 0);color:black']			
+								'options'=>[
+									'style'=>Yii::$app->getTemplate->Template(Yii::$app->user->identity->TEMPLATE)['LifeMenu-Content-Item']			
+								],
+								
 							];
 						};
 					}					

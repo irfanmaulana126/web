@@ -85,8 +85,11 @@ class SiteController extends Controller
             'ID_FB'=>$attributes['id'],
         ])
         ->one();
+	
+	Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
     if(!empty($user)){
         Yii::$app->user->login($user);
+		// return $this->goBack();
     }
     else{
         //Simpen disession attribute user dari Google
