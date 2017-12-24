@@ -12,7 +12,7 @@ dmstr\web\AdminLteAsset::register($this);
 	<div  class="logo" style="<?php echo Yii::$app->getTemplate->Template(Yii::$app->user->identity->TEMPLATE)['Navbar-Left']?>">
 		<?php
 		//#245F77,#1aa8bf
-	     echo Html::img('https://dashboard.kontrolgampang.com/logo-dashboard3.png', ['width'=>'150px','height'=>'50px']);
+	     echo Html::img(Yii::$app->request->baseUrl.'/logo-dashboard3.png', ['width'=>'150px','height'=>'50px']);
 		?>
 		<!-- LOGO 
 		LukisonGroup-->

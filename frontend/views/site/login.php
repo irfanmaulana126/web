@@ -10,14 +10,11 @@ use kartik\widgets\ActiveForm;
 use kartik\label\LabelInPlace;
 use kartik\password\PasswordInput;
 use yii\web\View;
+use yii\helpers\Url;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 
-$fbButton= yii\authclient\widgets\AuthChoice::widget([
-     'baseAuthUrl' => ['site/auth'],
-	 'popupMode' => true
-]);
 
 $this->registerJs("
       $(document).ready(function() 
@@ -50,6 +47,15 @@ $(document).ready(function()
       });
  
 ",View::POS_READY);
+
+$this->registerCss("
+	.auth-icon facebook {
+		margin:0 auto;
+		width: 100%;
+		padding-left:30%;
+		text-align: center;
+	}
+");
 	
 ?>
 <?php
@@ -100,22 +106,64 @@ $form = ActiveForm::begin([
 						])->passwordInput(['id'=>"pwd",'placeholder'=>'Password'])->label(false);
 					
 					?>
-				</div>
-				
-				
-			</div>
-		</div>
-		
-		<div class="form-group" style="text-align:right">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " >	
-				<div style="float:right; width:50px">
-					<?php echo Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-				</div>
-				<div style="float:right; width:80px">
-					<?php echo $fbButton; ?>
 				</div>				
 			</div>
+		</div>		
+		
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">	
+			<div class="row">		
+				<?php echo Html::submitButton('Login', ['class' => 'btn btn-primary',  'style'=>'width:100%','name' => 'login-button']); ?>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top:2px;text-align:center'">	
+			<div class="row">		
+				<?php 										
+					/* $title1 = Yii::t('app',' f');
+					$url = Url::toRoute(['/site/auth?authclient=facebook']);
+					$options1 = [
+						'id'=>'facebook-id',
+						'class'=>"btn btn-primary btn-xs",    
+						// 'class'=>"auth-icon facebook",    
+						'style'=>[
+							'text-align'=>'center','width'=>'100%','font-size'=>'19px','font-weight'=>'bold',
+							'height'=>'35px',
+							'padding-left:0px',
+							'border'=> 'none'
+						],
+					];					
+					$content = Html::a($title1,$url,$options1);							
+					echo $content;
+					//Html::submitButton('facebook', ['class' => 'btn btn-primmary',  'style'=>'width:100%','name' => 'login-button']) 	 */
+	
+
+					$fbButton= yii\authclient\widgets\AuthChoice::widget([
+					'id'=>'asdas',
+						 'baseAuthUrl' => ['site/auth'],
+						 'popupMode' => true,
+						 'options'=>[
+							///'class'=>'btn btn-primary btn-xs pull-center',
+							//'class'=>'btn btn-primary btn-xs',
+							'style'=>'width:100%;height:35px;text-align:center;padding-left:30%'
+							//'style'=>'padding-left:30%'
+						 ]
+					]);
+					echo $fbButton;
+				?>					
+			</div>	
 		</div>	
+		
+		<!--<div class="form-group" style="text-align:right">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 " >	
+				<div class="row">
+					<div style="float:right; width:50px">
+						<?php //echo Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+					</div>
+					<div style="float:right; width:80px">
+						<?php //echo $fbButton; ?>
+					</div>				
+				</div>
+			</div>
+		</div>	!-->
 </div>
 
 
