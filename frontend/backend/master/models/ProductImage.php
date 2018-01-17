@@ -7,7 +7,7 @@ use yii\web\UploadedFile;
 
 Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/backend/master/image/';
  
-class ItemImage extends \yii\db\ActiveRecord
+class ProductImage extends \yii\db\ActiveRecord
 {
 	public $imageTmp;
 	
@@ -20,7 +20,7 @@ class ItemImage extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'item_64';
+        return 'product_image';
     }
 
     /**
@@ -29,10 +29,10 @@ class ItemImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_UNIX','CREATE_AT', 'UPDATE_AT','imageTmp'], 'safe'],
+            [['ACCESS_GROUP','CREATE_AT', 'UPDATE_AT','PRODUCT_IMAGE'], 'safe'],
             [['STATUS'], 'integer'],
-            [['IMG64', 'IMGNM'], 'string'],
-            [['CREATE_BY', 'UPDATE_BY', 'ITEM_ID', 'OUTLET_CODE'], 'string', 'max' => 50],
+            [['PRODUCT_IMAGE'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png'],
+            [['CREATE_BY', 'UPDATE_BY', 'PRODUCT_ID', 'STORE_ID'], 'string', 'max' => 50],
         ];
     }
 
@@ -48,11 +48,10 @@ class ItemImage extends \yii\db\ActiveRecord
             'UPDATE_BY' => Yii::t('app', 'Update  By'),
             'UPDATE_AT' => Yii::t('app', 'Update  At'),
             'STATUS' => Yii::t('app', 'Status'),
-            'ACCESS_UNIX' => Yii::t('app', 'Access Unix'),
-            'ITEM_ID' => Yii::t('app', 'Item  ID'),
-            'OUTLET_CODE' => Yii::t('app', 'Outlet  Code'),
-            'IMG64' => Yii::t('app', 'IMAGE'),
-            'IMGNM' => Yii::t('app', 'Imgnm'),
+            'ACCESS_GROUP' => Yii::t('app', 'Access Unix'),
+            'PRODUCT_ID' => Yii::t('app', 'Item  ID'),
+            'STORE_ID' => Yii::t('app', 'Outlet  Code'),
+            'PRODUCT_IMAGE' => Yii::t('app', 'IMAGE'),
         ];
     }
 	public function fields()
