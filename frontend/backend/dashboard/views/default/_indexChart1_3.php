@@ -117,7 +117,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format('100')."');	//TOTAL_PENJUALAN
+				$(this).text('".number_format($modelDaily['TOTAL_SALES'])."');	//TOTAL_PENJUALAN
 			}
 		});
 	});
@@ -131,7 +131,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format('100')."');	//JUMLAH_TRANSAKSI
+				$(this).text('".number_format($modelDaily['JUMLAH_TRANSAKSI'])."');	//JUMLAH_TRANSAKSI
 			}
 		});
 	});
@@ -145,7 +145,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format('100')."');	//RATA_RATA_PENJUALAN
+				$(this).text('".number_format($modelDaily['TOTAL_SALES'])."');	//RATA_RATA_PENJUALAN
 			}
 		});
 	});
@@ -159,7 +159,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format('100')."');	//JUMLAH_PRODAK
+				$(this).text('".number_format($modelDaily['TOTAL_PRODUCT'])."');	//JUMLAH_PRODAK
 			}
 		});
 	});
@@ -173,7 +173,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format('100')."');	//JUMLAH_KARYAWAN
+				$(this).text('".number_format($model[6]->Val_Cnt)."');	//JUMLAH_KARYAWAN
 			}
 		});
 	});
@@ -187,7 +187,7 @@ $this->registerJs("
 				$(this).text(Math.ceil(now));
 			},
 			complete: function() {
-				$(this).text('".number_format('100')."');	//JUMLAH_TOKO_AKTIF
+				$(this).text('".number_format($model[4]->Val_Cnt)."');	//JUMLAH_TOKO_AKTIF
 			}
 		});
 	});
@@ -210,7 +210,7 @@ $this->registerJs("
 						<div class="col-lg-9 text-left .small">
 							<dl>
 								
-								<dt class="count-grand-total-hari" style="font-size:20px;color:#7e7e7e">100</dt>
+								<dt class="count-grand-total-hari" style="font-size:20px;color:#7e7e7e"><?=$model[0]->Val_Cnt?></dt>
 								<dd style="font-size:11px;color:#7e7e7e">PENJUALAN HARIAN (IDR)</dd>
 								
 							</dl>							
@@ -230,7 +230,7 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small">
 							<dl>
-								<dt class="count-trans-total-hari" style="font-size:20px;color:#7e7e7e">100</dt>
+								<dt class="count-trans-total-hari" style="font-size:20px;color:#7e7e7e"><?=$model[1]->Val_Cnt?></dt>
 								<dd style="font-size:11px;color:#7e7e7e">JUMLAH TRANSAKSI</dd>
 							</dl>
 							
@@ -250,7 +250,7 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small">
 							<dl>
-								<dt class="rata-rata-penjualan" style="font-size:20px;color:#7e7e7e">100</dt>
+								<dt class="rata-rata-penjualan" style="font-size:20px;color:#7e7e7e"><?=$model[2]->Val_Cnt?></dt>
 								<dd style="font-size:11px;color:#7e7e7e">RATA-RATA PENJUALAN (IDR)</dd>
 							</dl>
 							
@@ -290,8 +290,8 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small">
 							<dl>
-								<dt class="jumlah-toko-aktif" style="font-size:18px;color:#7e7e7e;float:left;padding-right:10px">100</dt> 
-								<div style="font-size:18px;color:#7e7e7e;font-weight: bold;"> of 10</div>
+								<dt class="jumlah-toko-aktif" style="font-size:18px;color:#7e7e7e;float:left;padding-right:10px"><?=$model[4]->Val_Cnt?></dt> 
+								<div style="font-size:18px;color:#7e7e7e;font-weight: bold;"> of <?=(int)$model[3]->Val_Cnt?></div>
 								<dd style="font-size:10px;color:#7e7e7e">JUMLAH TOKO</dd>
 							</dl>							
 						</div>
@@ -310,7 +310,7 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small">
 							<dl>
-								<dt class="jumlah-produk" style="font-size:18px;color:#7e7e7e">60</dt>
+								<dt class="jumlah-produk" style="font-size:18px;color:#7e7e7e"><?=$model[5]->Val_Cnt?></dt>
 								<dd style="font-size:10px;color:#7e7e7e">   JUMLAH PRODUK</dd>
 							</dl>
 							
@@ -330,7 +330,7 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small">
 							<dl>
-								<dt class="jumlah-karyawan" style="font-size:18px;color:#7e7e7e">11</dt>
+								<dt class="jumlah-karyawan" style="font-size:18px;color:#7e7e7e"><?=$model[6]->Val_Cnt?></dt>
 								<dd style="font-size:10px;color:#7e7e7e">JUMLAH KARYAWAN</dd>
 							</dl>
 							
