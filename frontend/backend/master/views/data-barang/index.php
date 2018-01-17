@@ -29,7 +29,10 @@ $this->registerCss("
 		color: blue;
 	}
 ");
-            // ACCESS_UNIX_STORE, 
+$this->registerJs($this->render('databarang_script.js'),View::POS_READY);
+echo $this->render('databarang_button'); //echo difinition
+echo $this->render('databarang_modal'); //echo difinition
+			// ACCESS_UNIX_STORE, 
 			// ACCESS_UNIX_ITEM,
 			// OUTLET_CODE,
 			// /OUTLET_NM',
@@ -47,7 +50,7 @@ $this->registerCss("
 	$bColor='rgba(87,114,111, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-Items Outlet</b>
+				</span><b>All-PRODUCT</b>
 	';
 	$gvAttStoreItems=[
 		[
@@ -60,13 +63,10 @@ $this->registerCss("
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'STORE_ID',
+			'attribute'=>'STORE_NM',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
-			'value'=>function($model){
-				return $model['STORE_ID'];
-			},
 			'hAlign'=>'right',
 			'vAlign'=>'top',
 			'mergeHeader'=>false,
@@ -79,7 +79,7 @@ $this->registerCss("
 		],		
 		//ITEM NAME
 		[
-			'attribute'=>'ITEM_NM',
+			'attribute'=>'PRODUCT_NM',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -94,7 +94,7 @@ $this->registerCss("
 		],		
 		//SATUAN
 		[
-			'attribute'=>'SATUAN',
+			'attribute'=>'CURRENT_STOCK',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -109,7 +109,7 @@ $this->registerCss("
 		],
 		//DEFAULT_STOCK
 		[
-			'attribute'=>'DEFAULT_STOCK',
+			'attribute'=>'CURRENT_PRICE',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -124,7 +124,7 @@ $this->registerCss("
 		],
 		//DEFAULT_HARGA
 		[
-			'attribute'=>'DEFAULT_HARGA',
+			'attribute'=>'PRODUCT_SIZE_UNIT',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -139,6 +139,37 @@ $this->registerCss("
 		]		
 	];
 	
+	$gvAttStoreItems[]=[			
+		//ACTION
+		'class' => 'kartik\grid\ActionColumn',
+		'template' => '{view}{edit}{hapus}',
+		'header'=>'ACTION',
+		'dropdown' => true,
+		'dropdownOptions'=>[
+			'class'=>'pull-right dropdown',
+			'style'=>'width:100%;background-color:#E6E6FA'				
+		],
+		'dropdownButton'=>[
+			'label'=>'ACTION',
+			'class'=>'btn btn-info btn-xs',
+			'style'=>'width:100%'		
+		],
+		'buttons' => [
+			'view' =>function ($url, $model){
+				return  tombolView($url, $model);
+			},
+			'edit' =>function($url, $model,$key){
+				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+				return  tombolEdit($url, $model);
+				//}					
+			},
+			'hapus' =>function($url, $model,$key){
+				return  tombolHapus($url, $model);
+			}
+		],
+		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
+		'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
+	]; 
 	$gvAllStoreItem=GridView::widget([
 		'id'=>'gv-all-data-store-item',
 		'dataProvider' => $dataProvider,
@@ -161,16 +192,15 @@ $this->registerCss("
 		'panel'=>[''],
 		'toolbar' => false,
 		'panel' => [
-			//'heading'=>false,
-			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-			//'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel($paramUrl).' '.tombolFHargaDiscount($paramUrl).' ' .tombolFDiscount($paramUrl).' '.tombolRefresh($paramUrl).' '.$pageNm,  
+			// 'heading'=>false,
+			'heading'=>'<div style="float:right"> '.tombolCreate().'</div>'.$pageNm,
 			'type'=>'success',
-			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
+			'before'=> '<div style="float:right"> '.tombolCreate().'</div>',
 			'before'=>false,
-			'showFooter'=>false,
+			'showFooter'=>true,
 		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
 	]); 	
 ?>
 

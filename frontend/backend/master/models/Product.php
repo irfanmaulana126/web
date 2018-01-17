@@ -30,18 +30,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_GROUP', 'STORE_ID', 'PRODUCT_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
-            [['GROUP_ID', 'UNIT_ID', 'INDUSTRY_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['PRODUCT_SIZE', 'STOCK_LEVEL'], 'number'],
-            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
-            [['productHargaTbl','productStockTbl'], 'safe'],
-            [['DCRP_DETIL'], 'string'],
-            [['ACCESS_GROUP'], 'string', 'max' => 15],
-            [['STORE_ID'], 'string', 'max' => 20],
-            [['PRODUCT_ID'], 'string', 'max' => 35],
-            [['PRODUCT_QR', 'PRODUCT_NM', 'PRODUCT_HEADLINE'], 'string', 'max' => 100],
-            [['PRODUCT_WARNA', 'PRODUCT_SIZE_UNIT', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
-            [['INDUSTRY_NM', 'INDUSTRY_GRP_NM'], 'string', 'max' => 255],
+            [['STORE_ID', 'PRODUCT_ID','UNIT_ID_GRP','PRODUCT_NM','PRODUCT_SIZE','PRODUCT_SIZE_UNIT','PRODUCT_HEADLINE','CURRENT_STOCK','CURRENT_PRICE','PRODUCT_QR','PRODUCT_WARNA','STATUS','STOCK_LEVEL','CURRENT_HPP','UNIT_ID'], 'required'],
+            [['CURRENT_STOCK'], 'integer'],
+            [['PRODUCT_QR','CURRENT_PRICE','PRODUCT_SIZE','PRODUCT_NM','PRODUCT_SIZE_UNIT','PRODUCT_HEADLINE'], 'string',],
         ];
     }
 
@@ -53,17 +44,21 @@ class Product extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'ACCESS_GROUP' => 'Access  Group',
-            'STORE_ID' => 'Store  ID',
+            'STORE_ID' => 'Nama Toko',
             'GROUP_ID' => 'Group  ID',
-            'PRODUCT_ID' => 'Product  ID',
-            'PRODUCT_QR' => 'Product  Qr',
-            'PRODUCT_NM' => 'Product  Nm',
+            'PRODUCT_ID' => 'Kode Produk',
+            'PRODUCT_QR' => 'Kode QR',
+            'PRODUCT_NM' => 'Nama Produk',
             'PRODUCT_WARNA' => 'Product  Warna',
             'PRODUCT_SIZE' => 'Product  Size',
             'PRODUCT_SIZE_UNIT' => 'Product  Size  Unit',
             'PRODUCT_HEADLINE' => 'Product  Headline',
             'UNIT_ID' => 'Unit  ID',
+            'UNIT_ID_GRP'=>'Unit Group',
             'STOCK_LEVEL' => 'Stock  Level',
+            'CURRENT_STOCK'=>'Current Stock',
+            'CURRENT_HPP'=>'Current HPP',
+            'CURRENT_PRICE'=>'Current Price',
             'INDUSTRY_ID' => 'Industry  ID',
             'INDUSTRY_NM' => 'Industry  Nm',
             'INDUSTRY_GRP_NM' => 'Industry  Grp  Nm',
@@ -115,6 +110,6 @@ class Product extends \yii\db\ActiveRecord
 		}else{
 			return  0;	
 		}
-	}	
-	
+    }
+
 }

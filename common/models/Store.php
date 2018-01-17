@@ -153,4 +153,5 @@ class Store extends \yii\db\ActiveRecord
 		return ['items','harga'];
 		//return ['unit'];
 	} */
+	
 }
