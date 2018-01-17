@@ -40,10 +40,11 @@ $this->registerCss("
 		height: 300px;
 	}
 	#gv-store .kv-grid-container{
-		height:450px
+		height:200px
 	}
 ");
 $this->registerJs($this->render('modal_store.js'),View::POS_READY);
+echo $this->render('button_store'); //echo difinition
 echo $this->render('modal_store'); //echo difinition
 	
 	
@@ -56,6 +57,32 @@ echo $this->render('modal_store'); //echo difinition
 	  ['STATUS' => 3, 'STT_NM' => 'Deleted'],
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
+	
+	function sttMsgDscp($stt){
+		if($stt==0){ //TRIAL
+			 return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
+					</span>','',['title'=>'Trial']);
+		}elseif($stt==1){
+			 return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:#05944d"></i>
+					</span>','',['title'=>'Active']);
+		}elseif($stt==2){
+			return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-remove fa-stack-1x" style="color:#01190d"></i>
+					</span>','',['title'=>'Deactive']);
+		}elseif($stt==3){
+			return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
+					</span>','',['title'=>'Delete']);
+		}
+	};	
+		
+	$dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Trial. '.sttMsgDscp(1).'=Active. '.sttMsgDscp(2).'=Deactive. '.sttMsgDscp(3).'=Delete.';
 	
 	
 	//Result Status value.
@@ -407,8 +434,8 @@ echo $this->render('modal_store'); //echo difinition
 				document.cookie="STORE_ID" + "=" +'.$model->STORE_ID.';
 				document.cookie="STORE_NM" + "=" +"'.$model->STORE_NM.'";
 				$.pjax.reload({
-					url: "'.Url::to(["/master/store/"]).'?Store[STORE_ID]="+'.$model->STORE_ID.',
-					container: "#expand-menu",
+					url: "'.Url::to(["/master/store/"]).'",
+					container: "#w17",
 					timeout: 1000,
 				});
 				
@@ -444,7 +471,7 @@ echo $this->render('modal_store'); //echo difinition
 				<span class="fa-stack fa-sm">
 				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
 				  <i class="fa fa-text-width fa-stack-1x"></i>
-				</span> List Toko'.'   <div style="float:right">	</div>',  
+				</span> List Toko'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;">'.tombolRestore().' '.$dscLabel.'</div></div> ',  
 			'type'=>'info',
 			'before'=>false,
 			'after'=>false,

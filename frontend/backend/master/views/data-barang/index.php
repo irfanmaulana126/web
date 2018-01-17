@@ -28,7 +28,11 @@ $this->registerCss("
 	a:active {
 		color: blue;
 	}
+	#gv-all-data-store-item .kv-grid-container{
+		height:450px
+	}
 ");
+$this->title="Prodak";
 $this->registerJs($this->render('databarang_script.js'),View::POS_READY);
 echo $this->render('databarang_button'); //echo difinition
 echo $this->render('databarang_modal'); //echo difinition
@@ -71,6 +75,7 @@ echo $this->render('databarang_modal'); //echo difinition
 			'vAlign'=>'top',
 			'mergeHeader'=>false,
 			'group'=>true,
+			'groupedRow'=>true,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),

@@ -39,6 +39,13 @@ $(document).on('click','#store-button-export-excel', function(ehead){
 	.load(ehead.target.value);
 });
 
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+$(document).on('click','#store-button-restore', function(ehead){ 			  
+	$('#store-button-restore-modal').modal('show')
+	.find('#store-button-restore-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	.load(ehead.target.value);
+});
+
 
 /**
  * ======================================== TIPS ========================================
