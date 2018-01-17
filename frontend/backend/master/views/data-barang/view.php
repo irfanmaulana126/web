@@ -1,51 +1,49 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-use kartik\select2\Select2;
-use common\models\Store;
-use yii\helpers\ArrayHelper;
-use kartik\money\MaskMoney;
+use yii\widgets\DetailView;
+
 /* @var $this yii\web\View */
 /* @var $model app\backend\master\models\ItemFdiscount */
-/* @var $form yii\widgets\ActiveForm */
+
+$this->title = $model->ID;
+$this->params['breadcrumbs'][] = ['label' => 'Item Fdiscounts', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
+<div class="item-fdiscount-view">
 
-<div class="item-fdiscount-form">
+    <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php $form = ActiveForm::begin(); ?>
+    <p>
+        <?= Html::a('Update', ['update', 'id' => $model->ID], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->ID], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete this item?',
+                'method' => 'post',
+            ],
+        ]) ?>
+    </p>
 
-    <?= $form->field($model, 'STORE_ID')->widget(Select2::classname(),[
-       'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
-        'options' => ['placeholder'=>'Select Category....'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ], 
-    ])?>
-    <?= $form->field($model, 'PRODUCT_QR')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'PRODUCT_NM')->textInput() ?>
-
-    <?= $form->field($model, 'PRODUCT_SIZE')->textInput() ?>
-
-    <?= $form->field($model, 'PRODUCT_SIZE_UNIT')->textInput() ?>
-
-    <?= $form->field($model, 'PRODUCT_HEADLINE')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CURRENT_STOCK')->textInput() ?>
-
-    <?= $form->field($model, 'CURRENT_PRICE')->widget(MaskMoney::classname(), [
-                            'options' => ['placeholder' => 'Harga Barang ...'],
-                            
-                            'pluginOptions'=>[
-                                'prefix'=>'Rp',
-                            ],
-						]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Tutup', ['class' => 'btn btn-danger','data-dismiss'=>'modal']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            'ID',
+            'CREATE_BY',
+            'CREATE_AT',
+            'UPDATE_BY',
+            'UPDATE_AT',
+            'STATUS',
+            'ITEM_ID',
+            'OUTLET_CODE',
+            'HARI',
+            'PERIODE_TGL1',
+            'PERIODE_TGL2',
+            'PERIODE_TIME1',
+            'PERIODE_TIME2',
+            'DISCOUNT_PERCENT',
+            'DCRIPT:ntext',
+        ],
+    ]) ?>
 
 </div>
