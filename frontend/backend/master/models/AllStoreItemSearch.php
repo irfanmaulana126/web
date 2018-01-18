@@ -48,7 +48,7 @@ class AllStoreItemSearch extends Model
 		//$this->OUTLET_CODE='0001';
 		$this->ACCESS_GROUP=Yii::$app->user->identity->ACCESS_GROUP;
         $qryAllStoreItems= Yii::$app->api_dbkg->createCommand("
-            SELECT a.*,b.STORE_NM FROM `product` as a INNER JOIN store as b on a.STORE_ID=b.STORE_ID WHERE a.ACCESS_GROUP='".$this->ACCESS_GROUP."' ORDER BY STORE_ID ASC;
+            SELECT a.*,b.STORE_NM FROM `product` as a INNER JOIN store as b on a.STORE_ID=b.STORE_ID WHERE a.ACCESS_GROUP='".$this->ACCESS_GROUP."' ORDER BY STORE_ID,PRODUCT_SIZE_UNIT ASC;
             ")->queryAll();
 		// $qryAllStoreItems= Yii::$app->db->createCommand("select * from VwStoreItem where ACCESS_UNIX_ITEM='".$this->ACCESS_UNIX_ITEM."' AND OUTLET_CODE='".$this->OUTLET_CODE."'")->queryAll();
 		

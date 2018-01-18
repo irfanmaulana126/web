@@ -12,9 +12,9 @@
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 //$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
-$(document).on('click','#stockproduct-button-periode', function(ehead){ 			  
-	$('#stockproduct-button-periode-modal').modal('show')
-	.find('#stockproduct-button-periode-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+$(document).on('click','#stockproduct-export-excel', function(ehead){ 			  
+	$('#stockproduct-export-excel-modal').modal('show')
+	.find('#stockproduct-export-excel-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });

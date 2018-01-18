@@ -471,7 +471,7 @@ echo $this->render('modal_store'); //echo difinition
 				<span class="fa-stack fa-sm">
 				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
 				  <i class="fa fa-text-width fa-stack-1x"></i>
-				</span> List Toko'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;">'.tombolRestore().' '.$dscLabel.'</div></div> ',  
+				</span> List Toko'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;">'.tombolCreate().' '.tombolRestore().' '.$dscLabel.'</div></div> ',  
 			'type'=>'info',
 			'before'=>false,
 			'after'=>false,

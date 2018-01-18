@@ -96,6 +96,25 @@ $this->registerCss("
 
 		return $content = Html::button($label,$options);
 	}
+
+	function tombolCreate(){
+		$title= Yii::t('app','');
+		$url = Url::toRoute(['/master/store/create']);
+		$options1 = ['value'=>$url,
+					'id'=>'store-button-create',
+					'data-pjax' => false,
+					'class'=>"btn btn-success btn-xs",
+					'title'=>'Tambah'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}
 	/**
 	 * HEADER BUTTON : EXPAND DETAIL
 	*/

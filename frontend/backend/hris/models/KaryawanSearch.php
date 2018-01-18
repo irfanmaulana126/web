@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\backend\hris\models\Karyawan;
+use yii\data\ArrayDataProvider;
 
 /**
  * KaryawanSearch represents the model behind the search form about `frontend\models\Karyawan`.
@@ -92,7 +93,16 @@ class KaryawanSearch extends Karyawan
 		$query->orderBy(['STORE_ID'=>SORT_ASC]);
         return $dataProvider;
     }
-	
+    public function searchExcelExport($params)
+    {
+        $query = "SELECT * FROM karyawan";
+       $qrySql= Yii::$app->db->createCommand($query)->queryAll();
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $qrySql,
+        ]);
+
+        return $dataProvider;
+    }
 	
 	public function searchPrint($params)
     {

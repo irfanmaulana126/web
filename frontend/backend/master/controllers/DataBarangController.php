@@ -13,6 +13,12 @@ use frontend\backend\master\models\Product;
 use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\AllStoreItemSearch;
 use frontend\backend\master\models\ProductImage;
+use frontend\backend\master\models\ProductDiscount;
+use frontend\backend\master\models\ProductDiscountSearch;
+use frontend\backend\master\models\ProductPromo;
+use frontend\backend\master\models\ProductPromoSearch;
+use frontend\backend\master\models\ProductHarga;
+use frontend\backend\master\models\ProductHargaSearch;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -40,12 +46,26 @@ class DataBarangController extends Controller
     public function actionIndex()
     {
         $model=new Product;
-        $searchModel = new AllStoreItemSearch();
+        $searchModel = new AllStoreItemSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        // print_r($dataProvider);die;	
+
+        $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $dataProviderDiscount = $searchModelDiscount->search(Yii::$app->request->queryParams);
+
+        $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $dataProviderPromo = $searchModelPromo->search(Yii::$app->request->queryParams);
+
+        $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
 		 return $this->render('index', [
 			'searchModel'=>$searchModel,
             'dataProvider' => $dataProvider,
+			'searchModelDiscount'=>$searchModelDiscount,
+            'dataProviderDiscount' => $dataProviderDiscount,
+			'searchModelPromo'=>$searchModelPromo,
+            'dataProviderPromo' => $dataProviderPromo,
+			'searchModelHarga'=>$searchModelHarga,
+            'dataProviderHarga' => $dataProviderHarga,
             'model'=>$model,
         ]);
 		
