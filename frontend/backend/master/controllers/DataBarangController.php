@@ -139,11 +139,23 @@ class DataBarangController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionDiscount($id)
+    public function actionDiscount($ACCESS_GROUP,$PRODUCT_ID,$STORE_ID)
     {
-        return $this->renderAjax('view', [
-            'model' => $this->findModel($id),
+        $model = new ProductDiscount();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $model->PRODUCT_ID=$PRODUCT_ID;
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->STORE_ID=$STORE_ID;
+            $model->START_TIME=date('H:i:s');
+           if ($model->save()) {
+            return $this->redirect(['index']);
+           }
+        } else{
+        return $this->renderAjax('_form_discount', [
+            'model' => $model,
         ]);
+        }
     }
     
     /**
@@ -151,10 +163,22 @@ class DataBarangController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionPromo($id)
+    public function actionPromo($ACCESS_GROUP,$PRODUCT_ID,$STORE_ID)
     {
-        return $this->renderAjax('view', [
-            'model' => $this->findModel($id),
+        $model = new ProductPromo();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->PRODUCT_ID=$PRODUCT_ID;
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->STORE_ID=$STORE_ID;
+            $model->START_TIME=date('H:i:s');
+           if ($model->save()) {
+            return $this->redirect(['index']);
+           }
+        }
+
+        return $this->renderAjax('_form_promo', [
+            'model' => $model,
         ]);
     }
     /**
@@ -162,24 +186,25 @@ class DataBarangController extends Controller
      * @param string $id
      * @return mixed
      */
-    public function actionHarga($id)
+    public function actionHarga($ACCESS_GROUP,$PRODUCT_ID,$STORE_ID)
     {
-        return $this->renderAjax('view', [
-            'model' => $this->findModel($id),
+        $model = new ProductHarga();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->PRODUCT_ID=$PRODUCT_ID;
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->STORE_ID=$STORE_ID;
+            $model->START_TIME=date('H:i:s');
+           if ($model->save()) {
+            return $this->redirect(['index']);
+           }
+        }
+
+        return $this->renderAjax('_form_harga', [
+            'model' =>  $model,
         ]);
     }
-    /**
-     * Displays a single Item model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionStock($id)
-    {
-        return $this->renderAjax('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-    
+
     /**
      * Displays a single Item model.
      * @param string $id
@@ -209,6 +234,7 @@ class DataBarangController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
     /**
      * Updates an existing Item model.
      * If update is successful, the browser will be redirected to the 'view' page.

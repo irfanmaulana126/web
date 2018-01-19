@@ -107,7 +107,7 @@ use yii\base\DynamicModel;
 	function tombolDiscount($url, $model){
 		$title1 = Yii::t('app',' Discount');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/discount','id'=>$model['ID']]),
+			'value'=>url::to(['/master/data-barang/discount','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
 			'id'=>'databarang-button-row-discount',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -126,7 +126,7 @@ use yii\base\DynamicModel;
 	function tombolHarga($url, $model){
 		$title1 = Yii::t('app',' Update Harga');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/harga','id'=>$model['ID']]),
+			'value'=>url::to(['/master/data-barang/harga','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
 			'id'=>'databarang-button-row-harga',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -145,7 +145,7 @@ use yii\base\DynamicModel;
 	function tombolPromo($url, $model){
 		$title1 = Yii::t('app',' Promo');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/promo','id'=>$model['ID']]),
+			'value'=>url::to(['/master/data-barang/promo','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
 			'id'=>'databarang-button-row-promo',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
