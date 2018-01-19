@@ -28,9 +28,8 @@ $this->registerCss("
 		color: blue;
 	}
 ");
-
-$this->registerJs($this->render('modal_item.js'),View::POS_END);
 echo $this->render('modal_item'); //echo difinition
+$this->registerJs($this->render('modal_item.js'),View::POS_END);
 
 
 	$aryStt= [
@@ -235,7 +234,7 @@ echo $this->render('modal_item'); //echo difinition
 		'panel' => [
 			//'heading'=>false,
 			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-			'heading'=>tombolBack().' '.tombolCreate($paramUrl).' '.tombolExportExcel($paramUrl).' '.tombolFHargaDiscount($paramUrl).' ' .tombolFDiscount($paramUrl).' '.tombolRefresh($paramUrl).' '.$pageNm,  
+			'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel($paramUrl).' '.tombolFHargaDiscount($paramUrl).' ' .tombolFDiscount($paramUrl).' '.tombolRefresh($paramUrl).' '.$pageNm,  
 			'type'=>'info',
 			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
 			'before'=>false,

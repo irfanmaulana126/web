@@ -75,7 +75,7 @@ echo $this->render('modal_item'); //echo difinition
 		],
 		//ITEM NAME
 		[
-			'attribute'=>'PRODUCT_NM',
+			'attribute'=>'ITEM_NM',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
