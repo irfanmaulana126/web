@@ -78,11 +78,11 @@ $this->registerCss("
 	/*
 	 * HEADER BUTTON : ITEMS Button - CREATE.
 	*/
-	function tombolCreate($paramUrl){
+	function tombolCreate(){
 		// if(getPermission()){
 			// if(getPermission()->BTN_CREATE==1){
 				$title1 = Yii::t('app', ' New');
-				$url = Url::toRoute(['/master/product/create','storeid'=>$paramUrl]);
+				$url = Url::toRoute(['/master/item/create']);
 				$options1 = ['value'=>$url,
 							'id'=>'item-index-button-create',
 							'data-pjax' => 1,
@@ -106,7 +106,7 @@ $this->registerCss("
 	**/
 	function tombolRefresh($paramUrl){
 		$title = Yii::t('app', 'Refresh');
-		$url =  Url::toRoute(['/master/product','storeid'=>$paramUrl]);
+		$url =  Url::toRoute(['/master/item','outlet_code'=>$paramUrl]);
 		$options = ['id'=>'item-id-refresh',
 				  'data-pjax' => 0,
 				  'class'=>"btn btn-default btn-xs",
@@ -128,7 +128,7 @@ $this->registerCss("
 	**/
 	function tombolFHargaDiscount($paramUrl){
 		$title = Yii::t('app', 'F-Harga/Discount');
-		$url =  Url::toRoute(['/master/formula','store_id'=>$paramUrl]);
+		$url =  Url::toRoute(['/master/formula','outlet_code'=>$paramUrl]);
 		$options = ['id'=>'item-harga-id',
 				  'data-pjax' => 0,
 				  'class'=>"btn btn-default btn-xs",
@@ -149,7 +149,7 @@ $this->registerCss("
 	**/
 	function tombolFDiscount($paramUrl){
 		$title = Yii::t('app', 'F-Discount');
-		$url =  Url::toRoute(['/master/formula-discount','store_id'=>$paramUrl]);
+		$url =  Url::toRoute(['/master/formula-discount','outlet_code'=>$paramUrl]);
 		$options = ['id'=>'item-fdiscount-id',
 				  'data-pjax' => 0,
 				  'class'=>"btn btn-default btn-xs",
@@ -172,7 +172,7 @@ $this->registerCss("
 		// if(getPermission()){
 			// if(getPermission()->BTN_PROCESS1==1){
 				$title1 = Yii::t('app', ' Export Excel');
-				$url = Url::toRoute(['/master/product/export-data','store_id'=>$paramUrl]);
+				$url = Url::toRoute(['/master/item/export-data','outlet_code'=>$paramUrl]);
 				$options1 = [
 							'data-pjax' => true,
 							'id'=>'item-button-export-data-excel',
@@ -200,7 +200,7 @@ $this->registerCss("
 			// if(getPermission()->BTN_VIEW==1 OR getPermission()->BTN_CREATE==1){
 				$title1 = Yii::t('app',' View');
 				$options1 = [
-					'value'=>url::to(['/master/product/view','id'=>$model->PRODUCT_ID]),
+					'value'=>url::to(['/master/item/view','id'=>$model->ID]),
 					'id'=>'item-button-view',
 					'class'=>"btn btn-default btn-xs",      
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -227,7 +227,7 @@ $this->registerCss("
 			// if(getPermission()->BTN_REVIEW==1){
 				$title1 = Yii::t('app',' Review');
 				$options1 = [
-					'value'=>url::to(['/master/product/review','id'=>$model->ID]),
+					'value'=>url::to(['/master/item/review','id'=>$model->ID]),
 					'id'=>'item-button-review',
 					'class'=>"btn btn-default btn-xs",      
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -256,7 +256,7 @@ $this->registerCss("
 	function tombolDeny($url, $model){
 		//if(Yii::$app->getUserOpt->Modul_aksesDeny('12')==0){
 			$title1 = Yii::t('app',' Limited Access');
-			$url = url::to(['/efenbi-rasasayang/product']);
+			$url = url::to(['/efenbi-rasasayang/item']);
 			$options1 = [
 				'value'=>$url,
 				'id'=>'item-button-deny',

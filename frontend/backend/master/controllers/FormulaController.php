@@ -12,7 +12,7 @@ use yii\helpers\view;
 
 use common\models\Store;
 use frontend\backend\master\models\Item;
-use frontend\backend\master\models\ProductSearch;
+use frontend\backend\master\models\ItemSearch;
 use frontend\backend\master\models\ItemFdiscount;
 use frontend\backend\master\models\ItemFdiscountSearch;
 
@@ -42,18 +42,17 @@ class FormulaController extends Controller
      */
     public function actionIndex()
     {		
-		$paramCari=Yii::$app->getRequest()->getQueryParam('store_id');
-        $paramCariItem=Yii::$app->getRequest()->getQueryParam('store_id');
-        
-		$modelOutlet=Store::find()->where(['STORE_ID'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
+		$paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
+		$paramCariItem=Yii::$app->getRequest()->getQueryParam('id');
+		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
 		if($modelOutlet){
-		    $searchModel = new ProductSearch(['STORE_ID'=>$paramCari]);
+		    $searchModel = new ItemSearch(['OUTLET_CODE'=>$paramCari]);
 			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);			
-		// print_r($dataProvider);die();
+		
 			///OUTLET ID.
 		
 			return $this->render('index', [
-				'outletNm'=>$modelOutlet!=''?$modelOutlet->STORE_NM:'none',
+				'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
 				'searchModel' => $searchModel!=''?$searchModel:false,
 				'dataProvider' => $dataProvider,
 				'paramCariOutlet'=>$paramCari,
