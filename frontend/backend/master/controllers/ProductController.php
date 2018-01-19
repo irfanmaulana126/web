@@ -3,18 +3,16 @@
 namespace frontend\backend\master\controllers;
 
 use Yii;
-use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\Json;
-use yii\web\UploadedFile;
+
 use common\models\Store;
 use frontend\backend\master\models\Product;
 use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\ItemSatuan;
-use frontend\backend\master\models\ProductImage;
-use frontend\backend\master\models\Industry;
+use frontend\backend\master\models\ItemImage;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -99,10 +97,8 @@ class ProductController extends Controller
      */
     public function actionView($id)
     {
-        
         return $this->renderAjax('view', [
             'model' => $this->findModel($id),
-            'image' =>$this->findModelImage($id)
         ]);
     }
 	
@@ -113,17 +109,17 @@ class ProductController extends Controller
      */
     public function actionReview($id)
     {
-		$model = $this->findModel($id);
+		$model =  $model = $this->findModel($id);
         // $modelImage =ItemImage::findOne(['ACCESS_UNIX'=>$model->ACCESS_UNIX,'OUTLET_CODE'=>$model->OUTLET_CODE,'ITEM_ID'=>$model->ITEM_ID]);
 		//$modelImage =ItemImage::find()->where(['ACCESS_UNIX'=>$model->ACCESS_UNIX,'OUTLET_CODE'=>$model->OUTLET_CODE,'ITEM_ID'=>$model->ITEM_ID])->one();
        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //return $this->redirect(['view', 'id' => $model->ID]);
-            return $this->redirect(['index','STORE_ID'=>$model->STORE_ID]);
+            return $this->redirect(['index','outlet_code'=>$model->OUTLET_CODE]);
         } else {
            return $this->renderAjax('review', [
                 'model' => $model,
-				'modelImage'=>ProductImage::findOne(['ACCESS_UNIX'=>$model->ACCESS_UNIX,'OUTLET_CODE'=>$model->OUTLET_CODE,'ITEM_ID'=>$model->ITEM_ID]),
+				'modelImage'=>ItemImage::findOne(['ACCESS_UNIX'=>$model->ACCESS_UNIX,'OUTLET_CODE'=>$model->OUTLET_CODE,'ITEM_ID'=>$model->ITEM_ID]),
             ]);
         }
 		
@@ -163,62 +159,16 @@ class ProductController extends Controller
      */
     public function actionCreate()
     {
-        $store_id=Yii::$app->getRequest()->getQueryParam('storeid');
-  
-        $model = new Product();
+        $model = new Item();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $model->CREATE_AT=date('Y-m-d H:i:s');
-            if($model->save(false)) {
-                return $this->redirect(['index','storeid'=>$store_id]);
-            }
-            else {
-                $transaction->rollBack();
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->ID]);
         } else {
-    //   print_r($store_id);die();
             return $this->renderAjax('_form', [
                 'model' => $model,
-                'store_id'=>$store_id
             ]);
         }
     }
-
-    // public function actionCreate()
-    // {
-    //     $store_id=Yii::$app->getRequest()->getQueryParam('storeid');
-  
-    //     $model = new Product();
-    //     $image = new ProductImage();
-
-    //     if ($model->load(Yii::$app->request->post())) {
-    //         $model->CREATE_AT=date('Y-m-d H:i:s');
-    //         if($model->save(false)) {
-    //             if($image->load(Yii::$app->request->post('PRODUCT_IMAGE'))){
-    //                 $transaction = Yii::$app->db->beginTransaction();
-    //                 $image->CREATE_AT=date('Y-m-d H:i:s');
-    //                 $gambar = UploadedFile::getInstance($image, 'PRODUCT_IMAGE');
-    //                 $gambar->saveAs(Yii::getAlias('@frontend/web/img/') . $image->image_src_filename .'.' . $gambar->extension);
-    //                 $image->PRODUCT_IMAGE = $image->image_src_filename.'.' . $gambar->extension;
-    //                 $image->STORE_ID=$model->STORE_ID;
-    //                 $image->save(false);
-    //                     $transaction->commit();
-    //                     return $this->redirect(['index','storeid'=>$store_id]);
-    //             }
-    //             return $this->redirect(['index','storeid'=>$store_id]);
-    //         }
-    //         else {
-    //             $transaction->rollBack();
-    //         }
-    //     } else {
-    // //   print_r($store_id);die();
-    //         return $this->renderAjax('_form', [
-    //             'model' => $model,
-    //             'store_id'=>$store_id,
-    //             'image'=>$image,
-    //         ]);
-    //     }
-    // }
 	
 	/**
      * CREATE - ITEM SATUAN 
@@ -299,44 +249,10 @@ class ProductController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Product::find()->where(['PRODUCT_ID'=>$id])->one()) !== null) {
+        if (($model = Item::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    /**
-     * Finds the Item model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Item the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModelImage($id)
-    {
-        if (($model = ProductImage::find()->where(['PRODUCT_ID'=>$id])->one()) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    public function actionIndustry() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-                $industry_id = $parents[0];
-                $out = Industry::find()->where(['INDUSRTY_ID_GRP'=>$industry_id])->all();
-                // the getSubCatList function will query the database based on the
-                // cat_id and return an array like below:
-                // [
-                //    ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
-                //    ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
-                // ]
-                echo Json::encode(['output'=>$out, 'selected'=>$data['selected']]);
-                return;
-            }
-        }
-        echo Json::encode(['output'=>'', 'selected'=>'']);
     }
 }
