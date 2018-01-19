@@ -28,14 +28,21 @@ $this->registerCss("
 	a:active {
 		color: blue;
 	}
-	#gv-all-data-store-item .kv-grid-container{
+	#gv-all-data-prodak-stock-item .kv-grid-container{
 		height:450px
 	}
+	#gv-all-data-prodak-stock-item .panel-heading {
+		background: linear-gradient(to bottom right, red, yellow);
+		color: white;
+	}
+	#gv-all-data-prodak-stock-item .panel-footer {
+		background: linear-gradient(to bottom right, red, yellow);
+	}
 ");
-	$bColor='rgba(87,114,111, 1)';
+	$bColor='rgba(255, 102, 0, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-PRODUCT</b>
+				</span><b>STOCK PRODUCT</b>
 	';
 	$gvAttStoreItems=[
 		[
@@ -162,7 +169,7 @@ $this->registerCss("
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
 	]; 
 	$gvAllStoreItem=GridView::widget([
-		'id'=>'gv-all-data-store-item',
+		'id'=>'gv-all-data-prodak-stock-item',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'columns'=>$gvAttStoreItems,				
@@ -170,7 +177,7 @@ $this->registerCss("
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'gv-all-data-store-item',
+				'id'=>'gv-all-data-prodak-stock-item',
 		    ],						  
 		],
 		'hover'=>true, //cursor select

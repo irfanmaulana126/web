@@ -28,17 +28,24 @@ $this->registerCss("
 	a:active {
 		color: blue;
 	}
-	#gv-all-data-store-item .kv-grid-container{
-		height:450px
+	#gv-all-data-prodak-item .kv-grid-container{
+		height:400px
+	}
+	#gv-all-data-prodak-item .panel-heading {
+		background: linear-gradient(to bottom right, red, yellow);
+		color: white;
+	}
+	#gv-all-data-prodak-item .panel-footer {
+		background: linear-gradient(to bottom right, red, yellow);
 	}
 ");
 			
-	$bColor='rgba(87,114,111, 1)';
+	$bColor='rgba(255, 102, 0, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
 				</span><b>All-PRODUCT</b>
 	';
-	$gvAttStoreItems=[
+	$gvAttProdakItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
@@ -131,10 +138,10 @@ $this->registerCss("
 		]		
 	];
 	
-	$gvAttStoreItems[]=[			
+	$gvAttProdakItem[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}',
+		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
 		'header'=>'ACTION',
 		'dropdown' => true,
 		'dropdownOptions'=>[
@@ -163,21 +170,24 @@ $this->registerCss("
 			},
 			'promo' =>function($url, $model,$key){
 				return  tombolPromo($url, $model);
+			},
+			'harga' =>function($url, $model,$key){
+				return  tombolHarga($url, $model);
 			}
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
 	]; 
 	$gvAllStoreItem=GridView::widget([
-		'id'=>'gv-all-data-store-item',
+		'id'=>'gv-all-data-prodak-item',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
-		'columns'=>$gvAttStoreItems,				
+		'columns'=>$gvAttProdakItem,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'gv-all-data-store-item',
+				'id'=>'gv-all-data-prodak-item',
 		    ],						  
 		],
 		'hover'=>true, //cursor select
@@ -191,8 +201,8 @@ $this->registerCss("
 		'toolbar' => false,
 		'panel' => [
 			// 'heading'=>false,
-			'heading'=>'<div style="float:right"> '.tombolCreate().'</div>'.$pageNm,
-			'type'=>'success',
+			'heading'=>'<div style="float:right"> ' .tombolCreate().'</div> &nbsp'.$pageNm,
+			'type'=>'default',
 			'before'=>false,
 			'showFooter'=>false,
 		],

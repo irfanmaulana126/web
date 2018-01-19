@@ -133,7 +133,53 @@ class DataBarangController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-     
+    
+    /**
+     * Displays a single Item model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionDiscount($id)
+    {
+        return $this->renderAjax('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+    
+    /**
+     * Displays a single Item model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionPromo($id)
+    {
+        return $this->renderAjax('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+    /**
+     * Displays a single Item model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionHarga($id)
+    {
+        return $this->renderAjax('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+    /**
+     * Displays a single Item model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionStock($id)
+    {
+        return $this->renderAjax('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+    
     /**
      * Displays a single Item model.
      * @param string $id

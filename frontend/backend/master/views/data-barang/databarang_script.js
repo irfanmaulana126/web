@@ -42,3 +42,39 @@ $(document).on('click','#databarang-button-row-edit', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+
+/*
+ * BUTTON Discount KARYAWAN
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-discount', function(ehead){ 			  
+	$('#databarang-button-row-discount-modal').modal('show')
+	.find('#databarang-button-row-discount-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON Harga KARYAWAN
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-harga', function(ehead){ 			  
+	$('#databarang-button-row-harga-modal').modal('show')
+	.find('#databarang-button-row-harga-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON Promo KARYAWAN
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-promo', function(ehead){ 			  
+	$('#databarang-button-row-promo-modal').modal('show')
+	.find('#databarang-button-row-promo-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});

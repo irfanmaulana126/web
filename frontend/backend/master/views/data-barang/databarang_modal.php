@@ -109,4 +109,75 @@ $this->registerCss("
 		echo "<div id='databarang-button-row-edit-content'></div>";
 	Modal::end();
 	
+	/*
+	 * BUTTON - Discount Prodak
+	*/
+	Modal::begin([
+		'id' => 'databarang-button-row-discount-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
+				<i class="fa fa-cubes fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> Discount Prodak </b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='databarang-button-row-discount-content'></div>";
+	Modal::end();
+
+	/*
+	 * BUTTON - Promo Prodak
+	*/
+	Modal::begin([
+		'id' => 'databarang-button-row-promo-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
+				<i class="fa fa-gift fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> Promo Prodak</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='databarang-button-row-promo-content'></div>";
+	Modal::end();
+
+	/*
+	 * BUTTON - Harga Prodak
+	*/
+	Modal::begin([
+		'id' => 'databarang-button-row-harga-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
+				<i class="fa fa-money fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> Harga Prodak</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='databarang-button-row-harga-content'></div>";
+	Modal::end();
 ?>

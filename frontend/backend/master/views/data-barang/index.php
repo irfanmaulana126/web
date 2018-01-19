@@ -36,15 +36,15 @@ echo $this->render('databarang_modal'); //echo difinition
 		#expand-menu .kv-grid-container{
 			height:250px
 		}
-		#w7 :link {
+		#w5 :link {
 			color: black;
 		}
 		/* mouse over link */
-		#w7-container a:hover {
+		#w5-container a:hover {
 			color: #5a96e7;
 		}
 		/* selected link */
-		#w7-container a:active {
+		#w5-container a:active {
 			color: blue;
 		}
 	");
@@ -101,14 +101,14 @@ echo $this->render('databarang_modal'); //echo difinition
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
 			<b class="fa fa-user fa-stack-1x" style="color:#FEFEFE"></b>
-		  </span><b> LIMIT STOCK PRODUCT </b>',
+		  </span><b> STOCK PRODUCT </b>',
 			'content'=>$Action4
 		],
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
 			<b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
-		  </span><b> JATUH TEMPO HARGA  </b>',
+		  </span><b> HISTORI HARGA  </b>',
 			'content'=>$Action5
 		],
 	];
