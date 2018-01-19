@@ -12,7 +12,6 @@ use yii\helpers\Url;
 use yii\data\ArrayDataProvider;
 use yii\web\View;
 
-<<<<<<< HEAD
 use frontend\backend\master\models\ProductSearch;
 $this->title="Prodak";
 $this->registerJs($this->render('databarang_script.js'),View::POS_READY);
@@ -49,26 +48,33 @@ echo $this->render('databarang_modal'); //echo difinition
 			color: blue;
 		}
 	");
-=======
->>>>>>> d15abbd788fd76058166c6eb84abcc607108a505
 
-			// STORE_STT,
-			// DATE_START,
-			// DATE_END,
-			// ITEM_ID,
-			// 'ITEM_NM',
-			// 'SATUAN',
-			//'DEFAULT_STOCK',
-			// DEFAULT_HARGA,
-			// ITEM_STT,
-			// STORE_CREARE_BY,STORE_CREARE_AT,STORE_UPDATE_BY, STORE_UPDATE_AT,
-			// ITEM_CREARE_BY,ITEM_CREARE_AT, ITEM_UPDATE_BY, ITEM_UPDATE_AT
-	$bColor='rgba(87,114,111, 1)';
-	$pageNm='<span class="fa-stack fa-xs text-right">				  
-				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-Items Outlet</b>
-	';
-	$gvAttStoreItems=[
+	// $headerColor='rgba(128, 179, 178, 1)';
+
+	$Action=$this->render('_index_all_product',[
+		'searchModel'=>$searchModel,
+		'dataProvider' => $dataProvider,
+		'model'=>$model,
+	]);
+	$Action2=$this->render('_index_discount',[
+		'searchModelDiscount'=>$searchModelDiscount,
+		'dataProviderDiscount' => $dataProviderDiscount,
+		]);
+	$Action3=$this->render('_index_promo',[
+		'searchModelPromo'=>$searchModelPromo,
+		'dataProviderPromo' => $dataProviderPromo,
+	]);
+	$Action4=$this->render('_index_stock',[
+		'searchModel'=>$searchModel,
+		'dataProvider' => $dataProvider,
+		'model'=>$model,
+		]);
+	$Action5=$this->render('_index_harga',[
+		'searchModelHarga'=>$searchModelHarga,
+		'dataProviderHarga' => $dataProviderHarga,
+	]);
+	
+	$items = [
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
@@ -77,7 +83,6 @@ echo $this->render('databarang_modal'); //echo difinition
 			'content'=>$Action,
 			'active'=>true
 		],
-<<<<<<< HEAD
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
@@ -115,8 +120,6 @@ echo $this->render('databarang_modal'); //echo difinition
 	]);
 // 	$test=ProductSearch::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP])->orderBy(['ACCESS_GROUP'=>SORT_DESC,'PRODUCT_SIZE_UNIT'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all();
 // print_r($test);die();
-=======
->>>>>>> d15abbd788fd76058166c6eb84abcc607108a505
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">

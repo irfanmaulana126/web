@@ -8,10 +8,17 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 use common\models\Store;
+use yii\web\UploadedFile;
 use frontend\backend\master\models\Product;
 use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\AllStoreItemSearch;
-
+use frontend\backend\master\models\ProductImage;
+use frontend\backend\master\models\ProductDiscount;
+use frontend\backend\master\models\ProductDiscountSearch;
+use frontend\backend\master\models\ProductPromo;
+use frontend\backend\master\models\ProductPromoSearch;
+use frontend\backend\master\models\ProductHarga;
+use frontend\backend\master\models\ProductHargaSearch;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -38,6 +45,8 @@ class DataBarangController extends Controller
      */
     public function actionIndex()
     {
+        $model=new Product;
+        $searchModel = new AllStoreItemSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
@@ -51,6 +60,13 @@ class DataBarangController extends Controller
 		 return $this->render('index', [
 			'searchModel'=>$searchModel,
             'dataProvider' => $dataProvider,
+			'searchModelDiscount'=>$searchModelDiscount,
+            'dataProviderDiscount' => $dataProviderDiscount,
+			'searchModelPromo'=>$searchModelPromo,
+            'dataProviderPromo' => $dataProviderPromo,
+			'searchModelHarga'=>$searchModelHarga,
+            'dataProviderHarga' => $dataProviderHarga,
+            'model'=>$model,
         ]);
 		
 		/* $paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
@@ -71,7 +87,6 @@ class DataBarangController extends Controller
 			$this->redirect(array('/site/alert'));
 		} */
     }
-<<<<<<< HEAD
     
      /**
      * Creates a new Item model.
@@ -212,6 +227,4 @@ class DataBarangController extends Controller
             ]);
         }
     }
-=======
->>>>>>> d15abbd788fd76058166c6eb84abcc607108a505
 }
