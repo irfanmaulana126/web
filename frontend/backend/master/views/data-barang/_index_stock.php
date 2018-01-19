@@ -1,3 +1,26 @@
+<!-- 'ID',
+            'ACCESS_GROUP',
+            'STORE_ID',
+            'PRODUCT_ID',
+            'LAST_STOCK',
+            //'INPUT_DATE',
+            //'INPUT_TIME',
+            //'INPUT_STOCK',
+            //'CURRENT_DATE',
+            //'CURRENT_TIME',
+            //'CURRENT_STOCK',
+            //'SISA_STOCK',
+            //'CREATE_BY',
+            //'CREATE_AT',
+            //'UPDATE_BY',
+            //'UPDATE_AT',
+            //'CREATE_UUID',
+            //'UPDATE_UUID',
+            //'STATUS',
+            //'DCRP_DETIL:ntext',
+            //'YEAR_AT',
+            //'MONTH_AT', -->
+
 <?php
 use yii\helpers\Html;
 use kartik\grid\GridView;
@@ -44,7 +67,7 @@ $this->registerCss("
 				  <i class="fa fa-share fa-1x"></i>
 				</span><b>STOCK PRODUCT</b>
 	';
-	$gvAttStoreItems=[
+	$gvAttProdakStockItems=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
@@ -55,7 +78,7 @@ $this->registerCss("
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'STORE_NM',
+			'attribute'=>'ACCESS_GROUP',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -72,7 +95,7 @@ $this->registerCss("
 		],		
 		//ITEM NAME
 		[
-			'attribute'=>'PRODUCT_NM',
+			'attribute'=>'STORE_ID',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -92,7 +115,7 @@ $this->registerCss("
 		],		
 		//SATUAN
 		[
-			'attribute'=>'CURRENT_STOCK',
+			'attribute'=>'PRODUCT_ID',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -107,7 +130,7 @@ $this->registerCss("
 		],
 		//DEFAULT_STOCK
 		[
-			'attribute'=>'CURRENT_PRICE',
+			'attribute'=>'LAST_STOCK',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -122,7 +145,7 @@ $this->registerCss("
 		],
 		//DEFAULT_HARGA
 		[
-			'attribute'=>'PRODUCT_SIZE_UNIT',
+			'attribute'=>'SISA_STOCK',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -137,7 +160,7 @@ $this->registerCss("
 		]		
 	];
 	
-	$gvAttStoreItems[]=[			
+	$gvAttProdakStockItems[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
 		'template' => '{view}{edit}{hapus}',
@@ -168,11 +191,11 @@ $this->registerCss("
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
 	]; 
-	$gvAllStoreItem=GridView::widget([
+	$gvAllProdakStockItem=GridView::widget([
 		'id'=>'gv-all-data-prodak-stock-item',
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
-		'columns'=>$gvAttStoreItems,				
+		'columns'=>$gvAttProdakStockItems,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[
@@ -200,4 +223,4 @@ $this->registerCss("
 		'floatHeader'=>true,
 	]); 	
 ?>
-			<?=$gvAllStoreItem?>
+			<?=$gvAllProdakStockItem?>

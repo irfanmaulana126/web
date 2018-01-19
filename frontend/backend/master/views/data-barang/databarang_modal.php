@@ -19,6 +19,15 @@ $this->registerCss("
 		border-radius: 5px;
 	}
 	
+	#databarang-button-row-discount-modal .modal-header {
+		background: linear-gradient(to bottom right, red, yellow);
+	}
+	#databarang-button-row-promo-modal .modal-header {
+		background: linear-gradient(to bottom right, red, yellow);
+	}
+	#databarang-button-row-harga-modal .modal-header {
+		background: linear-gradient(to bottom right, red, yellow);
+	}
 ");
 
 /**
@@ -116,7 +125,7 @@ $this->registerCss("
 		'id' => 'databarang-button-row-discount-modal',
 		'header' => '
 			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
 				<i class="fa fa-cubes fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> Discount Prodak </b>
 		',	
@@ -140,7 +149,7 @@ $this->registerCss("
 		'id' => 'databarang-button-row-promo-modal',
 		'header' => '
 			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
 				<i class="fa fa-gift fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> Promo Prodak</b>
 		',	
@@ -164,7 +173,7 @@ $this->registerCss("
 		'id' => 'databarang-button-row-harga-modal',
 		'header' => '
 			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
 				<i class="fa fa-money fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> Harga Prodak</b>
 		',	
