@@ -64,7 +64,6 @@ class StoreController extends Controller
 		$model= new Store();
 		$searchModel = new StoreSearch();
         $dataProvider = $searchModel->searchUserStore(Yii::$app->request->queryParams);
-        // print_r($model);die();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -144,6 +143,17 @@ class StoreController extends Controller
         }
     }
 	
+	public function actionRestore(){
+        $modelPeriode = new Store();
+		if ($modelPeriode->load(Yii::$app->request->post())) {
+            return $this->redirect(['index']);
+        }else {
+            return $this->renderAjax('form_cari',[
+				'modelPeriode' => $modelPeriode
+			]);
+	   }
+	}
+
 	public function actionExpandDetail() {
 		$id=$_POST['expandRowKey'];		
 		if($id==0){ 

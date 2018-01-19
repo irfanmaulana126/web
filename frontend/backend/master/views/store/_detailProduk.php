@@ -30,7 +30,7 @@ $this->registerCss("
 		height: 300px;
 	}
 	#list-prodak .kv-grid-container{
-		height:350px
+		height:200px
 	}
 ");
 

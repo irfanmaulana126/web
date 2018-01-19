@@ -11,6 +11,7 @@ use common\models\Store;
 use frontend\backend\master\models\Product;
 use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\AllStoreItemSearch;
+
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -37,9 +38,16 @@ class DataBarangController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new AllStoreItemSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        // print_r($dataProvider);die;	
+
+        $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $dataProviderDiscount = $searchModelDiscount->search(Yii::$app->request->queryParams);
+
+        $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $dataProviderPromo = $searchModelPromo->search(Yii::$app->request->queryParams);
+
+        $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
 		 return $this->render('index', [
 			'searchModel'=>$searchModel,
             'dataProvider' => $dataProvider,

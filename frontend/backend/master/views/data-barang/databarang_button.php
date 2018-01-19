@@ -211,6 +211,42 @@ use yii\base\DynamicModel;
 		$content = Html::button($label1,$options1);		
 		return '<li>'.$content.'</li>';
 	}
+	function tombolDiscount($url, $model){
+		$title1 = Yii::t('app',' Discount');
+		$options1 = [
+			'value'=>url::to(['/master/data-barang/view','id'=>$model['ID']]),
+			'id'=>'databarang-button-row-view',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-cubes fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	function tombolPromo($url, $model){
+		$title1 = Yii::t('app',' Promo');
+		$options1 = [
+			'value'=>url::to(['/master/data-barang/view','id'=>$model['ID']]),
+			'id'=>'databarang-button-row-view',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-gift fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
 	
 >>>>>>> 03b7298828a56a329b4bbb8516315fe6d61c91ca
 ?>

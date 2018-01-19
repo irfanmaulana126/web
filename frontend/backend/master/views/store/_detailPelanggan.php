@@ -30,7 +30,7 @@ use modulprj\absensi\models\AbsenImportPeriode;
 			height: 300px;
 		}
 		#list-pelanggan .kv-grid-container{
-			height:250px
+			height:200px
 		}
 	");
 

@@ -8,6 +8,18 @@
 */
 
 /*
+ * BUTTON CREATE
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#store-button-create', function(ehead){ 			  
+	$('#store-button-create-modal').modal('show')
+	.find('#store-button-create-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
  * store-View.
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
@@ -36,6 +48,13 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 $(document).on('click','#store-button-export-excel', function(ehead){ 			  
 	$('#store-modal-export-excel').modal('show')
 	.find('#store-modal-content-export-excel').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	.load(ehead.target.value);
+});
+
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+$(document).on('click','#store-button-restore', function(ehead){ 			  
+	$('#store-button-restore-modal').modal('show')
+	.find('#store-button-restore-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	.load(ehead.target.value);
 });
 

@@ -98,9 +98,18 @@ class StockProductController extends Controller
 	* @since 1.2
 	* ====================================
 	*/
-	public function actionExport($id){
+	public function actionExport(){
+		$modelPeriode = new \yii\base\DynamicModel([
+			'TAHUN'
+		]);		
+		$modelPeriode->addRule(['TAHUN'], 'required')
+         ->addRule(['TAHUN'], 'safe');
+		 
+		if ($modelPeriode->load(Yii::$app->request->post())) {
+		$id=$modelPeriode->TAHUN;
+		// print_r($id);die();
 		//DINAMIK MODEL PARAMS
-		$searchModel = new StockOutSearch(['thn'=>$id]);
+			$searchModel = new StockOutSearch(['thn'=>$id]);
         $dataProvider = $searchModel->searchPrint(Yii::$app->request->queryParams);
 		$dinamikField=$dataProvider->allModels;
 		
@@ -193,7 +202,9 @@ class StockProductController extends Controller
 					$aryFieldColomn
 				],
 			    'ceils' => $excel_ceilsProdukStok,
-                //'freezePane' => 'A3',
+				//'freezePane' => 'A3',
+				'columnGroup'=>false,
+				'autoSize'=>false,
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					$setHeaderMerge,
@@ -234,6 +245,10 @@ class StockProductController extends Controller
 		// die();
 		$excel_file = "ProdukStock";
 		$this->export4excel($excel_content, $excel_file,1);
+		}else{
+			return $this->renderAjax('form_cari_export',[
+				'modelPeriode' => $modelPeriode
+			]);
+		}		
 	}
-	
 }

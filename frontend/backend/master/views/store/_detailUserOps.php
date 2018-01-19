@@ -30,7 +30,7 @@ $this->registerCss("
 		height: 300px;
 	}
 	#list-user-ops .kv-grid-container{
-		height:230px
+		height:200px
 	}
 ");
 	$aryFieldUsrOps= [

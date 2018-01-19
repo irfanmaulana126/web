@@ -18,6 +18,7 @@ use yii\web\View;
 use yii\caching\XCache;
 use yii\data\ArrayDataProvider;
 $headerColor='rgba(128, 179, 178, 1)';
+$this->title = 'Store';
 	//print_r($dataModelImport);
 	//CSS
 	$this->registerCss("
@@ -39,7 +40,17 @@ $headerColor='rgba(128, 179, 178, 1)';
 		.tmp-button-delete a:hover {
 			color:red;
 		}
-		
+		#w17 :link {
+			color: black;
+		}
+		/* mouse over link */
+		#w17-container a:hover {
+			color: #5a96e7;
+		}
+		/* selected link */
+		#w17-container a:active {
+			color: blue;
+		}
 	");
 	
 	//Modal Ajax
@@ -47,31 +58,6 @@ $headerColor='rgba(128, 179, 178, 1)';
 	echo $this->render('modal_import'); //echo difinition
 	*/
 	//Result Status value.
-	function sttMsgDscp($stt){
-		if($stt==0){ //TRIAL
-			 return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
-					</span>','',['title'=>'Trial']);
-		}elseif($stt==1){
-			 return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-check fa-stack-1x" style="color:#05944d"></i>
-					</span>','',['title'=>'Active']);
-		}elseif($stt==2){
-			return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-remove fa-stack-1x" style="color:#01190d"></i>
-					</span>','',['title'=>'Deactive']);
-		}elseif($stt==3){
-			return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
-					</span>','',['title'=>'Delete']);
-		}
-	};	
-		
-	$dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Trial. '.sttMsgDscp(1).'=Active. '.sttMsgDscp(2).'=Deactive. '.sttMsgDscp(3).'=Delete.';
 	$dscAction='[<b>ACTION</b>]: 
 				<font color=red>Items</font>=CRUD Items/double click tabel row; 
 				<font color=red>View</font>=Detail Tampilan Outlet;  
@@ -149,17 +135,15 @@ $headerColor='rgba(128, 179, 178, 1)';
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="row">
-		<div class="col-xs-12 col-sm-6 col-lg-6" style="font-family: tahoma ;font-size: 8pt;">
+		<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 			<div class="row">		
 			<?=$_indexStore?>
 			</div>
 		</div>
-		<div class="col-xs-12 col-sm-6 col-lg-6" style="font-family: tahoma ;font-size: 8pt;">
-			<div class="row">	
-				<?php echo '<div style="padding-top:20px">'.$dscLabel.'</div>'?>	
-				<div  style="padding-top:10px">				
+		<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
+				<!-- <?php //echo '<div style="padding-top:20px">'.$dscLabel.'</div>'?>	 -->
+			<div  style="padding-top:10px">				
 					<?=$_indexExpand?>
-				</div>		
 			</div>		
 		</div>
 	</div>
