@@ -1,42 +1,49 @@
 <?php
 namespace frontend\backend\dashboard\controllers;
-use Yii;
-use yii\filters\AccessControl;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\data\ArrayDataProvider;
+
+use yii;
 use yii\helpers\Json;
-use yii\helpers\ArrayHelper;
+//use yii\rest\ActiveController;
+use yii\web\Controller;
+use yii\data\ActiveDataProvider;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\QueryParamAuth;
+use yii\filters\auth\HttpBasicAuth;
+use yii\filters\auth\HttpBearerAuth;
 use yii\filters\ContentNegotiator;
+use yii\filters\VerbFilter;
 use yii\web\Response;
+use yii\helpers\ArrayHelper;
+use yii\web\HttpException;
+
+
 use frontend\backend\laporan\models\RptDailyChart;
 use frontend\backend\laporan\models\RptDailyChartSearch;
 use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDailyHourSearch;
 use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryMonthly;
+use frontend\backend\dashboard\models\ChartWeeklySales;
+use frontend\backend\dashboard\models\ChartMonthlySales;
 /**
  * FoodtownController implements the CRUD actions for Foodtown model.
  */
 class DataController extends Controller
 {
-	public function behaviors(){
+	 public function behaviors()    {
         return ArrayHelper::merge(parent::behaviors(), [
-			'bootstrap'=> [
+			'bootstrap'=> 
+            [
 				'class' => ContentNegotiator::className(),
-				'formats' => [
-					'application/json' => Response::FORMAT_JSON,'charset' => 'UTF-8',
+				'formats' => 
+                [
+					'application/json' => Response::FORMAT_JSON,"JSON_PRETTY_PRINT"
 				],
-				'languages' => [
-					'en',
-					'de',
-				],
+				
 			],
 			'corsFilter' => [
 				'class' => \yii\filters\Cors::className(),
 				'cors' => [
 					// restrict access to
-					//'Origin' => ['http://lukisongroup.com','http://www.lukisongroup.com','http://labtest1-erp.int'],
-					'Origin' => ['*'],
+					'Origin' => ['*','http://localhost:810'],
 					'Access-Control-Request-Method' => ['POST', 'PUT','GET'],
 					// Allow only POST and PUT methods
 					'Access-Control-Request-Headers' => ['X-Wsse'],
@@ -48,12 +55,25 @@ class DataController extends Controller
 					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
 				]		
 			],
-        ]);	
-	} 	  
+			/* 'corsFilter' => [
+				'class' => \yii\filters\Cors::className(),
+				'cors' => [
+					'Origin' => ['*'],
+					'Access-Control-Allow-Headers' => ['X-Requested-With','Content-Type'],
+					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+					//'Access-Control-Request-Headers' => ['*'],					
+					'Access-Control-Allow-Credentials' => true,
+					'Access-Control-Max-Age' => 3600,
+					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page']
+					]		 
+			], */
+        ]);		
+    }  
     
     
     public function actionDailyTransaksi()
     {
+		$tglWaktu='';
 	   $model=RptDailyChart::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user(),'Val_Nm'=>'TRANSAKSI_HARIAN'])->one();
 	   $searchModel = new TransPenjualanHeaderSummaryDailyHourSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -308,8 +328,9 @@ class DataController extends Controller
 		 * Type : msline
 		 * 
 		*/
-		
-		$model=RptDailyChart::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user(),'Val_Nm'=>'TRANSAKSI_BULANAN'])->one();
+		$tglWaktu='2017-10-31 21:17:26';
+		$rsltDataSet1='';
+		//$model=RptDailyChart::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user(),'Val_Nm'=>'TRANSAKSI_BULANAN'])->one();
 		$modelMonthly= TransPenjualanHeaderSummaryMonthly::find()
 		->select('STORE_NM,STORE_ID,TAHUN,
 			SUM(CASE WHEN BULAN=1 THEN TOTAL_SALES ELSE 0 END) AS BLN1,
@@ -326,7 +347,8 @@ class DataController extends Controller
 			SUM(CASE WHEN BULAN=12 THEN TOTAL_SALES ELSE 0 END) AS BLN12,
 			UPDATE_AT
 			')
-		->where(['TAHUN'=>date("Y"),'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->groupBy('STORE_ID')
+		//->where(['TAHUN'=>date("Y"),'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->groupBy('STORE_ID')
+		->where(['TAHUN'=>'2017','ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->groupBy('STORE_ID')
 		->orderBy(['STORE_ID'=>SORT_ASC])
 		->all();	
 		foreach($modelMonthly as $row1 => $val1){
@@ -458,4 +480,53 @@ class DataController extends Controller
 		// return $model;
 	}	
 	
+	/**
+	 * ===================================
+	 * ========== WEEKLY SALES ===========
+	 * ===================================
+	 * Line Chart 
+	 * Type 		: msline
+	 * create by	: ptr.nov@gmail.com	
+	 * ===================================
+	*/
+	public function actionWeeklySales(){
+		$params     		= $_REQUEST;
+		$paramsHeader		= Yii::$app->request->headers;
+		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:$paramsHeader['ACCESS_GROUP'];
+		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:$paramsHeader['TAHUN'];
+		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:$paramsHeader['BULAN'];
+		
+		$modelWeeklySales= new ChartWeeklySales([
+			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
+			'TAHUN'=>$paramTahun,					//'2018',
+			'BULAN'=>$paramBulan					//'1'
+		]);
+		return $modelWeeklySales;
+	}	
+	
+	
+	public function actionTest()
+    {
+		$params     		= $_REQUEST;
+		$paramsHeader		= Yii::$app->request->headers;
+		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:$paramsHeader['ACCESS_GROUP'];
+		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:$paramsHeader['TAHUN'];
+		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:$paramsHeader['BULAN'];
+		
+		$modelMonthlySales= new ChartMonthlySales([
+			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
+			'TAHUN'=>$paramTahun,					//'2018',
+			'BULAN'=>$paramBulan					//'1'
+		]);
+		return $modelMonthlySales;		
+	}
+	
+	function weekOfMonthMysql($date) {
+		$minggu= date('W', strtotime($date));
+		if ($minggu<>0){
+			return ($minggu)-1;
+		} else{
+			return $minggu;
+		}
+	}
 }

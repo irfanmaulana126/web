@@ -84,9 +84,25 @@ use frontend\backend\laporan\models\RptDailyChartSearch;
 		],
 	]);	 */	
 
-	//DISTRIBUTOR SALES PO
-	$distSalesPo= Chart::Widget([
-		'urlSource'=> '/dashboard/data/monthy-sales',
+	//=WEEKLY SALES
+	$weeklySales= Chart::Widget([
+		//'urlSource'=> '/dashboard/data/weekly-sales?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
+		'urlSource'=> '/dashboard/data/weekly-sales',
+		'userid'=>'piter@lukison.com',
+		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
+		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
+		'type'=>'msline',//msline//'bar3d',//'gantt',					//Chart Type 
+		'renderid'=>'msline-sales-weekly',								//unix name render
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'300px',
+	]);	 
+	
+	//=MONTHLY SALES
+	$monthlySales= Chart::Widget([
+		//'urlSource'=> '/dashboard/data/monthy-sales',
+		//'urlSource'=> '/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
+		'urlSource'=> '/dashboard/data/test',
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
@@ -95,7 +111,9 @@ use frontend\backend\laporan\models\RptDailyChartSearch;
 		'autoRender'=>true,
 		'width'=>'100%',
 		'height'=>'300px',
-	]);	 
+	]);	
+	
+	
 	//$loadingSpinner1=Spinner::widget(['id'=>'spn1-load-road','preset' => 'large', 'align' => 'center', 'color' => 'blue']);
 	 
 
@@ -342,10 +360,19 @@ $this->registerJs("
 		</div>
 		<br>
 	</div>
-	<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:0px">
+	<div class="col-lg-12 col-md-12">
+		<div class="row">
+			<div class="panel-heading ">
+					<div class="row">
+						<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$weeklySales?></div></div><div class="clearfix"></div>
+					</div>
+				</div>				
+		</div>	
+	</div>	
+	<div class="col-lg-12 col-md-12">
 		<div class="panel-heading ">
 			<div class="row">
-				<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$distSalesPo?></div></div><div class="clearfix"></div>
+				<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$monthlySales?></div></div><div class="clearfix"></div>
 			</div>
 		</div>	
 	</div>			

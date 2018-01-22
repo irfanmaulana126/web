@@ -34,6 +34,37 @@ class KaryawanController extends Controller
         ];
     }
 
+		
+	public function beforeAction($action){
+		$modulIndentify=4; //OUTLET
+	   // Check only when the user is logged in.
+	   // Author piter Novian [ptr.nov@gmail.com].
+	   if (!Yii::$app->user->isGuest){
+		   if (Yii::$app->session['userSessionTimeout']< time() ) {
+			   // timeout
+			   Yii::$app->user->logout();
+			   return $this->goHome(); 
+		   } else {	
+			   //add Session.
+			   Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+			   //check validation [access/url].
+			   $checkAccess=Yii::$app->getUserOpt->UserMenuPermission($modulIndentify);
+			   if($checkAccess['modulMenu']['MODUL_STS']==0 OR $checkAccess['ModulPermission']['STATUS']==0){				
+				   $this->redirect(array('/site/alert'));
+			   }else{
+				   if($checkAccess['PageViewUrl']==true){						
+					   return true;
+				   }else{
+					   $this->redirect(array('/site/alert'));
+				   }					
+			   }			 
+		   }
+	   }else{
+		   Yii::$app->user->logout();
+		   return $this->goHome(); 
+	   }
+   }
+   
     /**
      * Lists all Karyawan models.
      * @return mixed
@@ -95,8 +126,8 @@ class KaryawanController extends Controller
    public function actionExport()
     {
 		$searchModel = new KaryawanSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$model=$dataProvider->getModels();
+        $dataProvider = $searchModel->searchExcelExport(Yii::$app->request->queryParams);
+		$model=$dataProvider->allModels;
 		// $arDataProvider= new ArrayDataProvider([	
 			// 'allModels'=>$dt,	
 			// 'pagination' => [
@@ -108,8 +139,8 @@ class KaryawanController extends Controller
 		//$model=Karyawan::find()->asArray()->all();
 		//->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->asArray()->all();
 		//$model->attributes;
-		print_r($model);
-		die();
+		// print_r($model);
+		// die();
 		
 		$excel_dataKaryawan= Postman4ExcelBehavior::excelDataFormat($model);		
         $excel_titleDatakaryawan = $excel_dataKaryawan['excel_title'];
@@ -117,16 +148,18 @@ class KaryawanController extends Controller
 
 		
 		//DATA IMPORT
-		$excel_content = [
+		$excel_content[] = 
 			[
 				'sheet_name' => 'data-karyawan',
                 'sheet_title' => [
 					$excel_titleDatakaryawan
 				],
 			    'ceils' => $excel_ceilsDatakaryawan,
-                //'freezePane' => 'A3',
+				'freezePane' => 'A2',
+				'columnGroup'=>false,
+				'autoSize'=>false,
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
-                /* 'headerStyle'=>[	
+                'headerStyle'=>[	
 					[
 						'NAMA_TOKO' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
 						'PRODUK' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
@@ -155,15 +188,17 @@ class KaryawanController extends Controller
 						'Closing' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
 						'Actual' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
 					]
-				], */
+				],
                'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
                'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
-			],
+			
 		];
 		// print_r($excel_content);
 		// die();
 		$excel_file = "data-karyawan";
-		$this->export4excel($excel_content, $excel_file,1); 
+		$this->export4excel($excel_content, $excel_file,0); 
+
+		// return $this->redirect(['index']);
     }
 
   

@@ -51,7 +51,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>''.(empty($modelToko['STORE_NM'])) ? '':$modelToko['STORE_NM'] .'',
 		],
 		[
 			'attribute' =>'ALAMAT',
@@ -59,12 +59,13 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>''.(empty($modelToko['ALAMAT'])) ? '':$modelToko['ALAMAT'].'',
 		],
 		
 		[		
 			'attribute' =>'PROVINCE_NM',			
 			'format'=>'raw',
+			'value'=>''.(empty($modelToko['PROVINCE_NM'])) ? '':$modelToko['PROVINCE_NM'].'',
 			'type'=>DetailView::INPUT_SELECT2,
 			'widgetOptions'=>[
 				//'data'=>$aryLocate,
@@ -76,6 +77,7 @@ use kartik\widgets\ActiveForm;
 		[	
 			'attribute' =>'CITY_NAME',			
 			'format'=>'raw',
+			'value'=>''.(empty($modelToko['CITY_NAME'])) ? '':$modelToko['CITY_NAME'].'',
 			'type'=>DetailView::INPUT_DEPDROP,
 			'widgetOptions'=>[
 				'options'=>['id'=>'locate-viewsub-store-id','placeholder'=>'Select ...'],
@@ -94,7 +96,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>''.(empty($modelToko['TLP'])) ? '':$modelToko['TLP'].'',
 		],
 		[
 			'attribute' =>'PIC',
@@ -102,7 +104,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>''.(empty($modelToko['PIC'])) ? '':$modelToko['PIC'].'',
 		]		
 	];
 	
@@ -112,25 +114,26 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,	
 			'format'=>'raw', 
-            'value'=>'<kbd>'.$modelToko->STORE_ID.'</kbd>',
+            'value'=>'<kbd>'.$modelToko['STORE_ID'].'</kbd>',
 		],
 		[
 			'attribute' =>'CREATE_BY',
 			'format'=>'raw', 
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,
-			//'value'=>'<kbd>'.$modelToko->UPDATE_BY.'</kbd>',
+			'value'=>''.(empty($modelToko['CREATE_BY'])) ? '':$modelToko['CREATE_BY'].'',
 		],
 		[
 			'attribute' =>'UPDATE_BY',
 			'format'=>'raw', 
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,
-			//'value'=>'<kbd>'.$modelToko->UPDATE_BY.'</kbd>',
+			'value'=>''.(empty($modelToko['UPDATE_BY'])) ? '':$modelToko['UPDATE_BY'].'',
 		],		
 		[
 			'attribute' =>'CREATE_AT',
 			'format'=>'raw',
+			'value'=>''.(empty($modelToko['CREATE_AT'])) ? '':$modelToko['CREATE_AT'].'',
 			'type'=>DetailView::INPUT_DATETIME,
 			'widgetOptions' => [
 				'pluginOptions'=>Yii::$app->gv->gvPliginDate()
@@ -140,6 +143,7 @@ use kartik\widgets\ActiveForm;
 		[
 			'attribute' =>'UPDATE_AT',
 			'format'=>'raw',
+			'value'=>''.(empty($modelToko['UPDATE_AT'])) ? '':$modelToko['UPDATE_AT'].'',
 			'displayOnly'=>true,
 			'type'=>DetailView::INPUT_DATE,
 			'widgetOptions' => [
@@ -164,7 +168,7 @@ use kartik\widgets\ActiveForm;
 			'attribute' =>'STATUS',			
 			'format'=>'raw',
 			//'value'=>$modelToko->STATUS==0?'Disable':($modelToko->STATUS==1?'Enable':'Unknown'),
-			'value'=>sttMsg($modelToko->STATUS),
+			'value'=>sttMsg($modelToko['STATUS']),
 			'type'=>DetailView::INPUT_SELECT2,
 			'widgetOptions'=>[
 				'data'=>Yii::$app->gv->gvStatusArray(),//$valStt
@@ -218,8 +222,10 @@ use kartik\widgets\ActiveForm;
 ?>
 <div style="height:100%;font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="row" >
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<?=$dvStoreData ?>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+			<?=$dvStoreData ?>		
+		</div>
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
 			<?=$dvStoreInfo ?>			
 		</div>
 	</div>

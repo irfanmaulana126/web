@@ -38,7 +38,7 @@ use kartik\widgets\ActiveForm;
 	
 	$attItemViewData=[	
 		[
-			'attribute' =>'ITEM_NM',
+			'attribute' =>'PRODUCT_NM',
 			'type'=>DetailView::INPUT_TEXTAREA,
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
@@ -46,7 +46,7 @@ use kartik\widgets\ActiveForm;
             //'value'=>'<kbd>'.$model->ITEM_NM.'</kbd>',
 		],
 		[		
-			'attribute' =>'SATUAN',			
+			'attribute' =>'PRODUCT_SIZE_UNIT',			
 			'format'=>'raw',
 			'type'=>DetailView::INPUT_SELECT2,
 			'widgetOptions'=>[
@@ -57,13 +57,13 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 		],
 		[
-			'attribute' =>'DEFAULT_STOCK',
+			'attribute' =>'CURRENT_STOCK',
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,	
 			'format'=>'raw', 
 		],
 		[
-			'attribute' =>'DEFAULT_HARGA',
+			'attribute' =>'CURRENT_PRICE',
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,	
 			'format'=>'raw', 
@@ -85,18 +85,18 @@ use kartik\widgets\ActiveForm;
 	
 	$attItemViewInfo=[
 		[
-			'attribute' =>'OUTLET_CODE',
+			'attribute' =>'STORE_ID',
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,	
 			'format'=>'raw', 
-            'value'=>'<kbd>'.$model->OUTLET_CODE.'</kbd>',
+            'value'=>'<kbd>'.$model->STORE_ID.'</kbd>',
 		],
 		[
-			'attribute' =>'ITEM_ID',
+			'attribute' =>'PRODUCT_ID',
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,	
 			'format'=>'raw', 
-            'value'=>'<kbd>'.$model->ITEM_ID.'</kbd>',
+            'value'=>'<kbd>'.$model->PRODUCT_ID.'</kbd>',
 		],
 		[
 			'attribute' =>'CREATE_BY',
@@ -135,9 +135,9 @@ use kartik\widgets\ActiveForm;
 	
 	$attributeImage = [		
 		[
-			'attribute' =>'itemsImage64',
+			'attribute' =>'PRODUCT_IMAGE',
 			'label'=>false,
-			'value'=>Html::img('data:image/jpg;charset=utf-8;base64,'.$model->itemsImage64,['width'=>'100','height'=>'120']),
+			'value'=>Html::img('data:image/jpg;charset=utf-8;base64,'.$image['PRODUCT_IMAGE'],['width'=>'100','height'=>'120']),
 			'format'=>['raw',['width'=>'100','height'=>'170']],
 			'type' => DetailView::INPUT_FILEINPUT,
 			'widgetOptions'=>[
@@ -157,7 +157,7 @@ use kartik\widgets\ActiveForm;
 	
 	$dvItemViewImage=DetailView::widget([
 			'id'=>'dv-items-view-image',
-			'model' => $model,
+			'model' => $image,
 			'attributes'=>$attributeImage,
 			'condensed'=>true,
 			'hover'=>true,
@@ -170,7 +170,7 @@ use kartik\widgets\ActiveForm;
 			'buttons2'=>'{view}{save}',		
 			'saveOptions'=>[ 
 				'id' =>'editBtn2',
-				'value'=>'/efenbi-rasasayang/item/view?id='.$model->ITEM_ID,
+				'value'=>'/efenbi-rasasayang/item/view?id='.$model->PRODUCT_ID,
 				'params' => ['custom_param' => true],
 			],	
 		]);

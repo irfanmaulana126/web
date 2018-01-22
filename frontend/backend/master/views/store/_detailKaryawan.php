@@ -30,7 +30,7 @@ use modulprj\absensi\models\AbsenImportPeriode;
 			height: 300px;
 		}
 		#list-karyawan .kv-grid-container{
-			height:250px
+			height:200px
 		}
 	");
 

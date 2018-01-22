@@ -40,10 +40,11 @@ use yii\base\DynamicModel;
 	/*
 	 * LINK EXPORT EXCEL.
 	*/
-	function tombolExportExcel($tanggal){
+	function tombolExportExcel(){
 		$title1 = Yii::t('app', ' Export Excel');
-		$url = Url::toRoute(['/inventory/stock-product/export?id='.$tanggal]);
+		$url = Url::toRoute(['/inventory/stock-product/export']);
 		$options1 = [
+					'value'=>$url,
 					'id'=>'stockproduct-export-excel',
 					'data-pjax' => true,
 					'class'=>"btn btn-primary btn-xs",
@@ -55,7 +56,7 @@ use yii\base\DynamicModel;
 				</span>
 		';
 		$label1 = $icon1 . ' ' . $title1;
-		$content = Html::a($label1,$url,$options1);
+		$content = Html::button($label1,$options1);
 		return $content;
 	}		
 	

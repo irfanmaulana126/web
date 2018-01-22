@@ -1,183 +1,133 @@
 <?php
 use yii\helpers\Html;
-use kartik\widgets\Select2;
-use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
-use kartik\widgets\Spinner;
 use yii\bootstrap\Modal;
-use yii\helpers\Url;
-use kartik\widgets\FileInput;
-use yii\helpers\Json;
-use yii\web\Response;
-use yii\widgets\Pjax;
+use kartik\grid\GridView;
 use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
+use kartik\builder\Form;
+use yii\helpers\Url;
+use yii\data\ArrayDataProvider;
 use yii\web\View;
 
-$this->registerCss("
-	:link {
-		color: #fdfdfd;
-	}
-	/* mouse over link */
-	a:hover {
-		color: #5a96e7;
-	}
-	/* selected link */
-	a:active {
-		color: blue;
-	}
-");
-            // ACCESS_UNIX_STORE, 
-			// ACCESS_UNIX_ITEM,
-			// OUTLET_CODE,
-			// /OUTLET_NM',
-			// STORE_STT,
-			// DATE_START,
-			// DATE_END,
-			// ITEM_ID,
-			// 'ITEM_NM',
-			// 'SATUAN',
-			//'DEFAULT_STOCK',
-			// DEFAULT_HARGA,
-			// ITEM_STT,
-			// STORE_CREARE_BY,STORE_CREARE_AT,STORE_UPDATE_BY, STORE_UPDATE_AT,
-			// ITEM_CREARE_BY,ITEM_CREARE_AT, ITEM_UPDATE_BY, ITEM_UPDATE_AT
-	$bColor='rgba(87,114,111, 1)';
-	$pageNm='<span class="fa-stack fa-xs text-right">				  
-				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-Items Outlet</b>
-	';
-	$gvAttStoreItems=[
+use frontend\backend\master\models\ProductSearch;
+$this->title="Prodak";
+$this->registerJs($this->render('databarang_script.js'),View::POS_READY);
+echo $this->render('databarang_button'); //echo difinition
+echo $this->render('databarang_modal'); //echo difinition
+	$this->registerCss("
+		#expand-menu :link {
+			color:black;
+		}
+		//mouse over link
+		#expand-menu a:hover {
+			color: black;
+		}
+		//selected link
+		a:active {
+			color: black;
+		}
+		.kv-panel {
+			//min-height: 340px;
+			height: 300px;
+		}
+		#expand-menu .kv-grid-container{
+			height:250px
+		}
+		#w5 :link {
+			color: black;
+		}
+		/* mouse over link */
+		#w5-container a:hover {
+			color: #5a96e7;
+		}
+		/* selected link */
+		#w5-container a:active {
+			color: blue;
+		}
+	");
+
+	// $headerColor='rgba(128, 179, 178, 1)';
+
+	$Action=$this->render('_index_all_product',[
+		'searchModel'=>$searchModel,
+		'dataProvider' => $dataProvider
+	]);
+	$Action2=$this->render('_index_discount',[
+		'searchModelDiscount'=>$searchModelDiscount,
+		'dataProviderDiscount' => $dataProviderDiscount,
+		]);
+	$Action3=$this->render('_index_promo',[
+		'searchModelPromo'=>$searchModelPromo,
+		'dataProviderPromo' => $dataProviderPromo,
+	]);
+	$Action4=$this->render('_index_stock',[		
+		'searchModelStock'=>$searchModelStock,
+		'dataProviderStock' => $dataProviderStock,
+	]);
+	$Action5=$this->render('_index_harga',[
+		'searchModelHarga'=>$searchModelHarga,
+		'dataProviderHarga' => $dataProviderHarga,
+	]);
+	
+	$items = [
 		[
-			'class'=>'kartik\grid\SerialColumn',
-			'contentOptions'=>['class'=>'kartik-sheet-style'],
-			'width'=>'10px',
-			'header'=>'No.',
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
+			'label'=>'<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+			<b class="fa fa-home fa-stack-1x" style="color:#FEFEFE"></b>
+		  </span><b> ALL PRODUK </b>',
+			'content'=>$Action,
+			'active'=>true
 		],
-		//ITEM_ID
 		[
-			'attribute'=>'STORE_ID',
-			'filterType'=>true,
-			'format'=>'raw',
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
-			'value'=>function($model){
-				return $model['STORE_ID'];
-			},
-			'hAlign'=>'right',
-			'vAlign'=>'top',
-			'mergeHeader'=>false,
-			'group'=>true,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
-		],		
-		//ITEM NAME
-		[
-			'attribute'=>'ITEM_NM',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
-			
-		],		
-		//SATUAN
-		[
-			'attribute'=>'SATUAN',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
+			'label'=>'<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+			<b class="fa fa-product-hunt fa-stack-1x" style="color:#FEFEFE"></b>
+		  </span><b> PRODUK DISCOUNT </b>',
+			'content'=>$Action2
 		],
-		//DEFAULT_STOCK
 		[
-			'attribute'=>'DEFAULT_STOCK',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
+			'label'=>'<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+			<b class="fa fa-users fa-stack-1x" style="color:#FEFEFE"></b>
+		  </span><b> PRODUK PROMO </b>',
+			'content'=>$Action3
 		],
-		//DEFAULT_HARGA
 		[
-			'attribute'=>'DEFAULT_HARGA',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-		]		
+			'label'=>'<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+			<b class="fa fa-user fa-stack-1x" style="color:#FEFEFE"></b>
+		  </span><b> STOCK PRODUCT </b>',
+			'content'=>$Action4
+		],
+		[
+			'label'=>'<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+			<b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
+		  </span><b> HISTORI HARGA  </b>',
+			'content'=>$Action5
+		],
 	];
 	
-	$gvAllStoreItem=GridView::widget([
-		'id'=>'gv-all-data-store-item',
-		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
-		'columns'=>$gvAttStoreItems,				
-		'pjax'=>true,
-		'pjaxSettings'=>[
-			'options'=>[
-				'enablePushState'=>false,
-				'id'=>'gv-all-data-store-item',
-		    ],						  
-		],
-		'hover'=>true, //cursor select
-		'responsive'=>true,
-		'responsiveWrap'=>true,
-		'bordered'=>true,
-		'striped'=>true,
-		'autoXlFormat'=>true,
-		'export' => false,
-		'panel'=>[''],
-		'toolbar' => false,
-		'panel' => [
-			//'heading'=>false,
-			//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-			//'heading'=>tombolBack().' '.tombolCreate().' '.tombolExportExcel($paramUrl).' '.tombolFHargaDiscount($paramUrl).' ' .tombolFDiscount($paramUrl).' '.tombolRefresh($paramUrl).' '.$pageNm,  
-			'type'=>'success',
-			//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
-			'before'=>false,
-			'showFooter'=>false,
-		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
-	]); 	
+	$tabIndex=TabsX::widget([
+		'items'=>$items,
+		'enableStickyTabs'=>true,
+		'encodeLabels'=>false
+	]);
+// 	$test=ProductSearch::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP])->orderBy(['ACCESS_GROUP'=>SORT_DESC,'PRODUCT_SIZE_UNIT'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all();
+// print_r($test);die();
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
-			<?=$gvAllStoreItem?>
+			<div class="pull-right">
+			</div>
+		</div>
+		<div class="row">
+			<?=$tabIndex?>
 		</div>
 	</div>
 </div>
