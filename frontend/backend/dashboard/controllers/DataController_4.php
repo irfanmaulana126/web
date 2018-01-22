@@ -22,7 +22,6 @@ use frontend\backend\laporan\models\RptDailyChartSearch;
 use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDailyHourSearch;
 use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryMonthly;
 use frontend\backend\dashboard\models\ChartWeeklySales;
-use frontend\backend\dashboard\models\ChartMonthlySales;
 /**
  * FoodtownController implements the CRUD actions for Foodtown model.
  */
@@ -484,41 +483,175 @@ class DataController extends Controller
 	 * ===================================
 	 * ========== WEEKLY SALES ===========
 	 * ===================================
-	 * Line Chart 
-	 * Type 		: msline
-	 * create by	: ptr.nov@gmail.com	
+	 * Maping Chart 
+	 * Type : msline
 	 * ===================================
 	*/
-	public function actionWeeklySales(){
-		$params     		= $_REQUEST;
-		$paramsHeader		= Yii::$app->request->headers;
-		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:$paramsHeader['ACCESS_GROUP'];
-		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:$paramsHeader['TAHUN'];
-		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:$paramsHeader['BULAN'];
+	public function actionWeeklySales(){		
+		$tglWaktu='2017-10-31 21:17:26';
+		$rsltDataSet1='';
+		//$model=RptDailyChart::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user(),'Val_Nm'=>'TRANSAKSI_BULANAN'])->one();
+		$modelMonthly= TransPenjualanHeaderSummaryMonthly::find()
+		->select('STORE_NM,STORE_ID,TAHUN,
+			SUM(CASE WHEN BULAN=1 THEN TOTAL_SALES ELSE 0 END) AS BLN1,
+			SUM(CASE WHEN BULAN=2 THEN TOTAL_SALES ELSE 0 END) AS BLN2,
+			SUM(CASE WHEN BULAN=3 THEN TOTAL_SALES ELSE 0 END) AS BLN3,
+			SUM(CASE WHEN BULAN=4 THEN TOTAL_SALES ELSE 0 END) AS BLN4,
+			SUM(CASE WHEN BULAN=5 THEN TOTAL_SALES ELSE 0 END) AS BLN5,
+			SUM(CASE WHEN BULAN=6 THEN TOTAL_SALES ELSE 0 END) AS BLN6,
+			SUM(CASE WHEN BULAN=7 THEN TOTAL_SALES ELSE 0 END) AS BLN7,
+			SUM(CASE WHEN BULAN=8 THEN TOTAL_SALES ELSE 0 END) AS BLN8,
+			SUM(CASE WHEN BULAN=9 THEN TOTAL_SALES ELSE 0 END) AS BLN9,
+			SUM(CASE WHEN BULAN=10 THEN TOTAL_SALES ELSE 0 END) AS BLN10,
+			SUM(CASE WHEN BULAN=11 THEN TOTAL_SALES ELSE 0 END) AS BLN11,
+			SUM(CASE WHEN BULAN=12 THEN TOTAL_SALES ELSE 0 END) AS BLN12,
+			SUM(CASE WHEN BULAN=13 THEN TOTAL_SALES ELSE 0 END) AS BLN13,
+			UPDATE_AT
+			')
+		//->where(['TAHUN'=>date("Y"),'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->groupBy('STORE_ID')
+		->where(['TAHUN'=>'2017','ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->groupBy('STORE_ID')
+		->orderBy(['STORE_ID'=>SORT_ASC])
+		->all();	
+		foreach($modelMonthly as $row1 => $val1){
+			$rsltMonth[]=$val1['BLN10'];
+			$dataval1='';
+			for( $i= 1 ; $i <= 12 ; $i++ ) {
+				$dataval1[]=['label'=>$i,'value'=>$val1['BLN'.$i]];
+			}
+			$rslt1['seriesname']=$val1['STORE_NM'];
+			$rslt1['data']=$dataval1;	
+			$rsltDataSet1[]=$rslt1;	
+			$tglWaktu=$val1['UPDATE_AT'];
+		}
 		
-		$modelWeeklySales= new ChartWeeklySales([
-			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
-			'TAHUN'=>$paramTahun,					//'2018',
-			'BULAN'=>$paramBulan					//'1'
-		]);
-		return $modelWeeklySales;
+		
+		// print_r($rsltDataSet1);
+		// die();
+		$data['chart']='
+			"chart": {
+				"caption": "RINGKASAN PENJUALAN MINGGUAN",
+				"subCaption": "TAHUN '.date("Y",strtotime($tglWaktu)).'",
+				"captionFontSize": "12",
+				"subcaptionFontSize": "10",
+				"subcaptionFontBold": "0",
+				"paletteColors": '.'"'.Yii::$app->arrayBantuan->ArrayPaletteColors().'"'.',
+				"bgcolor": "#ffffff",
+				"showBorder": "0",
+				"showShadow": "0",				
+				"usePlotGradientColor": "0",
+				"legendBorderAlpha": "0",
+				"legendShadow": "0",
+				"showAxisLines": "1",
+				"showAlternateHGridColor": "0",
+				"divlineThickness": "1",
+				"divLineIsDashed": "0",				
+				"divLineDashLen": "1",				
+				"divLineGapLen": "1",
+				"vDivLineDashed": "0",
+				"numVDivLines": "11",
+				"vDivLineThickness": "1",
+				"xAxisName": "Toko",
+				"yAxisName": "Rupiah",				
+				"anchorradius": "6",
+				"plotHighlightEffect": "fadeout|color=#f6f5fd, alpha=60",
+				"showValues": "0",
+				"rotateValues": "0",
+				"placeValuesInside": "0",
+				"formatNumberScale": "0",
+				"decimalSeparator": ",",
+				"thousandSeparator": ".",
+				"numberPrefix": "",
+				"ValuePadding": "0",
+				"yAxisValuesStep":"1",
+				"xAxisValuesStep":"0",
+				"yAxisMinValue": "0",
+				"numDivLines": "8",
+				"xAxisNamePadding": "30",
+				"showHoverEffect":"1",
+				"animation": "1" ,
+				"exportEnabled": "1",
+				"exportFileName":"RINGKASAN-BULANAN",
+				"exportAtClientSide":"1",
+				"showValues":"1"				
+			}
+		';
+		
+		$data['categories']='	
+			"categories": [
+				{
+					"category": [
+						{
+							"label": "january"
+						},
+						{
+							"label": "February"
+						},
+						{
+							"label": "March"
+						},
+						{
+							"label": "April"
+						},
+						{
+							"label": "Mey"
+						},
+						{
+							"label": "June"
+						},
+						{
+							"label": "July"
+						},
+						{
+							"label": "Agustus"
+						},
+						{
+							"label": "September"
+						},
+						{
+							"label": "Oktober"
+						},
+						{
+							"label": "November"
+						},
+						{
+							"label": "Desember"
+						},
+						{
+							"label": "Desemberx"
+						}						
+					]
+				}
+			]
+		';
+		$data['dataset']='
+			"dataset": [
+				{
+					"seriesname": "PO-CIP-2016",
+					"data":[{"value":100},{"value":1000}]
+				},
+				{
+					"seriesname": "PO-CIP-2017",
+					"data":[{"value":100}]
+				}
+			]				
+		'; 
+		
+		$dataset1='"dataset":'.json::encode($rsltDataSet1);
+		
+		// return json::decode("{".$data['chart'].','.$data['categories'].','.$data['dataset']."}");
+		//$rsltDataSet='"dataset":'.Yii::$app->arrayBantuan->strJson($model->Val_Json);
+		return json::decode("{".$data['chart'].','.$data['categories'].','.$dataset1."}");
+		// return $model;
 	}	
-	
 	
 	public function actionTest()
     {
-		$params     		= $_REQUEST;
-		$paramsHeader		= Yii::$app->request->headers;
-		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:$paramsHeader['ACCESS_GROUP'];
-		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:$paramsHeader['TAHUN'];
-		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:$paramsHeader['BULAN'];
-		
-		$modelMonthlySales= new ChartMonthlySales([
-			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
-			'TAHUN'=>$paramTahun,					//'2018',
-			'BULAN'=>$paramBulan					//'1'
+		$model= new ChartWeeklySales([
+			'TAHUN'=>'2018',
+			'BULAN'=>'1'
 		]);
-		return $modelMonthlySales;		
+		// $model= self::weekOfMonthMysql('2017-01-03');
+		return $model;
 	}
 	
 	function weekOfMonthMysql($date) {
