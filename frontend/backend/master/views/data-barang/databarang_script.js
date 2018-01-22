@@ -78,3 +78,77 @@ $(document).on('click','#databarang-button-row-promo', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+
+
+/*
+ * BUTTON VIEW Discount
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-view-discount', function(ehead){ 			  
+	$('#databarang-button-row-view-discount-modal').modal('show')
+	.find('#databarang-button-row-view-discount-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON EDIT Discount
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-edit-discount', function(ehead){ 			  
+	$('#databarang-button-row-edit-discount-modal').modal('show')
+	.find('#databarang-button-row-edit-discount-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+
+/*
+ * BUTTON VIEW Harga
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-view-harga', function(ehead){ 			  
+	$('#databarang-button-row-view-harga-modal').modal('show')
+	.find('#databarang-button-row-view-harga-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON VIEW Harga
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-view-promo', function(ehead){ 			  
+	$('#databarang-button-row-view-promo-modal').modal('show')
+	.find('#databarang-button-row-view-promo-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON EDIT Harga
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-edit-harga', function(ehead){ 			  
+	$('#databarang-button-row-edit-harga-modal').modal('show')
+	.find('#databarang-button-row-edit-harga-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON EDIT Promo
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-edit-promo', function(ehead){ 			  
+	$('#databarang-button-row-edit-promo-modal').modal('show')
+	.find('#databarang-button-row-edit-promo-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});

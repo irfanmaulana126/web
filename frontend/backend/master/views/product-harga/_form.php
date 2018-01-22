@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+use kartik\widgets\DatePicker;
+use kartik\field\FieldRange;
 /* @var $this yii\web\View */
 /* @var $model frontend\backend\master\models\ProductHarga */
 /* @var $form yii\widgets\ActiveForm */
@@ -11,36 +13,35 @@ use yii\widgets\ActiveForm;
 <div class="product-harga-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(); ?>
+    <!-- <div class="row">
+            <div class="col-xs-12 col-sm-6 col-lg-6">           
+                <?php// $form->field($model, 'STORE_ID')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-lg-6">
 
-    <?= $form->field($model, 'ACCESS_GROUP')->textInput(['maxlength' => true]) ?>
+                <?php// $form->field($model, 'PRODUCT_ID')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'STORE_ID')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'PRODUCT_ID')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'PERIODE_TGL1')->textInput() ?>
-
-    <?= $form->field($model, 'PERIODE_TGL2')->textInput() ?>
-
-    <?= $form->field($model, 'START_TIME')->textInput() ?>
+            </div>
+    </div> -->
+    <?php
+        echo '<label class="control-label">Periode Tanggal</label>';
+       echo DatePicker::widget([
+            'model' => $model,
+            'attribute' => 'PERIODE_TGL1',
+            'attribute2' => 'PERIODE_TGL2',
+            'options' => ['placeholder' => 'Start date'],
+            'options2' => ['placeholder' => 'End date'],
+            'type' => DatePicker::TYPE_RANGE,
+            'form' => $form,
+            'pluginOptions' => [
+                'format' => 'yyyy-mm-dd',
+                'autoclose' => true,
+            ]
+        ]);
+    ?>
 
     <?= $form->field($model, 'HARGA_JUAL')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CREATE_BY')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'CREATE_AT')->textInput() ?>
-
-    <?= $form->field($model, 'UPDATE_BY')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'UPDATE_AT')->textInput() ?>
-
-    <?= $form->field($model, 'STATUS')->textInput() ?>
-
-    <?= $form->field($model, 'DCRP_DETIL')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'YEAR_AT')->textInput() ?>
-
-    <?= $form->field($model, 'MONTH_AT')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

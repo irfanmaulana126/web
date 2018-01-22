@@ -30,7 +30,7 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
-use frontend\backend\master\models\ProductSearch;
+use frontend\backend\master\models\ProductDiscountSearch;
 
 $this->registerCss("
 	:link {
@@ -48,15 +48,16 @@ $this->registerCss("
 		height:400px
 	}
 	#gv-all-data-prodak-dicount-item .panel-heading {
-		background: linear-gradient(to bottom right, red, yellow);
-		color: white;
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		color: #444;
 	}
 	#gv-all-data-prodak-dicount-item .panel-footer {
-		background: linear-gradient(to bottom right, red, yellow);
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 ");
 			
-	$bColor='rgba(255, 102, 0, 1)';
+	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+	$bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
 				</span><b>PRODUCT DISCOUNT</b>
@@ -72,7 +73,7 @@ $this->registerCss("
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'ACCESS_GROUP',
+			'attribute'=>'store.STORE_NM',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -89,7 +90,7 @@ $this->registerCss("
 		],		
 		//ITEM NAME
 		[
-			'attribute'=>'STORE_ID',
+			'attribute'=>'PRODUCT_NM',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -100,28 +101,13 @@ $this->registerCss("
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
-			'filter'=>ArrayHelper::map(ProductSearch::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP])->orderBy(['ACCESS_GROUP'=>SORT_DESC,'PRODUCT_SIZE_UNIT'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'ACCESS_GROUP','PRODUCT_NM'),
+			'filter'=>ArrayHelper::map(ProductDiscountSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['ACCESS_GROUP'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_ID','product.PRODUCT_NM'),
 			'filterType'=>GridView::FILTER_SELECT2,
 			'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
 			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
 			'filterOptions'=>[],
 			
 		],		
-		//SATUAN
-		[
-			'attribute'=>'PRODUCT_ID',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
-		],
 		//DEFAULT_STOCK
 		[
 			'attribute'=>'PERIODE_TGL1',
@@ -132,6 +118,16 @@ $this->registerCss("
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
+			'filterType'=>GridView::FILTER_DATE,
+			'filterWidgetOptions'=>['pluginOptions' => [				
+				'format' => 'yyyy-mm-dd',					 
+				'autoclose' => true,
+				'todayHighlight' => true,
+				//'format' => 'dd-mm-yyyy hh:mm',
+				'autoWidget' => false,
+				//'todayBtn' => true,
+			]
+		],
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
@@ -147,11 +143,35 @@ $this->registerCss("
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
+			'filterType'=>GridView::FILTER_DATE,
+			'filterWidgetOptions'=>['pluginOptions' => [				
+				'format' => 'yyyy-mm-dd',					 
+				'autoclose' => true,
+				'todayHighlight' => true,
+				//'format' => 'dd-mm-yyyy hh:mm',
+				'autoWidget' => false,
+				//'todayBtn' => true,
+			]
+		],
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+		],
+		
+		[
+			'attribute'=>'DISCOUNT',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
-		]		
+		],		
 	];
 	
 	$gvAttProdakDiscountItem[]=[			
@@ -171,15 +191,15 @@ $this->registerCss("
 		],
 		'buttons' => [
 			'view' =>function ($url, $model){
-				return  tombolView($url, $model);
+				return  tombolViewDiscount($url, $model);
 			},
 			'edit' =>function($url, $model,$key){
 				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				return  tombolEdit($url, $model);
+				return  tombolEditDiscount($url, $model);
 				//}					
 			},
 			'hapus' =>function($url, $model,$key){
-				return  tombolHapus($url, $model);
+				return  tombolHapusDiscount($url, $model);
 			}
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),

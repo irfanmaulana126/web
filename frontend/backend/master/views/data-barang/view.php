@@ -23,7 +23,7 @@ use kartik\detail\DetailView;
         ],
         'hover'=>true,
         'panel'=>[
-			'heading'=>'<span class="fa fa-user"><span><b>Detail Prodak</b>',
+			'heading'=>'<span class="fa fa-share"><span><b> Detail Prodak</b>',
 			'type'=>DetailView::TYPE_INFO,
 		],
         'mode'=>DetailView::MODE_VIEW,

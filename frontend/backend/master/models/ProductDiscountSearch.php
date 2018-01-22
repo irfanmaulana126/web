@@ -15,11 +15,12 @@ class ProductDiscountSearch extends ProductDiscount
     /**
      * @inheritdoc
      */
+    public $PRODUCT_NM;
     public function rules()
     {
         return [
             [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'PRODUCT_ID', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
+            [['ACCESS_GROUP', 'PRODUCT_NM','STORE_ID', 'PRODUCT_ID', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
             [['DISCOUNT'], 'number'],
         ];
     }
@@ -43,6 +44,7 @@ class ProductDiscountSearch extends ProductDiscount
     public function search($params)
     {
         $query = ProductDiscount::find();
+        $query->joinWith(['product']);
 
         // add conditions that should always apply here
 
@@ -72,12 +74,13 @@ class ProductDiscountSearch extends ProductDiscount
             'MONTH_AT' => $this->MONTH_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+        $query->andFilterWhere(['like', 'product_discount.ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
+            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])
+            ->andFilterWhere(['like', 'product_discount.PRODUCT_ID', $this->PRODUCT_NM]);
 
         return $dataProvider;
     }

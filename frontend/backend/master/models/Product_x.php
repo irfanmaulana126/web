@@ -3,43 +3,11 @@
 namespace frontend\backend\master\models;
 
 use Yii;
-
+use frontend\backend\master\models\ProductHarga;
+use frontend\backend\master\models\ProductStock;
+use frontend\backend\master\models\ProductImage;
 use common\models\Store;
-/**
- * This is the model class for table "product".
- *
- * @property string $ID
- * @property string $ACCESS_GROUP
- * @property string $STORE_ID
- * @property string $GROUP_ID
- * @property string $PRODUCT_ID
- * @property string $PRODUCT_QR Untuk barcode sendiri
- * @property string $PRODUCT_NM
- * @property string $PRODUCT_WARNA
- * @property string $PRODUCT_SIZE nilai isi 
- * @property string $PRODUCT_SIZE_UNIT satuan ukuran isi; join tbl satuan.UNIT_ID
- * @property string $PRODUCT_HEADLINE keterangan header prodak item
- * @property string $UNIT_ID id satuan dalam jual; join tbl satuan.UNIT_ID
- * @property double $STOCK_LEVEL Minimum Stock Notify
- * @property double $CURRENT_STOCK
- * @property string $CURRENT_HPP
- * @property string $CURRENT_PRICE
- * @property string $INDUSTRY_ID
- * @property string $INDUSTRY_NM
- * @property string $INDUSTRY_GRP_ID
- * @property string $INDUSTRY_GRP_NM
- * @property string $IMG_FILE
- * @property string $CREATE_BY USER pembuat
- * @property string $CREATE_AT Tanggal dibuat
- * @property string $UPDATE_BY user Ubah
- * @property string $UPDATE_AT Tanggal diubah
- * @property string $CREATE_UUID
- * @property string $UPDATE_UUID
- * @property int $STATUS
- * @property string $DCRP_DETIL
- * @property int $YEAR_AT partisi unix
- * @property int $MONTH_AT partisi unix
- */
+
 class Product extends \yii\db\ActiveRecord
 {
     /**
@@ -51,22 +19,22 @@ class Product extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb()
+    {
+        return Yii::$app->get('production_api');
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['STORE_ID', 'PRODUCT_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
-            [['PRODUCT_SIZE', 'STOCK_LEVEL', 'CURRENT_STOCK', 'CURRENT_HPP', 'CURRENT_PRICE'], 'number'],
-            [['INDUSTRY_ID', 'INDUSTRY_GRP_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
-            [['DCRP_DETIL'], 'string'],
-            [['ACCESS_GROUP'], 'string', 'max' => 15],
-            [['STORE_ID'], 'string', 'max' => 20],
-            [['GROUP_ID', 'PRODUCT_QR', 'PRODUCT_NM', 'PRODUCT_HEADLINE'], 'string', 'max' => 100],
-            [['PRODUCT_ID'], 'string', 'max' => 35],
-            [['PRODUCT_WARNA', 'PRODUCT_SIZE_UNIT', 'UNIT_ID', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
-            [['INDUSTRY_NM', 'INDUSTRY_GRP_NM', 'IMG_FILE', 'CREATE_UUID', 'UPDATE_UUID'], 'string', 'max' => 255],
+            [['STORE_ID', 'PRODUCT_ID','UNIT_ID_GRP','PRODUCT_NM','PRODUCT_SIZE','PRODUCT_SIZE_UNIT','PRODUCT_HEADLINE','CURRENT_STOCK','CURRENT_PRICE','PRODUCT_QR','PRODUCT_WARNA','STATUS','STOCK_LEVEL','CURRENT_HPP','UNIT_ID'], 'required'],
+            [['CURRENT_STOCK'], 'integer'],
+            [['PRODUCT_QR','CURRENT_PRICE','PRODUCT_SIZE','PRODUCT_NM','PRODUCT_SIZE_UNIT','PRODUCT_HEADLINE'], 'string',],
         ];
     }
 
@@ -78,38 +46,40 @@ class Product extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'ACCESS_GROUP' => 'Access  Group',
-            'STORE_ID' => 'Store  ID',
+            'STORE_ID' => 'Nama Toko',
             'GROUP_ID' => 'Group  ID',
-            'PRODUCT_ID' => 'Product  ID',
-            'PRODUCT_QR' => 'Product  Qr',
-            'PRODUCT_NM' => 'Product  Nm',
+            'PRODUCT_ID' => 'Kode Produk',
+            'PRODUCT_QR' => 'Kode QR',
+            'PRODUCT_NM' => 'Nama Produk',
             'PRODUCT_WARNA' => 'Product  Warna',
             'PRODUCT_SIZE' => 'Product  Size',
             'PRODUCT_SIZE_UNIT' => 'Product  Size  Unit',
             'PRODUCT_HEADLINE' => 'Product  Headline',
             'UNIT_ID' => 'Unit  ID',
+            'UNIT_ID_GRP'=>'Unit Group',
             'STOCK_LEVEL' => 'Stock  Level',
-            'CURRENT_STOCK' => 'Current  Stock',
-            'CURRENT_HPP' => 'Current  Hpp',
-            'CURRENT_PRICE' => 'Current  Price',
+            'CURRENT_STOCK'=>'Current Stock',
+            'CURRENT_HPP'=>'Current HPP',
+            'CURRENT_PRICE'=>'Current Price',
             'INDUSTRY_ID' => 'Industry  ID',
             'INDUSTRY_NM' => 'Industry  Nm',
-            'INDUSTRY_GRP_ID' => 'Industry  Grp  ID',
             'INDUSTRY_GRP_NM' => 'Industry  Grp  Nm',
-            'IMG_FILE' => 'Img  File',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
             'UPDATE_AT' => 'Update  At',
-            'CREATE_UUID' => 'Create  Uuid',
-            'UPDATE_UUID' => 'Update  Uuid',
             'STATUS' => 'Status',
             'DCRP_DETIL' => 'Dcrp  Detil',
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];
     }
-    public function getProductHargaTbl(){
+	
+	/*
+	 * CURRENT PRICE 
+	 * Join to Table Harga where PRODUCT_ID, (current_date PERIODE_TGL1 AND PERIODE_TGL2)
+	*/
+	public function getProductHargaTbl(){
 		//Check Table Harga where PRODUCT_ID,PERIODE_TGL1 AND PERIODE_TGL2 to current_date
 		$modalHarga= ProductHarga::find()->where("
 			PRODUCT_ID='".$this->PRODUCT_ID."' AND 
@@ -159,4 +129,5 @@ class Product extends \yii\db\ActiveRecord
             return '';
         }
     }
+    
 }

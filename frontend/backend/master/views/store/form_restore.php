@@ -9,10 +9,9 @@ use yii\helpers\Url;
 use kartik\daterange\DateRangePicker;
 use kartik\depdrop\DepDropAction;
 use yii\web\JsExpression;
-use frontend\backend\ppob\models\PpobTransaksiSaldo;
 use yii\web\View;
 use softark\duallistbox\DualListbox;
-
+use common\models\Store;
 $this->registerJs("
 	$('#access').change(function() { 
 		change();
@@ -36,43 +35,20 @@ $this->registerJs("
    <?php $form = ActiveForm::begin([
 			'id'=> $modelPeriode->formName(),			
 			'enableClientValidation'=> true,
-			//'enableAjaxValidation'=>true,
-			//'method' => 'post',
-			//'validationUrl'=>Url::toRoute('/inventory/stock-opname/valid')
 			'action' =>['/master/store/restore']
    ]); ?>
 			  
-			<?php 
-			$options = [
-				'multiple' => true,
-				'size' => 20,
-			];
-			// echo Html::activeListBox($model, $attribute, $items, $options);
+			<?php
 			echo DualListbox::widget([
-				'model' => $model,
-				'attribute' => $attribute,
-				'items' => $items,
-				'options' => $options,
+				'model' => $modelPeriode,
+				'attribute' => 'STATUS',
+				'items' => ArrayHelper::map(Store::find()->all(),'STATUS','STORE_NM'),
 				'clientOptions' => [
 					'moveOnSelect' => false,
 					'selectedListLabel' => 'Selected Items',
 					'nonSelectedListLabel' => 'Available Items',
 				],
-			]);
-			/* $form->field($modelPeriode, 'ACCESS_GROUP')->widget(Select2::classname(), [
-				'data' => ArrayHelper::map(PpobTransaksiSaldo::find()->all(),'ACCESS_GROUP','user.username'),
-				'options' => [
-					'id'=>'access',
-					'placeholder' => 'Select Access Group...',
-				],
-				'pluginOptions' => [
-					'allowClear' => true,
-				],
 			]);?>
-
-			<?= $form->field($modelPeriode, 'STORE_ID')->widget(Select2::classname(), [
-				'options' => ['id'=>'store','placeholder' => 'Select Store Id ...',],
-				]);*/?>
 
 			<div class="form-group">
 					<?=Html::submitButton('CARI',['class' => 'btn btn-success']); ?>
