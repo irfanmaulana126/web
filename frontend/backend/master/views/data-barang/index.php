@@ -53,8 +53,7 @@ echo $this->render('databarang_modal'); //echo difinition
 
 	$Action=$this->render('_index_all_product',[
 		'searchModel'=>$searchModel,
-		'dataProvider' => $dataProvider,
-		'model'=>$model,
+		'dataProvider' => $dataProvider
 	]);
 	$Action2=$this->render('_index_discount',[
 		'searchModelDiscount'=>$searchModelDiscount,
@@ -64,11 +63,10 @@ echo $this->render('databarang_modal'); //echo difinition
 		'searchModelPromo'=>$searchModelPromo,
 		'dataProviderPromo' => $dataProviderPromo,
 	]);
-	$Action4=$this->render('_index_stock',[
-		'searchModel'=>$searchModel,
-		'dataProvider' => $dataProvider,
-		'model'=>$model,
-		]);
+	$Action4=$this->render('_index_stock',[		
+		'searchModelStock'=>$searchModelStock,
+		'dataProviderStock' => $dataProviderStock,
+	]);
 	$Action5=$this->render('_index_harga',[
 		'searchModelHarga'=>$searchModelHarga,
 		'dataProviderHarga' => $dataProviderHarga,

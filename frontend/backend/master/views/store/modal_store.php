@@ -35,7 +35,7 @@ $this->registerCss("
 				<i class="fa fa-pencil fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> Restore Toko </b>
 		',	
-		'size' => 'modal-sm',
+		'size' => 'modal-md',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,

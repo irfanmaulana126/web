@@ -15,11 +15,12 @@ class ProductStockSearch extends ProductStock
     /**
      * @inheritdoc
      */
+    public $PRODUCT_NM;
     public function rules()
     {
         return [
             [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'PRODUCT_ID', 'INPUT_DATE', 'INPUT_TIME', 'CURRENT_DATE', 'CURRENT_TIME', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'CREATE_UUID', 'UPDATE_UUID', 'DCRP_DETIL'], 'safe'],
+            [['ACCESS_GROUP', 'PRODUCT_NM','STORE_ID', 'PRODUCT_ID', 'INPUT_DATE', 'INPUT_TIME', 'CURRENT_DATE', 'CURRENT_TIME', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'CREATE_UUID', 'UPDATE_UUID', 'DCRP_DETIL'], 'safe'],
             [['LAST_STOCK', 'INPUT_STOCK', 'CURRENT_STOCK', 'SISA_STOCK'], 'number'],
         ];
     }
@@ -43,7 +44,7 @@ class ProductStockSearch extends ProductStock
     public function search($params)
     {
         $query = ProductStock::find();
-
+        $query->joinWith(['product']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -76,14 +77,15 @@ class ProductStockSearch extends ProductStock
             'MONTH_AT' => $this->MONTH_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+        $query->andFilterWhere(['like', 'product_stock.ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'CREATE_UUID', $this->CREATE_UUID])
             ->andFilterWhere(['like', 'UPDATE_UUID', $this->UPDATE_UUID])
-            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
+            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])
+            ->andFilterWhere(['like', 'PRODUCT_NM', $this->PRODUCT_NM]);
 
         return $dataProvider;
     }

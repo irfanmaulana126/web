@@ -19,6 +19,8 @@ use frontend\backend\master\models\ProductPromo;
 use frontend\backend\master\models\ProductPromoSearch;
 use frontend\backend\master\models\ProductHarga;
 use frontend\backend\master\models\ProductHargaSearch;
+use frontend\backend\master\models\ProductStock;
+use frontend\backend\master\models\ProductStockSearch;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -38,25 +40,57 @@ class DataBarangController extends Controller
             ],
         ];
     }
-
+	public function beforeAction($action){
+        $modulIndentify=4; //OUTLET
+       // Check only when the user is logged in.
+       // Author piter Novian [ptr.nov@gmail.com].
+       if (!Yii::$app->user->isGuest){
+           if (Yii::$app->session['userSessionTimeout']< time() ) {
+               // timeout
+               Yii::$app->user->logout();
+               return $this->goHome(); 
+           } else {	
+               //add Session.
+               Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+               //check validation [access/url].
+               $checkAccess=Yii::$app->getUserOpt->UserMenuPermission($modulIndentify);
+               if($checkAccess['modulMenu']['MODUL_STS']==0 OR $checkAccess['ModulPermission']['STATUS']==0){				
+                   $this->redirect(array('/site/alert'));
+               }else{
+                   if($checkAccess['PageViewUrl']==true){						
+                       return true;
+                   }else{
+                       $this->redirect(array('/site/alert'));
+                   }					
+               }			 
+           }
+       }else{
+           Yii::$app->user->logout();
+           return $this->goHome(); 
+       }
+   }
     /**
      * Lists all Item models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $model=new Product;
-        $searchModel = new AllStoreItemSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user]);
         $dataProviderDiscount = $searchModelDiscount->search(Yii::$app->request->queryParams);
 
-        $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user]);
         $dataProviderPromo = $searchModelPromo->search(Yii::$app->request->queryParams);
 
-        $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP]);
+        $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user]);
         $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
+
+        $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user]);
+        $dataProviderStock = $searchModelStock->search(Yii::$app->request->queryParams);
+        // print_r($searchModel);die();
 		 return $this->render('index', [
 			'searchModel'=>$searchModel,
             'dataProvider' => $dataProvider,
@@ -66,7 +100,8 @@ class DataBarangController extends Controller
             'dataProviderPromo' => $dataProviderPromo,
 			'searchModelHarga'=>$searchModelHarga,
             'dataProviderHarga' => $dataProviderHarga,
-            'model'=>$model,
+			'searchModelStock'=>$searchModelStock,
+            'dataProviderStock' => $dataProviderStock,
         ]);
 		
 		/* $paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
@@ -148,7 +183,9 @@ class DataBarangController extends Controller
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
             $model->START_TIME=date('H:i:s');
-           if ($model->save()) {
+            // print_r($model);die();
+            // $model->save();
+           if ($model->save(false)) {
             return $this->redirect(['index']);
            }
         } else{
@@ -172,7 +209,7 @@ class DataBarangController extends Controller
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
             $model->START_TIME=date('H:i:s');
-           if ($model->save()) {
+           if ($model->save(false)) {
             return $this->redirect(['index']);
            }
         }
@@ -189,19 +226,23 @@ class DataBarangController extends Controller
     public function actionHarga($ACCESS_GROUP,$PRODUCT_ID,$STORE_ID)
     {
         $model = new ProductHarga();
-
+    
         if ($model->load(Yii::$app->request->post())) {
             $model->PRODUCT_ID=$PRODUCT_ID;
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
             $model->START_TIME=date('H:i:s');
-           if ($model->save()) {
+           if ($model->save(false)) {
             return $this->redirect(['index']);
            }
         }
+        $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID]);
+        $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
 
         return $this->renderAjax('_form_harga', [
             'model' =>  $model,
+			'searchModelHarga'=>$searchModelHarga,
+            'dataProviderHarga' => $dataProviderHarga,
         ]);
     }
 

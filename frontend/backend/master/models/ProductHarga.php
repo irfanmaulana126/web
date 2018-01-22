@@ -3,7 +3,8 @@
 namespace frontend\backend\master\models;
 
 use Yii;
-
+use frontend\backend\master\models\Product;
+use common\models\Store;
 /**
  * This is the model class for table "product_harga".
  *
@@ -83,5 +84,23 @@ class ProductHarga extends \yii\db\ActiveRecord
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];
+    }
+    public function getStore()
+    {
+        if ($this->STORE_ID){
+            return $this->hasOne(Store::className(),['STORE_ID'=>'STORE_ID']);
+        }else{
+            return '';
+        }
+    }
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(),['PRODUCT_ID'=>'PRODUCT_ID']);
+    }
+
+
+    public function getPRODUCT_NM(){
+        $result=$this->product;
+        return $result=$result->PRODUCT_NM?:'';
     }
 }

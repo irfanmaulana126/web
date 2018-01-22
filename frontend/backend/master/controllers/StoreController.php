@@ -148,7 +148,7 @@ class StoreController extends Controller
 		if ($modelPeriode->load(Yii::$app->request->post())) {
             return $this->redirect(['index']);
         }else {
-            return $this->renderAjax('form_cari',[
+            return $this->renderAjax('form_restore',[
 				'modelPeriode' => $modelPeriode
 			]);
 	   }

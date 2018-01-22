@@ -15,11 +15,12 @@ class ProductPromoSearch extends ProductPromo
     /**
      * @inheritdoc
      */
+    public $PRODUCT_NM;
     public function rules()
     {
         return [
             [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'PRODUCT_ID', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'PROMO', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
+            [['ACCESS_GROUP', 'PRODUCT_NM','STORE_ID', 'PRODUCT_ID', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'PROMO', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
         ];
     }
 
@@ -42,7 +43,7 @@ class ProductPromoSearch extends ProductPromo
     public function search($params)
     {
         $query = ProductPromo::find();
-
+        $query->joinWith(['product']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -70,13 +71,14 @@ class ProductPromoSearch extends ProductPromo
             'MONTH_AT' => $this->MONTH_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+        $query->andFilterWhere(['like', 'product_promo.ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])
             ->andFilterWhere(['like', 'PROMO', $this->PROMO])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
+            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])
+            ->andFilterWhere(['like', 'product_promo.PRODUCT_NM', $this->PRODUCT_NM]);
 
         return $dataProvider;
     }

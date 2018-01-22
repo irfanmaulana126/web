@@ -15,11 +15,12 @@ class ProductHargaSearch extends ProductHarga
     /**
      * @inheritdoc
      */
+    public $PRODUCT_NM;
     public function rules()
     {
         return [
             [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'PRODUCT_ID', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
+            [['ACCESS_GROUP', 'PRODUCT_NM','STORE_ID', 'PRODUCT_ID', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
             [['HPP', 'HARGA_JUAL'], 'number'],
         ];
     }
@@ -43,6 +44,7 @@ class ProductHargaSearch extends ProductHarga
     public function search($params)
     {
         $query = ProductHarga::find();
+        $query->joinWith(['product']);
 
         // add conditions that should always apply here
 
@@ -73,12 +75,13 @@ class ProductHargaSearch extends ProductHarga
             'MONTH_AT' => $this->MONTH_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
-            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
-            ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])
+        $query->andFilterWhere(['like', 'product_harga.ACCESS_GROUP', $this->ACCESS_GROUP])
+            ->andFilterWhere(['like', 'product_harga.STORE_ID', $this->STORE_ID])
+            ->andFilterWhere(['like', 'product_harga.PRODUCT_ID', $this->PRODUCT_ID])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
+            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])
+            ->andFilterWhere(['like', 'product_harga.PRODUCT_NM', $this->PRODUCT_NM]);
 
         return $dataProvider;
     }

@@ -14,7 +14,8 @@ use kartik\money\MaskMoney;
 <div class="item-fdiscount-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <div class="row">
+    <div class="col-xs-12 col-sm-6 col-lg-6">
     <?= $form->field($model, 'STORE_ID')->widget(Select2::classname(),[
        'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
         'options' => ['placeholder'=>'Select Category....'],
@@ -28,6 +29,8 @@ use kartik\money\MaskMoney;
 
     <?= $form->field($model, 'PRODUCT_SIZE')->textInput() ?>
 
+    </div>
+    <div class="col-xs-12 col-sm-6 col-lg-6">
     <?= $form->field($model, 'PRODUCT_SIZE_UNIT')->textInput() ?>
 
     <?= $form->field($model, 'PRODUCT_HEADLINE')->textInput(['maxlength' => true]) ?>
@@ -36,12 +39,15 @@ use kartik\money\MaskMoney;
 
     <?= $form->field($model, 'CURRENT_PRICE')->widget(MaskMoney::classname(), [
                             'options' => ['placeholder' => 'Harga Barang ...'],
-                            
                             'pluginOptions'=>[
                                 'prefix'=>'Rp',
                             ],
-						]) ?>
+                        ]) ?>
 
+    </div>
+  </div>
+   
+    
     <div class="form-group">
         <?= Html::submitButton('Simpan', ['class' => 'btn btn-success']) ?>
     </div>

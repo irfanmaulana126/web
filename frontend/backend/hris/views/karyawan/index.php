@@ -29,7 +29,7 @@ $this->registerCss("
 		color: blue;
 	}
 	#gv-data-karyawan .kv-grid-container{
-			height:200px
+			height:400px
 		}
 ");
 
