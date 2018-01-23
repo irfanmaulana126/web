@@ -35,6 +35,7 @@ use kartik\field\FieldRange;
             'pluginOptions' => [
                 'format' => 'yyyy-mm-dd',
                 'autoclose' => true,
+                "startDate" => $model->PERIODE_TGL1,
             ]
         ]);
     ?>

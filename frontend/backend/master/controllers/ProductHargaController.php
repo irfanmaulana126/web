@@ -141,7 +141,11 @@ class ProductHargaController extends Controller
      */
     public function actionDelete($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)
     {
-        $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
+        // $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
+        $model = $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT);
+        $model->STATUS ="3";
+        $model->update();
+        Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
 
         return $this->redirect(['index']);
     }

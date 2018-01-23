@@ -18,7 +18,19 @@ $(document).on('click','#store-button-create', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+$('#provinsi').change(function() { 
+	change();
+ });
+ function change()
+ {
+	 var selectValue=$('#provinsi').val();
+	 $('#kota').empty();
+	 $.post('/master/store/kota?prov='+selectValue,
+		function(data){
+			$('select#kota').html(data);
+		});
 
+ };
 /*
  * store-View.
 */

@@ -18,6 +18,7 @@ use kartik\date\DatePicker;
 use yii\web\View;
 use common\models\LocateProvince;
 use common\models\LocateKota;
+use common\models\Store;
 $headerColor='rgba(128, 179, 178, 1)';
 //print_r($userProvinsi);
 $this->registerCss("
@@ -44,6 +45,10 @@ $this->registerCss("
 	}
 ");
 $this->registerJs($this->render('modal_store.js'),View::POS_READY);
+$this->registerJs("
+
+",View::POS_READY);
+
 echo $this->render('button_store'); //echo difinition
 echo $this->render('modal_store'); //echo difinition
 	
@@ -57,7 +62,8 @@ echo $this->render('modal_store'); //echo difinition
 	  ['STATUS' => 3, 'STT_NM' => 'Deleted'],
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
-	
+	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+    
 	function sttMsgDscp($stt){
 		if($stt==0){ //TRIAL
 			 return Html::a('<span class="fa-stack fa-xl">
@@ -157,6 +163,13 @@ echo $this->render('modal_store'); //echo difinition
 				'format'=>'html',
 				'noWrap'=>false,
 				'format'=>'raw',
+				'filter' => ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'STORE_NM','STORE_NM'),
+				'filterType'=>GridView::FILTER_SELECT2,
+				'filterWidgetOptions'=>[
+					'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+				],
+				'filterInputOptions'=>['placeholder'=>'Cari STORE'],
+				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 				'value'=>function($data) {				
 						return Html::tag('div', $data->STORE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
 				},
@@ -170,12 +183,14 @@ echo $this->render('modal_store'); //echo difinition
 			'attribute'=>'PROVINCE_NM',
 			'label'=>'PROVINSI',
 			// 'filter' => $aryProvinsi,
-			// 'filterType'=>GridView::FILTER_SELECT2,
-			// 'filterWidgetOptions'=>[
-				// 'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			// ],
-			// 'filterInputOptions'=>['placeholder'=>'Cari Provinsi'],
-			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'filter' => ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'PROVINCE_NM','PROVINCE_NM'),
+			'filterType'=>GridView::FILTER_SELECT2,
+			'filterWidgetOptions'=>[
+				'id'=>'access',
+				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+			],
+			'filterInputOptions'=>['placeholder'=>'Cari Provinsi','id'=>'provinsi'],
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
@@ -193,12 +208,13 @@ echo $this->render('modal_store'); //echo difinition
 			'attribute'=>'CITY_NAME',
 			'label'=>'KOTA',
 			// 'filter' => $aryKota,
-			// 'filterType'=>GridView::FILTER_SELECT2,
-			// 'filterWidgetOptions'=>[
-				// 'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			// ],
-			// 'filterInputOptions'=>['placeholder'=>'Cari Kota'],	
-			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),						
+			// 'filter' => TRUE,
+			'filterType'=>GridView::FILTER_SELECT2,
+			'filterWidgetOptions'=>[
+				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+			],
+			'filterInputOptions'=>['placeholder'=>'Cari Kota','id'=>'kota'],	
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),						
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
@@ -471,7 +487,7 @@ echo $this->render('modal_store'); //echo difinition
 				<span class="fa-stack fa-sm">
 				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
 				  <i class="fa fa-text-width fa-stack-1x"></i>
-				</span> List Toko'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;">'.tombolCreate().' '.tombolRestore().' '.$dscLabel.'</div></div> ',  
+				</span> List Toko'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;">'.tombolReqStore().' '.tombolRestore().' '.$dscLabel.'</div></div> ',  
 			'type'=>'info',
 			'before'=>false,
 			'after'=>false,

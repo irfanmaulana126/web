@@ -7,7 +7,6 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Store;
 use common\models\user;
-
 /**
  * StoreSearch represents the model behind the search form about `lukisongroup\efenbi\rasasayang\models\Store`.
  */
@@ -81,7 +80,7 @@ class StoreSearch extends Store
 			// 'asc' => ['locate_city.KotaNm' => SORT_ASC],
 			// 'desc' => ['locate_city.KotaNm' => SORT_DESC],
 		// ];
-		
+            
        $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])           
             ->andFilterWhere(['like', 'CREATE_AT', $this->CREATE_AT])
 			 ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
@@ -89,8 +88,9 @@ class StoreSearch extends Store
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'STORE_NM', $this->STORE_NM])
             ->andFilterWhere(['like', 'ALAMAT', $this->ALAMAT])
-            // ->andFilterWhere(['like', 'LOCATE_PROVINCE', $this->ProvinsiNm])
-            // ->andFilterWhere(['like', 'LOCATE_CITY', $this->KotaNm])
+            ->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+            ->andFilterWhere(['like', 'PROVINCE_ID', $this->PROVINCE_ID])
+            ->andFilterWhere(['like', 'CITY_ID', $this->CITY_ID])
             ->andFilterWhere(['like', 'PIC', $this->PIC])
             ->andFilterWhere(['like', 'TLP', $this->TLP])
             ->andFilterWhere(['like', 'FAX', $this->FAX]);
@@ -115,14 +115,30 @@ class StoreSearch extends Store
             return $dataProvider;
         } 
 		
-		$query->Where('FIND_IN_SET("'.(empty(Yii::$app->user->identity->ACCESS_ID)) ? '' : Yii::$app->user->identity->ACCESS_ID .'", ACCESS_ID)');
+		// $query->Where('FIND_IN_SET("'.(empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '170726220936' : Yii::$app->user->identity->ACCESS_GROUP .'", ACCESS_GROUP)');
 		//$query->Where('FIND_IN_SET("170726220936", ACCESS_ID)');
 		//$query->Where('FIND_IN_SET("'.$this->ACCESS_ID.'", ACCESS_ID)');
 		//$query->asArray();
 		$query->andFilterWhere([
             'ID' => $this->ID,
-            'STATUS' => $this->STATUS
+            'STATUS' => $this->STATUS,
+            'PROVINCE_ID'=>$this->PROVINCE_ID,
+            'CITY_ID'=> $this->CITY_ID
         ]);
+        $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])           
+        ->andFilterWhere(['like', 'CREATE_AT', $this->CREATE_AT])
+         ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
+        ->andFilterWhere(['like', 'UPDATE_AT', $this->UPDATE_AT])
+        ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
+        ->andFilterWhere(['like', 'STORE_NM', $this->STORE_NM])
+        ->andFilterWhere(['like', 'ALAMAT', $this->ALAMAT])
+        ->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+        ->andFilterWhere(['like', 'PROVINCE_NM', $this->PROVINCE_NM])
+        ->andFilterWhere(['like', 'CITY_NAME', $this->CITY_NAME])
+        ->andFilterWhere(['like', 'PIC', $this->PIC])
+        ->andFilterWhere(['like', 'TLP', $this->TLP])
+        ->andFilterWhere(['like', 'FAX', $this->FAX]);
+        $query->orderBy(['STATUS'=>SORT_ASC]);
         return $dataProvider;
 	}
 }

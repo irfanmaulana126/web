@@ -149,8 +149,9 @@ $gvAttProdakHargaItem=[
             'type' => DatePicker::TYPE_RANGE,
             'form' => $form,
             'pluginOptions' => [
-                'format' => 'yyyy-mm-dd',
                 'autoclose' => true,
+                'format' => 'yyyy-mm-dd',
+                "startDate" => date('Y-m-d'),
             ]
         ]);
     ?>
