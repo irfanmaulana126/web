@@ -4,13 +4,15 @@ namespace frontend\backend\master\models;
 
 use Yii;
 use yii\web\UploadedFile;
+use frontend\backend\master\models\Product;
 
 Yii::$app->params['uploadPath'] = Yii::$app->basePath . '/backend/master/image/';
  
 class ProductImage extends \yii\db\ActiveRecord
 {
-	public $imageTmp;
-	
+
+	public $upload_file;
+	public $image;
 	public static function getDb()
     {
         return Yii::$app->get('api_dbkg');
@@ -31,7 +33,8 @@ class ProductImage extends \yii\db\ActiveRecord
         return [
             [['ACCESS_GROUP','CREATE_AT', 'UPDATE_AT','PRODUCT_IMAGE'], 'safe'],
             [['STATUS'], 'integer'],
-            [['PRODUCT_IMAGE'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png'],
+            [['upload_file'], 'file', 'skipOnEmpty' => true,'extensions'=>'jpg,png', 'mimeTypes'=>'image/jpeg, image/png',],
+			[['PRODUCT_IMAGE'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png'],
             [['CREATE_BY', 'UPDATE_BY', 'PRODUCT_ID', 'STORE_ID'], 'string', 'max' => 50],
         ];
     }
@@ -68,8 +71,27 @@ class ProductImage extends \yii\db\ActiveRecord
 			}	
 		];
 	}
-	
-	
+    public function uploadImage() {
+        // get the uploaded file instance. for multiple file uploads
+        // the following data will return an array (you may need to use
+        // getInstances method)
+        $image = UploadedFile::getInstance($this, 'PRODUCT_IMAGE');
+        // if no image was uploaded abort the upload
+        if (empty($image)) {
+            return false;
+        }
+        // store the source file name
+        //$this->filename = $image->name;
+        $ext = end((explode(".", $image->name)));
+        // generate a unique file name
+        // $this->EMP_IMG = 'wan-'.date('ymdHis').".{$ext}"; //$image->name;//Yii::$app->security->generateRandomString().".{$ext}";
+        // the uploaded image instance
+        return $image;
+    }
+	public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['PRODUCT_ID' => 'PRODUCT_ID']);
+    }
 	
 }
 
