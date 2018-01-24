@@ -121,7 +121,8 @@ class ProductPromoController extends Controller
         $model = $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID' => $model->ID, 'PRODUCT_ID' => $model->PRODUCT_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
+            Yii::$app->session->setFlash('success', "Update Discount Berhasil");
+            return $this->redirect('/master/data-barang/index#w5-tab2');      
         }
 
         return $this->renderAjax('update', [
@@ -141,9 +142,13 @@ class ProductPromoController extends Controller
      */
     public function actionDelete($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)
     {
-        $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
+        // $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
+        $model = $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT);
+        $model->STATUS ="3";
+        $model->update();
+        Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
 
-        return $this->redirect(['index']);
+        return $this->redirect('/master/data-barang/index#w5-tab2');     
     }
 
     /**

@@ -69,7 +69,7 @@ class ProductDiscountSearch extends ProductDiscount
             'DISCOUNT' => $this->DISCOUNT,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'STATUS' => $this->STATUS,
+            'product_discount.STATUS' => 1,
             'YEAR_AT' => $this->YEAR_AT,
             'MONTH_AT' => $this->MONTH_AT,
         ]);

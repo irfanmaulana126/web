@@ -136,6 +136,11 @@ $this->registerCss("
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_SIZE_UNIT'=>SORT_DESC])->all(),'PRODUCT_SIZE_UNIT','PRODUCT_SIZE_UNIT'),
+			'filterType'=>GridView::FILTER_SELECT2,
+			'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
+			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+			'filterOptions'=>[],
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),

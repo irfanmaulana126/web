@@ -13,7 +13,7 @@ use yii\web\Cookie;
 use yii\web\Request;
 use common\models\Store;
 use common\models\StoreSearch;
-// use common\models\LocateKota;
+use common\models\LocateKota;
 
 class StoreController extends Controller
 {
@@ -61,10 +61,12 @@ class StoreController extends Controller
 
 	public function actionIndex()
     {
-		$model= new Store();
-		$searchModel = new StoreSearch();
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        $model= new Store(['ACCESS_GROUP'=>$user]);
+		$searchModel = new StoreSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->searchUserStore(Yii::$app->request->queryParams);
-        return $this->render('index', [
+		// print_r($user);die();
+		return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model'=>$model
@@ -109,7 +111,16 @@ class StoreController extends Controller
             ]);
         }
     }
-	
+	public function actionDelete($id)
+    {
+        // $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
+        $model = $this->findModel($id);
+        $model->STATUS ="3";
+        $model->update();
+        // Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
+
+        return $this->redirect(['index']);
+    }
 	/**
      * Depdrop Sub Kota - depedence Province
      * @author Piter
@@ -185,4 +196,25 @@ class StoreController extends Controller
 		
 		
 	}
+	public function actionKota() {
+        $paramCari=Yii::$app->getRequest()->getQueryParam('prov');
+        // print_r($paramCari);die();
+        if (!empty($paramCari)) {
+               $data= LocateKota::find()->where(['PROVINCE'=>$paramCari])->count();
+               if ($data>0) {
+                $access= LocateKota::find()->select('PROVINCE_ID,CITY_NAME,CITY_ID,PROVINCE')->where(['PROVINCE'=>$paramCari])->all();
+                
+                echo "<option value=''>Cari Kota</option>";
+                foreach($access as $accesss){
+                    echo "<option value='".$accesss->CITY_NAME."'>".$accesss->CITY_NAME."</option>";
+                }
+                return;
+               } else {
+    
+                echo "<option>Cari Kota</option>";
+                   echo "<option value=''> - </option>";
+                   return;
+               }
+        }
+    }
 }

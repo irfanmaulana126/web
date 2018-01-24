@@ -144,6 +144,8 @@ class DataBarangController extends Controller
             $image->STORE_ID=$model->STORE_ID;
             $image->save(false);
                 $transaction->commit();
+                
+            Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
                 return $this->redirect(['index']);
             }
             else {
@@ -186,12 +188,13 @@ class DataBarangController extends Controller
             // print_r($model);die();
             // $model->save();
            if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', "Penyimpanan Discount Berhasil");
             return $this->redirect(['index']);
            }
         } else{
-        return $this->renderAjax('_form_discount', [
-            'model' => $model,
-        ]);
+            return $this->renderAjax('_form_discount', [
+                'model' => $model,
+            ]);
         }
     }
     
@@ -210,6 +213,7 @@ class DataBarangController extends Controller
             $model->STORE_ID=$STORE_ID;
             $model->START_TIME=date('H:i:s');
            if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', "Penyimpanan Promo Berhasil");
             return $this->redirect(['index']);
            }
         }
@@ -233,6 +237,7 @@ class DataBarangController extends Controller
             $model->STORE_ID=$STORE_ID;
             $model->START_TIME=date('H:i:s');
            if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
             return $this->redirect(['index']);
            }
         }
@@ -256,7 +261,8 @@ class DataBarangController extends Controller
         $model = $this->findModel($id);
         $model->STATUS ="3";
         $model->update();
-        // print_r($model);die();
+        // print_r($model);die();                    
+        Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
         return $this->redirect(['index']);
         
     }
@@ -286,7 +292,8 @@ class DataBarangController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {            
+            Yii::$app->session->setFlash('success', "Perubahan Data Berhasil");
             return $this->redirect(['index']);
         } else {
             return $this->renderAjax('update', [
