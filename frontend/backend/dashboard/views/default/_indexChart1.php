@@ -100,9 +100,8 @@ use frontend\backend\laporan\models\RptDailyChartSearch;
 	
 	//=MONTHLY SALES
 	$monthlySales= Chart::Widget([
-		//'urlSource'=> '/dashboard/data/monthy-sales',
+		'urlSource'=> '/dashboard/data/monthy-sales',
 		//'urlSource'=> '/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
-		'urlSource'=> '/dashboard/data/test',
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric

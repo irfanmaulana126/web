@@ -29,7 +29,7 @@ $sideMenu=SideNav::widget([
 ]);
 
 ?>
-	<section class="sidebar " >
+	<section class="sidebar" style="padding-top:15px;height:100%;" >
 		<!-- User Login -->
 			<div class="user-panel" >
 				<div class="pull-left" style="text-align: left,font-family: tahoma ;font-size: 9pt;">
