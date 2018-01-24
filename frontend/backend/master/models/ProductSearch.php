@@ -73,7 +73,7 @@ class ProductSearch extends Product
             'INDUSTRY_GRP_ID' => $this->INDUSTRY_GRP_ID,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'STATUS' => $this->STATUS,
+            'STATUS' => 1,
             'YEAR_AT' => $this->YEAR_AT,
             'MONTH_AT' => $this->MONTH_AT,
         ]);
