@@ -37,15 +37,15 @@ echo $this->render('databarang_modal'); //echo difinition
 		#expand-menu .kv-grid-container{
 			height:250px
 		}
-		#w5 :link {
+		#w6 :link {
 			color: black;
 		}
 		/* mouse over link */
-		#w5-container a:hover {
+		#w6-container a:hover {
 			color: #5a96e7;
 		}
 		/* selected link */
-		#w5-container a:active {
+		#w6-container a:active {
 			color: blue;
 		}
 	");
@@ -71,6 +71,10 @@ echo $this->render('databarang_modal'); //echo difinition
 	$Action5=$this->render('_index_harga',[
 		'searchModelHarga'=>$searchModelHarga,
 		'dataProviderHarga' => $dataProviderHarga,
+	]);
+	$Action6=$this->render('_index_product_group',[
+		'searchModelGroup'=>$searchModelGroup,
+		'dataProviderGroup' => $dataProviderGroup,
 	]);
 	
 	$items = [
@@ -109,6 +113,13 @@ echo $this->render('databarang_modal'); //echo difinition
 			<b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
 		  </span><b> HISTORI HARGA  </b>',
 			'content'=>$Action5
+		],
+		[
+			'label'=>'<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+			<b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
+		  </span><b> PRODUCT GROUP </b>',
+			'content'=>$Action6
 		],
 	];
 	
