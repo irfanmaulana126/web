@@ -71,7 +71,8 @@ class KaryawanController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new KaryawanSearch();
+		$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        $searchModel = new KaryawanSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -88,7 +89,7 @@ class KaryawanController extends Controller
     {
         $model = new Karyawan();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
             return $this->redirect(['index', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'KARYAWAN_ID' => $model->KARYAWAN_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
         } else {
             return $this->renderAjax('form_create', [

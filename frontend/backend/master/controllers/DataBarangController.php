@@ -6,9 +6,11 @@ use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+use yii\base\Model;
 use common\models\Store;
 use yii\web\UploadedFile;
+use frontend\backend\master\models\ProductGroup;
+use frontend\backend\master\models\ProductGroupSearch;
 use frontend\backend\master\models\Product;
 use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\AllStoreItemSearch;
@@ -79,6 +81,9 @@ class DataBarangController extends Controller
         $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $searchModelGroup = new ProductGroupSearch(['ACCESS_GROUP'=>$user]);
+        $dataProviderGroup = $searchModelGroup->search(Yii::$app->request->queryParams);
+
         $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user]);
         $dataProviderDiscount = $searchModelDiscount->search(Yii::$app->request->queryParams);
 
@@ -94,6 +99,8 @@ class DataBarangController extends Controller
 		 return $this->render('index', [
 			'searchModel'=>$searchModel,
             'dataProvider' => $dataProvider,
+			'searchModelGroup'=>$searchModelGroup,
+            'dataProviderGroup' => $dataProviderGroup,
 			'searchModelDiscount'=>$searchModelDiscount,
             'dataProviderDiscount' => $dataProviderDiscount,
 			'searchModelPromo'=>$searchModelPromo,
@@ -134,16 +141,25 @@ class DataBarangController extends Controller
         $image = new ProductImage();
 
         if ($model->load(Yii::$app->request->post()) && $image->load(Yii::$app->request->post())) {
-            $model->CREATE_AT=date('Y-m-d H:i:s');
+            // $model->CREATE_AT=date('Y-m-d H:i:s');
             if($model->save(false)) {
                 $transaction = Yii::$app->db->beginTransaction();
-            $image->CREATE_AT=date('Y-m-d H:i:s');
-            $gambar = UploadedFile::getInstance($image, 'PRODUCT_IMAGE');
-            $gambar->saveAs(Yii::getAlias('@frontend/web/img/') . '.' . $gambar->extension);
-            $image->PRODUCT_IMAGE = 'gambar.' . $gambar->extension;
-            $image->STORE_ID=$model->STORE_ID;
-            $image->save(false);
-                $transaction->commit();
+                    // $image->CREATE_AT=date('Y-m-d H:i:s');
+                    // $gambar = UploadedFile::getInstance($image, 'PRODUCT_IMAGE');
+                    // $gambar->saveAs(Yii::getAlias('@frontend/web/img/') . '.' . $gambar->extension);
+                    // $image->PRODUCT_IMAGE = 'gambar.' . $gambar->extension;
+
+                    $upload_file = $image->uploadImage();
+                    $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                    $image->PRODUCT_IMAGE = $data_base64;
+
+                    // $image->PRODUCT_ID=$model->PRODUCT_ID;
+                    // $image->ACCESS_GROUP=$model->ACCESS_GROUP;
+                    $image->STORE_ID=$model->STORE_ID;
+                    $model->addProductImage($image);
+                    
+                    // print_r($image);die();
+                    $transaction->commit();
                 
             Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
                 return $this->redirect(['index']);
@@ -301,4 +317,14 @@ class DataBarangController extends Controller
             ]);
         }
     }
+    
+    public function saveimage($base64)
+    {
+    $base64 = str_replace('data:image/jpg;base64,', '', $base64);
+    $base64 = base64_encode($base64);
+    $base64 = str_replace('data:image/jpg;base64,', '+', $base64);
+    return $base64;
+    }
+
+
 }

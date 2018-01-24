@@ -6,6 +6,8 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use common\models\Store;
 use kartik\widgets\DatePicker;
+
+$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 ?>
 
 <div class="item-form">
@@ -13,7 +15,7 @@ use kartik\widgets\DatePicker;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'STORE_ID')->widget(Select2::classname(),[
-       'data'=>ArrayHelper::map(Store::find()->all(),'STORE_ID','STORE_NM'),'language' => 'en',
+       'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
         'options' => ['placeholder'=>'Select Category....'],
         'pluginOptions' => [
             'allowClear' => true
@@ -21,6 +23,20 @@ use kartik\widgets\DatePicker;
     ]) ?>
     
     <?= $form->field($model, 'KTP')->textInput() ?>
+        <div class="row">
+    <div class="col-md-12">
+            <div class="col-md-4">
+            <?= $form->field($model, 'NAMA_DPN')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-md-4">
+            <?= $form->field($model, 'NAMA_TGH')->textInput() ?>
+            </div>
+            <div class="col-md-4">
+            <?= $form->field($model, 'NAMA_BLK')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+    </div>
+    <?= $form->field($model, 'ALAMAT')->textInput() ?>
 
     <?= $form->field($model, 'TMP_LAHIR')->textInput() ?>
 
@@ -34,15 +50,15 @@ use kartik\widgets\DatePicker;
 							],
 						]);	 ?>
     
-    <?= $form->field($model, 'NAMA_DPN')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'GENDER')->dropDownList(['Laki Laki'=>'Laki-Laki','Prempuan'=>'Prempuan'],['prompt'=>'Select Option']) ?>
 
-    <?= $form->field($model, 'NAMA_TGH')->textInput() ?>
-
-    <?= $form->field($model, 'NAMA_BLK')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'STS_NIKAH')->dropDownList(['Belum Menikah' => 'Belum Menikah', 'Menikah' => 'Menikah'],['prompt'=>'Select Option']) ?>
 
     <?= $form->field($model, 'TLP')->textInput() ?>
 
-    <?= $form->field($model, 'GENDER')->dropDownList(['Laki Laki'=>'Laki-Laki','Prempuan'=>'Prempuan']) ?>
+    <?= $form->field($model, 'HP')->textInput() ?>
+    
+    <?= $form->field($model, 'EMAIL')->input('email') ?>
    
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

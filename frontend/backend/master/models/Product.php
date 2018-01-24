@@ -5,6 +5,7 @@ namespace frontend\backend\master\models;
 use Yii;
 
 use common\models\Store;
+use frontend\backend\master\models\ProductImage;
 /**
  * This is the model class for table "product".
  *
@@ -151,12 +152,14 @@ class Product extends \yii\db\ActiveRecord
             return '';
         }
     }
-    public function getImage()
+    public function getProductImage()
     {
-        if ($this->STORE_ID){
-            return $this->hasOne(ProductImage::className(),['STORE_ID'=>'STORE_ID']);
-        }else{
-            return '';
-        }
+        
+        return $this->hasOne(ProductImage::className(),['PRODUCT_ID'=>'PRODUCT_ID']);
     }
+    public function addProductImage($image)
+{
+    $image->link('product', $this); // isi nilai husband_id
+    return $image->save(false);
+}
 }
