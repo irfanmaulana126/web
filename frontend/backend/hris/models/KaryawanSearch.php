@@ -13,6 +13,7 @@ use yii\data\ArrayDataProvider;
  */
 class KaryawanSearch extends Karyawan
 {
+    public $Namakaryawan;
 	public function attributes()
 	{
 		return array_merge(parent::attributes(), ['storeNm']);
@@ -23,8 +24,8 @@ class KaryawanSearch extends Karyawan
     public function rules()
     {
         return [
-            [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'KARYAWAN_ID', 'NAMA_DPN', 'NAMA_TGH', 'NAMA_BLK', 'KTP', 'TMP_LAHIR', 'TGL_LAHIR', 'GENDER', 'ALAMAT', 'STS_NIKAH', 'TLP', 'HP', 'EMAIL', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL','storeNm'], 'safe'],
+            [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT','UPAH_HARIAN'], 'integer'],
+            [['ACCESS_GROUP', 'STORE_ID', 'KARYAWAN_ID', 'NAMA_DPN', 'NAMA_TGH', 'NAMA_BLK', 'KTP', 'TMP_LAHIR', 'TGL_LAHIR', 'GENDER', 'ALAMAT', 'STS_NIKAH', 'TLP', 'HP', 'EMAIL', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL','storeNm','Namakaryawan','STT_POT_TELAT','STT_POT_PULANG','STT_IZIN','STT_LEMBUR'], 'safe'],
         ];
     }
 
@@ -71,9 +72,12 @@ class KaryawanSearch extends Karyawan
             'STATUS' => $this->STATUS,
             'YEAR_AT' => $this->YEAR_AT,
             'MONTH_AT' => $this->MONTH_AT,
+            'UPAH_HARIAN'=>$this->UPAH_HARIAN
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+        $query->andWhere('NAMA_DPN LIKE "%' . $this->Namakaryawan . '%" ' .
+        'OR NAMA_TGH LIKE "%' . $this->Namakaryawan . '%"'. 'OR NAMA_BLK LIKE "%' . $this->Namakaryawan . '%"')
+            ->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'KARYAWAN_ID', $this->KARYAWAN_ID])
             ->andFilterWhere(['like', 'NAMA_DPN', $this->NAMA_DPN])
@@ -86,6 +90,10 @@ class KaryawanSearch extends Karyawan
             ->andFilterWhere(['like', 'STS_NIKAH', $this->STS_NIKAH])
             ->andFilterWhere(['like', 'TLP', $this->TLP])
             ->andFilterWhere(['like', 'HP', $this->HP])
+            ->andFilterWhere(['like', 'STT_POT_TELAT', $this->STT_POT_TELAT])
+            ->andFilterWhere(['like', 'STT_POT_PULANG', $this->STT_POT_PULANG])
+            ->andFilterWhere(['like', 'STT_IZIN', $this->STT_IZIN])
+            ->andFilterWhere(['like', 'STT_LEMBUR', $this->STT_LEMBUR])
             ->andFilterWhere(['like', 'EMAIL', $this->EMAIL])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])

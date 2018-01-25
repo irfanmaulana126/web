@@ -27,31 +27,40 @@ $this->registerJs("
 
 	 };
 ",View::POS_READY);
+$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        
 ?>
 
 <div class="ppob-transaksi-create">
 
 <div class="ppob-transaksi-form">
-   <?php $form = ActiveForm::begin([
-			'id'=> $modelPeriode->formName(),			
+   <?php 
+//    print_r($items);die();
+   $form = ActiveForm::begin([	
 			'enableClientValidation'=> true,
 			'action' =>['/master/store/restore']
    ]); ?>
 			  
 			<?php
+			$options = [
+				'multiple' => true,
+				'size' => 10,
+			];
 			echo DualListbox::widget([
 				'model' => $modelPeriode,
 				'attribute' => 'STATUS',
-				'items' => ArrayHelper::map(Store::find()->all(),'STATUS','STORE_NM'),
+				// 'selection' => ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user,'STATUS' =>'3'])->all(),'STORE_ID','STORE_NM'),
+				'items' => $items,
+				'options' => $options,
 				'clientOptions' => [
 					'moveOnSelect' => false,
 					'selectedListLabel' => 'Selected Items',
 					'nonSelectedListLabel' => 'Available Items',
 				],
 			]);?>
-
+<br>
 			<div class="form-group">
-					<?=Html::submitButton('CARI',['class' => 'btn btn-success']); ?>
+					<?=Html::submitButton('Simpan',['class' => 'btn btn-success']); ?>
 			</div>
 
 <?php ActiveForm::end(); ?>

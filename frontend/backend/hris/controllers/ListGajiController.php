@@ -41,4 +41,24 @@ class ListGajiController extends Controller
         ]);
     }
 
+    public function actionAcc($ID,$STORE_ID,$KARYAWAN_ID,$YEAR_AT,$MONTH_AT)
+    {
+        $model= Karyawan::findOne(['ID' => $ID, 'STORE_ID' => $STORE_ID, 'KARYAWAN_ID' => $KARYAWAN_ID, 'YEAR_AT' => $YEAR_AT, 'MONTH_AT' => $MONTH_AT]);
+
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()){
+                // print_r($model);die();
+                // $model->UPAH_HARIAN =Yii::$app->request->post('karyawan-upah_harian-disp');
+                // $tes = Yii::$app->request->post('STT_POT_TELAT');
+                // print_r($model);die();
+                $model->save(false);
+                return $this->redirect(['index']);
+            }
+        } else {
+            return $this->renderAjax('form_acc', [
+                'model' => $model,
+            ]);
+        }
+        
+    }
 }

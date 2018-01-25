@@ -4,6 +4,7 @@ namespace frontend\backend\hris\models;
 
 use Yii;
 use common\models\Store;
+use frontend\backend\hris\models\Karyawan;
 /**
  * This is the model class for table "karyawan".
  *
@@ -57,9 +58,9 @@ class Karyawan extends \yii\db\ActiveRecord
     {
         return [
             [['STORE_ID', 'KARYAWAN_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
-            [['TGL_LAHIR', 'CREATE_AT', 'UPDATE_AT','storeNm'], 'safe'],
+            [['TGL_LAHIR', 'CREATE_AT', 'UPDATE_AT','storeNm','STT_POT_TELAT','STT_POT_PULANG','STT_IZIN','STT_LEMBUR'], 'safe'],
             [['ALAMAT', 'DCRP_DETIL'], 'string'],
-            [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['STATUS', 'YEAR_AT', 'MONTH_AT','UPAH_HARIAN'], 'integer'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 25],
             [['KARYAWAN_ID'], 'string', 'max' => 30],
@@ -181,7 +182,20 @@ class Karyawan extends \yii\db\ActiveRecord
 		
 	public function getStoreTbl(){
 		return $this->hasOne(Store::className(), ['STORE_ID' => 'STORE_ID']);
-	}	
+	}
+	public function getNamaKaryawan()
+	{	
+		return $this->NAMA_DPN.' '.$this->NAMA_TGH.' '.$this->NAMA_BLK;
+	}
+	public function getNomer()
+	{	
+		return $this->HP.'/'.$this->TLP;
+	}
+	public function getTtl()
+	{	
+		return $this->TMP_LAHIR.'/'.$this->TGL_LAHIR;
+	}
+
 	public function getStoreNm(){
 		$rslt = $this->storeTbl['STORE_NM'];
 		if ($rslt){

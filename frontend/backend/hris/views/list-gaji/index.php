@@ -40,12 +40,15 @@ $this->registerCss("
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 ");
-			
+
+$this->registerJs($this->render('modal_gaji.js'),View::POS_READY);
+echo $this->render('karyawan_gaji_button'); //echo difinition
+echo $this->render('modal_gaji'); //echo difinition			
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
-				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-PRODUCT</b>
+				  <i class="fa fa-user fa-1x"></i>
+				</span><b>GAJI PEGAWAI</b>
 	';
 	$gvAttProdakItem=[
 		[
@@ -75,7 +78,7 @@ $this->registerCss("
 		],		
 		//ITEM NAME
 		[
-			'attribute'=>'KTP',
+			'attribute'=>'Namakaryawan',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'format'=>'raw',
@@ -87,56 +90,7 @@ $this->registerCss("
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),			
-		],		
-		//SATUAN
-		[
-			'attribute'=>'NAMA_DPN',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
 		],
-		//DEFAULT_STOCK
-		[
-			'attribute'=>'NAMA_TGH',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			// 'filterType'=>GridView::FILTER_MONEY,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-		],
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'NAMA_BLK',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-        ],		
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'GENDER',
@@ -301,29 +255,11 @@ $this->registerCss("
 	$gvAttProdakItem[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
+		'template' => '{acc}',
 		'header'=>'ACTION',
-		'dropdown' => true,
-		'dropdownOptions'=>[
-			'class'=>'pull-right dropdown',
-			'style'=>'width:100%;background-color:#E6E6FA'				
-		],
-		'dropdownButton'=>[
-			'label'=>'ACTION',
-			'class'=>'btn btn-info btn-xs',
-			'style'=>'width:100%'		
-		],
 		'buttons' => [
-			'view' =>function ($url, $model){
-				// return  tombolView($url, $model);
-			},
-			'edit' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				// return  tombolEdit($url, $model);
-				//}					
-			},
-			'hapus' =>function($url, $model,$key){
-				// return  tombolHapus($url, $model);
+			'acc' =>function ($url, $model){
+				return  tombolAcc($url, $model);
 			},
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),

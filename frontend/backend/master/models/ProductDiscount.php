@@ -4,8 +4,7 @@ namespace frontend\backend\master\models;
 
 use Yii;
 use frontend\backend\master\models\Product;
-use common\models\Store;
-
+use frontend\backend\master\models\Store;
 /**
  * This is the model class for table "product_discount".
  *

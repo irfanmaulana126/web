@@ -70,7 +70,7 @@ $this->title = 'Store';
 	*/
 	$_indexStore=$this->render('_indexStore',[
 		'dataProvider' => $dataProvider,
-		'searchModel' => $searchModel			
+		'searchModel' => $searchModel
 	]);
 	
 	$aryData1=[
