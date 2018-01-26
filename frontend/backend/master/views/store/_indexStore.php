@@ -448,7 +448,6 @@ echo $this->render('modal_store'); //echo difinition
 			
 			$btnclick= ['onclick' => '
 				document.cookie="STORE_ID" + "=" +'.$model->STORE_ID.';
-				document.cookie="STORE_NM" + "=" +"'.$model->STORE_NM.'";
 				$.pjax.reload({
 					url: "'.Url::to(["/master/store/"]).'",
 					container: "#w17",

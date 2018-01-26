@@ -84,5 +84,18 @@ class SetelanPresensiController extends Controller
             'dataProviderPot' => $dataProviderPot,
         ]);
     }
-
+    public function actionShift($STORE_ID,$ACCESS_GROUP)
+    {
+        $model = new HrdSettingJamkerja(['ACCESS_GROUP'=>$ACCESS_GROUP,'STORE_ID'=>$STORE_ID]);
+        $data = HrdSettingJamkerja::find()->where(['ACCESS_GROUP'=>$ACCESS_GROUP,'STORE_ID'=>$STORE_ID])->all();
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // return $this->redirect(['view', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
+        } else {
+            return $this->renderAjax('_form_jam',[
+                'model'=>$model,
+                'data'=>$data
+            ]);
+        }
+    }
 }
