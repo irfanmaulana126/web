@@ -11,8 +11,8 @@ use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 use yii\web\Cookie;
 use yii\web\Request;
-use common\models\Store;
-use common\models\StoreSearch;
+use frontend\backend\master\models\Store;
+use frontend\backend\master\models\StoreSearch;
 use common\models\LocateKota;
 
 class StoreController extends Controller
@@ -64,7 +64,7 @@ class StoreController extends Controller
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
         $model= new Store(['ACCESS_GROUP'=>$user]);
 		$searchModel = new StoreSearch(['ACCESS_GROUP'=>$user]);
-        $dataProvider = $searchModel->searchUserStore(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		// print_r($user);die();
 		return $this->render('index', [
             'searchModel' => $searchModel,
@@ -155,12 +155,32 @@ class StoreController extends Controller
     }
 	
 	public function actionRestore(){
+       
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        // print_r($user);die();
         $modelPeriode = new Store();
+        $datas = StoreSearch::find()->where(['and','ACCESS_GROUP='.$user.'','STATUS=3'])->all();
+        $items = ArrayHelper::map($datas, 'STORE_ID', 'STORE_NM');
+        // print_r($items);die();
 		if ($modelPeriode->load(Yii::$app->request->post())) {
-            return $this->redirect(['index']);
+                $modelPeriode;
+                // print_r($data);die();
+            foreach ($modelPeriode['STATUS'] as $value) {
+                $datas = Store::findOne(['STORE_ID' => $value]);
+                $datas->STATUS="2";
+                $datas->update();
+            }
+            
+	// $id=Yii::$app->request->cookies;
+    //         $storeId=$id->getValue('STORE_ID');
+    //         print_r($storeId);die();
+            $tes=Yii::$app->response->cookies->remove('STORE_ID');
+            // print_r($tes);die();
+            return $this->redirect('/master/store');
         }else {
             return $this->renderAjax('form_restore',[
-				'modelPeriode' => $modelPeriode
+				'modelPeriode' => $modelPeriode,
+                'items'=>$items
 			]);
 	   }
 	}

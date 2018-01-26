@@ -1,8 +1,9 @@
 
 <?php
-use yii\helpers\Html;
+use kartik\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
+use kartik\editable\Editable;
 use yii\widgets\Breadcrumbs;
 use kartik\widgets\Spinner;
 use yii\bootstrap\Modal;
@@ -15,6 +16,7 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
+use kartik\widgets\SwitchInput;
 use frontend\backend\master\models\Product;
 
 $this->title="Data Gaji";
@@ -59,10 +61,10 @@ $this->registerCss("
 		],
 		//ITEM_ID
 		[
+			// 'class' => 'kartik\grid\EditableColumn',
 			'attribute'=>'STORE_ID',
 			'filterType'=>true,
 			'format'=>'raw',
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
 			'hAlign'=>'right',
 			'vAlign'=>'top',
 			'mergeHeader'=>false,
@@ -92,10 +94,27 @@ $this->registerCss("
 		],
 		//DEFAULT_STOCK
 		[
+			'class' => 'kartik\grid\EditableColumn',
 			'attribute'=>'IZIN_STT',
 			//'label'=>'Cutomer',
+			'editableOptions'=> [
+					'header'=>'STATUS PEMBAYARAN', 
+					'asPopover' => true,
+					'size'=>'md',
+					'inputType' => \kartik\editable\Editable::INPUT_SWITCH,
+					'options' => [
+						'pluginOptions' => [
+							'items'=>[
+								'value'=>empty($model->IZIN_STT) ? '0' : '1',
+							]
+						]
+					]
+			],
 			'filterType'=>true,
-			// 'filterType'=>GridView::FILTER_MONEY,
+			'value'=>function($model) {				
+				$retVal = ($model->IZIN_STT==1) ? 'DIBAYAR' : 'TIDAK DIBAYAR' ;
+				return	$retVal;			
+			},
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
@@ -104,27 +123,11 @@ $this->registerCss("
 			'format'=>'raw',
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'IZIN_STT_NM',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-        ],	
 	];
-	$gvAttProdakItem[]=[			
+	$gvAttProdakItembutton[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
 		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',

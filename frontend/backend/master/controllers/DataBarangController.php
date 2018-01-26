@@ -141,24 +141,32 @@ class DataBarangController extends Controller
         $image = new ProductImage();
 
         if ($model->load(Yii::$app->request->post()) && $image->load(Yii::$app->request->post())) {
-            // $model->CREATE_AT=date('Y-m-d H:i:s');
+            $model->CREATE_AT=date('Y-m-d H:i:s');
             if($model->save(false)) {
                 $transaction = Yii::$app->db->beginTransaction();
+                    $C=$model->getPrimaryKey();
+                    $s=$C['ID'];
+                    $modelCari=Product::find()->where(['ID'=>$s])->one();
                     // $image->CREATE_AT=date('Y-m-d H:i:s');
                     // $gambar = UploadedFile::getInstance($image, 'PRODUCT_IMAGE');
                     // $gambar->saveAs(Yii::getAlias('@frontend/web/img/') . '.' . $gambar->extension);
                     // $image->PRODUCT_IMAGE = 'gambar.' . $gambar->extension;
-
+                    // $image->ACCESS_GROUP='123';//$modelCari->ACCESS_GROUP;
+                    // $image->STORE_ID='123';//$modelCari->STORE_ID;
+                    $image->PRODUCT_ID=$modelCari->PRODUCT_ID;
                     $upload_file = $image->uploadImage();
                     $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
-                    $image->PRODUCT_IMAGE = $data_base64;
+                    $image->PRODUCT_IMAGE = 'data:image/*;charset=utf-8;base64,'.$data_base64;
 
                     // $image->PRODUCT_ID=$model->PRODUCT_ID;
                     // $image->ACCESS_GROUP=$model->ACCESS_GROUP;
-                    $image->STORE_ID=$model->STORE_ID;
-                    $model->addProductImage($image);
+                    // $C=$model->getPrimaryKey();
+                    // $s=$C['STORE_ID'];
+                    $image->save();
                     
-                    // print_r($image);die();
+                   // print_r($C);die();
+                    // $model->addProductImage($image);
+                    
                     $transaction->commit();
                 
             Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");

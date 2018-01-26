@@ -13,9 +13,9 @@ use yii\data\ArrayDataProvider;
 use yii\web\View;
 use kartik\widgets\Alert;
 $this->title="Setelan Presensi";
-// $this->registerJs($this->render('databarang_script.js'),View::POS_READY);
+$this->registerJs($this->render('modal_presensi.js'),View::POS_READY);
 // echo $this->render('databarang_button'); //echo difinition
-// echo $this->render('databarang_modal'); //echo difinition
+echo $this->render('modal_presensi'); //echo difinition
 	$this->registerCss("
 		#expand-menu :link {
 			color:black;
@@ -35,15 +35,15 @@ $this->title="Setelan Presensi";
 		#expand-menu .kv-grid-container{
 			height:250px
 		}
-		#w6 :link {
+		#w11 :link {
 			color: black;
 		}
 		/* mouse over link */
-		#w6-container a:hover {
+		#w11-container a:hover {
 			color: #5a96e7;
 		}
 		/* selected link */
-		#w6-container a:active {
+		#w11-container a:active {
 			color: blue;
 		}
 	");

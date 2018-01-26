@@ -242,6 +242,7 @@ use common\models\Userlogin;
 
 	$id=Yii::$app->request->cookies;
 	$storeId=$id->getValue('STORE_ID');
+	// print_r($storeId);die();
 	if (empty($storeId)) {
 		$modelToko= new Store();
 	} else {

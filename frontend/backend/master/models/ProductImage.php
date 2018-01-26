@@ -57,20 +57,20 @@ class ProductImage extends \yii\db\ActiveRecord
             'PRODUCT_IMAGE' => Yii::t('app', 'IMAGE'),
         ];
     }
-	public function fields()
-	{
-		return [			
-			'CREATE_AT'=>function($model){
-				return $model->CREATE_AT;
-			},
-			'UPDATE_AT'=>function($model){
-				return $model->UPDATE_AT;
-			},					
-			'IMG64'=>function($model){
-				return $model->IMG64!=''?$model->IMG64:$this->blankImage;
-			}	
-		];
-	}
+	// public function fields()
+	// {
+	// 	return [			
+	// 		'CREATE_AT'=>function($model){
+	// 			return $model->CREATE_AT;
+	// 		},
+	// 		'UPDATE_AT'=>function($model){
+	// 			return $model->UPDATE_AT;
+	// 		},					
+	// 		'IMG64'=>function($model){
+	// 			return $model->IMG64!=''?$model->IMG64:$this->blankImage;
+	// 		}	
+	// 	];
+	// }
     public function uploadImage() {
         // get the uploaded file instance. for multiple file uploads
         // the following data will return an array (you may need to use
