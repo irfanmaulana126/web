@@ -35,7 +35,9 @@ use frontend\backend\laporan\models\RptDailyChartSearch;
 
 
 	$hourly3DaysTafik= Chart::Widget([
-		'urlSource'=>'/dashboard/data/daily-transaksi',
+		//'urlSource'=>'/dashboard/data/daily-transaksi',
+		//'urlSource'=>'/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1&TGL=2018-01-23',
+		'urlSource'=>'/dashboard/data/test',
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric

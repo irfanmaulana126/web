@@ -23,6 +23,7 @@ use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDailyHourSearch
 use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryMonthly;
 use frontend\backend\dashboard\models\ChartWeeklySales;
 use frontend\backend\dashboard\models\ChartMonthlySales;
+use frontend\backend\dashboard\models\ChartDayHourSales;
 /**
  * FoodtownController implements the CRUD actions for Foodtown model.
  */
@@ -93,7 +94,8 @@ class DataController extends Controller
 		};
 		
        $data['chart']='
-		"chart":{"caption": " HARIAN TRANSAKSI ",
+		"chart":{
+				"caption": " HARIAN TRANSAKSI ",
 				"subCaption": "'.$tglWaktu.'",
 				"captionFontSize": "12",
 				"subcaptionFontSize": "10",
@@ -319,13 +321,15 @@ class DataController extends Controller
 		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:$paramsHeader['ACCESS_GROUP'];
 		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:$paramsHeader['TAHUN'];
 		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:$paramsHeader['BULAN'];
+		$paramTGL			= isset($params['TGL'])!=''?$params['TGL']:$paramsHeader['TGL'];
 		
-		$modelMonthlySales= new ChartMonthlySales([
+		$modelDayHourCount= new ChartDayHourSales([
 			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
 			'TAHUN'=>$paramTahun,					//'2018',
-			'BULAN'=>$paramBulan					//'1'
+			'BULAN'=>$paramBulan,					//'1'
+			'TGL'=>$paramTGL						//'1'
 		]);
-		return $modelMonthlySales;		
+		return $modelDayHourCount;		
 	}
 	
 	
