@@ -58,7 +58,7 @@ $this->registerCss("
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'STORE_ID',
+			'attribute'=>'store.STORE_NM',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -68,9 +68,6 @@ $this->registerCss("
 			'group'=>true,
 			'groupedRow'=>true,
 			'noWrap'=>false,
-			'value' => function ($model, $key, $index) { 
-				return Html::button($model->STORE_ID, ['update', 'id' => $model->STORE_ID]);
-			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),

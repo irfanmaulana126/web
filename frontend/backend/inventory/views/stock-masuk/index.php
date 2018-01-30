@@ -13,7 +13,7 @@ use yii\web\View;
 
 // print_r($dataProvider->getModels()[0]['SISA_2017-11-03']);
 // die();
-
+$this->title="Stock Masuk";
 	$this->registerCss("
 		#stok-masuk .kv-grid-container{
 			height:500px

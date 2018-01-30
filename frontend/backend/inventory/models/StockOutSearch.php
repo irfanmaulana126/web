@@ -305,8 +305,8 @@ class StockOutSearch extends DynamicModel
 	public function searchOpname($params){
 		
       	$accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
-		//$TGL=$this->thn!=''?$this->thn:date('Y-m-d');
-		$TGL='2017-11-01';
+		$TGL=$this->thn!=''?$this->thn:date('Y-m-d');
+		// $TGL='2017-11-01';
 		
 		$qrySql= Yii::$app->production_api->createCommand("
 					SELECT  st.STORE_NM,inv.STORE_ID,

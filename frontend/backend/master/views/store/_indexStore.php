@@ -60,6 +60,7 @@ echo $this->render('modal_store'); //echo difinition
 	  ['STATUS' => 1, 'STT_NM' => 'Active'],
 	  ['STATUS' => 2, 'STT_NM' => 'Deactive'],
 	  ['STATUS' => 3, 'STT_NM' => 'Deleted'],
+	  ['STATUS' => 4, 'STT_NM' => 'Allow'],
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
@@ -85,10 +86,15 @@ echo $this->render('modal_store'); //echo difinition
 					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
 					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
 					</span>','',['title'=>'Delete']);
+		}elseif($stt==4){
+			return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:blue"></i>
+					</span>','',['title'=>'Allow']);
 		}
 	};	
 		
-	$dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Trial. '.sttMsgDscp(1).'=Active. '.sttMsgDscp(2).'=Deactive. '.sttMsgDscp(3).'=Delete.';
+	$dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Trial. '.sttMsgDscp(1).'=Active. '.sttMsgDscp(2).'=Deactive. '.sttMsgDscp(3).'=Delete. '.sttMsgDscp(4).'=Allow.';
 	
 	
 	//Result Status value.
@@ -113,6 +119,11 @@ echo $this->render('modal_store'); //echo difinition
 					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
 					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
 					</span>','',['title'=>'Delete']);
+		}elseif($stt==4){
+			return Html::a('<span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-check fa-stack-1x" style="color:blue"></i>
+					</span>','',['title'=>'Allow']);
 		}
 	};	
 	
@@ -153,6 +164,7 @@ echo $this->render('modal_store'); //echo difinition
 		], */
 		//OUTLET_NM
 			[
+				// 'IdOptions'=>'tes',
 				'attribute'=>'STORE_NM',
 				'label'=>'NAMA TOKO',
 				'filterType'=>true,
@@ -399,42 +411,56 @@ echo $this->render('modal_store'); //echo difinition
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
 	];
 	
-	/* 
+	
 	$gvAttributeItem[]=[
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{product}{view}{review}{payment}',
+		// 'template' => '{product}{view}{review}{payment}',
+		'template' => '{review}{payment}{allow}{edit}{delete}',
 		'header'=>'ACTION',
 		'dropdown' => true,
 		'dropdownOptions'=>[
 			'class'=>'pull-right dropdown',
-			'style'=>'text-align:center;background-color:#E6E6FA'				
+			'style'=>'width:100%;background-color:#E6E6FA'				
 		],
 		'dropdownButton'=>[
 			'label'=>'ACTION',
-			'class'=>'btn btn-default btn-xs',
-			'style'=>'width:100%;'		
+			'class'=>'btn btn-info btn-xs',
+			'style'=>'width:100%'		
 		],
 		'buttons' => [
-			'product' =>function ($url, $model){
-			  return  tombolProduct($url, $model);
-			},
+			
 			// 'view' =>function ($url, $model){
-			  // return  tombolView($url, $model);
+			//   return  tombolView($url, $model);
 			// },
-			// 'review' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-					// return  tombolReview($url, $model);
-				//}					
-			// },
-			// 'payment' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-					// return  tombolPayment($model);
-				//}					
-			// }
+			'edit' =>function ($url, $model){
+				if($model->STATUS!=3){
+					return  tombolUpdate($url, $model);
+				}	
+			},
+			'delete' =>function ($url, $model){
+				if($model->STATUS!=3){
+					return  tombolDelete($url, $model);
+				}	
+			},
+			'review' =>function($url, $model,$key){
+				if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+					return  tombolReview($url, $model);
+				}					
+			},
+			'payment' =>function($url, $model,$key){
+				if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+					return  tombolPayment($model);
+				}					
+			},
+			'allow' =>function($url, $model,$key){
+				if($model->STATUS==4){ //Jika sudah close tidak bisa di edit.
+					return  tombolAllow($model);
+				}					
+			}
 		], 
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$headerColor,'#ffffff'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','0',''),
-	]; */	
+	]; 
 	
 	$gvStore=GridView::widget([
 		'id'=>'gv-store',
@@ -446,16 +472,13 @@ echo $this->render('modal_store'); //echo difinition
 			//$urlDestination=Url::to(['/master/product', 'storeid' => $model->STORE_ID]);
 			//if 
 			
-			$btnclick= ['onclick' => '
+			$btnclick= ['ondblclick' => '
 				document.cookie="STORE_ID" + "=" +'.$model->STORE_ID.';
 				$.pjax.reload({
 					url: "'.Url::to(["/master/store/"]).'",
 					container: "#w17",
 					timeout: 1000,
-				});
-				
-			
-			'];
+				});	'];
 			//$btnclick2= ['ondblclick' =>'location.href="'.$urlDestination.'"'];
 			//print_r($btnclick2);
 			//die();
@@ -479,20 +502,18 @@ echo $this->render('modal_store'); //echo difinition
 		'toolbar' => [
 			''
 		],
-		'summary'=>false,
 		'panel' => [
 			//'heading'=>false,
 			'heading'=>'
 				<span class="fa-stack fa-sm">
 				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
 				  <i class="fa fa-text-width fa-stack-1x"></i>
-				</span> List Toko'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;">'.tombolReqStore().' '.tombolRestore().' '.$dscLabel.'</div></div> ',  
+				</span> List Toko'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;"> </div></div> ',  
 			'type'=>'info',
 			'before'=>false,
 			'after'=>false,
-			//'footer'=>false,
-			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
-			//'before'=> tombolReqStore(),
+			'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.tombolReqStore().' '.tombolRestore().'</div>',
+			// 'before'=> tombolReqStore(),
 			'showFooter'=>'aas',
 		], 
 		// 'floatOverflowContainer'=>true,

@@ -117,18 +117,18 @@ use kartik\widgets\ActiveForm;
             'value'=>'<kbd>'.$modelToko['STORE_ID'].'</kbd>',
 		],
 		[
-			'attribute' =>'CREATE_BY',
+			'attribute' =>'FAX',
 			'format'=>'raw', 
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,
-			'value'=>''.(empty($modelToko['CREATE_BY'])) ? '':$modelToko['CREATE_BY'].'',
+			'value'=>''.(empty($modelToko['FAX'])) ? '':$modelToko['FAX'].'',
 		],
 		[
-			'attribute' =>'UPDATE_BY',
+			'attribute' =>'INDUSTRY_NM',
 			'format'=>'raw', 
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,
-			'value'=>''.(empty($modelToko['UPDATE_BY'])) ? '':$modelToko['UPDATE_BY'].'',
+			'value'=>''.(empty($modelToko['INDUSTRY_NM'])) ? '':$modelToko['INDUSTRY_NM'].'',
 		],		
 		[
 			'attribute' =>'CREATE_AT',
@@ -141,9 +141,9 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%']
 		],		
 		[
-			'attribute' =>'UPDATE_AT',
+			'attribute' =>'INDUSTRY_GRP_NM',
 			'format'=>'raw',
-			'value'=>''.(empty($modelToko['UPDATE_AT'])) ? '':$modelToko['UPDATE_AT'].'',
+			'value'=>''.(empty($modelToko['INDUSTRY_GRP_NM'])) ? '':$modelToko['INDUSTRY_GRP_NM'].'',
 			'displayOnly'=>true,
 			'type'=>DetailView::INPUT_DATE,
 			'widgetOptions' => [
@@ -188,8 +188,8 @@ use kartik\widgets\ActiveForm;
 		'condensed'=>true,
 		'hover'=>true,
 		'panel'=>[
-			'heading'=>'<b>Outlet Data </b>',
-			'type'=>DetailView::TYPE_DEFAULT,
+			'heading'=>'<b>STORE DATA </b>',
+			'type'=>DetailView::TYPE_INFO,
 		],
 		'mode'=>DetailView::MODE_VIEW,
 		//'buttons1'=>'{update}',

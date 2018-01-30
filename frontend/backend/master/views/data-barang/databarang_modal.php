@@ -22,6 +22,13 @@ $this->registerCss("
 	#databarang-button-row-discount-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	
+	#databarang-button-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#create-group-product-button-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 	#databarang-button-row-promo-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
@@ -29,6 +36,12 @@ $this->registerCss("
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 	
+	#group-product-button-row-view-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#group-product-button-row-edit-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 	#databarang-button-row-view-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
@@ -68,6 +81,33 @@ $this->registerCss("
 	
 	/*
 	 * BUTTON - FORM CREATE
+	*/
+	Modal::begin([
+		//'id' => 'sync_save',
+		'id' => 'create-group-product-button-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> TAMBAH GROUP PRODUCT</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			//'toggleButton' => ['label' => 'click me'],
+		],
+		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='create-group-product-button-content'></div>";
+	Modal::end();
+
+	/*
+	 * BUTTON - FORM CREATE GROUP PRODUCT
 	*/
 	Modal::begin([
 		//'id' => 'sync_save',
@@ -142,6 +182,57 @@ $this->registerCss("
 		]
 	]);
 		echo "<div id='databarang-button-row-edit-content'></div>";
+	Modal::end();
+
+	/*
+	 * BUTTON - REVIEW KARYAWAN
+	*/
+	Modal::begin([
+		'id' => 'group-product-button-row-view-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> LIHAT PRODUCT GROUP</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='group-product-button-row-view-content'></div>";
+	Modal::end();
+	
+	/*
+	 * BUTTON - EDIT KARYAWAN
+	*/
+	Modal::begin([
+		//'id' => 'sync_save',
+		'id' => 'group-product-button-row-edit-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> UBAH DATA PRODUCT GROUP</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			//'toggleButton' => ['label' => 'click me'],
+		],
+		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='group-product-button-row-edit-content'></div>";
 	Modal::end();
 	
 	/*

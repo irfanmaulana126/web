@@ -39,11 +39,12 @@ function tombolAryColumn(){
 		// 'FILTER_OPTION'=>[],
 		]
 	];	  
+	
 	$aryFieldColomn[]=[
 	'ID' =>1, 'ATTR' =>[
-		'ATR_FIELD'=>'KTP','ATR_LABEL'=>'NO.KTP','ATR_HEADER_MERGE'=>false,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false,'ATR_PAGESUMMARY'=>false,'ATR_FORMAT'=>'raw',
+		'ATR_FIELD'=>'Namakaryawan','ATR_LABEL'=>'Karyawan','ATR_HEADER_MERGE'=>false,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false,'ATR_PAGESUMMARY'=>false,'ATR_FORMAT'=>'raw',
 		'H_WIDTH'=>'100px','H_ALIGN'=>'center','H_FONT_SIZE' =>'10px','H_FONT_COLOR'=>$H_FONT_COLOR1,'H_BG_COLOR' =>$H_BG_COLOR1,'H_VALIGN'=>'RIGHT','V_VALIGN'=>'top','H_COLSPAN'=>'0',
-		'C_FONT_SIZE' =>'10px','C_ALIGN'=>'left','C_FONT_BOLD'=>'bold','C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,
+		'C_FONT_SIZE' =>'10px','C_ALIGN'=>'left','C_FONT_BOLD'=>false,'C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,
 		'FILTER'=>true,'FILTER_TYPE'=>false,'FILTER_WIDGET_OPTION'=>[],'FILTER_INPUT_OPTION'=>['class'=>'form-control'],'FILTER_OPTION'=>[],
 		//PENGUNAAN FILTER 
 		// 'FILTER'=>true,'FILTER_TYPE'=>GridView::FILTER_SELECT2,
@@ -52,53 +53,8 @@ function tombolAryColumn(){
 		// 'FILTER_OPTION'=>[],		
 		]
 	];	
-	//--NAMA---
 	$aryFieldColomn[]=[
 	'ID' =>2, 'ATTR' =>[
-		'ATR_FIELD'=>'NAMA_DPN','ATR_LABEL'=>'NAMA DEPAN','ATR_HEADER_MERGE'=>false,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false,'ATR_PAGESUMMARY'=>false,'ATR_FORMAT'=>'raw',
-		'H_WIDTH'=>'15px','H_ALIGN'=>'center','H_FONT_SIZE' =>'10px','H_FONT_COLOR'=>$H_FONT_COLOR1,'H_BG_COLOR' =>$H_BG_COLOR1,'H_VALIGN'=>'RIGHT','V_VALIGN'=>'top','H_COLSPAN'=>'3',
-		'C_FONT_SIZE' =>'10px','C_ALIGN'=>'left','C_FONT_BOLD'=>false,'C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,
-		'FILTER'=>true,'FILTER_TYPE'=>false,'FILTER_WIDGET_OPTION'=>[],'FILTER_INPUT_OPTION'=>['class'=>'form-control'],'FILTER_OPTION'=>['style'=>'background-color:rgba(255, 255, 255, 1); align:center','colspan'=>'3',],
-		//PENGUNAAN FILTER 
-		// 'FILTER'=>true,'FILTER_TYPE'=>GridView::FILTER_SELECT2,
-		// 'FILTER_WIDGET_OPTION'=>['pluginOptions'=>['allowClear'=>true]],
-		// 'FILTER_INPUT_OPTION'=>['placeholder'=>'-Pilih-'],
-		// 'FILTER_OPTION'=>[],
-		//DATE TIME PLUGIN
-		// 'FILTER_WIDGET_OPTION'=>['pluginOptions'=>['format' => 'yyyy-mm-dd','autoclose' => true,'todayHighlight' => true,'autoWidget' => false,'todayBtn' => true,]],
-		]
-	];
-	//--NAMA---	
-	$aryFieldColomn[]=[
-	'ID' =>3, 'ATTR' =>[
-		'ATR_FIELD'=>'NAMA_TGH','ATR_LABEL'=>'NAMA TENGAH','ATR_HEADER_MERGE'=>true,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false,'ATR_PAGESUMMARY'=>false,'ATR_FORMAT'=>'raw',
-		'H_WIDTH'=>'15px','H_ALIGN'=>'center','H_FONT_SIZE' =>'10px','H_FONT_COLOR'=>$H_FONT_COLOR1,'H_BG_COLOR' =>$H_BG_COLOR1,'H_VALIGN'=>'RIGHT','V_VALIGN'=>'top','H_COLSPAN'=>'0',
-		'C_FONT_SIZE' =>'10px','C_ALIGN'=>'left','C_FONT_BOLD'=>false,'C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,
-		'FILTER'=>false,'FILTER_TYPE'=>false,'FILTER_WIDGET_OPTION'=>[],'FILTER_INPUT_OPTION'=>['class'=>'form-control'],'FILTER_OPTION'=>[],
-		//PENGUNAAN FILTER 
-		// 'FILTER'=>true,'FILTER_TYPE'=>GridView::FILTER_SELECT2,
-		// 'FILTER_WIDGET_OPTION'=>['pluginOptions'=>['allowClear'=>true]],
-		// 'FILTER_INPUT_OPTION'=>['placeholder'=>'-Pilih-'],
-		// 'FILTER_OPTION'=>[],
-		]
-	];
-	//--NAMA---	
-	$aryFieldColomn[]=[
-	'ID' =>4, 'ATTR' =>[
-		'ATR_FIELD'=>'NAMA_BLK','ATR_LABEL'=>'NAMA BELAKANG','ATR_HEADER_MERGE'=>true,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false,'ATR_PAGESUMMARY'=>false,'ATR_FORMAT'=>'raw',
-		'H_WIDTH'=>'15px','H_ALIGN'=>'center','H_FONT_SIZE' =>'10px','H_FONT_COLOR'=>$H_FONT_COLOR1,'H_BG_COLOR' =>$H_BG_COLOR1,'H_VALIGN'=>'RIGHT','V_VALIGN'=>'top','H_COLSPAN'=>'0',
-		'C_FONT_SIZE' =>'10px','C_ALIGN'=>'left','C_FONT_BOLD'=>false,'C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,
-		 'FILTER'=>false,'FILTER_TYPE'=>false,'FILTER_WIDGET_OPTION'=>[],'FILTER_INPUT_OPTION'=>['class'=>'form-control'],'FILTER_OPTION'=>[],
-		//PENGUNAAN FILTER 
-		// 'FILTER'=>true,'FILTER_TYPE'=>GridView::FILTER_SELECT2,
-		// 'FILTER_WIDGET_OPTION'=>['pluginOptions'=>['allowClear'=>true]],
-		// 'FILTER_INPUT_OPTION'=>['placeholder'=>'-Pilih-'],
-		// 'FILTER_OPTION'=>[],
-		]
-	];	
-	
-	$aryFieldColomn[]=[
-	'ID' =>5, 'ATTR' =>[
 		'ATR_FIELD'=>'GENDER','ATR_LABEL'=>'JENIS KELAMIN','ATR_HEADER_MERGE'=>false,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false,'ATR_PAGESUMMARY'=>false,'ATR_FORMAT'=>'raw',
 		'H_WIDTH'=>'50px','H_ALIGN'=>'center','H_FONT_SIZE' =>'10px','H_FONT_COLOR'=>$H_FONT_COLOR1,'H_BG_COLOR' =>$H_BG_COLOR1,'H_VALIGN'=>'RIGHT','V_VALIGN'=>'top','H_COLSPAN'=>'0',
 		'C_FONT_SIZE' =>'10px','C_ALIGN'=>'left','C_FONT_BOLD'=>false,'C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,
@@ -112,7 +68,7 @@ function tombolAryColumn(){
 	];	
 			
 	$aryFieldColomn[]=[
-	'ID' =>6, 'ATTR' =>[
+	'ID' =>3, 'ATTR' =>[
 		'ATR_FIELD'=>'HP','ATR_LABEL'=>'HANDPHONE','ATR_HEADER_MERGE'=>false,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false,'ATR_PAGESUMMARY'=>false,'ATR_FORMAT'=>'raw',
 		'H_WIDTH'=>'100px','H_ALIGN'=>'center','H_FONT_SIZE' =>'10px','H_FONT_COLOR'=>$H_FONT_COLOR1,'H_BG_COLOR' =>$H_BG_COLOR1,'H_VALIGN'=>'RIGHT','V_VALIGN'=>'top','H_COLSPAN'=>'0',
 		'C_FONT_SIZE' =>'10px','C_ALIGN'=>'left','C_FONT_BOLD'=>false,'C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,
@@ -125,7 +81,7 @@ function tombolAryColumn(){
 		]
 	];	
 	$aryFieldColomn[]=[
-	'ID' =>7, 'ATTR' =>[
+	'ID' =>4, 'ATTR' =>[
 		'ATR_FIELD'=>'TLP','ATR_LABEL'=>'TELEPON RUMAH','ATR_HEADER_MERGE'=>false,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false,'ATR_PAGESUMMARY'=>false,'ATR_FORMAT'=>'raw',
 		'H_WIDTH'=>'50px','H_ALIGN'=>'center','H_FONT_SIZE' =>'10px','H_FONT_COLOR'=>$H_FONT_COLOR1,'H_BG_COLOR' =>$H_BG_COLOR1,'H_VALIGN'=>'RIGHT','V_VALIGN'=>'top','H_COLSPAN'=>'0',
 		'C_FONT_SIZE' =>'10px','C_ALIGN'=>'left','C_FONT_BOLD'=>false,'C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,
@@ -138,7 +94,7 @@ function tombolAryColumn(){
 		]
 	];		
 	$aryFieldColomn[]=[
-	'ID' =>8, 'ATTR' =>[
+	'ID' =>5, 'ATTR' =>[
 		'ATR_FIELD'=>'STATUS','ATR_LABEL'=>'STATUS','ATR_HEADER_MERGE'=>false,'ATR_GROUP'=>false,'ATR_GROUPROW'=>false,'ATR_PAGESUMMARY'=>false,'ATR_FORMAT'=>'raw',
 		'H_WIDTH'=>'100px','H_ALIGN'=>'center','H_FONT_SIZE' =>'10px','H_FONT_COLOR'=>$H_FONT_COLOR1,'H_BG_COLOR' =>$H_BG_COLOR1,'H_VALIGN'=>'RIGHT','V_VALIGN'=>'top',
 		'C_FONT_SIZE' =>'10px','C_ALIGN'=>'center','C_FONT_BOLD'=>false,'C_FONT_COLOR' =>$C_FONT_COLOR1,'C_BG_COLOR' =>$C_BG_COLOR1,

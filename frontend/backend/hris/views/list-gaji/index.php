@@ -61,7 +61,7 @@ echo $this->render('modal_gaji'); //echo difinition
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'STORE_ID',
+			'attribute'=>'storeTbl.STORE_NM',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),

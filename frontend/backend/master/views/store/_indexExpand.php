@@ -13,7 +13,7 @@ use yii\data\ArrayDataProvider;
 use common\models\Store;
 use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\CustomerSearch;
-use frontend\backend\hris\models\KaryawanSearch;
+use frontend\backend\hris\models\Karyawan;
 use common\models\Userlogin;
 	
 	// $this->registerCss("
@@ -277,7 +277,7 @@ use common\models\Userlogin;
 		'dataProviderPlg'=>$dataProviderPlg
 	]);
 		
-	$searchModelKar = KaryawanSearch::find()->where(['STORE_ID'=>$storeId])->all();
+	$searchModelKar = Karyawan::find()->where(['STORE_ID'=>$storeId])->all();
 	$dataProviderKar= new ArrayDataProvider([
 		'allModels'=>$searchModelKar,	
 		'pagination' => [
@@ -288,7 +288,7 @@ use common\models\Userlogin;
 		'storeId'=>$storeId,
 		'dataProviderKar'=>$dataProviderKar
 	]);
-	$modalUser=Userlogin::find()->Where('FIND_IN_SET(ACCESS_ID,"'.$modelToko->ACCESS_ID.'")')->all();
+	$modalUser=Userlogin::find()->Where('ACCESS_LEVEL="OPS" AND FIND_IN_SET(ACCESS_ID,"'.$modelToko->ACCESS_ID.'")')->all();
 		$dataProviderUserOps= new ArrayDataProvider([
 			'allModels'=>$modalUser,	
 			'pagination' => [

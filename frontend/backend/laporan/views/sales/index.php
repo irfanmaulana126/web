@@ -52,8 +52,8 @@ $this->registerCss("
 	");
 // $this->title = 'Trans Opencloses';
 // $this->params['breadcrumbs'][] = $this->title;
-	
-	$aryStore=ArrayHelper::map(Store::find()->all(), 'STORE_ID','STORE_NM');
+	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+    $aryStore=ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->all(), 'STORE_ID','STORE_NM');
 	$aryTypeTrans=ArrayHelper::map(MerchantType::find()->all(), 'TYPE_PAY_ID','TYPE_PAY_NM');
 	
 	$aryFieldDTransHeader= [		  

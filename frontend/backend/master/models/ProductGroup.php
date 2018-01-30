@@ -3,6 +3,7 @@
 namespace frontend\backend\master\models;
 
 use Yii;
+use frontend\backend\master\models\Store;
 
 /**
  * This is the model class for table "product_group".
@@ -59,7 +60,7 @@ class ProductGroup extends \yii\db\ActiveRecord
             'ACCESS_GROUP' => 'Access  Group',
             'STORE_ID' => 'Store  ID',
             'GROUP_ID' => 'Group  ID',
-            'GROUP_NM' => 'Group  Nm',
+            'GROUP_NM' => 'Nama Group',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
@@ -69,5 +70,13 @@ class ProductGroup extends \yii\db\ActiveRecord
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];
+    }
+    public function getStore()
+    {
+        if ($this->STORE_ID){
+            return $this->hasOne(Store::className(),['STORE_ID'=>'STORE_ID']);
+        }else{
+            return '';
+        }
     }
 }

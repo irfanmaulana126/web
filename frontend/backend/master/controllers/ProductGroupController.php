@@ -84,7 +84,7 @@ class ProductGroupController extends Controller
      */
     public function actionView($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT),
         ]);
     }
@@ -99,10 +99,10 @@ class ProductGroupController extends Controller
         $model = new ProductGroup();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'GROUP_ID' => $model->GROUP_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
+            return $this->redirect(array('/master/data-barang#w6-tab5'));
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -123,10 +123,10 @@ class ProductGroupController extends Controller
         $model = $this->findModel($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'GROUP_ID' => $model->GROUP_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
+            return $this->redirect(array('/master/data-barang#w6-tab5'));
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
@@ -144,11 +144,12 @@ class ProductGroupController extends Controller
      */
     public function actionDelete($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT)
     {
-        $this->findModel($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT)->delete();
+        $model = $this->findModel($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT);
+        $model->STATUS ="3";
+        $model->update();
 
-        return $this->redirect(['index']);
+        return $this->redirect(array('/master/data-barang#w6-tab5'));
     }
-
     /**
      * Finds the ProductGroup model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

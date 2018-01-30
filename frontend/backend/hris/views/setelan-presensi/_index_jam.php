@@ -59,7 +59,7 @@ $this->registerCss("
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'STORE_ID',
+			'attribute'=>'store.STORE_NM',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -69,15 +69,45 @@ $this->registerCss("
 			'group'=>true,
 			'groupedRow'=>true,
 			'noWrap'=>false,
-			'value' => function ($model, $key, $index) { 
-				return Html::button($model->STORE_ID, ['value'=>Url::toRoute(['/hris/setelan-presensi/shift','STORE_ID'=>$model->STORE_ID,'ACCESS_GROUP'=>$model->ACCESS_GROUP]),'id' => 'presensi-button-jam']);
-			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],		
-		//SATUAN
+		//SATUAN//DEFAULT_HARGA
+		[
+			'class' => 'kartik\grid\EditableColumn',
+			'attribute'=>'STATUS',
+			//'label'=>'Cutomer',
+			'editableOptions'=> [
+					'header'=>'STATUS PEMBAYARAN', 
+					'asPopover' => true,
+					'size'=>'md',
+					'inputType' => \kartik\editable\Editable::INPUT_SWITCH,
+					'options' => [
+						'pluginOptions' => [
+							'items'=>[
+								'value'=>empty($model->STATUS) ? '0' : '1',
+							]
+						]
+					]
+			],
+			'value'=>function($model) {				
+				$retVal = ($model->STATUS==1) ? 'AKTIF' : 'TIDAK AKTIF' ;
+				return	$retVal;			
+			},
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>'raw',
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+        ],	
 		[
 			'attribute'=>'SHIFT_NM',
 			//'label'=>'Cutomer',
@@ -286,8 +316,9 @@ $this->registerCss("
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
 			
         ],	
+		
 	];
-	$gvAttProdakItem[]=[			
+	$gvAttProdakItembutton[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
 		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
@@ -307,12 +338,9 @@ $this->registerCss("
 				// return  tombolView($url, $model);
 			},
 			'edit' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				// return  tombolEdit($url, $model);
-				//}					
+								
 			},
 			'hapus' =>function($url, $model,$key){
-				// return  tombolHapus($url, $model);
 			},
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
