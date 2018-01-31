@@ -52,7 +52,7 @@ use yii\base\DynamicModel;
 		$url = Url::toRoute(['/hris/karyawan/export']);
 		$options1 = [
 					'id'=>'stockproduct-export-excel',
-					'data-pjax' => true,
+					'data-pjax' => 0,
 					'class'=>"btn btn-primary btn-xs",
 					'title'=>'Export Excel'
 		];

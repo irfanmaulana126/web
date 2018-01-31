@@ -141,45 +141,11 @@ class DataBarangController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-        $image = new ProductImage();
 
-        if ($model->load(Yii::$app->request->post()) && $image->load(Yii::$app->request->post())) {
-            $data=store::find()->where(['STORE_ID'=>$model['STORE_ID']])->one();
-            $dataunit=ProductUnit::find()->where(['UNIT_ID'=>$model['UNIT_ID']])->one();
-            $model->INDUSTRY_ID=$data->INDUSTRY_ID;
-            $model->INDUSTRY_GRP_ID=$data->INDUSTRY_GRP_ID;
-            $model->INDUSTRY_NM=$data->INDUSTRY_NM;
-            $model->INDUSTRY_GRP_NM=$data->INDUSTRY_GRP_NM;
-            $model->PRODUCT_SIZE_UNIT=$dataunit->UNIT_NM;
+        if ($model->load(Yii::$app->request->post())) {
             $model->CREATE_AT=date('Y-m-d H:i:s');
-            if($model->save(false)) {
-                $transaction = Yii::$app->db->beginTransaction();
-                    $C=$model->getPrimaryKey();
-                    $s=$C['ID'];
-                    $modelCari=Product::find()->where(['ID'=>$s])->one();
-                    // $image->CREATE_AT=date('Y-m-d H:i:s');
-                    // $gambar = UploadedFile::getInstance($image, 'PRODUCT_IMAGE');
-                    // $gambar->saveAs(Yii::getAlias('@frontend/web/img/') . '.' . $gambar->extension);
-                    // $image->PRODUCT_IMAGE = 'gambar.' . $gambar->extension;
-                    // $image->ACCESS_GROUP='123';//$modelCari->ACCESS_GROUP;
-                    // $image->STORE_ID='123';//$modelCari->STORE_ID;
-                    $image->PRODUCT_ID=$modelCari->PRODUCT_ID;
-                    $upload_file = $image->uploadImage();
-                    $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
-                    $image->PRODUCT_IMAGE = 'data:image/*;charset=utf-8;base64,'.$data_base64;
-
-                    // $image->PRODUCT_ID=$model->PRODUCT_ID;
-                    // $image->ACCESS_GROUP=$model->ACCESS_GROUP;
-                    // $C=$model->getPrimaryKey();
-                    // $s=$C['STORE_ID'];
-                    $image->save();
-                    
-                   // print_r($C);die();
-                    // $model->addProductImage($image);
-                    
-                    $transaction->commit();
-                
-            Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
+            if($model->save(false)) {                
+                Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
                 return $this->redirect(['index']);
             }
             else {
@@ -189,7 +155,6 @@ class DataBarangController extends Controller
     //   print_r($store_id);die();
             return $this->renderAjax('_form', [
                 'model' => $model,
-                'image'=>$image,
             ]);
         }
     }
@@ -284,7 +249,30 @@ class DataBarangController extends Controller
             'dataProviderHarga' => $dataProviderHarga,
         ]);
     }
+    /**
+     * Creates a new ProductStock model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionStock($ACCESS_GROUP,$PRODUCT_ID,$STORE_ID)
+    {
+        $model = new ProductStock();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->PRODUCT_ID=$PRODUCT_ID;
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->STORE_ID=$STORE_ID;
+            $model->INPUT_TIME=date('H:i:s');
+            $model->INPUT_DATE=date('Y-m-d');
+           if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', "Penyimpanan Stock Berhasil");
+            return $this->redirect(['index']);
+           }
+        }
 
+        return $this->renderAjax('_form_stock', [
+            'model' => $model,
+        ]);
+    }
     /**
      * Displays a single Item model.
      * @param string $id
@@ -324,14 +312,52 @@ class DataBarangController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        $image = new ProductImage(['PRODUCT_ID'=>$model['PRODUCT_ID']]);
+        $model = $this->findModel($id);        
+        $image = ProductImage::find()->where(['PRODUCT_ID'=>$model['PRODUCT_ID']])->one();
         // print_r($image);die();
+        if(empty($image)){
+            $image = new ProductImage();
+        }
 
         if ($model->load(Yii::$app->request->post()) && $image->load(Yii::$app->request->post())) { 
-            // print(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'));die();           
-            if($model->save(false)) {
+            // print(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'));die();      
                 if (!empty(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'))) {
+                    $data=store::find()->where(['STORE_ID'=>$model['STORE_ID']])->one();
+                    $dataunit=ProductUnit::find()->where(['UNIT_ID'=>$model['UNIT_ID']])->one();
+                    $model->INDUSTRY_ID=$data->INDUSTRY_ID;
+                    $model->INDUSTRY_GRP_ID=$data->INDUSTRY_GRP_ID;
+                    $model->INDUSTRY_NM=$data->INDUSTRY_NM;
+                    $model->INDUSTRY_GRP_NM=$data->INDUSTRY_GRP_NM;
+                    $model->PRODUCT_SIZE_UNIT=$dataunit->UNIT_NM;
+                    $model->CREATE_AT=date('Y-m-d H:i:s');
+                    if($model->save(false)) {
+                        $transaction = Yii::$app->db->beginTransaction();
+                            $C=$model->getPrimaryKey();
+                            $s=$C['ID'];
+                            $modelCari=Product::find()->where(['ID'=>$s])->one();
+                            // $image->CREATE_AT=date('Y-m-d H:i:s');
+                            // $gambar = UploadedFile::getInstance($image, 'PRODUCT_IMAGE');
+                            // $gambar->saveAs(Yii::getAlias('@frontend/web/img/') . '.' . $gambar->extension);
+                            // $image->PRODUCT_IMAGE = 'gambar.' . $gambar->extension;
+                            // $image->ACCESS_GROUP='123';//$modelCari->ACCESS_GROUP;
+                            // $image->STORE_ID='123';//$modelCari->STORE_ID;
+                            $image->PRODUCT_ID=$modelCari->PRODUCT_ID;
+                            $upload_file = $image->uploadImage();
+                            $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                            $image->PRODUCT_IMAGE = 'data:image/*;charset=utf-8;base64,'.$data_base64;
+        
+                            // $image->PRODUCT_ID=$model->PRODUCT_ID;
+                            // $image->ACCESS_GROUP=$model->ACCESS_GROUP;
+                            // $C=$model->getPrimaryKey();
+                            // $s=$C['STORE_ID'];
+                            $image->save();
+                            
+                           // print_r($C);die();
+                            // $model->addProductImage($image);
+                            
+                            $transaction->commit();
+
+
                     $transaction = Yii::$app->db->beginTransaction();
                     $image->PRODUCT_ID=$model['PRODUCT_ID'];
                     $upload_file = $image->uploadImage();

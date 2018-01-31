@@ -46,7 +46,7 @@ use yii\base\DynamicModel;
 		$options1 = [
 					'value'=>$url,
 					'id'=>'stockproduct-export-excel',
-					'data-pjax' => true,
+					'data-pjax' => 0,
 					'class'=>"btn btn-primary btn-xs",
 					'title'=>'Export Excel'
 		];

@@ -53,7 +53,7 @@ class ProductStock extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['PRODUCT_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
+            [['PRODUCT_ID', 'YEAR_AT', 'MONTH_AT','INPUT_STOCK'], 'required'],
             [['LAST_STOCK', 'INPUT_STOCK', 'CURRENT_STOCK', 'SISA_STOCK'], 'number'],
             [['INPUT_DATE', 'INPUT_TIME', 'CURRENT_DATE', 'CURRENT_TIME', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],

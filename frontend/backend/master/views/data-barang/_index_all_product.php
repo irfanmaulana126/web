@@ -157,7 +157,7 @@ $this->registerCss("
 	$gvAttProdakItem[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
+		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}{stock}',
 		'header'=>'ACTION',
 		'dropdown' => true,
 		'dropdownOptions'=>[
@@ -189,6 +189,9 @@ $this->registerCss("
 			},
 			'harga' =>function($url, $model,$key){
 				return  tombolHarga($url, $model);
+			},
+			'stock' =>function($url, $model,$key){
+				return  tombolStock($url, $model);
 			}
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),

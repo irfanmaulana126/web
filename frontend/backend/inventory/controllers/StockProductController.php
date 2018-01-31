@@ -193,6 +193,8 @@ class StockProductController extends Controller
         $excel_ceilsProdukStok = $excel_dataProdukStok['excel_ceils'];
 
 		
+		// print_r($excel_ceilsProdukStok);
+		// die();
 		//DATA IMPORT
 		$excel_content = [
 			[
@@ -202,41 +204,43 @@ class StockProductController extends Controller
 					$aryFieldColomn
 				],
 			    'ceils' => $excel_ceilsProdukStok,
-				//'freezePane' => 'A3',
+				'freezePane' => 'A3',
 				'columnGroup'=>false,
 				'autoSize'=>false,
-                'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
-                'headerStyle'=>[	
-					$setHeaderMerge,
-					[
-						'NAMA_TOKO' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
-						'PRODUK' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
-						'LALU' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'MASUK' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'TERJUAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'SISA' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Masuk' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Keluar' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Sisa' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Closing' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Actual' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-					]						
-				],
-				'contentStyle'=>[
-					[						
-						'NAMA_TOKO' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
-						'PRODUK'=>['font-size'=>'8','valign'=>'center','align'=>'left'],
-						'LALU' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'MASUK' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'TERJUAL' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'SISA' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Masuk' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Keluar' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Sisa' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Closing' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Actual' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-					]
-				],
+				'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
+				// Tidak terpakai karena sudah terdifinisi dari awal
+                // 'headerStyle'=>[	
+				// 	$setHeaderMerge,
+				// 	[
+				// 		'NAMA_TOKO' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+				// 		'PRODUK' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
+				// 		'LALU' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+				// 		'MASUK' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+				// 		'TERJUAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+				// 		'SISA' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+				// 		'Masuk' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+				// 		'Keluar' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+				// 		'Sisa' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+				// 		'Closing' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+				// 		'Actual' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+				// 	]						
+				// ],
+				// 'contentStyle'=>[
+				// 	$setHeaderMerge,
+				// 	[						
+				// 		'NAMA_TOKO' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+				// 		'PRODUK'=>['font-size'=>'8','valign'=>'center','align'=>'left'],
+				// 		'LALU' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+				// 		'MASUK' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+				// 		'TERJUAL' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+				// 		'SISA' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+				// 		'Masuk' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+				// 		'Keluar' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+				// 		'Sisa' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+				// 		'Closing' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+				// 		'Actual' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+				// 	]
+				// ],
                'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
                'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
 			],
@@ -244,7 +248,7 @@ class StockProductController extends Controller
 		// print_r($excel_content);
 		// die();
 		$excel_file = "ProdukStock";
-		$this->export4excel($excel_content, $excel_file,1);
+		$this->export4excel($excel_content, $excel_file,0);
 		}else{
 			return $this->renderAjax('form_cari_export',[
 				'modelPeriode' => $modelPeriode

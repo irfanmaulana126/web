@@ -64,7 +64,7 @@ class StoreController extends Controller
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
         // print_r($user);die();
-        $model= Store::find()->where(['and','ACCESS_GROUP='.$user.'','STATUS IN ("0","1","2","4")'])->all();
+        $model= Store::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>['0','1','2','4']])->all();
 		$searchModel = new StoreSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		// print_r($user);die();
