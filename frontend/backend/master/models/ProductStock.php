@@ -88,7 +88,7 @@ class ProductStock extends \yii\db\ActiveRecord
             'UPDATE_BY' => 'Update  By',
             'UPDATE_AT' => 'Update  At',
             'STATUS' => 'Status',
-            'DCRP_DETIL' => 'Dcrp  Detil',
+            'DCRP_DETIL' => 'Detail',
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];

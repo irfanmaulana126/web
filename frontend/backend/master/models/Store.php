@@ -7,7 +7,8 @@ use Yii;
 /**
  * This is the model class for table "store".
  *
- * @property string $ID RECEVED & RELEASE: ID UNIX, POSTING URL DAN AJAX
+ * @property string $ID RECEVED & RELEASE:
+ ID UNIX, POSTING URL DAN AJAX
  * @property string $ACCESS_GROUP
  * @property string $STORE_ID
  * @property string $STORE_NM
@@ -15,7 +16,15 @@ use Yii;
  * @property string $UUID
  * @property resource $PLAYER_ID
  * @property string $DATE_START TANGGAL PEMBAYARAN
- * @property string $DATE_END TANGGAL AKHIR PEMBAYARAN. FORMULA  1. Jumlah Pembayaran  2. lama waktu aktif.  3. 8 Hari sebelum berakhir masa tengang.      a. create invoice.      b. show list masa tengang.      c. send invoice email.      d. prosess pembayaran
+ * @property string $DATE_END TANGGAL AKHIR PEMBAYARAN.
+ FORMULA
+  1. Jumlah Pembayaran
+  2. lama waktu aktif.
+  3. 8 Hari sebelum berakhir masa tengang.
+      a. create invoice.
+      b. show list masa tengang.
+      c. send invoice email.
+      d. prosess pembayaran
  * @property string $PROVINCE_ID
  * @property string $PROVINCE_NM
  * @property string $CITY_ID
@@ -35,7 +44,10 @@ use Yii;
  * @property string $CREATE_AT Tanggal dibuat
  * @property string $UPDATE_BY user Ubah
  * @property string $UPDATE_AT Tanggal diubah
- * @property int $STATUS 0=TRIAL (30 hari) ;1=Active; 2=Deactive (BALUM BAYAR) 3=Delete
+ * @property int $STATUS 0=TRIAL (30 hari)
+ ;1=Active;
+ 2=Deactive (BALUM BAYAR)
+ 3=Delete
  * @property string $DCRP_DETIL
  * @property int $YEAR_AT partisi unix
  * @property int $MONTH_AT partisi unix
@@ -77,34 +89,34 @@ class Store extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'ACCESS_GROUP' => 'Access  Group',
-            'STORE_ID' => 'Store  ID',
-            'STORE_NM' => 'Store  Nm',
-            'ACCESS_ID' => 'Access  ID',
+            'STORE_ID' => 'Store ID',
+            'STORE_NM' => 'Nama Store',
+            'ACCESS_ID' => 'Access ID',
             'UUID' => 'Uuid',
             'PLAYER_ID' => 'Player  ID',
             'DATE_START' => 'Date  Start',
             'DATE_END' => 'Date  End',
-            'PROVINCE_ID' => 'Province  ID',
-            'PROVINCE_NM' => 'Province  Nm',
-            'CITY_ID' => 'City  ID',
-            'CITY_NAME' => 'City  Name',
+            'PROVINCE_ID' => 'Provinsi',
+            'PROVINCE_NM' => 'Provinsi',
+            'CITY_ID' => 'City',
+            'CITY_NAME' => 'Kota',
             'LATITUDE' => 'Latitude',
             'LONGITUDE' => 'Longitude',
             'ALAMAT' => 'Alamat',
-            'PIC' => 'Pic',
-            'TLP' => 'Tlp',
+            'PIC' => 'PIC',
+            'TLP' => 'TLP',
             'FAX' => 'Fax',
             'PPN' => 'Ppn',
             'INDUSTRY_ID' => 'Industry  ID',
-            'INDUSTRY_NM' => 'Industry  Nm',
+            'INDUSTRY_NM' => 'Industri',
             'INDUSTRY_GRP_ID' => 'Industry  Grp  ID',
-            'INDUSTRY_GRP_NM' => 'Industry  Grp  Nm',
+            'INDUSTRY_GRP_NM' => 'Industri Group',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
             'UPDATE_AT' => 'Update  At',
             'STATUS' => 'Status',
-            'DCRP_DETIL' => 'Dcrp  Detil',
+            'DCRP_DETIL' => 'Deskripsi',
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];

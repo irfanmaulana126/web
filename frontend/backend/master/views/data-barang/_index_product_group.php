@@ -57,7 +57,7 @@ $this->registerCss("
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'STORE_ID',
+			'attribute'=>'store.STORE_NM',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -69,29 +69,15 @@ $this->registerCss("
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
-		],		
-		//ITEM NAME
-		[
-			'attribute'=>'GROUP_ID',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'format'=>'raw',
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
-			'filterType'=>GridView::FILTER_SELECT2,
-			'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
-			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
-			'filterOptions'=>[],
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),			
-		],		
+			'contentOptions'=>[
+				'style'=>[
+					'text-align'=>'left',
+					'color'=>'red',
+					'font-family'=>'tahoma, arial, sans-serif',						
+					'font-weight'=>'bold',
+				],
+			]
+		],
 		//SATUAN
 		[
 			'attribute'=>'GROUP_NM',
@@ -108,6 +94,29 @@ $this->registerCss("
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],	
+		//ITEM NAME
+		[
+			'attribute'=>'NOTE',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'format'=>'raw',
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'value'=>function($model){
+				if(!empty($model['NOTE'])){
+					return $model['NOTE'];
+				}else{
+					return '-';
+				};
+				//return sttMsgImport($model->STATUS);				 
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),			
+		],		
 	];
 	
 	$gvAttProdakItem[]=[			
@@ -127,15 +136,15 @@ $this->registerCss("
 		],
 		'buttons' => [
 			'view' =>function ($url, $model){
-				return  tombolView($url, $model);
+				return  tombolViewgroup($url, $model);
 			},
 			'edit' =>function($url, $model,$key){
 				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				return  tombolEdit($url, $model);
+				return  tombolEditgroup($url, $model);
 				//}					
 			},
 			'hapus' =>function($url, $model,$key){
-				return  tombolHapus($url, $model);
+				return  tombolHapusgroup($url, $model);
 			}
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
@@ -163,11 +172,12 @@ $this->registerCss("
 		'panel'=>[''],
 		'toolbar' => false,
 		'panel' => [
-			// 'heading'=>false,
-			'heading'=>'<div style="float:right"> ' .tombolCreate().'</div> &nbsp'.$pageNm,
+			'heading'=>$pageNm,
 			'type'=>'default',
 			'before'=>false,
 			'showFooter'=>false,
+			'after'=>false,
+			'before'=>'<div class="pull-right">'.tombolCreategroupproduct().'</div>',
 		],
 		// 'floatOverflowContainer'=>true,
 		// 'floatHeader'=>true,

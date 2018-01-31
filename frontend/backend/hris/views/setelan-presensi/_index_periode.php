@@ -58,7 +58,7 @@ $this->registerCss("
 		],
 		//ITEM_ID
 		[
-			'attribute'=>'STORE_ID',
+			'attribute'=>'store.STORE_NM',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),

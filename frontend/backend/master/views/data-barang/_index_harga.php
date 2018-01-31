@@ -85,13 +85,19 @@ $this->registerCss("
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
+			'contentOptions'=>[
+				'style'=>[
+					'text-align'=>'left',
+					'color'=>'red',
+					'font-family'=>'tahoma, arial, sans-serif',						
+					'font-weight'=>'bold',
+				],
+			]
 		],		
 		//ITEM NAME
 		[
 			'attribute'=>'PRODUCT_NM',
-			//'label'=>'Cutomer',
+			'label'=>'Nama Produk',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
 			'hAlign'=>'right',

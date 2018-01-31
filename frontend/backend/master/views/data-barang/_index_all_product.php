@@ -69,8 +69,14 @@ $this->registerCss("
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
+			'contentOptions'=>[
+				'style'=>[
+					'text-align'=>'left',
+					'color'=>'red',
+					'font-family'=>'tahoma, arial, sans-serif',						
+					'font-weight'=>'bold',
+				],
+			]
 		],		
 		//ITEM NAME
 		[
@@ -211,10 +217,13 @@ $this->registerCss("
 		'toolbar' => false,
 		'panel' => [
 			// 'heading'=>false,
-			'heading'=>'<div style="float:right"> ' .tombolCreate().'</div> &nbsp'.$pageNm,
+			'heading'=>$pageNm,
 			'type'=>'default',
 			'before'=>false,
 			'showFooter'=>false,
+			'after'=>false,
+			'before'=>'<div class="pull-right">'.tombolCreate().'</div>',
+			// 'before'=> tombolReqStore(),
 		],
 		// 'floatOverflowContainer'=>true,
 		// 'floatHeader'=>true,

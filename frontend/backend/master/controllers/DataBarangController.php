@@ -7,9 +7,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
-use common\models\Store;
 use yii\web\UploadedFile;
+use frontend\backend\master\models\Store;
 use frontend\backend\master\models\ProductGroup;
+use frontend\backend\master\models\ProductUnit;
 use frontend\backend\master\models\ProductGroupSearch;
 use frontend\backend\master\models\Product;
 use frontend\backend\master\models\ProductSearch;
@@ -23,6 +24,8 @@ use frontend\backend\master\models\ProductHarga;
 use frontend\backend\master\models\ProductHargaSearch;
 use frontend\backend\master\models\ProductStock;
 use frontend\backend\master\models\ProductStockSearch;
+use frontend\backend\master\models\Industry;
+use frontend\backend\master\models\IndustryGroup;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -141,6 +144,13 @@ class DataBarangController extends Controller
         $image = new ProductImage();
 
         if ($model->load(Yii::$app->request->post()) && $image->load(Yii::$app->request->post())) {
+            $data=store::find()->where(['STORE_ID'=>$model['STORE_ID']])->one();
+            $dataunit=ProductUnit::find()->where(['UNIT_ID'=>$model['UNIT_ID']])->one();
+            $model->INDUSTRY_ID=$data->INDUSTRY_ID;
+            $model->INDUSTRY_GRP_ID=$data->INDUSTRY_GRP_ID;
+            $model->INDUSTRY_NM=$data->INDUSTRY_NM;
+            $model->INDUSTRY_GRP_NM=$data->INDUSTRY_GRP_NM;
+            $model->PRODUCT_SIZE_UNIT=$dataunit->UNIT_NM;
             $model->CREATE_AT=date('Y-m-d H:i:s');
             if($model->save(false)) {
                 $transaction = Yii::$app->db->beginTransaction();
@@ -315,17 +325,39 @@ class DataBarangController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $image = new ProductImage(['PRODUCT_ID'=>$model['PRODUCT_ID']]);
+        // print_r($image);die();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {            
+        if ($model->load(Yii::$app->request->post()) && $image->load(Yii::$app->request->post())) { 
+            // print(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'));die();           
+            if($model->save(false)) {
+                if (!empty(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'))) {
+                    $transaction = Yii::$app->db->beginTransaction();
+                    $image->PRODUCT_ID=$model['PRODUCT_ID'];
+                    $upload_file = $image->uploadImage();
+                    $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                    $image->PRODUCT_IMAGE = 'data:image/*;charset=utf-8;base64,'.$data_base64;
+                    // print_r($image->PRODUCT_ID);die();
+                    Yii::$app->db->createCommand("
+                    UPDATE product_image SET PRODUCT_IMAGE='".$image->PRODUCT_IMAGE."' WHERE PRODUCT_ID='".$image->PRODUCT_ID."'")->execute();
+                    // $image->update();
+                    
+                    $transaction->commit();
+                }
+                               
             Yii::$app->session->setFlash('success', "Perubahan Data Berhasil");
             return $this->redirect(['index']);
+            }
+            else {
+                $transaction->rollBack();
+            }
         } else {
             return $this->renderAjax('update', [
-                'model' => $model,
+                'model' => $model,                
+                'image'=>$image,
             ]);
         }
     }
-    
     public function saveimage($base64)
     {
     $base64 = str_replace('data:image/jpg;base64,', '', $base64);
@@ -334,5 +366,29 @@ class DataBarangController extends Controller
     return $base64;
     }
 
+    /**
+     * Depdrop Sub unit - depedence Province
+     * @author Piter
+     * @since 1.1.0
+     * @return mixed
+     */
+    public function actionUnit() {
+        $out = [];
+            if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+                if ($parents != null) {
+                    $id = $parents[0];
+                    $model = ProductUnit::find()->asArray()->where(['UNIT_ID_GRP'=>$id])->all();														
+                                                            
+                    foreach ($model as $key => $value) {
+                    $out[] = ['id'=>$value['UNIT_ID'],'name'=> $value['UNIT_NM']];
+                    } 
+                    echo json_encode(['output'=>$out, 'selected'=>'']);
+                    return;
+            }
+        }
+        echo Json::encode(['output'=>'', 'selected'=>'']);
+    }
+    
 
 }

@@ -14,6 +14,7 @@ use yii\web\View;
 // print_r($dataProvider->getModels()[0]['SISA_2017-11-03']);
 // die();
 
+$this->title='Stok Opname';
 	$this->registerCss("
 		#prodak-stok-opname .kv-grid-container{
 			height:500px
@@ -59,17 +60,17 @@ use yii\web\View;
 	];
 	
 	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','SIZE' => '10px','WIDTH'=>'50px','label'=>'TOKO1','align'=>'left','group'=>true,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '9px','WIDTH'=>'50px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'PRODUK','SIZE' => '9px','WIDTH'=>'50px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false]];
+	// $aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '9px','WIDTH'=>'50px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
+	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUK','SIZE' => '9px','WIDTH'=>'50px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false]];
 	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>3,'class'=>'text-center','style'=>'width:14px;background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
-	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'TTL_LALU','SIZE' => '9px','WIDTH'=>'50px','label'=>'LALU','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_MASUK','SIZE' => '9px','WIDTH'=>'50px','label'=>'MASUK','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>5, 'ATTR' =>['FIELD'=>'TTL_JUAL','SIZE' => '9px','WIDTH'=>'50px','label'=>'TERJUAL','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>6, 'ATTR' =>['FIELD'=>'TTL_SISA','SIZE' => '9px','WIDTH'=>'50px','label'=>'SISA','align'=>'right','group'=>false,'pageSummary'=>false]];
+	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'TTL_LALU','SIZE' => '9px','WIDTH'=>'50px','label'=>'LALU','align'=>'right','group'=>false,'pageSummary'=>false]];
+	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'TTL_MASUK','SIZE' => '9px','WIDTH'=>'50px','label'=>'MASUK','align'=>'right','group'=>false,'pageSummary'=>false]];
+	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_JUAL','SIZE' => '9px','WIDTH'=>'50px','label'=>'TERJUAL','align'=>'right','group'=>false,'pageSummary'=>false]];
+	$aryFieldColomn[]=['ID' =>5, 'ATTR' =>['FIELD'=>'TTL_SISA','SIZE' => '9px','WIDTH'=>'50px','label'=>'SISA','align'=>'right','group'=>false,'pageSummary'=>false]];
 	$headerContent1[]=['content'=>'TOTAL STOK','options'=>['colspan'=>4,'WIDTH'=>'50px','class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
 	 //OPNAME
-	$aryFieldColomn[]=['ID' =>7, 'ATTR' =>['FIELD'=>'Closing','SIZE' => '9px','label'=>'Closing','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
-	$aryFieldColomn[]=['ID' =>8, 'ATTR' =>['FIELD'=>'Actual','SIZE' => '9px','label'=>'Actual','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
+	$aryFieldColomn[]=['ID' =>6, 'ATTR' =>['FIELD'=>'Closing','SIZE' => '9px','label'=>'Closing','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
+	$aryFieldColomn[]=['ID' =>7, 'ATTR' =>['FIELD'=>'Actual','SIZE' => '9px','label'=>'Actual','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
 	$headerContent1[]=['content'=>'STOK OPNAME','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
 
 	$valFields = ArrayHelper::map($aryFieldColomn, 'ID', 'ATTR');

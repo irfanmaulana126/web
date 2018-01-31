@@ -1,21 +1,36 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use common\models\Store;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\backend\master\models\ProductGroup */
-
-$this->title = 'Update Product Group: {nameAttribute}';
-$this->params['breadcrumbs'][] = ['label' => 'Product Groups', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->ID, 'url' => ['view', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'GROUP_ID' => $model->GROUP_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]];
-$this->params['breadcrumbs'][] = 'Update';
+/* @var $form yii\widgets\ActiveForm */
 ?>
-<div class="product-group-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="product-group-form">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'STORE_ID')->widget(Select2::classname(),[
+        'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>1])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
+        'options' => ['placeholder'=>'Select Category....'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ], 
+    ])?>
+
+    <?= $form->field($model, 'GROUP_NM')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'NOTE')->textarea(['rows' => 6]) ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 
 </div>

@@ -14,6 +14,7 @@ use yii\web\Request;
 use frontend\backend\master\models\Store;
 use frontend\backend\master\models\StoreSearch;
 use common\models\LocateKota;
+use frontend\backend\master\models\Industry;
 
 class StoreController extends Controller
 {
@@ -62,7 +63,8 @@ class StoreController extends Controller
 	public function actionIndex()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $model= new Store(['ACCESS_GROUP'=>$user]);
+        // print_r($user);die();
+        $model= Store::find()->where(['and','ACCESS_GROUP='.$user.'','STATUS IN ("0","1","2","4")'])->all();
 		$searchModel = new StoreSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		// print_r($user);die();
@@ -81,7 +83,7 @@ class StoreController extends Controller
      */
     public function actionView($id)
     {
-    	$model =  $model = $this->findModel($id);
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             //return $this->redirect(['view', 'id' => $model->ID]);
@@ -100,10 +102,9 @@ class StoreController extends Controller
      */
     public function actionReview($id)
     {
-    	$model =  $model = $this->findModel($id);
+    	$model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            //return $this->redirect(['view', 'id' => $model->ID]);
             return $this->redirect(['index']);
         } else {
            return $this->renderAjax('review', [
@@ -111,6 +112,43 @@ class StoreController extends Controller
             ]);
         }
     }
+    
+    public function actionCreate()
+    {
+    	$model = new Store();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->ACCESS_GROUP=Yii::$app->user->identity->ACCESS_GROUP;
+            $model->DATE_START=date('Y-m-d H:i:s');
+            $model->CREATE_AT=date('Y-m-d H:i:s');
+            if ($model->save(false)) {
+                
+                Yii::$app->session->setFlash('success', "Penyimpanan Store Berhasil");
+                return $this->redirect(['index']);   
+            }
+        } else {
+           return $this->renderAjax('form_create', [
+                'model' => $model,
+            ]);
+        }
+    }
+    public function actionUpdate($id)
+    {
+    	$model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save(false)) {
+                
+            Yii::$app->session->setFlash('success', "Perubahan Berhasil");
+                return $this->redirect(['index']);   
+            }
+        } else {
+           return $this->renderAjax('form_update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
 	public function actionDelete($id)
     {
         // $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
@@ -119,6 +157,7 @@ class StoreController extends Controller
         $model->update();
         // Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
 
+        Yii::$app->session->setFlash('success', "Penghapusan Berhasil");
         return $this->redirect(['index']);
     }
 	/**
@@ -127,7 +166,7 @@ class StoreController extends Controller
      * @since 1.1.0
      * @return mixed
      */
-   public function actionKotaSub() {
+   public function actionKota() {
     $out = [];
 		if (isset($_POST['depdrop_parents'])) {
         $parents = $_POST['depdrop_parents'];
@@ -167,7 +206,7 @@ class StoreController extends Controller
                 // print_r($data);die();
             foreach ($modelPeriode['STATUS'] as $value) {
                 $datas = Store::findOne(['STORE_ID' => $value]);
-                $datas->STATUS="2";
+                $datas->STATUS="4";
                 $datas->update();
             }
             
@@ -176,6 +215,8 @@ class StoreController extends Controller
     //         print_r($storeId);die();
             $tes=Yii::$app->response->cookies->remove('STORE_ID');
             // print_r($tes);die();
+            
+            Yii::$app->session->setFlash('success', "Restore Berhasil");
             return $this->redirect('/master/store');
         }else {
             return $this->renderAjax('form_restore',[
@@ -216,25 +257,27 @@ class StoreController extends Controller
 		
 		
 	}
-	public function actionKota() {
-        $paramCari=Yii::$app->getRequest()->getQueryParam('prov');
-        // print_r($paramCari);die();
-        if (!empty($paramCari)) {
-               $data= LocateKota::find()->where(['PROVINCE'=>$paramCari])->count();
-               if ($data>0) {
-                $access= LocateKota::find()->select('PROVINCE_ID,CITY_NAME,CITY_ID,PROVINCE')->where(['PROVINCE'=>$paramCari])->all();
-                
-                echo "<option value=''>Cari Kota</option>";
-                foreach($access as $accesss){
-                    echo "<option value='".$accesss->CITY_NAME."'>".$accesss->CITY_NAME."</option>";
-                }
-                return;
-               } else {
-    
-                echo "<option>Cari Kota</option>";
-                   echo "<option value=''> - </option>";
-                   return;
-               }
+    /**
+     * Depdrop Sub Industry - depedence Province
+     * @author Piter
+     * @since 1.1.0
+     * @return mixed
+     */
+    public function actionIndustry() {
+        $out = [];
+            if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+                if ($parents != null) {
+                    $id = $parents[0];
+                    $model = Industry::find()->asArray()->where(['INDUSTRY_GRP_ID'=>$id])->all();														
+                                                            
+                    foreach ($model as $key => $value) {
+                    $out[] = ['id'=>$value['INDUSTRY_ID'],'name'=> $value['INDUSTRY_NM']];
+                    } 
+                    echo json_encode(['output'=>$out, 'selected'=>'']);
+                    return;
+            }
         }
+        echo Json::encode(['output'=>'', 'selected'=>'']);
     }
 }

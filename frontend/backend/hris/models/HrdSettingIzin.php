@@ -3,6 +3,7 @@
 namespace frontend\backend\hris\models;
 
 use Yii;
+use common\models\Store;
 
 /**
  * This is the model class for table "hrd_setting_izin".
@@ -79,5 +80,13 @@ class HrdSettingIzin extends \yii\db\ActiveRecord
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];
+    }
+    public function getStore()
+    {
+        if ($this->STORE_ID){
+            return $this->hasOne(Store::className(),['STORE_ID'=>'STORE_ID']);
+        }else{
+            return '';
+        }
     }
 }

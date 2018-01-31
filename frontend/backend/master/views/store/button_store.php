@@ -55,23 +55,46 @@ $this->registerCss("
 	/**
 	 * HEADER BUTTON : STORE - REGISTER STORE
 	*/
+	function tombolCreate(){
+		$title= Yii::t('app','');
+		$url = Url::toRoute(['/master/store/create']);
+		$options1 = ['value'=>$url,
+					'id'=>'store-button-create',
+					'data-pjax' => false,
+					'class'=>"btn btn-success btn-xs",
+					'title'=>'Tambah'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}
+
 	function tombolReqStore(){
 		$title = Yii::t('app', 'Ragister New Store');
-		$url =  Url::toRoute(['/payment/status']);
-		$options = ['id'=>'store-id-register',
-				  'data-pjax' => 0,
-				  'class'=>"btn btn-success btn-xs",
-				];
-		$icon = '<span class="fa fa-check-circle fa-lg"></span>';
-		$label = $icon . ' ' . $title;
-
-		return $content = Html::a($label,$url,$options);
+		
+		$url = Url::toRoute(['/master/store/create']);
+		$options1 = ['value'=>$url,
+					'id'=>'store-button-create',
+					'data-pjax' => false,
+					'class'=>"btn btn-success btn-xs",
+					'title'=>'Tambah'
+		];
+		$icon1 = '<span class="fa fa-check-circle fa-lg"></span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;	
 	}
 	
 	//HEADER BUTTON : Link Button Refresh 
 	function tombolRefresh(){
 		$title = Yii::t('app', 'Refresh');
-		$url =  Url::toRoute(['/master/outlet']);
+		$url =  Url::toRoute(['/master/store']);
 		$options = ['id'=>'store-id-refresh',
 				  'data-pjax' => 0,
 				  'class'=>"btn btn-info btn-xs",
@@ -97,24 +120,7 @@ $this->registerCss("
 		return $content = Html::button($label,$options);
 	}
 
-	function tombolCreate(){
-		$title= Yii::t('app','');
-		$url = Url::toRoute(['/master/store/create']);
-		$options1 = ['value'=>$url,
-					'id'=>'store-button-create',
-					'data-pjax' => false,
-					'class'=>"btn btn-success btn-xs",
-					'title'=>'Tambah'
-		];
-		$icon1 = '<span class="fa-stack fa-sm text-left">
-				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
-				  <b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
-				</span>
-		';
-		$label1 = $icon1.' '.$title ;
-		$content = Html::button($label1,$options1);
-		return $content;		
-	}
+	
 	/**
 	 * HEADER BUTTON : EXPAND DETAIL
 	*/
@@ -155,21 +161,18 @@ $this->registerCss("
 	/*
 	 *  ROWS BUTTON : Store - VIEW.
 	*/
-	function tombolView($url, $model){
-		// if(getPermission()){
-			//Jika BTN_CREATE Show maka BTN_CVIEW Show.
-			// if(getPermission()->BTN_VIEW==1 OR getPermission()->BTN_CREATE==1){
-				$title1 = Yii::t('app',' View');
+	function tombolDelete($url, $model){
+				$title1 = Yii::t('app',' Hapus');
 				$options1 = [
-					'value'=>url::to(['/master/outlet/view','id'=>$model->ID]),
-					'id'=>'store-button-view',
-					'class'=>"btn btn-default btn-xs",    
+					'href'=>url::to(['/master/store/delete','id'=>$model['ID']]),
+					'class'=>"btn btn-default btn-xs",
+					'data'=>['confirm'=>'Apakah kamu yakin ingin mengapus data ini','method'=>'post',],    
 					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
 				];
 				$icon1 = '
 					<span class="fa-stack fa-xs">																	
 						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
-						<i class="fa fa-eye fa-stack-1x" style="color:black"></i>
+						<i class="fa fa-trash fa-stack-1x" style="color:black"></i>
 					</span>
 				';      
 				$label1 = $icon1 . '  ' . $title1;
@@ -178,7 +181,6 @@ $this->registerCss("
 			// }
 		// }
 	}
-	
 	/*
 	 *  ACTION BUTTON : PRODUCT LIST.
 	*/
@@ -240,7 +242,7 @@ $this->registerCss("
 	*/
 	function tombolPayment($model){
 		$title = Yii::t('app', 'Payment');
-		$url =  Url::toRoute(['/payment/status','outlet_code'=>$model->OUTLET_CODE]);
+		$url =  Url::toRoute(['/payment/status','STORE_ID'=>$model->STORE_ID]);
 		$options = ['id'=>'store-id-payment',
 				  'data-pjax' => 0,
 				  'class'=>"btn btn-default btn-xs",    
@@ -255,6 +257,50 @@ $this->registerCss("
 		$label = $icon . ' ' . $title;
 		$content = Html::a($label,$url,$options);
 		return  $content ;
+	}
+	
+	/**
+	 * allow
+	*/
+	function tombolAllow($model){
+		$title = Yii::t('app', 'Allow');
+		$url =  Url::toRoute(['/payment/status','STORE_ID'=>$model->STORE_ID]);
+		$options = ['id'=>'store-id-payment',
+				  'data-pjax' => 0,
+				  'class'=>"btn btn-default btn-xs",    
+				  'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none','color'=>'black'],
+				];
+		$icon = '
+					<span class="fa-stack fa-xs">																	
+						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-money fa-stack-1x" style="color:black"></i>
+					</span>
+				';   
+		$label = $icon . ' ' . $title;
+		$content = Html::a($label,$url,$options);
+		return  $content ;
+	}
+	
+	/*
+	 * BUTTON EDIT
+	*/
+	function tombolUpdate($url, $model){
+		$title1 = Yii::t('app',' Edit');
+		$options1 = [
+			'value'=>url::to(['/master/store/update','id'=>$model['ID']]),
+			'id'=>'databarang-button-row-edit',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+				<i class="fa fa-edit fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
 	}
 		
 	/*
@@ -284,66 +330,152 @@ $this->registerCss("
 			return $content;
 		//}
 	}
-	
-	
-	/**
-	 * ===============================
-	 * Modal store
-	 * Author	: ptr.nov2gmail.com
-	 * Update	: 21/01/2017
-	 * Version	: 2.1
-	 * ==============================
-	*/
-	$modalHeaderColor='#fbfbfb';//' rgba(74, 206, 231, 1)';
-	
-	/*
-	 * store - VIEW.
-	*/
-	Modal::begin([
-		'id' => 'store-modal-view',
-		'header' => '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-				<i class="fa fa-eye fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> VIEW STORE</b>
-		',	
-		'size' => 'modal-dm',
-		//'options' => ['class'=>'slide'],
-		'headerOptions'=>[
-			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
-			//'toggleButton' => ['label' => 'click me'],
-		],
-		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
-	]);
-	echo "<div id='store-modal-content-view'></div>";
-	Modal::end();
-	
-	/*
-	 * store - REVIEW.
-	*/
-	Modal::begin([
-		'id' => 'store-modal-review',
 		
-		'header' => '
+	/*
+	 * BUTTON CREATE PRODUK
+	*/
+	function tombolCreateProduk(){
+		$title= Yii::t('app','');
+		$url = Url::toRoute(['/master/data-barang/create']);
+		$options1 = ['value'=>$url,
+					'id'=>'databarang-button',
+					'data-pjax' => false,
+					'class'=>"btn btn-success btn-xs",
+					'title'=>'Tambah'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}
+		
+	
+	/*
+	 *  BUTTON VIEW
+	*/
+	function tombolViewProduk($url, $model){
+		$title1 = Yii::t('app',' View');
+		$options1 = [
+			'value'=>url::to(['/master/data-barang/view','id'=>$model['ID']]),
+			'id'=>'databarang-button-row-view',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
 			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:'.bgIconColor().'"></i>
-				<i class="fa fa-edit fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> REVIEW STORE</b>
-		',		
-		'size' =>'modal-dm',
-		'headerOptions'=>[
-			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,			
-		],
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
-	]);
-	echo "<div id='store-modal-content-review'></div>";
-	Modal::end();
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-eye fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	
+	/*
+	 * BUTTON EDIT
+	*/
+	function tombolEditProduk($url, $model){
+		$title1 = Yii::t('app',' Edit');
+		$options1 = [
+			'value'=>url::to(['/master/data-barang/update','id'=>$model['ID']]),
+			'id'=>'databarang-button-row-edit',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-edit fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+    
+    /*
+	 * BUTTON Hapus
+	*/
+	function tombolHapusProduk($url, $model){
+		$title1 = Yii::t('app',' Hapus');
+		$options1 = [
+			'href'=>url::to(['/master/data-barang/delete','id'=>$model['ID']]),
+			'class'=>"btn btn-default btn-xs",
+			'data'=>['confirm'=>'Apakah kamu yakin ingin mengapus data ini','method'=>'post',],    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-trash fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	
+	function tombolDiscount($url, $model){
+		$title1 = Yii::t('app',' Discount');
+		$options1 = [
+			'value'=>url::to(['/master/data-barang/discount','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'id'=>'databarang-button-row-discount',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-cubes fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	
+	function tombolHarga($url, $model){
+		$title1 = Yii::t('app',' Update Harga');
+		$options1 = [
+			'value'=>url::to(['/master/data-barang/harga','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'id'=>'databarang-button-row-harga',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-money fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+
+	function tombolPromo($url, $model){
+		$title1 = Yii::t('app',' Promo');
+		$options1 = [
+			'value'=>url::to(['/master/data-barang/promo','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'id'=>'databarang-button-row-promo',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-gift fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	
 	
 ?>

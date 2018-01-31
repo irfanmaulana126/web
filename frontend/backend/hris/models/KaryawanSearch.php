@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\backend\hris\models\Karyawan;
+use common\models\Store;
 use yii\data\ArrayDataProvider;
 
 /**
@@ -98,7 +99,7 @@ class KaryawanSearch extends Karyawan
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
-		$query->orderBy(['STORE_ID'=>SORT_ASC]);
+		$query->orderBy(['STORE_ID'=>SORT_ASC,'STATUS'=>SORT_ASC]);
         return $dataProvider;
     }
     public function searchExcelExport($params)
@@ -111,7 +112,14 @@ class KaryawanSearch extends Karyawan
 
         return $dataProvider;
     }
-	
+    public function getStore()
+    {
+        if ($this->STORE_ID){
+            return $this->hasOne(Store::className(),['STORE_ID'=>'STORE_ID']);
+        }else{
+            return '';
+        }
+    }
 	public function searchPrint($params)
     {
 		$sql="

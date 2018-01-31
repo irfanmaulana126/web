@@ -6,7 +6,7 @@ use yii\helpers\Url;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\web\View;
-
+use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\TransPenjualanHeaderSummaryMonthlySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -54,21 +54,34 @@ $this->registerJs("
 	$valHari = ArrayHelper::map($aryHari, 'ID', 'HARI');
 	
 	// Multiple select without model
-	$btn_srchChart1=Select2::widget([
-			'name' => 'state_2',
-			//'value' => '',
-			'size' => Select2::SMALL,
-			'data' => $valHari,
-			'hideSearch' => false,
-			'theme' => Select2::THEME_KRAJEE,//THEME_DEFAULT,//THEME_CLASSIC,//THEME_BOOTSTRAP,//THEME_KRAJEE,
-			'pluginOptions' => [
-				'allowClear' => true
-			],
-			'options' => [
-				'id'=>'tahun',
-				'multiple' => false, 'placeholder'=>'pilih tahun...'
-			]
-		]);
+	// $btn_srchChart1=Select2::widget([
+	// 		'name' => 'state_2',
+	// 		//'value' => '',
+	// 		'size' => Select2::SMALL,
+	// 		'data' => $valHari,
+	// 		'hideSearch' => false,
+	// 		'theme' => Select2::THEME_KRAJEE,//THEME_DEFAULT,//THEME_CLASSIC,//THEME_BOOTSTRAP,//THEME_KRAJEE,
+	// 		'pluginOptions' => [
+	// 			'allowClear' => true
+	// 		],
+	// 		'options' => [
+	// 			'id'=>'tahun',
+	// 			'multiple' => false, 'placeholder'=>'pilih tahun...'
+	// 		]
+	// 	]);
+	$btn_srchChart1=DatePicker::widget([
+		'name' => 'check_issue_date', 
+		'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
+		'convertFormat' => true,
+		'pluginOptions' => [
+			'autoclose'=>true,
+			'startView'=>'years',
+			'minViewMode'=>'years',
+			'format' => 'yyyy',
+			// 'todayHighlight' => true,
+			 'todayHighlight' => true
+		]
+	]);
 	$btn_srchChart="<div style='padding-bottom:3px;float:right'> Periode Tahun".$btn_srchChart1."</div>";
 	
 	$arusMasuk= GridView::widget([
@@ -561,7 +574,7 @@ $this->registerJs("
 						echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$cari['thn'].'</b>';				
 					?>		
 			</div>
-			<div>
+			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
 				<?=$btn_srchChart?>
 			</div>
 		</div>

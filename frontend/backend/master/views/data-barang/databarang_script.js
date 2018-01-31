@@ -18,6 +18,17 @@ $(document).on('click','#databarang-button', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+/*
+ * BUTTON CREATE GROUP PRODUCT
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#create-group-product-button', function(ehead){ 			  
+	$('#create-group-product-button-modal').modal('show')
+	.find('#create-group-product-button-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
 
 /*
  * BUTTON VIEW KARYAWAN
@@ -39,6 +50,29 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 $(document).on('click','#databarang-button-row-edit', function(ehead){ 			  
 	$('#databarang-button-row-edit-modal').modal('show')
 	.find('#databarang-button-row-edit-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+/*
+ * BUTTON VIEW KARYAWAN
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#group-product-button-row-view', function(ehead){ 			  
+	$('#group-product-button-row-view-modal').modal('show')
+	.find('#group-product-button-row-view-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON EDIT KARYAWAN
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#group-product-button-row-edit', function(ehead){ 			  
+	$('#group-product-button-row-edit-modal').modal('show')
+	.find('#group-product-button-row-edit-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });

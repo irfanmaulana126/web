@@ -62,7 +62,7 @@ $this->registerCss("
 		//ITEM_ID
 		[
 			// 'class' => 'kartik\grid\EditableColumn',
-			'attribute'=>'STORE_ID',
+			'attribute'=>'store.STORE_NM',
 			'filterType'=>true,
 			'format'=>'raw',
 			'hAlign'=>'right',

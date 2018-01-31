@@ -157,7 +157,47 @@ $this->registerCss("
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
 	];
 
-	
+	$attDinamikListProdak[]=[			
+		//ACTION
+		'class' => 'kartik\grid\ActionColumn',
+		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
+		'header'=>'ACTION',
+		'dropdown' => true,
+		'dropdownOptions'=>[
+			'class'=>'pull-right dropdown',
+			'style'=>'width:100%;background-color:#E6E6FA'				
+		],
+		'dropdownButton'=>[
+			'label'=>'ACTION',
+			'class'=>'btn btn-info btn-xs',
+			'style'=>'width:100%'		
+		],
+		'buttons' => [
+			'view' =>function ($url, $model){
+				return  tombolViewProduk($url, $model);
+			},
+			'edit' =>function($url, $model,$key){
+				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+				return  tombolEditProduk($url, $model);
+				//}					
+			},
+			'hapus' =>function($url, $model,$key){
+				return  tombolHapusProduk($url, $model);
+			},
+			'discount' =>function($url, $model,$key){
+				return  tombolDiscount($url, $model);
+			},
+			'promo' =>function($url, $model,$key){
+				return  tombolPromo($url, $model);
+			},
+			'harga' =>function($url, $model,$key){
+				return  tombolHarga($url, $model);
+			}
+		],
+		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
+		'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
+	];
+
 	$gvListProdak= GridView::widget([
 		'id'=>'list-prodak',
 		'dataProvider' => $dataProviderProdak,

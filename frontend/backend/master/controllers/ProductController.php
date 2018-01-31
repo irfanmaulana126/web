@@ -319,24 +319,5 @@ class ProductController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-    }
-    public function actionIndustry() {
-        $out = [];
-        if (isset($_POST['depdrop_parents'])) {
-            $parents = $_POST['depdrop_parents'];
-            if ($parents != null) {
-                $industry_id = $parents[0];
-                $out = Industry::find()->where(['INDUSRTY_ID_GRP'=>$industry_id])->all();
-                // the getSubCatList function will query the database based on the
-                // cat_id and return an array like below:
-                // [
-                //    ['id'=>'<sub-cat-id-1>', 'name'=>'<sub-cat-name1>'],
-                //    ['id'=>'<sub-cat_id_2>', 'name'=>'<sub-cat-name2>']
-                // ]
-                echo Json::encode(['output'=>$out, 'selected'=>$data['selected']]);
-                return;
-            }
-        }
-        echo Json::encode(['output'=>'', 'selected'=>'']);
-    }
+    }    
 }

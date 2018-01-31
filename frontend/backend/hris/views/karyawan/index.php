@@ -96,6 +96,12 @@ echo $this->render('karyawan_column'); //echo difinition
 						  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
 						  <i class="fa fa-check fa-stack-1x" style="color:#0f39ab"></i>
 						</span>','',['title'=>'AKTIF']);
+					}else if ($data->STATUS == 3) {
+					  return Html::a('
+					  <span class="fa-stack fa-xl">
+					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
+					</span>','',['title'=>'KELUAR']);
 					}					
 				}else{						
 					if($data->{$val}){					
