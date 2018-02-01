@@ -79,4 +79,8 @@ class ProductGroup extends \yii\db\ActiveRecord
             return '';
         }
     }
+    public function getSTORE_NM(){
+        $result=$this->store;
+        return $result!=''?$result->STORE_NM:'';
+    }
 }

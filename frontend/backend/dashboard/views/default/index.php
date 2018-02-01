@@ -5,6 +5,8 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 use ptrnov\fusionchart\Chart;
 use ptrnov\fusionchart\ChartAsset;
+use yii\bootstrap\Modal;
+use yii\web\JsExpression;
 ChartAsset::register($this);
 $this->title = 'Dashboard';
 $this->params['breadcrumbs'][] = $this->title;
@@ -38,10 +40,9 @@ $this->params['breadcrumbs'][] = $this->title;
 			// 'encodeLabels'=>false,
 			// 'height'=>'450px',
 			// 'align'=>TabsX::ALIGN_LEFT,						
-		// ]);											
-?>
+		// ]);	
+	?>
 <div id="loaderPtr"></div>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt;">
-		
 			<?=$_indexChart1?>
 </div>

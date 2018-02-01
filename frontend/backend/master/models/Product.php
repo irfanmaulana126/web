@@ -152,9 +152,16 @@ class Product extends \yii\db\ActiveRecord
             return '';
         }
     }
-    public function getProductImage()
+    public function getImage()
     {
-        
         return $this->hasOne(ProductImage::className(),['PRODUCT_ID'=>'PRODUCT_ID']);
+    }
+    public function getGambar(){
+        $result=$this->image;
+        return $result!=''?$result->PRODUCT_IMAGE:'';
+    }
+    public function getSTORE_NM(){
+        $result=$this->store;
+        return $result!=''?$result->STORE_NM:'';
     }
 }

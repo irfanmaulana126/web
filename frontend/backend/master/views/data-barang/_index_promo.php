@@ -70,9 +70,8 @@ $this->registerCss("
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
-		//ITEM_ID
 		[
-			'attribute'=>'store.STORE_NM',
+			'attribute'=>'STORE_NM',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -82,6 +81,13 @@ $this->registerCss("
 			'group'=>true,
 			'groupedRow'=>true,
 			'noWrap'=>false,
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->STORE_NM)) {
+					return '-';
+				} else {
+					return "Nama Toko : <span class='label label-success'>".$model->STORE_NM."</span> ";
+				}
+			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>[
@@ -92,8 +98,7 @@ $this->registerCss("
 					'font-weight'=>'bold',
 				],
 			]
-		],		
-		//ITEM NAME
+		],	
 		[
 			'attribute'=>'PRODUCT_NM',
 			'label'=>'Nama Produk',

@@ -382,7 +382,7 @@ $this->registerCss("
 	function tombolEditProduk($url, $model){
 		$title1 = Yii::t('app',' Edit');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/update','id'=>$model['ID']]),
+			'value'=>url::to(['/master/store/updateproduk','id'=>$model['ID']]),
 			'id'=>'databarang-button-row-edit',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -423,7 +423,7 @@ $this->registerCss("
 	function tombolDiscount($url, $model){
 		$title1 = Yii::t('app',' Discount');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/discount','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'value'=>url::to(['/master/store/discount','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
 			'id'=>'databarang-button-row-discount',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -442,7 +442,7 @@ $this->registerCss("
 	function tombolHarga($url, $model){
 		$title1 = Yii::t('app',' Update Harga');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/harga','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'value'=>url::to(['/master/store/harga','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
 			'id'=>'databarang-button-row-harga',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -461,7 +461,7 @@ $this->registerCss("
 	function tombolPromo($url, $model){
 		$title1 = Yii::t('app',' Promo');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/promo','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'value'=>url::to(['/master/store/promo','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
 			'id'=>'databarang-button-row-promo',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
@@ -470,6 +470,24 @@ $this->registerCss("
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
 				<i class="fa fa-gift fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	function tombolStock($url, $model){
+		$title1 = Yii::t('app',' Stock');
+		$options1 = [
+			'value'=>url::to(['/master/store/stock','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'id'=>'databarang-button-row-stock',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-tags fa-stack-1x" style="color:black"></i>
 			</span>
 		';      
 		$label1 = $icon1 . '  ' . $title1;

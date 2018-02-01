@@ -110,4 +110,8 @@ class ProductStock extends \yii\db\ActiveRecord
         $result=$this->product;
         return $result=$result->PRODUCT_NM?:'';
     }
+    public function getSTORE_NM(){
+        $result=$this->store;
+        return $result!=''?$result->STORE_NM:'';
+    }
 }

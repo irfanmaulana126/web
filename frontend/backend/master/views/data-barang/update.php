@@ -76,7 +76,7 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'PRODUCT_HEADLINE')->textInput() ?>
 
 			<?= $form->field($model, 'STOCK_LEVEL')->textInput(['type'=>'number','min'=>1,'allowEmpty' => true,'integerOnly' => false]) ?>
-		
+			
 			<div class="col-md-6">
 				<?= 
 				'<label class="control-label">Unit Group</label>';
@@ -102,7 +102,8 @@ $data=$image->PRODUCT_IMAGE;
 				]); ?>
 			</div>
 
-						
+			<?= $form->field($model, 'PRODUCT_SIZE')->textInput(['type'=>'number','min'=>1,'allowEmpty' => true,'integerOnly' => false]) ?>
+								
 			<?= 
 			$form->field($image, 'PRODUCT_IMAGE')->widget(FileInput::classname(), [
 				'name'=>'item-input-file',

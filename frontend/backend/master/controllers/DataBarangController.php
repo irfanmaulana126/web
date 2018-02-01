@@ -191,8 +191,13 @@ class DataBarangController extends Controller
             return $this->redirect(['index']);
            }
         } else{
+            $searchModel = new ProductDiscountSearch(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    
             return $this->renderAjax('_form_discount', [
-                'model' => $model,
+                'model' =>  $model,
+                'searchModel'=>$searchModel,
+                'dataProvider' => $dataProvider,
             ]);
         }
     }
@@ -216,9 +221,13 @@ class DataBarangController extends Controller
             return $this->redirect(['index']);
            }
         }
+        $searchModel = new ProductPromoSearch(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->renderAjax('_form_promo', [
-            'model' => $model,
+            'model' =>  $model,
+			'searchModel'=>$searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
     /**
@@ -319,9 +328,9 @@ class DataBarangController extends Controller
             $image = new ProductImage();
         }
 
+        // $transaction = Yii::$app->db->beginTransaction();
         if ($model->load(Yii::$app->request->post()) && $image->load(Yii::$app->request->post())) { 
-            // print(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'));die();      
-                if (!empty(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'))) {
+            // print(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'));die();  
                     $data=store::find()->where(['STORE_ID'=>$model['STORE_ID']])->one();
                     $dataunit=ProductUnit::find()->where(['UNIT_ID'=>$model['UNIT_ID']])->one();
                     $model->INDUSTRY_ID=$data->INDUSTRY_ID;
@@ -330,8 +339,10 @@ class DataBarangController extends Controller
                     $model->INDUSTRY_GRP_NM=$data->INDUSTRY_GRP_NM;
                     $model->PRODUCT_SIZE_UNIT=$dataunit->UNIT_NM;
                     $model->CREATE_AT=date('Y-m-d H:i:s');
-                    if($model->save(false)) {
-                        $transaction = Yii::$app->db->beginTransaction();
+                    // $model->save(false);
+                    if($model->save(false)) {    
+                        if (!empty(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'))) {
+                            $transaction = Yii::$app->db->beginTransaction();
                             $C=$model->getPrimaryKey();
                             $s=$C['ID'];
                             $modelCari=Product::find()->where(['ID'=>$s])->one();
@@ -370,13 +381,14 @@ class DataBarangController extends Controller
                     
                     $transaction->commit();
                 }
-                               
+            // else {
+            //         $transaction->rollBack();
+            //     }
+            
             Yii::$app->session->setFlash('success', "Perubahan Data Berhasil");
             return $this->redirect(['index']);
-            }
-            else {
-                $transaction->rollBack();
-            }
+            }                               
+            
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,                

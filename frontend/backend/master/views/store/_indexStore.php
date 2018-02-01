@@ -60,7 +60,6 @@ echo $this->render('modal_store'); //echo difinition
 	  ['STATUS' => 1, 'STT_NM' => 'Active'],
 	  ['STATUS' => 2, 'STT_NM' => 'Deactive'],
 	  ['STATUS' => 3, 'STT_NM' => 'Deleted'],
-	  ['STATUS' => 4, 'STT_NM' => 'Allow'],
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
@@ -86,15 +85,10 @@ echo $this->render('modal_store'); //echo difinition
 					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
 					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
 					</span>','',['title'=>'Delete']);
-		}elseif($stt==4){
-			return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-check fa-stack-1x" style="color:blue"></i>
-					</span>','',['title'=>'Allow']);
-		}
+				}
 	};	
 		
-	$dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Trial. '.sttMsgDscp(1).'=Active. '.sttMsgDscp(2).'=Deactive. '.sttMsgDscp(3).'=Delete. '.sttMsgDscp(4).'=Allow.';
+	$dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Trial. '.sttMsgDscp(1).'=Active. '.sttMsgDscp(2).'=Deactive. '.sttMsgDscp(3).'=Delete. ';
 	
 	
 	//Result Status value.
@@ -119,11 +113,6 @@ echo $this->render('modal_store'); //echo difinition
 					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
 					  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
 					</span>','',['title'=>'Delete']);
-		}elseif($stt==4){
-			return Html::a('<span class="fa-stack fa-xl">
-					  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
-					  <i class="fa fa-check fa-stack-1x" style="color:blue"></i>
-					</span>','',['title'=>'Allow']);
 		}
 	};	
 	
@@ -415,7 +404,7 @@ echo $this->render('modal_store'); //echo difinition
 	$gvAttributeItem[]=[
 		'class' => 'kartik\grid\ActionColumn',
 		// 'template' => '{product}{view}{review}{payment}',
-		'template' => '{review}{payment}{allow}{edit}{delete}',
+		'template' => '{review}{payment}{edit}{delete}',
 		'header'=>'ACTION',
 		'dropdown' => true,
 		'dropdownOptions'=>[
@@ -438,7 +427,7 @@ echo $this->render('modal_store'); //echo difinition
 				}	
 			},
 			'delete' =>function ($url, $model){
-				if($model->STATUS!=3){
+				if($model->STATUS!=3 && $model->owner=="OWNER"){
 					return  tombolDelete($url, $model);
 				}	
 			},
@@ -448,20 +437,14 @@ echo $this->render('modal_store'); //echo difinition
 				}					
 			},
 			'payment' =>function($url, $model,$key){
-				if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
+				if($model->STATUS!=1 && $model->DATE_END>=date('Y-m-d')){ //Jika sudah close tidak bisa di edit.
 					return  tombolPayment($model);
-				}					
-			},
-			'allow' =>function($url, $model,$key){
-				if($model->STATUS==4){ //Jika sudah close tidak bisa di edit.
-					return  tombolAllow($model);
 				}					
 			}
 		], 
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$headerColor,'#ffffff'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','0',''),
 	]; 
-	
 	$gvStore=GridView::widget([
 		'id'=>'gv-store',
 		'dataProvider' => $dataProvider,

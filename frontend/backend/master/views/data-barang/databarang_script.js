@@ -113,7 +113,7 @@ $(document).on('click','#databarang-button-row-promo', function(ehead){
 	.load($(this).attr('value'));
 });
 /*
- * BUTTON Promo KARYAWAN
+ * BUTTON stock
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 //$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	

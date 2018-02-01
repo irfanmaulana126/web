@@ -75,8 +75,8 @@ class ProductDiscountSearch extends ProductDiscount
         ]);
 
         $query->andFilterWhere(['like', 'product_discount.ACCESS_GROUP', $this->ACCESS_GROUP])
-            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
-            ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])
+            ->andFilterWhere(['like', 'product_discount.STORE_ID', $this->STORE_ID])
+            ->andFilterWhere(['like', 'product_discount.PRODUCT_ID', $this->PRODUCT_ID])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])
