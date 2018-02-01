@@ -15,6 +15,18 @@ use frontend\backend\master\models\Store;
 use frontend\backend\master\models\StoreSearch;
 use common\models\LocateKota;
 use frontend\backend\master\models\Industry;
+use yii\web\UploadedFile;
+use frontend\backend\master\models\Product;
+use frontend\backend\master\models\ProductImage;
+use frontend\backend\master\models\ProductUnit;
+use frontend\backend\master\models\ProductDiscount;
+use frontend\backend\master\models\ProductDiscountSearch;
+use frontend\backend\master\models\ProductPromo;
+use frontend\backend\master\models\ProductPromoSearch;
+use frontend\backend\master\models\ProductHarga;
+use frontend\backend\master\models\ProductHargaSearch;
+use frontend\backend\master\models\ProductStock;
+use frontend\backend\master\models\ProductStockSearch;
 
 class StoreController extends Controller
 {
@@ -64,7 +76,7 @@ class StoreController extends Controller
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
         // print_r($user);die();
-        $model= Store::find()->where(['and','ACCESS_GROUP='.$user.'','STATUS IN ("0","1","2","4")'])->all();
+        $model= Store::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>['0','1','2','4']])->all();
 		$searchModel = new StoreSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		// print_r($user);die();
@@ -206,7 +218,7 @@ class StoreController extends Controller
                 // print_r($data);die();
             foreach ($modelPeriode['STATUS'] as $value) {
                 $datas = Store::findOne(['STORE_ID' => $value]);
-                $datas->STATUS="4";
+                $datas->STATUS="2";
                 $datas->update();
             }
             
@@ -279,5 +291,208 @@ class StoreController extends Controller
             }
         }
         echo Json::encode(['output'=>'', 'selected'=>'']);
+    }
+    /**
+     * Updates an existing Item model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionUpdateproduk($id)
+    {
+        $model = Product::findOne($id);        
+        $image = ProductImage::find()->where(['PRODUCT_ID'=>$model['PRODUCT_ID']])->one();
+        // print_r($image);die();
+        if(empty($image)){
+            $image = new ProductImage();
+        }
+
+        // $transaction = Yii::$app->db->beginTransaction();
+        if ($model->load(Yii::$app->request->post()) && $image->load(Yii::$app->request->post())) { 
+            // print(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'));die();  
+                    $data=store::find()->where(['STORE_ID'=>$model['STORE_ID']])->one();
+                    $dataunit=ProductUnit::find()->where(['UNIT_ID'=>$model['UNIT_ID']])->one();
+                    $model->INDUSTRY_ID=$data->INDUSTRY_ID;
+                    $model->INDUSTRY_GRP_ID=$data->INDUSTRY_GRP_ID;
+                    $model->INDUSTRY_NM=$data->INDUSTRY_NM;
+                    $model->INDUSTRY_GRP_NM=$data->INDUSTRY_GRP_NM;
+                    $model->PRODUCT_SIZE_UNIT=$dataunit->UNIT_NM;
+                    $model->CREATE_AT=date('Y-m-d H:i:s');
+                    // $model->save(false);
+                    if($model->save(false)) {    
+                        if (!empty(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'))) {
+                            $transaction = Yii::$app->db->beginTransaction();
+                            $C=$model->getPrimaryKey();
+                            $s=$C['ID'];
+                            $modelCari=Product::find()->where(['ID'=>$s])->one();
+                            // $image->CREATE_AT=date('Y-m-d H:i:s');
+                            // $gambar = UploadedFile::getInstance($image, 'PRODUCT_IMAGE');
+                            // $gambar->saveAs(Yii::getAlias('@frontend/web/img/') . '.' . $gambar->extension);
+                            // $image->PRODUCT_IMAGE = 'gambar.' . $gambar->extension;
+                            // $image->ACCESS_GROUP='123';//$modelCari->ACCESS_GROUP;
+                            // $image->STORE_ID='123';//$modelCari->STORE_ID;
+                            $image->PRODUCT_ID=$modelCari->PRODUCT_ID;
+                            $upload_file = $image->uploadImage();
+                            $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                            $image->PRODUCT_IMAGE = 'data:image/*;charset=utf-8;base64,'.$data_base64;
+        
+                            // $image->PRODUCT_ID=$model->PRODUCT_ID;
+                            // $image->ACCESS_GROUP=$model->ACCESS_GROUP;
+                            // $C=$model->getPrimaryKey();
+                            // $s=$C['STORE_ID'];
+                            $image->save();
+                            
+                           // print_r($C);die();
+                            // $model->addProductImage($image);
+                            
+                            $transaction->commit();
+
+
+                    $transaction = Yii::$app->db->beginTransaction();
+                    $image->PRODUCT_ID=$model['PRODUCT_ID'];
+                    $upload_file = $image->uploadImage();
+                    $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                    $image->PRODUCT_IMAGE = 'data:image/*;charset=utf-8;base64,'.$data_base64;
+                    // print_r($image->PRODUCT_ID);die();
+                    Yii::$app->db->createCommand("
+                    UPDATE product_image SET PRODUCT_IMAGE='".$image->PRODUCT_IMAGE."' WHERE PRODUCT_ID='".$image->PRODUCT_ID."'")->execute();
+                    // $image->update();
+                    
+                    $transaction->commit();
+                }
+            // else {
+            //         $transaction->rollBack();
+            //     }
+            
+            Yii::$app->session->setFlash('success', "Perubahan Data Berhasil");
+            return $this->redirect(array('/master/store#w17-tab1'));
+            }                               
+            
+        } else {
+            return $this->renderAjax('/data-barang/update', [
+                'model' => $model,                
+                'image'=>$image,
+            ]);
+        }
+    }
+    public function saveimage($base64)
+    {
+    $base64 = str_replace('data:image/jpg;base64,', '', $base64);
+    $base64 = base64_encode($base64);
+    $base64 = str_replace('data:image/jpg;base64,', '+', $base64);
+    return $base64;
+    }
+    
+    /**
+     * Displays a single Item model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionDiscount($ACCESS_GROUP,$PRODUCT_ID,$STORE_ID)
+    {
+        $model = new ProductDiscount();
+        
+        if ($model->load(Yii::$app->request->post())) {
+            $model->PRODUCT_ID=$PRODUCT_ID;
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->STORE_ID=$STORE_ID;
+            $model->START_TIME=date('H:i:s');
+            // print_r($model);die();
+            // $model->save();
+           if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', "Penyimpanan Discount Berhasil");
+            return $this->redirect(array('/master/store#w17-tab1'));
+           }
+        } else{
+            $searchModel = new ProductDiscountSearch(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    
+            return $this->renderAjax('/data-barang/_form_discount', [
+                'model' => $model,
+                'searchModel'=>$searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+    }
+    
+    /**
+     * Displays a single Item model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionPromo($ACCESS_GROUP,$PRODUCT_ID,$STORE_ID)
+    {
+        $model = new ProductPromo();
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->PRODUCT_ID=$PRODUCT_ID;
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->STORE_ID=$STORE_ID;
+            $model->START_TIME=date('H:i:s');
+           if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', "Penyimpanan Promo Berhasil");
+            return $this->redirect(array('/master/store#w17-tab1'));
+           }
+        }
+        $searchModel = new ProductPromoSearch(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->renderAjax('/data-barang/_form_promo', [
+            'model' => $model,
+			'searchModel'=>$searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    /**
+     * Displays a single Item model.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionHarga($ACCESS_GROUP,$PRODUCT_ID,$STORE_ID)
+    {
+        $model = new ProductHarga();
+    
+        if ($model->load(Yii::$app->request->post())) {
+            $model->PRODUCT_ID=$PRODUCT_ID;
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->STORE_ID=$STORE_ID;
+            $model->START_TIME=date('H:i:s');
+           if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
+            return $this->redirect(array('/master/store#w17-tab1'));
+           }
+        }
+        $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID]);
+        $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
+
+        return $this->renderAjax('/data-barang/_form_harga', [
+            'model' =>  $model,
+			'searchModelHarga'=>$searchModelHarga,
+            'dataProviderHarga' => $dataProviderHarga,
+        ]);
+    }
+    /**
+     * Creates a new ProductStock model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionStock($ACCESS_GROUP,$PRODUCT_ID,$STORE_ID)
+    {
+        $model = new ProductStock();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->PRODUCT_ID=$PRODUCT_ID;
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->STORE_ID=$STORE_ID;
+            $model->INPUT_TIME=date('H:i:s');
+            $model->INPUT_DATE=date('Y-m-d');
+           if ($model->save(false)) {
+            Yii::$app->session->setFlash('success', "Penyimpanan Stock Berhasil");
+            return $this->redirect(array('/master/store#w17-tab1'));
+           }
+        }
+
+        return $this->renderAjax('/data-barang/_form_stock', [
+            'model' => $model,
+        ]);
     }
 }

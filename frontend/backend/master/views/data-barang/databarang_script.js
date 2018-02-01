@@ -112,6 +112,17 @@ $(document).on('click','#databarang-button-row-promo', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+/*
+ * BUTTON stock
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-stock', function(ehead){ 			  
+	$('#databarang-button-row-stock-modal').modal('show')
+	.find('#databarang-button-row-stock-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
 
 
 /*

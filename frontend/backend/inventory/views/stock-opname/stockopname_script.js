@@ -53,3 +53,15 @@ $(document).on('click','#stockopname-button-upload', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+
+/*
+ * BUTTON export
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#stockopname-export-excel', function(ehead){ 			  
+	$('#stockopname-export-excel-modal').modal('show')
+	.find('#stockopname-export-excel-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});

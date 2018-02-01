@@ -96,6 +96,11 @@ class ProductDiscount extends \yii\db\ActiveRecord
 
     public function getPRODUCT_NM(){
         $result=$this->product;
-        return $result=$result->PRODUCT_NM?:'';
+        // print_r($result);die();
+        return $result=$result['PRODUCT_NM']?:'';
+    }
+    public function getSTORE_NM(){
+        $result=$this->store;
+        return $result!=''?$result->STORE_NM:'';
     }
 }

@@ -39,7 +39,25 @@ $this->registerCss("
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 ");
-			
+	$colorPluginOptions =  [
+		'showPalette' => true,
+		'showPaletteOnly' => true,
+		'showSelectionPalette' => true,
+		'showAlpha' => false,
+		'allowEmpty' => false,
+		'preferredFormat' => 'name',
+		'palette' => [
+			[
+				"white", "black", "grey", "silver", "gold", "brown", 
+			],
+			[
+				"red", "orange", "yellow", "indigo", "maroon", "pink"
+			],
+			[
+				"blue", "green", "violet", "cyan", "magenta", "purple", 
+			],
+		]
+	];		
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
@@ -67,6 +85,13 @@ $this->registerCss("
 			'group'=>true,
 			'groupedRow'=>true,
 			'noWrap'=>false,
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->STORE_NM)) {
+					return '-';
+				} else {
+					return "Nama Toko : <span class='label label-success'>".$model->STORE_NM."</span> ";
+				}
+			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>[
@@ -100,7 +125,7 @@ $this->registerCss("
 		],		
 		//SATUAN
 		[
-			'attribute'=>'CURRENT_STOCK',
+			'attribute'=>'PRODUCT_WARNA',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -109,29 +134,68 @@ $this->registerCss("
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->PRODUCT_WARNA)) {
+					return '-';
+				} else {
+					return "<span class='badge' style='background-color: {$model->PRODUCT_WARNA}'> </span>  <code>" . $model->PRODUCT_WARNA . '</code>';
+				}
+			},
+			'width' => '8%',
+			'filterType' => GridView::FILTER_COLOR,
+			'filterWidgetOptions' => [
+				'showDefaultPalette' => false,
+				'pluginOptions' => $colorPluginOptions,
+			],
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],
-		//DEFAULT_STOCK
+		//DEFAULT_HARGA,		
 		[
-			'attribute'=>'CURRENT_PRICE',
+			'attribute'=>'INDUSTRY_GRP_NM',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
-			// 'filterType'=>GridView::FILTER_MONEY,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->INDUSTRY_GRP_NM)) {
+					return '-';
+				} else {
+					return $model->INDUSTRY_GRP_NM;
+				}
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+		],	
+		[
+			'attribute'=>'INDUSTRY_NM',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->INDUSTRY_NM)) {
+					return '-';
+				} else {
+					return $model->INDUSTRY_NM;
+				}
+			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
 			
 		],
-		//DEFAULT_HARGA
 		[
 			'attribute'=>'PRODUCT_SIZE_UNIT',
 			//'label'=>'Cutomer',
@@ -147,6 +211,102 @@ $this->registerCss("
 			'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
 			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
 			'filterOptions'=>[],
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->PRODUCT_SIZE_UNIT)) {
+					return '-';
+				} else {
+					return $model->PRODUCT_SIZE_UNIT;
+				}
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+		],
+		[
+			'attribute'=>'PRODUCT_SIZE',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			// 'filterType'=>GridView::FILTER_MONEY,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->PRODUCT_SIZE)) {
+					return 0;
+				} else {
+					return $model->PRODUCT_SIZE;
+				}
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+		],		
+		[
+			'attribute'=>'STOCK_LEVEL',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->STOCK_LEVEL)) {
+					return 0;
+				} else {
+					return $model->STOCK_LEVEL;
+				}
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+		],		
+		[
+			'attribute'=>'CURRENT_STOCK',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->CURRENT_STOCK)) {
+					return 0;
+				} else {
+					return $model->CURRENT_STOCK;
+				}
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+		],		
+		[
+			'attribute'=>'CURRENT_PRICE',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->CURRENT_PRICE)) {
+					return 0;
+				} else {
+					return $model->CURRENT_PRICE;
+				}
+			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
@@ -157,7 +317,7 @@ $this->registerCss("
 	$gvAttProdakItem[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
+		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}{stock}',
 		'header'=>'ACTION',
 		'dropdown' => true,
 		'dropdownOptions'=>[
@@ -189,6 +349,9 @@ $this->registerCss("
 			},
 			'harga' =>function($url, $model,$key){
 				return  tombolHarga($url, $model);
+			},
+			'stock' =>function($url, $model,$key){
+				return  tombolStock($url, $model);
 			}
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),

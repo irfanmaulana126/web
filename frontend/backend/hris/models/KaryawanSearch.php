@@ -104,7 +104,7 @@ class KaryawanSearch extends Karyawan
     }
     public function searchExcelExport($params)
     {
-        $query = "SELECT * FROM karyawan";
+        $query = "SELECT * FROM karyawan WHERE ACCESS_GROUP=".Yii::$app->user->identity->ACCESS_GROUP." AND  STATUS=1";
        $qrySql= Yii::$app->db->createCommand($query)->queryAll();
         $dataProvider = new ArrayDataProvider([
             'allModels' => $qrySql,

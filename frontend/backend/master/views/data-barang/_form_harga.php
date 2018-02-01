@@ -15,7 +15,14 @@ use kartik\field\FieldRange;
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCss("   
 .product-discount-form #gv-all-data-prodak-harga-item .kv-grid-container{
-		height:100px
+		height:100px;
+    }
+.product-discount-form	#gv-all-data-prodak-harga-item .panel-heading {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		color: #444;
+	}
+.product-discount-form #gv-all-data-prodak-harga-item .panel-footer {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 ");
 $bColor='rgb(76, 131, 255)';

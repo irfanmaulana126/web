@@ -103,7 +103,7 @@ $this->registerJS('$("#store-button-restore-modal").on("shown", function () {
             'pluginOptions' => [
                 'allowClear' => true
             ],
-        ]); ?>
+        ])->label('Industri Group'); ?>
                 
     </div>
     
@@ -116,8 +116,8 @@ $this->registerJS('$("#store-button-restore-modal").on("shown", function () {
                 'depends'=>['industri-grp-id'],
                 'placeholder'=>'Select...',
                 'url'=>Url::to(['/master/store/industry'])
-            ]
-        ]); ?>
+            ],
+        ])->label('Industri'); ?>
                 
     </div>
     <div class="col-md-4">

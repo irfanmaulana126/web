@@ -57,7 +57,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['STORE_ID', 'PRODUCT_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
+            [['STORE_ID', 'PRODUCT_ID','STOCK_LEVEL', 'YEAR_AT','PRODUCT_NM', 'MONTH_AT'], 'required'],
             [['PRODUCT_SIZE', 'STOCK_LEVEL', 'CURRENT_STOCK', 'CURRENT_HPP', 'CURRENT_PRICE'], 'number'],
             [['INDUSTRY_ID', 'INDUSTRY_GRP_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['CREATE_AT', 'UPDATE_AT'], 'safe'],
@@ -152,9 +152,16 @@ class Product extends \yii\db\ActiveRecord
             return '';
         }
     }
-    public function getProductImage()
+    public function getImage()
     {
-        
         return $this->hasOne(ProductImage::className(),['PRODUCT_ID'=>'PRODUCT_ID']);
+    }
+    public function getGambar(){
+        $result=$this->image;
+        return $result!=''?$result->PRODUCT_IMAGE:'';
+    }
+    public function getSTORE_NM(){
+        $result=$this->store;
+        return $result!=''?$result->STORE_NM:'';
     }
 }

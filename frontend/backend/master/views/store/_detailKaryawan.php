@@ -41,8 +41,8 @@ use modulprj\absensi\models\AbsenImportPeriode;
 		['ID' =>3, 'ATTR' =>['FIELD'=>'GENDER','SIZE' => '180px','label'=>'Jenis Kelamin','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 		['ID' =>4, 'ATTR' =>['FIELD'=>'HP','SIZE' => '180px','label'=>'Phone','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 		['ID' =>5, 'ATTR' =>['FIELD'=>'EMAIL','SIZE' => '180px','label'=>'e-Mail','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>5, 'ATTR' =>['FIELD'=>'ALAMAT','SIZE' => '180px','label'=>'ALAMAT','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>5, 'ATTR' =>['FIELD'=>'UPAH_HARIAN','SIZE' => '180px','label'=>'UPAH/HARI','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>6, 'ATTR' =>['FIELD'=>'ALAMAT','SIZE' => '180px','label'=>'ALAMAT','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>7, 'ATTR' =>['FIELD'=>'UPAH_HARIAN','SIZE' => '180px','label'=>'UPAH/HARI','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 	];
 	
 	$valFieldsKaryawan = ArrayHelper::map($aryFieldKar, 'ID', 'ATTR'); 
@@ -104,6 +104,36 @@ use modulprj\absensi\models\AbsenImportPeriode;
 				]
 			],  
 			'format'=>$value[$key]['format'],
+			'value'=>function($model)use($value,$key){
+				$val=$value[$key]['FIELD'];
+				// print_r($model->ALAMAT);die();	
+				if($val=='ALAMAT'){
+					if (empty($model->ALAMAT)) {
+					  return '-';
+					}else {
+					  return $model->ALAMAT;
+					}
+				}elseif($val=='HP'){
+					if (empty($model->HP)) {
+						return '-';
+					  }else {
+						return $model->HP;
+					  }
+				}elseif($val=='EMAIL'){
+					if (empty($model->EMAIL)) {
+						return '-';
+					  }else {
+						return $model->EMAIL;
+					  }
+				}
+				else{						
+					if($model->{$val}){					
+						return  $model->{$val};			//USE ArrayData
+					}else {
+						return  $model->{$val};
+					}						
+				}		
+			},
 			'contentOptions'=>[
 				'style'=>[
 					'text-align'=>$value[$key]['align'],

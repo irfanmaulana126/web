@@ -102,16 +102,17 @@ use yii\base\DynamicModel;
 		$content = Html::button($label1,$options1);
 		return $content;		
 	}
-	
+		
 	/*
 	 * LINK EXPORT EXCEL.
 	*/
-	function tombolExportExcel($tanggal){
+	function tombolExportExcel(){
 		$title1 = Yii::t('app', ' Export Excel');
-		$url = Url::toRoute(['/inventory/stock-opname/export?id='.$tanggal]);
+		$url = Url::toRoute(['/inventory/stock-opname/export']);
 		$options1 = [
+					'value'=>$url,
 					'id'=>'stockopname-export-excel',
-					'data-pjax' => true,
+					'data-pjax' => 0,
 					'class'=>"btn btn-primary btn-xs",
 					'title'=>'Export Excel'
 		];
@@ -121,10 +122,9 @@ use yii\base\DynamicModel;
 				</span>
 		';
 		$label1 = $icon1 . ' ' . $title1;
-		$content = Html::a($label1,$url,$options1);
+		$content = Html::button($label1,$options1);
 		return $content;
-	}		
-	
+	}	
 	/**
 	 * ===============================
 	 * Modal store

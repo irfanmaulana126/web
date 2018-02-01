@@ -18,6 +18,13 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\backend\master\models\ItemFdiscount */
 /* @var $form yii\widgets\ActiveForm */
+$data=$image->PRODUCT_IMAGE;
+	if (!empty($data)) {
+		$datas='<img src="'.$image->PRODUCT_IMAGE.'" alt="Your Avatar" style="width:160px;align:center">';
+	} else {
+		$datas='<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" style="width:160px;align:center">';
+	}	
+
 ?>
 
 <div class="item-fdiscount-form">
@@ -25,14 +32,6 @@ use yii\helpers\Url;
 <?php $form = ActiveForm::begin([
 	'options'=>['enctype'=>'multipart/form-data'],
 	]); ?>	
-		
-        <?= $form->field($model, 'STORE_ID')->widget(Select2::classname(),[
-            'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>1])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
-            'options' => ['placeholder'=>'Select Category....'],
-            'pluginOptions' => [
-                'allowClear' => true
-            ], 
-        ])?>
 			
 			<?= $form->field($model, 'PRODUCT_NM')->textInput() ?>
 
@@ -76,23 +75,8 @@ use yii\helpers\Url;
 			
 			<?= $form->field($model, 'PRODUCT_HEADLINE')->textInput() ?>
 
-			<div class="col-md-3">
-				<?= $form->field($model, 'CURRENT_PRICE')->widget(MaskMoney::classname(), [
-					'pluginOptions' => [
-						'prefix' => 'Rp ',
-					]
-				]);?>				
-			</div>
-			<div class="col-md-3">
-				<?= $form->field($model, 'CURRENT_HPP')->textInput(['type'=>'number','min'=>0,'allowEmpty' => true,'integerOnly' => false]) ?>
-			</div>
-			<div class="col-md-3">
-				<?= $form->field($model, 'CURRENT_STOCK')->textInput(['type'=>'number','min'=>0,'allowEmpty' => true, 'integerOnly' => false]) ?>
-			</div>
-			<div class="col-md-3">
-				<?= $form->field($model, 'STOCK_LEVEL')->textInput(['type'=>'number','min'=>0,'allowEmpty' => true,'integerOnly' => false]) ?>
-			</div>
-		
+			<?= $form->field($model, 'STOCK_LEVEL')->textInput(['type'=>'number','min'=>1,'allowEmpty' => true,'integerOnly' => false]) ?>
+			
 			<div class="col-md-6">
 				<?= 
 				'<label class="control-label">Unit Group</label>';
@@ -118,29 +102,8 @@ use yii\helpers\Url;
 				]); ?>
 			</div>
 
-			<div class="col-md-6">
-				<?= $form->field($model, 'INDUSTRY_GRP_ID')->widget(Select2::classname(), [
-					'data' => ArrayHelper::map(IndustryGroup::find()->all(),'INDUSTRY_GRP_ID','INDUSTRY_GRP_NM'),
-					'options' => ['placeholder' => 'Select a state ...','id'=>'industri'],
-					'pluginOptions' => [
-						'allowClear' => true
-					],
-				]); ?>
-			</div>
-
-			<div class="col-md-6">
-				<?= $form->field($model, 'INDUSTRY_ID')->widget(DepDrop::classname(), [
-					'type'=>DepDrop::TYPE_SELECT2,
-					'options'=>['id'=>'subindustri-id'],
-					'pluginOptions'=>[
-						'depends'=>['industri'],
-						'placeholder'=>'Select...',
-						'url'=>Url::to(['/master/data-barang/industry'])
-					]
-				]); ?>
-			</div>
-
-						
+			<?= $form->field($model, 'PRODUCT_SIZE')->textInput(['type'=>'number','min'=>1,'allowEmpty' => true,'integerOnly' => false]) ?>
+								
 			<?= 
 			$form->field($image, 'PRODUCT_IMAGE')->widget(FileInput::classname(), [
 				'name'=>'item-input-file',
@@ -160,7 +123,7 @@ use yii\helpers\Url;
 					'removeLabel' => '',
 					'removeIcon'=> '<i class="glyphicon glyphicon-remove"></i>',
 					'removeTitle'=> 'Clear Selected File',
-					// 'defaultPreviewContent' => '<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" style="width:160px;align:center">',
+					'defaultPreviewContent' => $datas,
 					'maxFileSize'=>30 //10KB
 					
 				],

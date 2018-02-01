@@ -149,11 +149,12 @@ class KaryawanController extends Controller
 
 		
 		//DATA IMPORT
+        // print_r($excel_dataKaryawan);die();
 		$excel_content[] = 
 			[
 				'sheet_name' => 'data-karyawan',
                 'sheet_title' => [
-					$excel_titleDatakaryawan
+					['ID','ACCESS_GROUP','STORE_ID','KARYAWAN_ID','NAMA_DPN','NAMA_TGH','NAMA_BLK','KTP','TMP_LAHIR','TGL_LAHIR','GENDER','ALAMAT','STS_NIKAH','TLP','HP','EMAIL','UPAH_HARIAN','STT_POT_TELAT','STT_POT_PULANG','STT_IZIN','STT_LEMBUR','CREATE_BY','CREATE_AT','UPDATE_BY','UPDATE_AT','STATUS','DCRP_DETIL','YEAR_AT','MONTH_AT']
 				],
 			    'ceils' => $excel_ceilsDatakaryawan,
 				'freezePane' => 'A2',
@@ -162,39 +163,70 @@ class KaryawanController extends Controller
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					[
-						'NAMA_TOKO' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
-						'PRODUK' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
-						'LALU' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'MASUK' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'TERJUAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'SISA' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Masuk' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Keluar' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Sisa' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Closing' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Actual' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-					]						
+						'ACCESS_GROUP' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'STORE_ID' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'KARYAWAN_ID' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'NAMA_DPN' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
+						'NAMA_TGH' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'NAMA_BLK' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'KTP' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'TMP_LAHIR' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'TGL_LAHIR' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'ALAMAT' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'STS_NIKAH' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'TLP' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'HP' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'EMAIL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'UPAH_HARIAN' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'STT_POT_TELAT' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'STT_POT_PULANG' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'STT_IZIN' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'STT_LEMBUR' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'CREATE_BY' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'CREATE_AT' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'UPDATE_BY' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'UPDATE_AT' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'STATUS' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'DCRP_DETIL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'YEAR_AT' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'MONTH_AT' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center']				
 				],
+			],
 				'contentStyle'=>[
 					[						
-						'NAMA_TOKO' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
-						'PRODUK'=>['font-size'=>'8','valign'=>'center','align'=>'left'],
-						'LALU' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'MASUK' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'TERJUAL' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'SISA' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Masuk' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Keluar' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Sisa' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Closing' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Actual' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'ACCESS_GROUP' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'STORE_ID' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'KARYAWAN_ID' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'NAMA_DPN' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'NAMA_TGH' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'NAMA_BLK' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'KTP' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'TMP_LAHIR' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'TGL_LAHIR' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'ALAMAT' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'STS_NIKAH' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'TLP' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'HP' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'EMAIL' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'UPAH_HARIAN' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'STT_POT_TELAT' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'STT_POT_PULANG' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'STT_IZIN' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'STT_LEMBUR' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'CREATE_BY' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'CREATE_AT' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'UPDATE_BY' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'UPDATE_AT' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'STATUS' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'DCRP_DETIL' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'YEAR_AT' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'MONTH_AT' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT']
 					]
 				],
-               'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
-               'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
-			
+			'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+			'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),			
 		];
-		// print_r($excel_content);
+		// print_r($excel_ceilsDatakaryawan);
 		// die();
 		$excel_file = "data-karyawan";
 		$this->export4excel($excel_content, $excel_file,0); 

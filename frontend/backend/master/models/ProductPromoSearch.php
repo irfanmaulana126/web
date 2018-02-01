@@ -72,8 +72,8 @@ class ProductPromoSearch extends ProductPromo
         ]);
 
         $query->andFilterWhere(['like', 'product_promo.ACCESS_GROUP', $this->ACCESS_GROUP])
-            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
-            ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])
+            ->andFilterWhere(['like', 'product_promo.STORE_ID', $this->STORE_ID])
+            ->andFilterWhere(['like', 'product_promo.PRODUCT_ID', $this->PRODUCT_ID])
             ->andFilterWhere(['like', 'PROMO', $this->PROMO])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])

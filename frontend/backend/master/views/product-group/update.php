@@ -15,14 +15,6 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'STORE_ID')->widget(Select2::classname(),[
-        'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>1])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
-        'options' => ['placeholder'=>'Select Category....'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ], 
-    ])?>
-
     <?= $form->field($model, 'GROUP_NM')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'NOTE')->textarea(['rows' => 6]) ?>

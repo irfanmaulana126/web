@@ -3,7 +3,7 @@
 namespace frontend\backend\master\models;
 
 use Yii;
-
+use frontend\backend\master\models\User;
 /**
  * This is the model class for table "store".
  *
@@ -120,5 +120,14 @@ class Store extends \yii\db\ActiveRecord
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];
+    }
+    public function getUser()
+    {
+        return $this->hasOne(User::className(),['ACCESS_GROUP'=>'ACCESS_GROUP']);
+    }
+
+    public function getOwner(){
+        $result=$this->user;
+        return $result=$result->ACCESS_LEVEL?:'';
     }
 }
