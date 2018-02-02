@@ -440,7 +440,7 @@ $this->registerCss("
 	}
 	
 	function tombolHarga($url, $model){
-		$title1 = Yii::t('app',' Update Harga');
+		$title1 = Yii::t('app','Harga');
 		$options1 = [
 			'value'=>url::to(['/master/store/harga','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
 			'id'=>'databarang-button-row-harga',

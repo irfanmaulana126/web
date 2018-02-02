@@ -244,6 +244,7 @@ class DataBarangController extends Controller
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
             $model->START_TIME=date('H:i:s');
+            // print_r($model);die();
            if ($model->save(false)) {
             Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
             return $this->redirect(['index']);

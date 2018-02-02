@@ -49,7 +49,7 @@ class ProductHarga extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['PRODUCT_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
+            [['PRODUCT_ID', 'YEAR_AT', 'MONTH_AT','PERIODE_TGL1', 'PERIODE_TGL2','HPP', 'HARGA_JUAL'], 'required'],
             [['PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['HARGA_JUAL'], 'number'],
             [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],

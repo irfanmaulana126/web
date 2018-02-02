@@ -6,7 +6,30 @@
  * Version	: 2.1
  * ===============================
 */
-
+/*
+ * Js Harga Modal
+*/
+$(document).ready(function() {
+	$('#hitung').change(function(){
+	var persedian=parseInt($('#persedian').val());
+	var pembelian=parseInt($('#pembelian').val());
+	var bahanangkut=parseInt($('#bahanangkut').val());
+	var retur=parseInt($('#retur').val());
+	var potongan=parseInt($('#potongan').val());
+	var persedianakhir=parseInt($('#persedianakhir').val());
+	var belibersi=(pembelian+bahanangkut)-(retur+potongan);
+	var barangjual=(belibersi+persedian);
+	var hpp=(barangjual+persedianakhir);
+	$('#harga').val(barangjual);
+	$('#hpp').val(hpp);
+	$('#harga-disp').val(barangjual);
+	$('#hpp-disp').val(hpp);
+	$('#productharga-harga_jual-disp').val(barangjual);
+	$('#productharga-harga_jual').val(barangjual);
+	$('#productharga-hpp-disp').val(hpp);
+	$('#productharga-hpp').val(hpp);
+	});
+});
 /*
  * BUTTON CREATE
 */

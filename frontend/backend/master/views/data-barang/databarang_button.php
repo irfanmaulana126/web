@@ -210,7 +210,7 @@ use yii\base\DynamicModel;
 	}
 	
 	function tombolHarga($url, $model){
-		$title1 = Yii::t('app',' Update Harga');
+		$title1 = Yii::t('app','Harga');
 		$options1 = [
 			'value'=>url::to(['/master/data-barang/harga','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
 			'id'=>'databarang-button-row-harga',

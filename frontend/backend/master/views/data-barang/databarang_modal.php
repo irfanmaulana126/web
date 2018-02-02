@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
 use yii\base\DynamicModel;
-
+use kartik\money\MaskMoney;
 $this->registerCss("
 	/**
 	 * CSS - Border radius Sudut.
@@ -22,7 +22,9 @@ $this->registerCss("
 	#databarang-button-row-discount-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
-	
+	#cal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 	#databarang-button-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
@@ -487,4 +489,136 @@ $this->registerCss("
 	]);
 		echo "<div id='databarang-button-row-edit-harga-content'></div>";
 	Modal::end();
-?>
+	/*
+	 * BUTTON - EDIT Harga
+	*/
+	Modal::begin([
+		//'id' => 'sync_save',
+		'id' => 'cal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b>Calculator HPP</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			//'toggleButton' => ['label' => 'click me'],
+		],
+		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);?>
+<?php $form = ActiveForm::begin(); ?>
+	<?= '<div id="hitung">'?>
+	<?php 
+	echo Html::label('Persedian Barang Dagang');
+	echo MaskMoney::widget([
+		'name'=>'persedian',
+		'options' => ['placeholder' => 'Persedian Barang Dagang',
+			'class' => 'form-control',
+			'id'=>'persedian',
+	],'pluginOptions' => [
+        'prefix' => 'Rp ',
+        'precision' => 0
+     ]
+		]);
+	echo Html::label('Pembelian');
+	echo MaskMoney::widget([
+		'name'=>'pembelian',
+		'options' => [
+				'placeholder' => 'Pembelian',
+				'class' => 'form-control',
+				'id'=>'pembelian',
+		],'pluginOptions' => [
+			'prefix' => 'Rp ',
+			'precision' => 0
+		 ]
+			]);
+	echo Html::label('Bahan Anggkut Pembelian');
+	echo  MaskMoney::widget([
+		'name'=>'bahanangkut',
+		'options' =>[
+					'placeholder' => 'Bahan Anggkut Pembelian',
+					'class' => 'form-control',
+					'id'=>'bahanangkut',
+				],'pluginOptions' => [
+					'prefix' => 'Rp ',
+					'precision' => 0
+				 ]
+	]);
+	echo Html::label('Retur');
+	echo  MaskMoney::widget([
+		'name'=>'retur',
+		'options' => [
+					'placeholder' => 'Retur',
+					'class' => 'form-control',
+					'id'=>'retur',
+				],'pluginOptions' => [
+					'prefix' => 'Rp ',
+					'precision' => 0
+				 ]
+	]);
+	echo Html::label('Potongan Pembelian');
+	echo  MaskMoney::widget([
+		'name'=>'potongan',
+		'options' => [
+					'placeholder' => 'Potongan Pembelian',
+					'class' => 'form-control',
+					'id'=>'potongan',
+				],'pluginOptions' => [
+						'prefix' => 'Rp ',
+						'precision' => 0
+					 ]
+				]);
+	echo Html::label('Persedian Barang Akhir');
+	echo  MaskMoney::widget([
+		'name'=>'persedianakhir',
+		'options' => [
+					'placeholder' => 'Persedian Barang Akhir',
+					'class' => 'form-control',
+					'id'=>'persedianakhir',
+				],'pluginOptions' => [
+					'prefix' => 'Rp ',
+					'precision' => 0
+				 ]
+				]);
+	echo Html::label('Harga');
+	 echo  MaskMoney::widget([
+		'name'=>'harga',
+		'disabled' => true,
+		'options' => [
+					'placeholder' => 'Harga',
+					'class' => 'form-control',
+					'id'=>'harga',
+				],'pluginOptions' => [
+					'prefix' => 'Rp ',
+					'precision' => 0
+				 ]
+				]);
+	echo Html::label('HPP');
+	echo  MaskMoney::widget([
+		'name'=>'hpp',
+		'disabled' => true,
+		'options' => [
+					'placeholder' => 'HPP',
+					'class' => 'form-control',
+					'id'=>'hpp',
+				],'pluginOptions' => [
+					'prefix' => 'Rp ',
+					'precision' => 0
+				 ]
+				]);
+		?>
+		<?= "<br><div class='form-group'>"?>
+			<?= Html::button('Save', ['class' => 'btn btn-success','data-dismiss'=>'modal','aria-hidden'=>'true']) ?>
+			<?= Html::resetButton('Reset', ['class' => 'btn btn-info']) ?>
+			<?="</div>"?>
+    <?="</div>"?>
+
+    <?php ActiveForm::end(); ?>
+<?php Modal::end();?>
