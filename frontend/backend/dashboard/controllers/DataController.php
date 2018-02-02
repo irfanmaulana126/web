@@ -71,199 +71,28 @@ class DataController extends Controller
         ]);		
     }  
     
-    
+    /**
+	 * ===================================
+	 * ========== DAILY HOUR   ===========
+	 * ===================================
+	 * Line Chart 
+	 * Type 		: msline
+	 * create by	: ptr.nov@gmail.com	
+	 * ===================================
+	*/
     public function actionDailyTransaksi()
     {
-		$tglWaktu='';
-	   $model=RptDailyChart::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user(),'Val_Nm'=>'TRANSAKSI_HARIAN'])->one();
-	   $searchModel = new TransPenjualanHeaderSummaryDailyHourSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$params     		= $_REQUEST;
+		//$paramsHeader		= Yii::$app->request->headers;
+		$paramAccessGroup	= isset($params['ACCESS_GROUP'])?$params['ACCESS_GROUP']:'';
+		$paramTGL			= isset($params['TGL'])?$params['TGL']:'';
 		
-		$modelHour=$dataProvider->getModels();
-		//$i=0;
-		foreach ($modelHour as $row => $val){
-			//$i=0;
-			$dataval='';
-			for( $i= 1 ; $i <= 24 ; $i++ ) {
-				$dataval[]=['label'=>$i,'value'=>$val['VAL'.$i],'anchorBgColor'=>'#00fd83'];
-			}
-			$rslt['seriesname']=$val['storeNm'];
-			$rslt['data']=$dataval;	
-			$rsltDataSet[]=$rslt;	
-			$tglWaktu=$val['UPDATE_AT'];
-		};
-		
-       $data['chart']='
-		"chart":{
-				"caption": " HARIAN TRANSAKSI ",
-				"subCaption": "'.$tglWaktu.'",
-				"captionFontSize": "12",
-				"subcaptionFontSize": "10",
-				"subcaptionFontBold": "0",
-				"paletteColors": "#0B1234,#68acff,#00fd83,#e700c4,#8900ff,#fb0909,#0000ff,#ff4040,#7fff00,#ff7f24,#ff7256,#ffb90f,#006400,#030303,#ff69b4,#8b814c,#3f6b52,#744f4f,#6fae93,#858006,#426506,#055c5a,#a7630d,#4d8a9c,#449f9c,#8da9ab,#c4dfdd,#bf7793,#559e96,#afca84,#608e97,#806d88,#688b94,#b5dfe7,#b29cba,#83adb5,#c7bbc9,#2d5867,#e1e9b7,#bcd2d0,#f96161,#c9bbbb,#bfc5ce,#8f6d4d,#a87f99,#62909b,#a0acc0,#94b9b8",
-				"bgcolor": "#ffffff",
-				"showBorder": "0",
-				"showShadow": "0",
-				"usePlotGradientColor": "0",
-				"legendBorderAlpha": "0",
-				"legendShadow": "0",
-				"showAxisLines": "1",
-				"showAlternateHGridColor": "0",
-				"divlineThickness": "1",
-				"divLineIsDashed": "0",
-				"divLineDashLen": "1",
-				"divLineGapLen": "1",
-				"vDivLineDashed": "0",
-				"numVDivLines": "6",
-				"vDivLineThickness": "1",
-				"xAxisName": "24 Hour",
-				"yAxisName": "Jumlah Transaction",
-				"anchorradius": "3",
-				"plotHighlightEffect": "fadeout|color=#f6f5fd, alpha=60",
-				"showValues": "0",
-				"rotateValues": "0",
-				"placeValuesInside": "0",
-				"formatNumberScale": "0",
-				"decimalSeparator": ",",
-				"thousandSeparator": ".",
-				"numberPrefix": "",
-				"ValuePadding": "0",
-				"yAxisValuesStep": "1",
-				"xAxisValuesStep": "0",
-				"yAxisMinValue": "0",
-				"numDivLines": "10",
-				"xAxisNamePadding": "30",
-				"showHoverEffect": "1",
-				"animation": "1"
-			}';
-		 $data['categories']='
-			"categories":[
-				{
-					"category":[
-						{
-							"label": "01"
-						},
-						{
-							"label": "02"
-						},
-						{
-							"label": "03"
-						},
-						{
-							"label": "04"
-						},
-						{
-							"label": "05"
-						},
-						{
-							"label": "06"
-						},
-						{
-							"label": "07"
-						},
-						{
-							"label": "08"
-						},
-						{
-							"label": "09"
-						},
-						{
-							"label": "10"
-						},
-						{
-							"label": "11"
-						},
-						{
-							"label": "12"
-						},
-						{
-							"label": "13"
-						},
-						{
-							"label": "14"
-						},
-						{
-							"label": "15"
-						},
-						{
-							"label": "16"
-						},
-						{
-							"label": "17"
-						},
-						{
-							"label": "18"
-						},
-						{
-							"label": "19"
-						},
-						{
-							"label": "20"
-						},
-						{
-							"label": "21"
-						},
-						{
-							"label": "22"
-						},
-						{
-							"label": "23"
-						},
-						{
-							"label": "24"
-						}						
-					]
-				}
-			]';
-		
-		$data['dataset']='
-			"dataset":[
-					{
-						"seriesname": "TOKO A",
-						"data": null
-					},
-					{
-						"seriesname": "TOKO B",
-						"data": [
-							{
-								"label": "10",
-								"value": "54",
-								"anchorBgColor": "#68acff"
-							},
-							{
-								"label": "11",
-								"value": "46",
-								"anchorBgColor": "#68acff"
-							}
-						]
-					},
-					{
-						"seriesname": "TOKO C",
-						"data": [
-							{
-								"label": "10",
-								"value": "15",
-								"anchorBgColor": "#00fd83"
-							},
-							{
-								"label": "11",
-								"value": "59",
-								"anchorBgColor": "#00fd83"
-							}
-						]
-					}
-				]';
-				
-		/* ===================
-		 * == FROM DATABASE ==
-		 * ===================*/	
-		//return json::decode("{".$data['chart'].','.$data['categories'].','.$data['dataset']."}");
-		// $rsltDataSet='"dataset":'.Yii::$app->arrayBantuan->strJson($model->Val_Json);		
-		//return json::decode("{".$data['chart'].','.$data['categories'].','.$rsltDataSet."}");		
-		$dataset='"dataset":'.json::encode($rsltDataSet);
-		return json::decode("{".$data['chart'].','.$data['categories'].','.$dataset."}");
-		// return $rsltDataSet;
-	  }
+		$modelDayHourCount= new ChartDayHourSales([
+			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
+			'TGL'=>date('Y-m-d',strtotime($paramTGL)),		//'1'
+		]);
+		return $modelDayHourCount;		
+	}
 		
 	/**
 	 * ===================================
@@ -276,10 +105,10 @@ class DataController extends Controller
 	*/
 	public function actionWeeklySales(){
 		$params     		= $_REQUEST;
-		$paramsHeader		= Yii::$app->request->headers;
-		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:$paramsHeader['ACCESS_GROUP'];
-		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:$paramsHeader['TAHUN'];
-		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:$paramsHeader['BULAN'];
+		//$paramsHeader		= Yii::$app->request->headers;
+		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:'';//$paramsHeader['ACCESS_GROUP'];
+		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:'';//$paramsHeader['TAHUN'];
+		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:'';//$paramsHeader['BULAN'];
 		
 		$modelWeeklySales= new ChartWeeklySales([
 			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
@@ -301,10 +130,10 @@ class DataController extends Controller
 	public function actionMonthySales()
     {
 		$params     		= $_REQUEST;
-		$paramsHeader		= Yii::$app->request->headers;
-		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:$paramsHeader['ACCESS_GROUP'];
-		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:$paramsHeader['TAHUN'];
-		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:$paramsHeader['BULAN'];
+		//$paramsHeader		= Yii::$app->request->headers;
+		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:'';//$paramsHeader['ACCESS_GROUP'];
+		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:'';//$paramsHeader['TAHUN'];
+		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:'';//$paramsHeader['BULAN'];
 		
 		$modelMonthlySales= new ChartMonthlySales([
 			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
@@ -317,11 +146,11 @@ class DataController extends Controller
 	public function actionTest()
     {
 		$params     		= $_REQUEST;
-		$paramsHeader		= Yii::$app->request->headers;
-		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:$paramsHeader['ACCESS_GROUP'];
-		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:$paramsHeader['TAHUN'];
-		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:$paramsHeader['BULAN'];
-		$paramTGL			= isset($params['TGL'])!=''?$params['TGL']:$paramsHeader['TGL'];
+		//$paramsHeader		= Yii::$app->request->headers;
+		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:'';//$paramsHeader['ACCESS_GROUP'];
+		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:'';//$paramsHeader['TAHUN'];
+		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:'';//$paramsHeader['BULAN'];
+		$paramTGL			= isset($params['TGL'])!=''?$params['TGL']:'';//$paramsHeader['TGL'];
 		
 		$modelDayHourCount= new ChartDayHourSales([
 			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'

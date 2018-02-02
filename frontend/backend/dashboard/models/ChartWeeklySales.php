@@ -64,14 +64,14 @@ class ChartWeeklySales extends Model
 			])->all();
 			
 			//=[2]== AMBIL MINGGU AWAL BULAN
-			$firstWeekOfMonth=$model= self::weekOfMonthMysql($varTahun.'-'.$varBulan.'-01');
+			$firstWeekOfMonth=self::weekOfMonthMysql(date('Y-m-d',strtotime($varTahun.'-'.$varBulan.'-01')));
 			
 			if ($modelWeek){	
 					$rslt1['seriesname']=$valStore['STORE_NM'];//$modelWeek[0]['STORE_NM'];
 					$dataval1=[];
 					//=[3]==LOOPING 5 MINGGU
 					for( $i= 1 ; $i <= 5 ; $i++ ) {
-						$cariWeek=$firstWeekOfMonth + $i;					
+						$cariWeek=3 + $i;					
 						$valData=Yii::$app->arrayBantuan->array_find($modelWeek,'MINGGU',$cariWeek);
 						
 						if($valData){
@@ -182,6 +182,7 @@ class ChartWeeklySales extends Model
 	function weekOfMonthMysql($date) {
 		$minggu= date('W', strtotime($date));
 		if ($minggu<>0){
+			//return ($minggu)-1;
 			return ($minggu)-1;
 		} else{
 			return $minggu;

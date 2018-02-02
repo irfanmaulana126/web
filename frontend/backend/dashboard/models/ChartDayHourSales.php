@@ -10,8 +10,6 @@ use frontend\backend\dashboard\models\Store;
 class ChartDayHourSales extends Model
 {
 	 public $ACCESS_GROUP;
-	 public $BULAN;
-	 public $TAHUN;
 	 public $TGL;
 	 
     /**
@@ -30,7 +28,7 @@ class ChartDayHourSales extends Model
 	{
 		return [			
 			'chart'=>function($model){
-				return self::chartlabel($model->TAHUN,$model->BULAN,$model->TGL);
+				return self::chartlabel($this->TGL);
 			},
 			'categories'=>function(){
 				return [
@@ -38,18 +36,18 @@ class ChartDayHourSales extends Model
 				];
 			},
 			'dataset'=>function($model){
-				return self::chartData($model->ACCESS_GROUP,$model->TAHUN,$model->BULAN,$model->TGL);				
+				return self::chartData($this->ACCESS_GROUP,$this->TGL);				
 			}
 		];
 	}
 	
-	private function chartData($accessGroup,$tahun,$bulan,$tgl){		
+	private function chartData($accessGroup,$tgl){		
 		//== PARAM TO CURRENT VARIABLE / DEFAULT VARIABLE
 		// $accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];
 		$varAccessGroup = $accessGroup!=''?$accessGroup:Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
-		$varTahun		= $tahun!=''?$tahun:date('Y');
-		$varBulan		= $bulan!=''?$bulan:date('m');
-		$varTgl			= $tgl!=''?$tgl:date('Y-m-d');
+		$varTahun		= $tgl!=''?date('Y',strtotime($tgl)):date('Y');
+		$varBulan		= $tgl!=''?date('m',strtotime($tgl)):date('m');
+		$varTgl			= $tgl!=''?date('Y-m-d',strtotime($tgl)):date('Y-m-d');
 		
 		$datasetRslt=[];
 		//=[0]== AMBIL STORE OF ACCESS_GROUP
@@ -94,10 +92,10 @@ class ChartDayHourSales extends Model
 		return $datasetRslt;		//jika data ada
 	}
 	
-	private function chartlabel($tahun,$bulan,$tgl){
-		$varTahun		= $tahun!=''?$tahun:date('Y');
-		$varBulan		= $bulan!=''?$bulan:date('m');
-		$varTgl			= $tgl!=''?$tgl:date('Y-m-d');
+	private function chartlabel($tgl){
+		$varTahun		= $tgl!=''?date('Y',strtotime($tgl)):date('Y');
+		$varBulan		= $tgl!=''?date('m',strtotime($tgl)):date('m');
+		$varTgl			= $tgl!=''?date('Y-m-d',strtotime($tgl)):date('Y-m-d');		
 		$nmBulan=date('F', strtotime($varTahun.'-'.$varBulan.'-01')); // Nama Bulan
 		$chart=[
 			"caption"=> " HARIAN TRANSAKSI ",
@@ -105,7 +103,7 @@ class ChartDayHourSales extends Model
 			"captionFontSize"=> "12",
 			"subcaptionFontSize"=> "10",
 			"subcaptionFontBold"=> "0",
-			"paletteColors"=> "#0B1234,#68acff,#00fd83,#e700c4,#8900ff,#fb0909,#0000ff,#ff4040,#7fff00,#ff7f24,#ff7256,#ffb90f,#006400,#030303,#ff69b4,#8b814c,#3f6b52,#744f4f,#6fae93,#858006,#426506,#055c5a,#a7630d,#4d8a9c,#449f9c,#8da9ab,#c4dfdd,#bf7793,#559e96,#afca84,#608e97,#806d88,#688b94,#b5dfe7,#b29cba,#83adb5,#c7bbc9,#2d5867,#e1e9b7,#bcd2d0,#f96161,#c9bbbb,#bfc5ce,#8f6d4d,#a87f99,#62909b,#a0acc0,#94b9b8",
+			"paletteColors"=> Yii::$app->arrayBantuan->ArrayPaletteColors(),
 			"bgcolor"=> "#ffffff",
 			"showBorder"=> "0",
 			"showShadow"=> "0",
