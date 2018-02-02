@@ -37,15 +37,15 @@ echo $this->render('databarang_modal'); //echo difinition
 		#expand-menu .kv-grid-container{
 			height:250px
 		}
-		#w6 :link {
+		#w7 :link {
 			color: black;
 		}
 		/* mouse over link */
-		#w6-container a:hover {
+		#w7-container a:hover {
 			color: #5a96e7;
 		}
 		/* selected link */
-		#w6-container a:active {
+		#w7-container a:active {
 			color: blue;
 		}
 	");
@@ -81,7 +81,7 @@ echo $this->render('databarang_modal'); //echo difinition
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
-			<b class="fa fa-home fa-stack-1x" style="color:#FEFEFE"></b>
+			<b class="fa fa-product-hunt fa-stack-1x" style="color:#FEFEFE"></b>
 		  </span><b> ALL PRODUK </b>',
 			'content'=>$Action,
 			'active'=>true
@@ -89,35 +89,35 @@ echo $this->render('databarang_modal'); //echo difinition
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
-			<b class="fa fa-product-hunt fa-stack-1x" style="color:#FEFEFE"></b>
+			<b class="fa fa-cubes fa-stack-1x" style="color:#FEFEFE"></b>
 		  </span><b> PRODUK DISCOUNT </b>',
 			'content'=>$Action2
 		],
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
-			<b class="fa fa-users fa-stack-1x" style="color:#FEFEFE"></b>
+			<b class="fa fa-gift fa-stack-1x" style="color:#FEFEFE"></b>
 		  </span><b> PRODUK PROMO </b>',
 			'content'=>$Action3
 		],
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
-			<b class="fa fa-user fa-stack-1x" style="color:#FEFEFE"></b>
+			<b class="fa fa-tags fa-stack-1x" style="color:#FEFEFE"></b>
 		  </span><b> STOCK PRODUCT </b>',
 			'content'=>$Action4
 		],
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
-			<b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
+			<b class="fa fa-money fa-stack-1x" style="color:#FEFEFE"></b>
 		  </span><b> HISTORI HARGA  </b>',
 			'content'=>$Action5
 		],
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
 			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
-			<b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
+			<b class="fa fa-folder-open fa-stack-1x" style="color:#FEFEFE"></b>
 		  </span><b> PRODUCT GROUP </b>',
 			'content'=>$Action6
 		],

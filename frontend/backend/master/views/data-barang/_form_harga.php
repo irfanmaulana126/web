@@ -166,14 +166,22 @@ $gvAttProdakHargaItem=[
                             'options' => ['placeholder' => 'Harga Barang ...'],
                             'pluginOptions'=>[
                                 'prefix'=>'Rp',
+                                'precision' => 0
+                            ],
+                        ]) ?>
+     <?= $form->field($model, 'HPP')->widget(MaskMoney::classname(), [
+                            'options' => ['placeholder' => 'HPP ...'],
+                            'pluginOptions'=>[
+                                'prefix'=>'Rp',
+                                'precision' => 0
                             ],
                         ]) ?>
     <br>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::button('calculator', ['class' => 'btn btn-warning','data-toggle'=>'modal', 'href'=>'#cal']) ?>
     </div>
 <?php ActiveForm::end(); ?>
 
 
 </div>
-

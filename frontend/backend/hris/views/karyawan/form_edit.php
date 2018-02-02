@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use common\models\Store;
+use yii\widgets\MaskedInput;
 
 ?>
 
@@ -26,7 +27,16 @@ use common\models\Store;
 
     <?= $form->field($model, 'NAMA_BLK')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'TLP')->textInput() ?>
+    <?= $form->field($model, 'TLP')->widget(MaskedInput::classname(),[
+                            'mask' => '9',
+                            'clientOptions' => ['repeat' => 12, 'greedy' => false]]) ?>
+
+    <?= $form->field($model, 'HP')->widget(MaskedInput::classname(),[
+    'mask' => '(999) 999-9999']) ?>
+    
+    <?= $form->field($model, 'EMAIL')->widget(MaskedInput::classname(),['clientOptions' => [
+        'alias' =>  'email'
+    ]]) ?>
 
     <?= $form->field($model, 'GENDER')->dropDownList(['Laki Laki'=>'Laki-Laki','Perempuan'=>'Perempuan']) ?>
    

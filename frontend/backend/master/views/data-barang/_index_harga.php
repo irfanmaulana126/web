@@ -185,6 +185,21 @@ $this->registerCss("
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],
+		//SATUAN
+		[
+			'attribute'=>'HPP',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
+			
+		],
 	];
 	
 	$gvAttProdakHargaItemButton[]=[			

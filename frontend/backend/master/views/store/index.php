@@ -41,15 +41,15 @@ $this->title = 'Store';
 		.tmp-button-delete a:hover {
 			color:red;
 		}
-		#w17 :link {
+		#w18 :link {
 			color: black;
 		}
 		/* mouse over link */
-		#w17-container a:hover {
+		#w18-container a:hover {
 			color: #5a96e7;
 		}
 		/* selected link */
-		#w17-container a:active {
+		#w18-container a:active {
 			color: blue;
 		}
 	");
