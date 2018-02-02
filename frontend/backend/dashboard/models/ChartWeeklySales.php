@@ -50,6 +50,7 @@ class ChartWeeklySales extends Model
 		$varAccessGroup = $accessGroup!=''?$accessGroup:Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
 		$varTahun		= $tahun!=''?$tahun:date('Y');
 		$varBulan		= $bulan!=''?$bulan:date('m');
+		$varBulanDigit	= str_pad($varBulan, 2, '0', STR_PAD_LEFT); //2 gigit bulan
 		
 		$datasetRslt=[];
 		//=[0]== AMBIL STORE OF ACCESS_GROUP
@@ -64,21 +65,29 @@ class ChartWeeklySales extends Model
 			])->all();
 			
 			//=[2]== AMBIL MINGGU AWAL BULAN
-			$firstWeekOfMonth=self::weekOfMonthMysql(date('Y-m-d',strtotime($varTahun.'-'.$varBulan.'-01')));
+			
 			
 			if ($modelWeek){	
+					$firstWeekOfMonth=self::weekOfMonthMysql(date('Y-m-d',strtotime($varTahun.'-'.$varBulanDigit.'-01')));
 					$rslt1['seriesname']=$valStore['STORE_NM'];//$modelWeek[0]['STORE_NM'];
 					$dataval1=[];
 					//=[3]==LOOPING 5 MINGGU
-					for( $i= 1 ; $i <= 5 ; $i++ ) {
-						$cariWeek=3 + $i;					
+					//$x=1;
+					//$cariWeek=0;
+					//$xs=($firstWeekOfMonth+5);
+					for( $i=0 ; $i <= 4 ; $i++ ) {
+						$cariWeek=(integer)($firstWeekOfMonth) + $i;	
+						$valData='';
 						$valData=Yii::$app->arrayBantuan->array_find($modelWeek,'MINGGU',$cariWeek);
 						
 						if($valData){
-							$dataval1[]=['label'=>'w'.$valData[0]['MINGGU'],'value'=>$valData[0]['TOTAL_JUAL']];
+						//	$dataval1[]=['label'=>'w'.$valData[0]['MINGGU'],'value'=>$valData[0]['TOTAL_JUAL']];
+							$dataval1[]=['label'=>'w'.$cariWeek,'value'=>$valData[0]['TOTAL_JUAL']];
 						}else{
-							$dataval1[]=['label'=>'w'.$i,'value'=>'0'];
-						};						
+							$dataval1[]=['label'=>'w'.$cariWeek,'value'=>'0'];
+							//$dataval1[]=['label'=>'w'.$i,'value'=>$cariWeek];
+						};				
+						//$x=$x+1;
 					} 
 					//=[4]==SETTING ARRAY
 					$rslt1['data']=$dataval1;	
@@ -181,11 +190,11 @@ class ChartWeeklySales extends Model
 	*/
 	function weekOfMonthMysql($date) {
 		$minggu= date('W', strtotime($date));
-		if ($minggu<>0){
-			//return ($minggu)-1;
-			return ($minggu)-1;
-		} else{
+		// return $mingguInt;
+		if ($minggu==0){
 			return $minggu;
+		}else{
+			return $minggu-1;
 		}
 	}
 }

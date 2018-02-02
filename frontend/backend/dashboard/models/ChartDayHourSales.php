@@ -96,7 +96,7 @@ class ChartDayHourSales extends Model
 		$varTahun		= $tgl!=''?date('Y',strtotime($tgl)):date('Y');
 		$varBulan		= $tgl!=''?date('m',strtotime($tgl)):date('m');
 		$varTgl			= $tgl!=''?date('Y-m-d',strtotime($tgl)):date('Y-m-d');		
-		$nmBulan=date('F', strtotime($varTahun.'-'.$varBulan.'-01')); // Nama Bulan
+		$nmBulan=date('F', strtotime($varTahun.'-'.'0'.$varBulan.'-01')); // Nama Bulan
 		$chart=[
 			"caption"=> " HARIAN TRANSAKSI ",
 			"subCaption"=>"Tanggal ".$varTgl,

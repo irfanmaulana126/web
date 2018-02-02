@@ -88,8 +88,8 @@ class DataController extends Controller
 		$paramTGL			= isset($params['TGL'])?$params['TGL']:'';
 		
 		$modelDayHourCount= new ChartDayHourSales([
-			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
-			'TGL'=>date('Y-m-d',strtotime($paramTGL)),		//'1'
+			'ACCESS_GROUP'=>$paramAccessGroup,				//'170726220936'
+			'TGL'=>$paramTGL,		//'1'
 		]);
 		return $modelDayHourCount;		
 	}
@@ -107,13 +107,13 @@ class DataController extends Controller
 		$params     		= $_REQUEST;
 		//$paramsHeader		= Yii::$app->request->headers;
 		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:'';//$paramsHeader['ACCESS_GROUP'];
-		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:'';//$paramsHeader['TAHUN'];
-		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:'';//$paramsHeader['BULAN'];
+		$paramTahun			= isset($params['TAHUN'])?$params['TAHUN']:'';//$paramsHeader['TAHUN'];
+		$paramBulan			= isset($params['BULAN'])?$params['BULAN']:'';//$paramsHeader['BULAN'];
 		
 		$modelWeeklySales= new ChartWeeklySales([
 			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
 			'TAHUN'=>$paramTahun,					//'2018',
-			'BULAN'=>$paramBulan					//'1'
+			'BULAN'=>$paramBulan,					//'1'
 		]);
 		return $modelWeeklySales;
 	}	
@@ -132,8 +132,8 @@ class DataController extends Controller
 		$params     		= $_REQUEST;
 		//$paramsHeader		= Yii::$app->request->headers;
 		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:'';//$paramsHeader['ACCESS_GROUP'];
-		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:'';//$paramsHeader['TAHUN'];
-		$paramBulan			= isset($params['BULAN'])!=''?$params['BULAN']:'';//$paramsHeader['BULAN'];
+		$paramTahun			= isset($params['TAHUN'])?$params['TAHUN']:'';//$paramsHeader['TAHUN'];
+		$paramBulan			= isset($params['BULAN'])?$params['BULAN']:'';//$paramsHeader['BULAN'];
 		
 		$modelMonthlySales= new ChartMonthlySales([
 			'ACCESS_GROUP'=>$paramAccessGroup,		//'170726220936'
@@ -145,7 +145,7 @@ class DataController extends Controller
 	
 	public function actionTest()
     {
-		$params     		= $_REQUEST;
+		/* $params     		= $_REQUEST;
 		//$paramsHeader		= Yii::$app->request->headers;
 		$paramAccessGroup	= isset($params['ACCESS_GROUP'])!=''?$params['ACCESS_GROUP']:'';//$paramsHeader['ACCESS_GROUP'];
 		$paramTahun			= isset($params['TAHUN'])!=''?$params['TAHUN']:'';//$paramsHeader['TAHUN'];
@@ -157,8 +157,10 @@ class DataController extends Controller
 			'TAHUN'=>$paramTahun,					//'2018',
 			'BULAN'=>$paramBulan,					//'1'
 			'TGL'=>$paramTGL						//'1'
-		]);
-		return $modelDayHourCount;		
+		]); */
+		//return $modelDayHourCount;		
+		return self::weekOfMonthMysql('2018-02-02');	
+		// return str_pad(10, 2, '0', STR_PAD_LEFT);		
 	}
 	
 	
