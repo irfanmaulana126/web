@@ -19,9 +19,9 @@ class ProductHargaSearch extends ProductHarga
     public function rules()
     {
         return [
-            [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT','PERIODE_TGL1', 'PERIODE_TGL2','HPP', 'HARGA_JUAL','PPN'], 'integer'],
             [['ACCESS_GROUP', 'PRODUCT_NM','STORE_ID', 'PRODUCT_ID', 'PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
-            [['HPP', 'HARGA_JUAL'], 'number'],
+            [['HPP', 'HARGA_JUAL','PPN'], 'number'],
         ];
     }
 
@@ -68,6 +68,7 @@ class ProductHargaSearch extends ProductHarga
             'START_TIME' => $this->START_TIME,
             'HPP' => $this->HPP,
             'HARGA_JUAL' => $this->HARGA_JUAL,
+            'PPN' => $this->PPN,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'product_harga.STATUS' => 1,

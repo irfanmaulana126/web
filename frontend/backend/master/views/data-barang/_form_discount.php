@@ -161,7 +161,7 @@ $gvAttProdakDiscountItem=[
             ]
         ]);
     ?>
-    <?= $form->field($model,'DISCOUNT')->textInput() ?>
+    <?= $form->field($model,'DISCOUNT')->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false]) ?>
             
     <br>
     <div class="form-group">

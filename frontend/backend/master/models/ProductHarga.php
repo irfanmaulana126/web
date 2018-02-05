@@ -27,6 +27,7 @@ use frontend\backend\master\models\Store;
  */
 class ProductHarga extends \yii\db\ActiveRecord
 {
+    public $margin;
     /**
      * @inheritdoc
      */
@@ -49,9 +50,9 @@ class ProductHarga extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['PRODUCT_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
+            [['PRODUCT_ID', 'YEAR_AT', 'margin','MONTH_AT','PERIODE_TGL1', 'PERIODE_TGL2','HPP', 'HARGA_JUAL','PPN'], 'required'],
             [['PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
-            [['HARGA_JUAL'], 'number'],
+            [['HARGA_JUAL','PPN'], 'number'],
             [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['DCRP_DETIL'], 'string'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
@@ -75,6 +76,7 @@ class ProductHarga extends \yii\db\ActiveRecord
             'PERIODE_TGL2' => 'Periode  Tanggal Akhir',
             'START_TIME' => 'Start  Time',
             'HARGA_JUAL' => 'Harga  Jual',
+            'PPN' => 'PPN',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',

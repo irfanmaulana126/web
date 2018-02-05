@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
 use yii\base\DynamicModel;
+use kartik\money\MaskMoney;
 
 $this->registerCss("
 	/**
@@ -406,4 +407,3 @@ $this->registerCss("
 	]);
 		echo "<div id='databarang-button-row-stock-content'></div>";
 	Modal::end();
-?>

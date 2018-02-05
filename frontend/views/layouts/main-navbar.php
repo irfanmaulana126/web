@@ -68,6 +68,13 @@ dmstr\web\AdminLteAsset::register($this);
 				'url' => ['/site/logout'],
 				'linkOptions' => ['data-method' => 'post']
 			];
+			$menuItems[] = [
+				'label' => Icon::show('bell-o'),
+				'items'=>[
+					['label'=>'test','url' => ['/site/logout'],],
+					['label'=>'test','url' => ['/site/logout'],],
+				],
+			];
 		}
 		?>
 		 <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">!-->

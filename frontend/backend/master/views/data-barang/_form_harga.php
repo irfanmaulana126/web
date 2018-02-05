@@ -13,6 +13,19 @@ use kartik\field\FieldRange;
 /* @var $this yii\web\View */
 /* @var $model app\backend\master\models\ItemFdiscount */
 /* @var $form yii\widgets\ActiveForm */
+$this->registerJs("
+
+$(document).ready(function() {
+	$('#hitung').change(function(){
+	var hpp=parseInt($('#productharga-hpp').val())
+	var ppn=parseInt($('#productharga-ppn').val());
+    var margin=parseInt($('#margin').val());
+	var hppbersih=hpp+margin;
+	$('#productharga-harga_jual-disp').val(hppbersih);
+	$('#productharga-harga_jual').val(hppbersih);
+	});
+});
+");
 $this->registerCss("   
 .product-discount-form #gv-all-data-prodak-harga-item .kv-grid-container{
 		height:100px;
@@ -109,7 +122,7 @@ $gvAttProdakHargaItem=[
 ];
 ?>
 
-<div class="product-discount-form">
+<div class="product-discount-form" id="hitung">
 <?= GridView::widget([
 		'id'=>'gv-all-data-prodak-harga-item',
 		'dataProvider' => $dataProviderHarga,
@@ -144,7 +157,6 @@ $gvAttProdakHargaItem=[
 	]); 
     ?>
 <?php $form = ActiveForm::begin(); ?>
-   
     <?php
         echo '<label class="control-label">Periode Tanggal</label>';
        echo DatePicker::widget([
@@ -162,18 +174,38 @@ $gvAttProdakHargaItem=[
             ]
         ]);
     ?>
-     <?= $form->field($model, 'HARGA_JUAL')->widget(MaskMoney::classname(), [
-                            'options' => ['placeholder' => 'Harga Barang ...'],
+     <?= $form->field($model, 'HPP')->widget(MaskMoney::classname(), [
+                            'options' => ['placeholder' => 'HPP ...'],
                             'pluginOptions'=>[
-                                'prefix'=>'Rp',
+                                'prefix'=>'Rp ',
+                                'precision' => 0
                             ],
                         ]) ?>
+     <?= $form->field($model, 'PPN')->textInput(['type'=>'number','min'=>0,'max'=>10,'allowEmpty' => true,'integerOnly' => false]) ?>
+    
+     <?= $form->field($model, 'margin')->widget(MaskMoney::classname(), [
+		'options' => [
+					'placeholder' => 'Margin Harga ...',
+					'class' => 'form-control',
+					'id'=>'margin',
+				],'pluginOptions' => [
+					'prefix' => 'Rp ',
+					'precision' => 0
+				 ]
+				]); ?>
+    <?= $form->field($model, 'HARGA_JUAL')->widget(MaskMoney::classname(), [
+                'options' => ['placeholder' => 'Harga Barang ...'],
+                'pluginOptions'=>[
+                    'prefix'=>'Rp ',
+                    'precision' => 0
+                ],
+            ]) ?>
     <br>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?php /* echo Html::button('calculator', ['class' => 'btn btn-warning','data-toggle'=>'modal','href'=>'#cal'])*/ ?>
     </div>
 <?php ActiveForm::end(); ?>
 
 
 </div>
-

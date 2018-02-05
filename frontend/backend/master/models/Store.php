@@ -128,6 +128,7 @@ class Store extends \yii\db\ActiveRecord
 
     public function getOwner(){
         $result=$this->user;
-        return $result=$result->ACCESS_LEVEL?:'';
+        $result = (empty($result->ACCESS_LEVEL)) ? '' : $result->ACCESS_LEVEL ;
+        return $result;
     }
 }
