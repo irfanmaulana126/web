@@ -8,7 +8,7 @@
 */
 
 /*
- * Js Harga Modal
+ * Js Modal harga hitung HPP
 */
 $(document).ready(function() {
 	$('#hitung').change(function(){

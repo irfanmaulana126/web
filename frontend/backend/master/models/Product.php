@@ -58,7 +58,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['STORE_ID', 'PRODUCT_ID','STOCK_LEVEL', 'YEAR_AT','PRODUCT_NM', 'MONTH_AT'], 'required'],
-            [['PRODUCT_SIZE', 'STOCK_LEVEL', 'CURRENT_STOCK', 'CURRENT_HPP', 'CURRENT_PRICE'], 'number'],
+            [['PRODUCT_SIZE', 'STOCK_LEVEL', 'CURRENT_STOCK', 'CURRENT_HPP', 'CURRENT_PRICE','PPN'], 'number'],
             [['INDUSTRY_ID', 'INDUSTRY_GRP_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['DCRP_DETIL'], 'string'],
@@ -93,6 +93,7 @@ class Product extends \yii\db\ActiveRecord
             'CURRENT_STOCK' => 'Current Stock',
             'CURRENT_HPP' => 'Current  Hpp',
             'CURRENT_PRICE' => 'Harga',
+            'CURRENT_PPN' => 'PPN',
             'INDUSTRY_ID' => 'Industry  ID',
             'INDUSTRY_NM' => 'Industri',
             'INDUSTRY_GRP_ID' => 'Industry  Grp  ID',

@@ -99,7 +99,6 @@ $this->registerCss("
 			//'label'=>'Cutomer',
 			'editableOptions'=> [
 					'header'=>'STATUS PEMBAYARAN', 
-					'asPopover' => true,
 					'size'=>'md',
 					'inputType' => \kartik\editable\Editable::INPUT_SWITCH,
 					'options' => [
