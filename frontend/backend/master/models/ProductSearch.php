@@ -20,7 +20,7 @@ class ProductSearch extends Product
         return [
             [['ID', 'INDUSTRY_ID', 'INDUSTRY_GRP_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['ACCESS_GROUP', 'STORE_ID', 'GROUP_ID', 'PRODUCT_ID', 'PRODUCT_QR', 'PRODUCT_NM', 'PRODUCT_WARNA', 'PRODUCT_SIZE_UNIT', 'PRODUCT_HEADLINE', 'UNIT_ID', 'INDUSTRY_NM', 'INDUSTRY_GRP_NM', 'IMG_FILE', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'CREATE_UUID', 'UPDATE_UUID', 'DCRP_DETIL'], 'safe'],
-            [['PRODUCT_SIZE', 'STOCK_LEVEL', 'CURRENT_STOCK', 'CURRENT_HPP', 'CURRENT_PRICE'], 'number'],
+            [['PRODUCT_SIZE', 'STOCK_LEVEL', 'CURRENT_STOCK', 'CURRENT_HPP', 'CURRENT_PPN','CURRENT_PRICE'], 'number'],
         ];
     }
 
@@ -69,6 +69,7 @@ class ProductSearch extends Product
             'CURRENT_STOCK' => $this->CURRENT_STOCK,
             'CURRENT_HPP' => $this->CURRENT_HPP,
             'CURRENT_PRICE' => $this->CURRENT_PRICE,
+            'CURRENT_PPN' => $this->CURRENT_PPN,
             'INDUSTRY_ID' => $this->INDUSTRY_ID,
             'INDUSTRY_GRP_ID' => $this->INDUSTRY_GRP_ID,
             'CREATE_AT' => $this->CREATE_AT,
