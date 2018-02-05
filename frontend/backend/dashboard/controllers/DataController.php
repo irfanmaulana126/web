@@ -24,6 +24,7 @@ use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryMonthly;
 use frontend\backend\dashboard\models\ChartWeeklySales;
 use frontend\backend\dashboard\models\ChartMonthlySales;
 use frontend\backend\dashboard\models\ChartDayHourSales;
+use frontend\backend\dashboard\models\MonthlySales;
 /**
  * FoodtownController implements the CRUD actions for Foodtown model.
  */
@@ -159,8 +160,9 @@ class DataController extends Controller
 			'TGL'=>$paramTGL						//'1'
 		]); */
 		//return $modelDayHourCount;		
-		return self::weekOfMonthMysql('2018-02-02');	
-		// return str_pad(10, 2, '0', STR_PAD_LEFT);		
+		//return self::weekOfMonthMysql('2018-02-02');	
+		// return str_pad(10, 2, '0', STR_PAD_LEFT);	
+       return MonthlySales::find()->all();		
 	}
 	
 	
