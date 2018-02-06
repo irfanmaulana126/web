@@ -56,22 +56,22 @@ class ChartMonthlySales extends Model
 	
 		foreach($modelStore as $rowStore => $valStore){
 			//=[1]== AMBIL DATA WEEKLY SALES
-			$modelWeek=MonthlySales::find()->where([
+			$modelMonth=MonthlySales::find()->where([
 				'STORE_ID'=>$valStore['STORE_ID'],//'170726220936.0001',
 				'TAHUN'=>$varTahun,
-				'BULAN'=>$varBulan
+				//'BULAN'=>$varBulan
 			])->all();
 			
 			//=[2]== AMBIL MINGGU AWAL BULAN
-			$firstWeekOfMonth=$model= self::weekOfMonthMysql($varTahun.'-'.$varBulan.'-01');
+			//$firstWeekOfMonth=$model= self::weekOfMonthMysql($varTahun.'-'.$varBulan.'-01');
 			
-			if ($modelWeek){	
+			if ($modelMonth){	
 					$rslt1['seriesname']=$valStore['STORE_NM'];//$modelWeek[0]['STORE_NM'];
 					$dataval1=[];
 					//=[3]==LOOPING 5 MINGGU
 					for( $i= 1 ; $i <= 12 ; $i++ ) {
-						$cariWeek=$firstWeekOfMonth + $i;					
-						$valData=Yii::$app->arrayBantuan->array_find($modelWeek,'BULAN',$cariWeek);
+						//$cariWeek=$firstWeekOfMonth + $i;					
+						$valData=Yii::$app->arrayBantuan->array_find($modelMonth,'BULAN',$i);
 						
 						if($valData){
 							$dataval1[]=['label'=>'bln'.$valData[0]['BULAN'],'value'=>$valData[0]['TOTAL_JUAL']];
@@ -107,7 +107,7 @@ class ChartMonthlySales extends Model
 			"captionFontSize"=>"12",
 			"subcaptionFontSize"=>"10",
 			"subcaptionFontBold"=>"0",
-			//"paletteColors"=> '"'.Yii::$app->arrayBantuan->ArrayPaletteColors().'"',
+			"paletteColors"=> Yii::$app->arrayBantuan->ArrayPaletteColors(),
 			"bgcolor"=>"#ffffff",
 			"showBorder"=>"0",
 			"showShadow"=>"0",				

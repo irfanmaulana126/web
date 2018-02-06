@@ -47,8 +47,11 @@ class WeeklySales extends \yii\db\ActiveRecord
             [['TRANS_WEEK'], 'required'],
             [['TRANS_DATE', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['BULAN', 'MINGGU'], 'integer'],
-            [['TOTAL_QTY', 'TOTAL_QTY_PRODUK', 'TOTAL_QTY_PPOB', 'TOTAL_PRODUK', 'TOTAL_PPOB', 'TOTAL_HPP', 'TOTAL_JUAL', 'TOTAL_DISCOUNT', 'TOTAL_PROMO'], 'number'],
-            [['TRANS_WEEK'], 'string', 'max' => 100],
+             [['TOTAL_QTY_PRODUK', 'TOTAL_HPP_PRODUK', 'TOTAL_PPN_PRODUK','TOTAL_JUAL_PRODUK','TOTAL_DISCOUNT_PRODUK','TOTAL_PROMO_PRODUK',
+			  'TOTAL_QTY_PPOB', 'TOTAL_JUAL_PPOB', 'TOTAL_QTY_OTHER','TOTAL_JUAL_OTHER',
+  			  'TOTAL_QTY', 'TOTAL_JUAL',
+			], 'safe'],
+			[['TRANS_WEEK'], 'string', 'max' => 100],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 20],
             [['TAHUN'], 'string', 'max' => 5],
@@ -69,15 +72,18 @@ class WeeklySales extends \yii\db\ActiveRecord
             'TAHUN' => 'Tahun',
             'BULAN' => 'Bulan',
             'MINGGU' => 'Minggu',
-            'TOTAL_QTY' => 'Total  Qty',
-            'TOTAL_QTY_PRODUK' => 'Total  Qty  Produk',
-            'TOTAL_QTY_PPOB' => 'Total  Qty  Ppob',
-            'TOTAL_PRODUK' => 'Total  Produk',
-            'TOTAL_PPOB' => 'Total  Ppob',
-            'TOTAL_HPP' => 'Total  Hpp',
-            'TOTAL_JUAL' => 'Total  Jual',
-            'TOTAL_DISCOUNT' => 'Total  Discount',
-            'TOTAL_PROMO' => 'Total  Promo',
+            'TOTAL_QTY_PRODUK' => 'TOTAL_QTY_PRODUK',
+			'TOTAL_HPP_PRODUK' => 'TOTAL_HPP_PRODUK',
+			'TOTAL_PPN_PRODUK' => 'TOTAL_PPN_PRODUK',
+			'TOTAL_JUAL_PRODUK' => 'TOTAL_JUAL_PRODUK',
+			'TOTAL_DISCOUNT_PRODUK' => 'TOTAL_DISCOUNT_PRODUK',
+			'TOTAL_PROMO_PRODUK' => 'TOTAL_PROMO_PRODUK',
+			'TOTAL_QTY_PPOB' => 'TOTAL_QTY_PPOB',
+			'TOTAL_JUAL_PPOB' => 'TOTAL_JUAL_PPOB',
+			'TOTAL_QTY_OTHER' => 'TOTAL_QTY_OTHER',
+			'TOTAL_JUAL_OTHER' => 'TOTAL_JUAL_OTHER',
+			'TOTAL_QTY' => 'TOTAL_QTY',
+			'TOTAL_JUAL' => 'TOTAL_JUAL',
             'CREATE_AT' => 'Create  At',
             'UPDATE_AT' => 'Update  At',
         ];
@@ -95,32 +101,38 @@ class WeeklySales extends \yii\db\ActiveRecord
 			'MINGGU'=>function($model){
 				return $model->MINGGU;
 			},
-			'TOTAL_HPP'=>function($model){
-				return $model->TOTAL_HPP;
-			},
-			'TOTAL_JUAL'=>function($model){
-				return $model->TOTAL_JUAL;
-			},
-			'TOTAL_DISCOUNT'=>function($model){
-				return $model->TOTAL_DISCOUNT;
-			},
-			'TOTAL_PROMO'=>function($model){
-				return $model->TOTAL_PROMO;
-			},
 			'TOTAL_QTY_PRODUK'=>function($model){
 				return $model->TOTAL_QTY_PRODUK;
+			},
+			'TOTAL_HPP_PRODUK'=>function($model){
+				return $model->TOTAL_HPP_PRODUK;
+			},
+			'TOTAL_PPN_PRODUK'=>function($model){
+				return $model->TOTAL_PPN_PRODUK;
+			},
+			'TOTAL_JUAL_PRODUK'=>function($model){
+				return $model->TOTAL_JUAL_PRODUK;
+			},
+			'TOTAL_DISCOUNT_PRODUK'=>function($model){
+				return $model->TOTAL_DISCOUNT_PRODUK;
+			},
+			'TOTAL_PROMO_PRODUK'=>function($model){
+				return $model->TOTAL_PROMO_PRODUK;
 			},
 			'TOTAL_QTY_PPOB'=>function($model){
 				return $model->TOTAL_QTY_PPOB;
 			},
+			'TOTAL_JUAL_PPOB'=>function($model){
+				return $model->TOTAL_JUAL_PPOB;
+			},
+			'TOTAL_QTY_OTHER'=>function($model){
+				return $model->TOTAL_QTY_OTHER;
+			},
+			'TOTAL_JUAL_OTHER'=>function($model){
+				return $model->TOTAL_JUAL_OTHER;
+			},
 			'TOTAL_QTY'=>function($model){
 				return $model->TOTAL_QTY;
-			},
-			'TOTAL_PRODUK'=>function($model){
-				return $model->TOTAL_PRODUK;
-			},
-			'TOTAL_PPOB'=>function($model){
-				return $model->TOTAL_PPOB;
 			},
 			'TOTAL_JUAL'=>function($model){
 				return $model->TOTAL_JUAL;
