@@ -182,7 +182,7 @@ class StockOpnameController extends Controller
 					['Nama Toko','Access Group','Produk','Lalu','Masuk','Terjual','Sisa','Closing','Actual']
 				],
 				'ceils' => $excel_ceilsProdukStok,
-				'freezePane' => 'A3',
+				'freezePane' => 'A2',
 				'columnGroup'=>false,
 				'autoSize'=>false,
 				'headerColor' => Postman4ExcelBehavior::getCssClass("header"),

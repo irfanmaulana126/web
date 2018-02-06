@@ -34,8 +34,8 @@ $this->registerCss("
 	}
 ");
 	$aryFieldUsrOps= [
-		['ID' =>0, 'ATTR' =>['FIELD'=>'username','SIZE' => '180px','label'=>'Karyawan','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>1, 'ATTR' =>['FIELD'=>'UUID','SIZE' => '180px','label'=>'UUID Perangkat','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>0, 'ATTR' =>['FIELD'=>'username','SIZE' => '180px','label'=>'KARYAWAN','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>1, 'ATTR' =>['FIELD'=>'UUID','SIZE' => '180px','label'=>'UUID PERANGKAT','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 	];
 	
 	$valFieldsUserOps = ArrayHelper::map($aryFieldUsrOps, 'ID', 'ATTR'); 

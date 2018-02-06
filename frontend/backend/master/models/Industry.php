@@ -41,8 +41,8 @@ class Industry extends \yii\db\ActiveRecord
     {
         return [
             'INDUSTRY_ID' => 'ID',
-            'INDUSTRY_GRP_ID' => 'Industry  Group',
-            'INDUSTRY_NM' => 'industry  Name',
+            'INDUSTRY_GRP_ID' => 'INDUSTRI GROUP',
+            'INDUSTRY_NM' => 'NAMA INDUSTRI',
             'CREATE_AT' => 'Create  At',
             'UPDATE_AT' => 'Update  AT',
         ];

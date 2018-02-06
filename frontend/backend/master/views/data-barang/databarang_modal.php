@@ -22,6 +22,9 @@ $this->registerCss("
 	#databarang-button-row-discount-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	#databarang-button-row-stock-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 	#cal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
@@ -246,9 +249,9 @@ $this->registerCss("
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
 				<i class="fa fa-cubes fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> Discount Prodak </b>
+			</span><b> DISKON PRODUK </b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-lg',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -270,9 +273,9 @@ $this->registerCss("
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
 				<i class="fa fa-gift fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> Promo Prodak</b>
+			</span><b> PROMO PRODUK</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-lg',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -294,9 +297,9 @@ $this->registerCss("
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
 				<i class="fa fa-money fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> Harga Prodak</b>
+			</span><b> HARGA PRODUK</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-lg',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -318,7 +321,7 @@ $this->registerCss("
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
 				<i class="fa fa-money fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> Stock Prodak</b>
+			</span><b> STOCK PRODUK</b>
 		',	
 		'size' => 'modal-md',
 		'options' => ['class'=>'slide'],

@@ -8,6 +8,22 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\FileInput;
 use kartik\widgets\ActiveField;
 use kartik\widgets\ActiveForm;
+$this->registerCss("
+#dv-store-data .panel-heading {
+	background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	color:#000;
+}
+#dv-store-data .panel-footer {
+	background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+}
+#dv-store-info .panel-heading {
+	background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	color:#000;
+}
+#dv-store-info .panel-footer {
+	background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+}
+");
 // print_r($modelToko);
 // die();
 	//Difinition Status.
@@ -47,6 +63,7 @@ use kartik\widgets\ActiveForm;
 	$attSroreData=[	
 		[
 			'attribute' =>'STORE_NM',
+			'label'=>'NAMA STORE',
 			'type'=>DetailView::INPUT_TEXTAREA,
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
@@ -63,7 +80,8 @@ use kartik\widgets\ActiveForm;
 		],
 		
 		[		
-			'attribute' =>'PROVINCE_NM',			
+			'attribute' =>'PROVINCE_NM',
+			'label'=>'PROVINSI',		
 			'format'=>'raw',
 			'value'=>''.(empty($modelToko['PROVINCE_NM'])) ? '':$modelToko['PROVINCE_NM'].'',
 			'type'=>DetailView::INPUT_SELECT2,
@@ -75,7 +93,8 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 		],
 		[	
-			'attribute' =>'CITY_NAME',			
+			'attribute' =>'CITY_NAME',
+			'label'=>'KOTA',			
 			'format'=>'raw',
 			'value'=>''.(empty($modelToko['CITY_NAME'])) ? '':$modelToko['CITY_NAME'].'',
 			'type'=>DetailView::INPUT_DEPDROP,
@@ -92,6 +111,7 @@ use kartik\widgets\ActiveForm;
 		], 
 		[
 			'attribute' =>'TLP',
+			'label'=>'PHONE',
 			//'type'=>DetailView::INPUT_TEXTAREA,
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
@@ -101,6 +121,7 @@ use kartik\widgets\ActiveForm;
 		[
 			'attribute' =>'PIC',
 			//'type'=>DetailView::INPUT_TEXTAREA,
+			'label'=>'PIC',
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
@@ -118,6 +139,7 @@ use kartik\widgets\ActiveForm;
 		],
 		[
 			'attribute' =>'FAX',
+			'label'=>'FAX',
 			'format'=>'raw', 
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,
@@ -125,6 +147,7 @@ use kartik\widgets\ActiveForm;
 		],
 		[
 			'attribute' =>'INDUSTRY_NM',
+			'label'=>'INDUSTRI',
 			'format'=>'raw', 
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			'displayOnly'=>true,
@@ -132,6 +155,7 @@ use kartik\widgets\ActiveForm;
 		],		
 		[
 			'attribute' =>'CREATE_AT',
+			'label'=>'CREATE',
 			'format'=>'raw',
 			'value'=>''.(empty($modelToko['CREATE_AT'])) ? '':$modelToko['CREATE_AT'].'',
 			'type'=>DetailView::INPUT_DATETIME,
@@ -143,6 +167,7 @@ use kartik\widgets\ActiveForm;
 		[
 			'attribute' =>'INDUSTRY_GRP_NM',
 			'format'=>'raw',
+			'label'=>'INDUSTRI GROUP',
 			'value'=>''.(empty($modelToko['INDUSTRY_GRP_NM'])) ? '':$modelToko['INDUSTRY_GRP_NM'].'',
 			'displayOnly'=>true,
 			'type'=>DetailView::INPUT_DATE,
@@ -167,6 +192,7 @@ use kartik\widgets\ActiveForm;
 		 [
 			'attribute' =>'STATUS',			
 			'format'=>'raw',
+			'label'=>'STATUS',
 			//'value'=>$modelToko->STATUS==0?'Disable':($modelToko->STATUS==1?'Enable':'Unknown'),
 			'value'=>sttMsg($modelToko['STATUS']),
 			'type'=>DetailView::INPUT_SELECT2,
@@ -209,7 +235,7 @@ use kartik\widgets\ActiveForm;
 		'condensed'=>true,
 		'hover'=>true,
 		'panel'=>[
-			'heading'=>'<b>System Info</b>',
+			'heading'=>'<b>INFO STORE</b>',
 			'type'=>DetailView::TYPE_INFO,
 		],
 		'mode'=>DetailView::MODE_VIEW,

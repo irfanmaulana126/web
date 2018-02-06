@@ -28,11 +28,11 @@ $(document).ready(function() {
 ");
 $this->registerCss("   
 .product-discount-form #gv-all-data-prodak-harga-item .kv-grid-container{
-		height:100px;
+		height:300px;
     }
 .product-discount-form	#gv-all-data-prodak-harga-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-		color: #444;
+		color: #000;
 	}
 .product-discount-form #gv-all-data-prodak-harga-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
@@ -123,6 +123,8 @@ $gvAttProdakHargaItem=[
 ?>
 
 <div class="product-discount-form" id="hitung">
+<div class="row">
+<div class="col-md-6">
 <?= GridView::widget([
 		'id'=>'gv-all-data-prodak-harga-item',
 		'dataProvider' => $dataProviderHarga,
@@ -156,9 +158,11 @@ $gvAttProdakHargaItem=[
 		// 'floatHeader'=>true,
 	]); 
     ?>
+</div>
+<div class="col-md-6">
 <?php $form = ActiveForm::begin(); ?>
     <?php
-        echo '<label class="control-label">Periode Tanggal</label>';
+        echo '<label class="control-label">PERIODE TANGGAL</label>';
        echo DatePicker::widget([
             'model' => $model,
             'attribute' => 'PERIODE_TGL1',
@@ -174,6 +178,7 @@ $gvAttProdakHargaItem=[
             ]
         ]);
     ?>
+    <br>
      <?= $form->field($model, 'HPP')->widget(MaskMoney::classname(), [
                             'options' => ['placeholder' => 'HPP ...'],
                             'pluginOptions'=>[
@@ -181,8 +186,6 @@ $gvAttProdakHargaItem=[
                                 'precision' => 0
                             ],
                         ]) ?>
-     <?= $form->field($model, 'PPN')->textInput(['type'=>'number','min'=>0,'max'=>10,'allowEmpty' => true,'integerOnly' => false]) ?>
-    
      <?= $form->field($model, 'margin')->widget(MaskMoney::classname(), [
 		'options' => [
 					'placeholder' => 'Margin Harga ...',
@@ -206,6 +209,6 @@ $gvAttProdakHargaItem=[
         <?php /* echo Html::button('calculator', ['class' => 'btn btn-warning','data-toggle'=>'modal','href'=>'#cal'])*/ ?>
     </div>
 <?php ActiveForm::end(); ?>
-
-
+</div>
+</div>
 </div>

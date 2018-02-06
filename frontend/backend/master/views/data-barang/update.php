@@ -76,7 +76,9 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'PRODUCT_HEADLINE')->textInput() ?>
 
 			<?= $form->field($model, 'STOCK_LEVEL')->textInput(['type'=>'number','min'=>1,'allowEmpty' => true,'integerOnly' => false]) ?>
-			
+			   
+			<?= $form->field($model, 'CURRENT_PPN')->textInput(['type'=>'number','min'=>0,'max'=>10,'allowEmpty' => true,'integerOnly' => false]) ?>
+    
 			<div class="col-md-6">
 				<?= 
 				'<label class="control-label">Unit Group</label>';

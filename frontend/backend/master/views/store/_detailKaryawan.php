@@ -36,11 +36,11 @@ use modulprj\absensi\models\AbsenImportPeriode;
 
 	$aryFieldKar= [
 		['ID' =>0, 'ATTR' =>['FIELD'=>'KTP','SIZE' => '180px','label'=>'KTP','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>1, 'ATTR' =>['FIELD'=>'Namakaryawan','SIZE' => '180px','label'=>'Karyawan','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>2, 'ATTR' =>['FIELD'=>'Ttl','SIZE' => '180px','label'=>'Tempat/Tanggal lahir','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>3, 'ATTR' =>['FIELD'=>'GENDER','SIZE' => '180px','label'=>'Jenis Kelamin','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>4, 'ATTR' =>['FIELD'=>'HP','SIZE' => '180px','label'=>'Phone','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>5, 'ATTR' =>['FIELD'=>'EMAIL','SIZE' => '180px','label'=>'e-Mail','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>1, 'ATTR' =>['FIELD'=>'Namakaryawan','SIZE' => '180px','label'=>'KARYAWAN','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>2, 'ATTR' =>['FIELD'=>'Ttl','SIZE' => '180px','label'=>'TEMPAT/TANGGAL LAHIR','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>3, 'ATTR' =>['FIELD'=>'GENDER','SIZE' => '180px','label'=>'JENIS KELAMIN','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>4, 'ATTR' =>['FIELD'=>'HP','SIZE' => '180px','label'=>'PHONE','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>5, 'ATTR' =>['FIELD'=>'EMAIL','SIZE' => '180px','label'=>'E-MAIL','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 		['ID' =>6, 'ATTR' =>['FIELD'=>'ALAMAT','SIZE' => '180px','label'=>'ALAMAT','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 		['ID' =>7, 'ATTR' =>['FIELD'=>'UPAH_HARIAN','SIZE' => '180px','label'=>'UPAH/HARI','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 	];

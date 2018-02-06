@@ -19,7 +19,51 @@ $this->registerCss("
 	.modal-content { 
 		border-radius: 5px;
 	}
-	
+	#store-button-restore-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#store-button-create-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#store-button-edit-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-view-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-edit-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-discount-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-promo-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-stock-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-harga-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-view-discount-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-edit-discount-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-view-promo-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-edit-promo-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-view-harga-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#databarang-button-row-edit-harga-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 ");
 
 	$modalHeaderColor='#fbfbfb';//' rgba(74, 206, 231, 1)';
@@ -166,7 +210,7 @@ $this->registerCss("
 				<i class="fa fa-cubes fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> Discount Prodak </b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-lg',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -190,7 +234,7 @@ $this->registerCss("
 				<i class="fa fa-gift fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> Promo Prodak</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-lg',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -214,7 +258,7 @@ $this->registerCss("
 				<i class="fa fa-money fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> Harga Prodak</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-lg',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
