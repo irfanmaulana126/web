@@ -15,35 +15,24 @@ use kartik\widgets\DateTimePicker;;
 			'enableClientValidation'=> true,
 			//'enableAjaxValidation'=>true,
 			//'method' => 'post',
-			//'validationUrl'=>Url::toRoute('/absensi/absen-import/valid')
-			'action' =>['/inventory/stock-product/export']
+			//'validationUrl'=>Url::toRoute('/inventory/stock-opname/valid')
+			'action' =>['/inventory/stock-masuk/export']
    ]); ?>
 		<div style="height:100%;font-family: verdana, arial, sans-serif ;font-size: 6pt;">
 		<div class="row" >
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<?php
-						echo $form->field($modelPeriode, 'TAHUN')->widget(DatePicker::classname(), [
+						echo $form->field($modelPeriode, 'TAHUNBULAN')->widget(DatePicker::classname(), [
 							'options' => ['placeholder' => 'Enter date ...'],
 							'convertFormat' => true,
 							'pluginOptions' => [
 								'autoclose'=>true,
-								// 'startView'=>'year',
-								// 'minViewMode'=>'months',
+								'startView'=>'year',
+								'minViewMode'=>'months',
 								// 'todayHighlight' => true,
-								 'format' => 'yyyy-MM-dd'
+								 'format' => 'yyyy-MM'
 							],
-						])->label('PILIH TAHUN');		
-					?>
-					<?php
-						// echo $form->field($modelPeriode, 'BULAN')->widget(DatePicker::classname(), [
-							// 'options' => ['placeholder' => 'Enter date ...'],
-							// 'convertFormat' => true,
-							// 'pluginOptions' => [
-								// 'autoclose'=>true,
-								// 'todayHighlight' => true,
-								// 'format' => 'yyyy-MM-dd'
-							// ],
-						// ])->label('PILIH BULAN');			
+						])->label('PILIH TAHUN DAN BULAN');		
 					?>
 				</div>
 					

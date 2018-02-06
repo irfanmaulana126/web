@@ -50,7 +50,7 @@ $this->registerCss("
 	}
 	#gv-all-data-prodak-harga-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-		color: #444;
+		color: #000;
 	}
 	#gv-all-data-prodak-harga-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);

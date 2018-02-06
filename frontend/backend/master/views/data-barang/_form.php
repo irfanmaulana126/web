@@ -32,7 +32,7 @@ use yii\helpers\Url;
             'pluginOptions' => [
                 'allowClear' => true
             ], 
-        ])->label('Store')?>
+        ])->label('STORE')?>
 			
 			<?= $form->field($model, 'PRODUCT_NM')->textInput() ?>
 

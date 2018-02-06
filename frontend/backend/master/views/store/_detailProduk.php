@@ -36,13 +36,13 @@ $this->registerCss("
 
 
 	$aryFieldPrd= [
-		['ID' =>0, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '180px','label'=>'Prodak','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>1, 'ATTR' =>['FIELD'=>'INDUSTRY_GRP_NM','SIZE' => '180px','label'=>'Industri Group','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>2, 'ATTR' =>['FIELD'=>'INDUSTRY_NM','SIZE' => '180px','label'=>'Industri','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>3, 'ATTR' =>['FIELD'=>'PRODUCT_SIZE_UNIT','SIZE' => '60px','label'=>'Satuan','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>4, 'ATTR' =>['FIELD'=>'PRODUCT_SIZE','SIZE' => '50px','label'=>'Nilai','align'=>'right','format'=>['decimal', 2],'mergeHeader'=>false]],
-		['ID' =>5, 'ATTR' =>['FIELD'=>'productHargaTbl','SIZE' => '80px','label'=>'Harga','align'=>'right','format'=>['decimal', 2],'mergeHeader'=>false]],
-		['ID' =>6, 'ATTR' =>['FIELD'=>'productStockTbl','SIZE' => '50px','label'=>'Qty','align'=>'right','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>0, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '180px','label'=>'PRODUK','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>1, 'ATTR' =>['FIELD'=>'INDUSTRY_GRP_NM','SIZE' => '180px','label'=>'INDUSTRI Group','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>2, 'ATTR' =>['FIELD'=>'INDUSTRY_NM','SIZE' => '180px','label'=>'INDUSTRI','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>3, 'ATTR' =>['FIELD'=>'PRODUCT_SIZE_UNIT','SIZE' => '60px','label'=>'SATUAN','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>4, 'ATTR' =>['FIELD'=>'PRODUCT_SIZE','SIZE' => '50px','label'=>'NILAI','align'=>'right','format'=>['decimal', 2],'mergeHeader'=>false]],
+		['ID' =>5, 'ATTR' =>['FIELD'=>'productHargaTbl','SIZE' => '80px','label'=>'HARGA','align'=>'right','format'=>['decimal', 2],'mergeHeader'=>false]],
+		['ID' =>6, 'ATTR' =>['FIELD'=>'productStockTbl','SIZE' => '50px','label'=>'QTY','align'=>'right','format'=>'raw','mergeHeader'=>false]],
 	];	
 	$valFieldsProdak = ArrayHelper::map($aryFieldPrd, 'ID', 'ATTR'); 
 	$bColor='rgba(87,114,111, 1)';

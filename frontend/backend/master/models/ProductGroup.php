@@ -57,16 +57,16 @@ class ProductGroup extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
-            'ACCESS_GROUP' => 'Access  Group',
-            'STORE_ID' => 'Store  ID',
-            'GROUP_ID' => 'Group  ID',
-            'GROUP_NM' => 'Nama Group',
+            'ACCESS_GROUP' => 'ACCESS GROUP',
+            'STORE_ID' => 'STORE ID',
+            'GROUP_ID' => 'GROUP ID',
+            'GROUP_NM' => 'NAMA GROUP',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
             'UPDATE_AT' => 'Update  At',
-            'STATUS' => 'Status',
-            'NOTE' => 'Note',
+            'STATUS' => 'STATUS',
+            'NOTE' => 'NOTE',
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];

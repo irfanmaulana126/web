@@ -35,9 +35,9 @@ use modulprj\absensi\models\AbsenImportPeriode;
 	");
 
 	$aryFieldPlg= [
-		['ID' =>0, 'ATTR' =>['FIELD'=>'NAME','SIZE' => '180px','label'=>'Nama','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>1, 'ATTR' =>['FIELD'=>'PHONE','SIZE' => '180px','label'=>'Phone','align'=>'left','format'=>'raw','mergeHeader'=>false]],
-		['ID' =>2, 'ATTR' =>['FIELD'=>'EMAIL','SIZE' => '180px','label'=>'E-mail','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>0, 'ATTR' =>['FIELD'=>'NAME','SIZE' => '180px','label'=>'NAMA','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>1, 'ATTR' =>['FIELD'=>'PHONE','SIZE' => '180px','label'=>'PHONE','align'=>'left','format'=>'raw','mergeHeader'=>false]],
+		['ID' =>2, 'ATTR' =>['FIELD'=>'EMAIL','SIZE' => '180px','label'=>'E-MAIL','align'=>'left','format'=>'raw','mergeHeader'=>false]],
 	];	
 	$valFieldsPlg = ArrayHelper::map($aryFieldPlg, 'ID', 'ATTR'); 
 	$bColor='rgba(87,114,111, 1)';

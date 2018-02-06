@@ -33,7 +33,7 @@ $this->registerCss("
 	}
 	#gv-all-data-prodak-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-		color: #444;
+		color: #000;
 	}
 	#gv-all-data-prodak-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
@@ -380,12 +380,11 @@ $this->registerCss("
 		'toolbar' => false,
 		'panel' => [
 			// 'heading'=>false,
-			'heading'=>$pageNm,
+			'heading'=>'<div class="pull-right">'.tombolCreate().'&nbsp;</div>'.$pageNm,
 			'type'=>'default',
 			'before'=>false,
 			'showFooter'=>false,
 			'after'=>false,
-			'before'=>'<div class="pull-right">'.tombolCreate().'</div>',
 			// 'before'=> tombolReqStore(),
 		],
 		// 'floatOverflowContainer'=>true,

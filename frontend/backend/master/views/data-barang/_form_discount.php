@@ -15,11 +15,11 @@ use kartik\field\FieldRange;
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCss("   
 .product-discount-form #gv-all-data-prodak-harga-item .kv-grid-container{
-		height:100px;
+		height:300px;
     }
 .product-discount-form	#gv-all-data-prodak-harga-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-		color: #444;
+		color: #000;
 	}
 .product-discount-form #gv-all-data-prodak-harga-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
@@ -108,8 +108,9 @@ $gvAttProdakDiscountItem=[
     ],
 ];
 ?>
-
 <div class="product-discount-form">
+<div class="row">
+<div class="col-md-6">
 <?= GridView::widget([
 		'id'=>'gv-all-data-prodak-harga-item',
 		'dataProvider' => $dataProvider,
@@ -143,9 +144,11 @@ $gvAttProdakDiscountItem=[
 		// 'floatHeader'=>true,
 	]); 
     ?>
+</div>
+<div class="col-md-6">
 <?php $form = ActiveForm::begin(); ?>
     <?php
-        echo '<label class="control-label">Periode Tanggal</label>';
+        echo '<label class="control-label">PERIODE TANGGAL</label>';
        echo DatePicker::widget([
             'model' => $model,
             'attribute' => 'PERIODE_TGL1',
@@ -161,6 +164,7 @@ $gvAttProdakDiscountItem=[
             ]
         ]);
     ?>
+    <br>
     <?= $form->field($model,'DISCOUNT')->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false]) ?>
             
     <br>
@@ -168,7 +172,8 @@ $gvAttProdakDiscountItem=[
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 <?php ActiveForm::end(); ?>
+</div>
 
 
 </div>
-
+</div>

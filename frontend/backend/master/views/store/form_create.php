@@ -9,6 +9,7 @@ use common\models\LocateProvince;
 use yii\helpers\ArrayHelper;
 use frontend\backend\master\models\Industry;
 use frontend\backend\master\models\IndustryGroup;
+use yii\widgets\MaskedInput;
 
 use yii\helpers\Url;
 /* @var $this yii\web\View */
@@ -103,7 +104,7 @@ $this->registerJS('$("#store-button-restore-modal").on("shown", function () {
             'pluginOptions' => [
                 'allowClear' => true
             ],
-        ])->label('Industri Group'); ?>
+        ])->label('INDUSTRI GROUP'); ?>
                 
     </div>
     
@@ -117,17 +118,19 @@ $this->registerJS('$("#store-button-restore-modal").on("shown", function () {
                 'placeholder'=>'Select...',
                 'url'=>Url::to(['/master/store/industry'])
             ],
-        ])->label('Industri'); ?>
+        ])->label('INDUSTRI'); ?>
                 
     </div>
     <div class="col-md-4">
         <?= $form->field($model, 'PIC')->textInput() ?>
     </div>
     <div class="col-md-4">
-        <?= $form->field($model, 'TLP')->textInput() ?>
+        <?= $form->field($model, 'TLP')->widget(MaskedInput::classname(),
+        ['mask' => '(999) 9999999'])->label('Phone') ?>
     </div>
     <div class="col-md-4">
-        <?= $form->field($model, 'FAX')->textInput() ?>    
+        <?= $form->field($model, 'FAX')->widget(MaskedInput::classname(),
+        ['mask' => '(999) 9999999']) ?>    
     </div>
    
     <div class="col-md-12">

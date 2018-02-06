@@ -56,7 +56,7 @@ $this->registerCss("
 	}
 	#gv-all-data-prodak-stock-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-		color: #444;
+		color: #000;
 	}
 	#gv-all-data-prodak-stock-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
@@ -108,7 +108,7 @@ $this->registerCss("
 		],	
 		[
 			'attribute'=>'PRODUCT_NM',
-			'label'=>'Nama Produk',
+			'label'=>'NAMA PRODUK',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
 			'hAlign'=>'right',
@@ -128,7 +128,7 @@ $this->registerCss("
 		//SATUAN
 		[
 			'attribute'=>'INPUT_TIME',
-			'label'=>'Time',
+			'label'=>'WAKTU',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',

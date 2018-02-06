@@ -43,6 +43,13 @@ $this->registerCss("
 	#gv-store .kv-grid-container{
 		height:200px
 	}
+	#gv-store .panel-heading {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		color:#000;
+	}
+	#gv-store .panel-footer {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 ");
 $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 $this->registerJs("
@@ -491,7 +498,7 @@ echo $this->render('modal_store'); //echo difinition
 				<span class="fa-stack fa-sm">
 				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
 				  <i class="fa fa-text-width fa-stack-1x"></i>
-				</span> List Toko'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;"> </div></div> ',  
+				</span> LIST TOKO'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;"> </div></div> ',  
 			'type'=>'info',
 			'before'=>false,
 			'after'=>false,

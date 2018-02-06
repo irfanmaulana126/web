@@ -49,7 +49,7 @@ $this->registerCss("
 	}
 	#gv-all-data-prodak-dicount-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-		color: #444;
+		color: #000;
 	}
 	#gv-all-data-prodak-dicount-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
@@ -73,6 +73,7 @@ $this->registerCss("
 		],
 		[
 			'attribute'=>'STORE_NM',
+			'label'=>'NAMA STORE',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -102,7 +103,7 @@ $this->registerCss("
 		],	
 		[
 			'attribute'=>'PRODUCT_NM',
-			'label'=>'Nama Produk',
+			'label'=>'NAMA PRODUK',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
 			'hAlign'=>'right',
