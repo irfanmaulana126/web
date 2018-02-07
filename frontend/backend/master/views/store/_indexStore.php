@@ -52,10 +52,6 @@ $this->registerCss("
 	}
 ");
 $this->registerJs($this->render('modal_store.js'),View::POS_READY);
-$this->registerJs("
-
-",View::POS_READY);
-
 echo $this->render('button_store'); //echo difinition
 echo $this->render('modal_store'); //echo difinition
 	

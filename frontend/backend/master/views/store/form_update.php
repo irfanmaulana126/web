@@ -85,10 +85,6 @@ $this->registerJS('
             }      
             
 ');
-$this->registerJS('$("#store-button-restore-modal").on("shown", function () {
-    google.maps.event.trigger(map, "resize");
-});
-');
 ?>
 <div class="ppob-header-form">
 
