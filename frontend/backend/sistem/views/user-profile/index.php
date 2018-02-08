@@ -19,6 +19,50 @@ $this->title = 'User Profiles';
 $headerColor='rgba(128, 179, 178, 1)';
 //print_r($userProvinsi);
 $this->registerCss("
+	.custom-file-input::-webkit-file-upload-button {
+		visibility: hidden;
+	}
+	.custom-file-input::before {
+		content: 'Pilih Foto';
+		display: inline-block;
+		background: #d2d6de;
+		border-radius: 3px;
+		padding: 5px 8px;
+		outline: none;
+		white-space: nowrap;
+		-webkit-user-select: none;
+		cursor: pointer;
+		text-shadow: 1px 1px #666;
+		font-weight: 700;
+		font-size: 10pt;
+	}
+	.custom-file-input:hover::before {
+		border-color: black;
+	}
+	.custom-file-input:active::before {
+		background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+	}
+	.w3-example {
+		background-color: #f1f1f1;
+		width: 170px;
+		height: 220px;
+		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+	}
+	input[type='file']{
+		color: transparent;
+	}
+	.image {
+	opacity: 1;
+	display: block;
+	width: 100%;
+	height: auto;
+	transition: .5s ease;
+	backface-visibility: hidden;
+	}
+	.tombol {
+		padding-top:15px;
+		margin-left:40px;
+	}
 	:link {
 		color: #fdfdfd;
 	}
@@ -120,10 +164,7 @@ echo $this->render('modal_store'); //echo difinition
 					</span>','',['title'=>'Delete']);
 		}
 	};	
-	
-	
-	
-	
+		
 	$bColor='rgba(87,114,111, 1)';
 		
 	$gvAttributeItem=[
@@ -320,14 +361,33 @@ echo $this->render('modal_store'); //echo difinition
 				'delay' => 1000
 			]);
 		}?>
+		
 <div class="row">
     <div class="col-sm-2">
-		<?php if(empty($dataProviderimage->ACCESS_IMAGE)){?>
-			<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" class="img-circle" style="width:165px;height:165px;align:center">
-		<?php }else{?>
-			<img src="<?php echo $dataProviderimage->ACCESS_IMAGE;?>" alt="Your Avatar" class="img-circle" style="width:165px;height:165px;align:center">
-		<?php }?>
+		<div class="w3-example">
+			<div class="penampung">
+				<?php if(empty($dataProviderimage->ACCESS_IMAGE)){?>
+					<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" class="image img-circle" style="width:150px;height:150px;margin-left:10px">
+				<?php }else{?>
+					<img src="<?php echo $dataProviderimage->ACCESS_IMAGE;?>" alt="Your Avatar" class="image img-circle" style="width:150px;height:150px;margin-left:10px">
+				<?php }?>
+				</div>
+				<div class="tombol">
+
+				<?php $form = ActiveForm::begin([
+					'method' => 'post',
+					'action' =>['/sistem/user-image/update?ACCESS_ID='.Yii::$app->user->identity->ACCESS_ID.''],
+					'options'=>['enctype'=>'multipart/form-data'],
+					'validateOnSubmit' => true,
+					'enableAjaxValidation' => true,
+					'validationUrl'=>['/sistem/user-image/val-image']
+					]); ?>
+					<?= $form->field($dataProviderimage, 'ACCESS_IMAGE')->fileInput(['onchange'=>'this.form.submit()', 'class'=>'custom-file-input', 'accept'=>'image/x-png,image/gif,image/jpeg'])->label(false); ?>
+				<?php ActiveForm::end(); ?>
+			</div>
+		</div>
 	</div>
+
     <div class="col-sm-10">
         <?php echo DetailView::widget([
 			'id'=>'dv-info',
@@ -412,12 +472,16 @@ echo $this->render('modal_store'); //echo difinition
                 ],
             ]
         ]);?>
+		<div class="col-md-8">
+		<p>Besar file: maksimum 10.000.000 bytes (10 Megabytes)
+			Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG</p>
+		</div>
 		<div class="pull-right">		
 			<?php echo tombolEditProfile($dataProvider);?>
 			<?php echo tombolChange($dataProvider);?>
 		</div>
     </div>
-    </div>
+</div>
 	<hr>
 	Next For Dompet
 	<hr>
