@@ -92,5 +92,25 @@ class UserProfileSearch extends UserProfile
 	{	
 		return $this->LAHIR_TEMPAT.'/'.$this->LAHIR_TGL;
 	}
+	public function getGender()
+	{	
+		return $this->LAHIR_GENDER;
+	}
+	public function getKtp()
+	{	
+		return $this->KTP;
+	}
+	public function getHp()
+	{	
+		return $this->HP;
+	}
+	public function getEmail()
+	{	
+		return $this->EMAIL;
+	}
+	public function getAlamat()
+	{	
+		return $this->ALMAT;
+	}
 
 }

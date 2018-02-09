@@ -43,8 +43,8 @@ class UserImage extends \yii\db\ActiveRecord
         return [
             [['ACCESS_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
             [['ACCESS_IMAGE', 'DCRP_DETIL'], 'string'],
-            [['upload_file'], 'file', 'skipOnEmpty' => true,'extensions'=>'jpg,png', 'mimeTypes'=>'image/jpeg, image/png','maxSize' => 512000, 'tooBig' => 'Limit is 500KB'],
-			[['ACCESS_IMAGE'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png', 'mimeTypes'=>'image/jpeg, image/png','maxSize' => 512000, 'tooBig' => 'Limit is 500KB'],
+            [['upload_file'], 'file', 'skipOnEmpty' => true,'extensions'=>'jpg,png', 'mimeTypes'=>'image/jpeg, image/png'],
+			[['ACCESS_IMAGE'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png', 'mimeTypes'=>'image/jpeg, image/png'],
             [['CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['ACCESS_ID', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],

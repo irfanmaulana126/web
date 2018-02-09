@@ -41,6 +41,17 @@ $(document).on('click','#databarang-button', function(ehead){
 	.load($(this).attr('value'));
 });
 /*
+ * BUTTON UPLOAD FORMAT.
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-upload', function(ehead){ 			  
+	$('#databarang-button-upload-modal').modal('show')
+	.find('#databarang-button-upload-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+/*
  * BUTTON CREATE GROUP PRODUCT
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
@@ -219,3 +230,4 @@ $(document).on('click','#databarang-button-row-edit-promo', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+
