@@ -10,8 +10,8 @@ use yii\web\Response;
 use yii\helpers\Json;
 use yii\helpers\ArrayHelper;
 
-use common\models\Store;
-use common\models\StoreSearch;
+use frontend\backend\sistem\models\Store;
+use frontend\backend\sistem\models\StoreSearch;
 
 class PermissionController extends Controller
 {

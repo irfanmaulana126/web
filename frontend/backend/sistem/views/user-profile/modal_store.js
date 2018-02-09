@@ -1,67 +1,102 @@
 /**
  * ===============================
- * JS Modal Import
+ * JS Modal store
  * Author	: ptr.nov2gmail.com
- * Update	: 05/09/2017
+ * Update	: 21/01/2017
  * Version	: 2.1
  * ===============================
 */
-
 /*
- * Js Modal harga hitung HPP
+ * BUTTON CREATE
 */
-$(document).ready(function() {
-	$('#hitung').change(function(){
-	var persedian=parseInt($('#persedian').val());
-	var pembelian=parseInt($('#pembelian').val());
-	var bahanangkut=parseInt($('#bahanangkut').val());
-	var retur=parseInt($('#retur').val());
-	var potongan=parseInt($('#potongan').val());
-	var persedianakhir=parseInt($('#persedianakhir').val());
-	var belibersi=(pembelian+bahanangkut)-(retur+potongan);
-	var barangjual=(belibersi+persedian);
-	var hpp=(barangjual+persedianakhir);
-	$('#harga').val(barangjual);
-	$('#hpp').val(hpp);
-	$('#harga-disp').val(barangjual);
-	$('#hpp-disp').val(hpp);
-	$('#productharga-harga_jual-disp').val(barangjual);
-	$('#productharga-harga_jual').val(barangjual);
-	$('#productharga-hpp-disp').val(hpp);
-	$('#productharga-hpp').val(hpp);
-	});
+$("#store-button-restore-modal").on("shown", function () {
+    google.maps.event.trigger(map, "resize");
 });
 
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 //$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
-$(document).on('click','#databarang-button', function(ehead){ 			  
-	$('#databarang-button-modal').modal('show')
-	.find('#databarang-button-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+$(document).on('click','#store-button-create', function(ehead){ 			  
+	$('#store-button-create-modal').modal('show')
+	.find('#store-button-create-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
 /*
- * BUTTON UPLOAD FORMAT.
+ * BUTTON update
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 //$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
-$(document).on('click','#databarang-button-upload', function(ehead){ 			  
-	$('#databarang-button-upload-modal').modal('show')
-	.find('#databarang-button-upload-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+$(document).on('click','#store-button-edit', function(ehead){ 			  
+	$('#store-button-edit-modal').modal('show')
+	.find('#store-button-edit-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
 /*
- * BUTTON CREATE GROUP PRODUCT
+ * deepdrop
+*/
+$('#provinsi').change(function() { 
+	change();
+ });
+ function change()
+ {
+	 var selectValue=$('#provinsi').val();
+	 $('#kota').empty();
+	 $.post('/master/store/kota?prov='+selectValue,
+		function(data){
+			$('select#kota').html(data);
+		});
+
+ };
+/*
+ * store-View.
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 //$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
-$(document).on('click','#create-group-product-button', function(ehead){ 			  
-	$('#create-group-product-button-modal').modal('show')
-	.find('#create-group-product-button-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+$(document).on('click','#store-button-view', function(ehead){ 			  
+	$('#store-modal-view').modal('show')
+	.find('#store-modal-content-view').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+/*
+ * BUTTON stock
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-stock', function(ehead){ 			  
+	$('#databarang-button-row-stock-modal').modal('show')
+	.find('#databarang-button-row-stock-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+/*
+ * store-REview.
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+$(document).on('click','#store-button-review', function(ehead){ 			  
+	$('#store-modal-review').modal('show')
+	.find('#store-modal-content-review').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	.load(ehead.target.value);
+});
+
+/*
+ * store-Export-Excel.
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+$(document).on('click','#store-button-export-excel', function(ehead){ 			  
+	$('#store-modal-export-excel').modal('show')
+	.find('#store-modal-content-export-excel').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	.load(ehead.target.value);
+});
+
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+$(document).on('click','#store-button-restore', function(ehead){ 			  
+	$('#store-button-restore-modal').modal('show')
+	.find('#store-button-restore-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	.load(ehead.target.value);
+});
+
 
 /*
  * BUTTON VIEW KARYAWAN
@@ -83,29 +118,6 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 $(document).on('click','#databarang-button-row-edit', function(ehead){ 			  
 	$('#databarang-button-row-edit-modal').modal('show')
 	.find('#databarang-button-row-edit-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	//.load(ehead.target.value);
-	.load($(this).attr('value'));
-});
-/*
- * BUTTON VIEW KARYAWAN
-*/
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};
-//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
-$(document).on('click','#group-product-button-row-view', function(ehead){ 			  
-	$('#group-product-button-row-view-modal').modal('show')
-	.find('#group-product-button-row-view-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	//.load(ehead.target.value);
-	.load($(this).attr('value'));
-});
-
-/*
- * BUTTON EDIT KARYAWAN
-*/
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};
-//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
-$(document).on('click','#group-product-button-row-edit', function(ehead){ 			  
-	$('#group-product-button-row-edit-modal').modal('show')
-	.find('#group-product-button-row-edit-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
@@ -142,17 +154,6 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 $(document).on('click','#databarang-button-row-promo', function(ehead){ 			  
 	$('#databarang-button-row-promo-modal').modal('show')
 	.find('#databarang-button-row-promo-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
-	//.load(ehead.target.value);
-	.load($(this).attr('value'));
-});
-/*
- * BUTTON stock
-*/
-$.fn.modal.Constructor.prototype.enforceFocus = function(){};
-//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
-$(document).on('click','#databarang-button-row-stock', function(ehead){ 			  
-	$('#databarang-button-row-stock-modal').modal('show')
-	.find('#databarang-button-row-stock-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
@@ -231,3 +232,59 @@ $(document).on('click','#databarang-button-row-edit-promo', function(ehead){
 	.load($(this).attr('value'));
 });
 
+/*
+ * BUTTON CHANGE
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#userprofile-button-row-change', function(ehead){ 			  
+	$('#userprofile-button-row-change-modal').modal('show')
+	.find('#userprofile-button-row-change-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON PROFILE
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#userprofile-button-row-profil', function(ehead){ 			  
+	$('#userprofile-button-row-profil-modal').modal('show')
+	.find('#userprofile-button-row-profil-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+/**
+ * ======================================== TIPS ========================================
+ * HELPER INCLUDE FILE
+ * include 	: index.php [MODAL JS AND CONTENT].
+ * File		: modal_store.js And modal_store.php
+ * Version	: 2.1
+*/
+/* 
+	$this->registerJs($this->render('modal_store.js'),View::POS_READY);
+	echo $this->render('modal_store');
+*/
+
+/**
+ * HELPER BUTTON 
+ * Action 	: Button
+ * include	: View
+ * Version	: 2.1
+*/
+/* 
+	return  Html::button(Yii::t('app', 
+		'<span class="fa-stack fa-xs">																	
+			<i class="fa fa-circle fa-stack-2x " style="color:#f08f2e"></i>
+			<i class="fa fa-cart-arrow-down fa-stack-1x" style="color:#fbfbfb"></i>
+		</span> View Customers'
+	),
+	['value'=>url::to(['/marketing/sales-promo/view','id'=>$model->ID]),
+	'id'=>'store-button-view',
+	'class'=>"btn btn-default btn-xs ",      
+	'style'=>['text-align'=>'left','width'=>'170px', 'height'=>'25px','border'=> 'none'],
+	]); 
+*/
+
+/*=========================================================================================*/
