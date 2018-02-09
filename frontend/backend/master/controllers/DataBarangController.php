@@ -429,5 +429,24 @@ class DataBarangController extends Controller
         echo Json::encode(['output'=>'', 'selected'=>'']);
     }
     
-
+/**====================================
+	* UPLOAD OPNAME - FORMAT
+	* @return mixed
+	* @author piter [ptr.nov@gmail.com]
+	* @since 1.2
+	* ====================================
+	*/
+	public function actionUploadFile(){
+		$modelPeriode = new \yii\base\DynamicModel([
+			'uploadExport'
+		]);		
+		$modelPeriode->addRule(['uploadExport'], 'required')
+         ->addRule(['uploadExport'], 'safe');
+		 
+		if (!$modelPeriode->load(Yii::$app->request->post())) {
+			return $this->renderAjax('form_upload',[
+				'modelPeriode' => $modelPeriode
+			]);
+		}
+	}
 }

@@ -10,24 +10,18 @@ use yii\web\Response;
 use kartik\widgets\ActiveForm;
 class UserImageController extends Controller
 {
-    public function actionValImage(){
-        $model = new UserImage;
-        if (Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if (!$model->validate()) {
-                return ActiveForm::validate($model);
-            }
-        }
-    }
+    
     public function actionUpdate($ACCESS_ID)
     {
 
         $model = new UserImage;  
 
         if ($model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            if($model->validate()){
-                // throw new NotAcceptableHttpException('Tiene errores de validación en la forma');
+            $data=UploadedFile::getInstance($model, 'ACCESS_IMAGE');
+            // print_r($data->size);die();
+            if($data->size>=512000){
+                Yii::$app->session->setFlash('error', 'Ukuran File anda '.$data->size.' bytes Terlalu Besar. Maksimal 51200 bytes/500KB');
+                $this->redirect(array('/sistem/user-profile')); 
             }else{
                 if (!empty(UploadedFile::getInstance($model, 'ACCESS_IMAGE'))) {
                     $transaction = Yii::$app->db->beginTransaction();

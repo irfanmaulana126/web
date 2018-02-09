@@ -380,7 +380,7 @@ $this->registerCss("
 		'toolbar' => false,
 		'panel' => [
 			// 'heading'=>false,
-			'heading'=>'<div class="pull-right">'.tombolCreate().'&nbsp;</div>'.$pageNm,
+			'heading'=>'<div class="pull-right">'.tombolExportExcel().' '.tombolImportExcel().' '.tombolCreate().'&nbsp;</div>'.$pageNm,
 			'type'=>'default',
 			'before'=>false,
 			'showFooter'=>false,

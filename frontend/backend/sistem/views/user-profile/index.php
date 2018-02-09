@@ -17,6 +17,9 @@ use frontend\backend\sistem\models\Store;
 
 $this->title = 'User Profiles';
 $headerColor='rgba(128, 179, 178, 1)';
+$user = (empty(Yii::$app->user->identity->ACCESS_ID)) ? '' : Yii::$app->user->identity->ACCESS_ID;
+$genderx = (empty($dataProvider->gender)) ? '' : $dataProvider->gender;
+    
 //print_r($userProvinsi);
 $this->registerCss("
 	.custom-file-input::-webkit-file-upload-button {
@@ -376,11 +379,8 @@ echo $this->render('modal_store'); //echo difinition
 
 				<?php $form = ActiveForm::begin([
 					'method' => 'post',
-					'action' =>['/sistem/user-image/update?ACCESS_ID='.Yii::$app->user->identity->ACCESS_ID.''],
+					'action' =>['/sistem/user-image/update?ACCESS_ID='.$user.''],
 					'options'=>['enctype'=>'multipart/form-data'],
-					'validateOnSubmit' => true,
-					'enableAjaxValidation' => true,
-					'validationUrl'=>['/sistem/user-image/val-image']
 					]); ?>
 					<?= $form->field($dataProviderimage, 'ACCESS_IMAGE')->fileInput(['onchange'=>'this.form.submit()', 'class'=>'custom-file-input', 'accept'=>'image/x-png,image/gif,image/jpeg'])->label(false); ?>
 				<?php ActiveForm::end(); ?>
@@ -389,6 +389,7 @@ echo $this->render('modal_store'); //echo difinition
 	</div>
 
     <div class="col-sm-10">
+	<?php if(!empty($user)){ ?>
         <?php echo DetailView::widget([
 			'id'=>'dv-info',
             'model'=>$dataProvider,
@@ -413,9 +414,9 @@ echo $this->render('modal_store'); //echo difinition
 							'valueColOptions'=>['style'=>'width:30%']
                         ],
                         [
-							'attribute'=>'LAHIR_GENDER',
-							'value'=> ($dataProvider->LAHIR_GENDER==1)?"Laki-Laki":
-							(($dataProvider->LAHIR_GENDER==2)?"Perempuan":"Harap perbaiki data"),
+							'attribute'=>'gender',
+							'value'=> (($genderx)==1)?"Laki-Laki":
+							(($genderx==2)?"Perempuan":"Harap perbaiki data"),
 							'label'=>'Jenis Kelamin',
                             'enableEditMode'=>false,
                             'displayOnly'=>true,
@@ -426,14 +427,14 @@ echo $this->render('modal_store'); //echo difinition
                 [
                     'columns' => [
                         [
-							'attribute'=>'KTP',
+							'attribute'=>'ktp',
 							'label'=>'KTP',
                             'enableEditMode'=>false,
                             'displayOnly'=>true,
 							'valueColOptions'=>['style'=>'width:30%']
                         ],
                         [
-							'attribute'=>'HP',
+							'attribute'=>'hp',
 							'label'=>'Telepon',
                             'enableEditMode'=>false,
                             'displayOnly'=>true,
@@ -451,7 +452,7 @@ echo $this->render('modal_store'); //echo difinition
 							'valueColOptions'=>['style'=>'width:30%']
                         ],
                         [
-                            'attribute'=>'EMAIL',
+                            'attribute'=>'email',
 							'label'=>'Email',
                             'enableEditMode'=>false,
                             'displayOnly'=>true,
@@ -462,7 +463,7 @@ echo $this->render('modal_store'); //echo difinition
                 [
                     'columns' => [
                         [
-							'attribute'=>'ALMAT',
+							'attribute'=>'alamat',
 							'label'=>'Alamat',
                             'enableEditMode'=>false,
                             'displayOnly'=>true,
@@ -472,8 +473,9 @@ echo $this->render('modal_store'); //echo difinition
                 ],
             ]
         ]);?>
+		<?php } ?>
 		<div class="col-md-8">
-		<p>Besar file: maksimum 10.000.000 bytes (10 Megabytes)
+		<p>Besar file: Maksimal 51200 bytes/500KB
 			Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG</p>
 		</div>
 		<div class="pull-right">		
@@ -485,7 +487,7 @@ echo $this->render('modal_store'); //echo difinition
 	<hr>
 	Next For Dompet
 	<hr>
-        <?php if (Yii::$app->user->identity->ACCESS_LEVEL=="OWNER") {?>
+        <?php if (!empty(Yii::$app->user->identity->ACCESS_LEVEL)=="OWNER") {?>
             <?=$gvStore?>
         <?php } ?>
     </div>
