@@ -81,10 +81,12 @@ class StockOutSearch extends DynamicModel
 			FROM	
 			tmp_".$accessGroup." str1;			
 		";		
+		
 		$qrySqlField=Yii::$app->production_api->createCommand($sql)->execute();
 		$qrySqlField= Yii::$app->production_api->createCommand("	
 			select @fildText ;
 		")->queryAll(); 
+		// print_r($qrySqlField);die();
 		$dpFieldtext= new ArrayDataProvider([	
 			'allModels'=>$qrySqlField,	
 			'pagination' => [
@@ -143,6 +145,7 @@ class StockOutSearch extends DynamicModel
 					GROUP BY inv.STORE_ID,inv.PRODUCT_ID,inv.BULAN
 					ORDER BY inv.PRODUCT_ID,inv.TGL
 		")->queryAll(); 	
+		print_r($qrySql);die();	
 		$dataProvider= new ArrayDataProvider([	
 			'allModels'=>$qrySql,	
 			'pagination' => [
@@ -216,7 +219,7 @@ class StockOutSearch extends DynamicModel
 		$qrySqlField=Yii::$app->production_api->createCommand($sql)->execute();
 		$qrySqlField= Yii::$app->production_api->createCommand("	
 			select @fildText ;
-		")->queryAll(); 
+		")->queryAll(); 	
 		$dpFieldtext= new ArrayDataProvider([	
 			'allModels'=>$qrySqlField,	
 			'pagination' => [

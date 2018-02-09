@@ -108,10 +108,11 @@ class StockProductController extends Controller
 		 
 		if ($modelPeriode->load(Yii::$app->request->post())) {
 		$id=$modelPeriode->TAHUN;
-		// print_r($id);die();
+		// print_r($id."-01");die();
 		//DINAMIK MODEL PARAMS
-			$searchModel = new StockOutSearch(['thn'=>$id]);
-        $dataProvider = $searchModel->searchPrint(Yii::$app->request->queryParams);
+		$searchModel = new CurrentStockSearch(['thn'=>$id."-01"]);
+        $dataProvider = $searchModel->searchDayOfMonthStock(Yii::$app->request->queryParams);
+		// print_r($dataProvider);die();
 		$dinamikField=$dataProvider->allModels;
 		
 		$headerMerge[]=['DATA_PRODUK'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'15']];

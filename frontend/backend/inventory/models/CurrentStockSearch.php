@@ -83,14 +83,16 @@ class CurrentStockSearch extends DynamicModel
 			],			
 		]);		
 		$rsltField=$dpFieldtext->getModels()[0]['@fildText'];
-				
+				// print_r($rsltField);die();
 		$qrySql= Yii::$app->production_api->createCommand("
 			select 
 				#===========================PR =========================================
 				#=== 1. STOK REFUND - pengembalian stock karena cancel Transaksi     ===
 				#=== 2. STOCK OPNAME (BALANCE OPNAME, sisa stock closing dan actual) ===
 				#===========================PR =========================================
-				inv.STORE_NM,inv.STORE_ID,inv.PRODUCT_NM,							
+				inv.STORE_NM,
+				inv.STORE_ID,
+				inv.PRODUCT_NM,							
 				".$rsltField.",							
 				inv.STOCK_AWAL,																					#Stok Bulan Lalu, menjadi stock Awal bulan.
 				sum(inv.STOCK_BARU) AS TTL_STOCK_BARU,															#Penambahan Stok di Bulan berjalan.
@@ -102,24 +104,25 @@ class CurrentStockSearch extends DynamicModel
 			from
 			(
 				SELECT  
-					a1.LALU AS STOCK_AWAL,				#Sisa stok bulan lalu
-					a1.MASUK AS STOCK_BARU,				#Penambahan stok bulan berjalan.
-					a1.TERJUAL AS STOCK_TERJUAL,		#Stok penjualan bulan berjalan.
-					a1.OPNAME AS STOCK_OPNAME,			#Stok opname bulan berjalan.
-					a1.SISA AS STOCK_SISA,				#Sisa stock daily of month.
-					a1.STOCK_LAST_MONTH,				#Stok Awal bulan, dari stok bulan lalu.
+					(CASE WHEN a1.LALU <> '' THEN a1.LALU ELSE '0' END) AS STOCK_AWAL,				#Sisa stok bulan lalu
+					(CASE WHEN a1.MASUK <> '' THEN a1.MASUK ELSE '0' END) AS STOCK_BARU,				#Penambahan stok bulan berjalan.
+					(CASE WHEN a1.TERJUAL <> '' THEN a1.TERJUAL ELSE '0' END) AS STOCK_TERJUAL,		#Stok penjualan bulan berjalan.
+					(CASE WHEN a1.OPNAME <> '' THEN a1.OPNAME ELSE '0' END)AS STOCK_OPNAME,			#Stok opname bulan berjalan.
+					(CASE WHEN a1.SISA <> '' THEN a1.OPNAME ELSE '0' END) AS STOCK_SISA,				#Sisa stock daily of month.
+					(CASE WHEN a1.STOCK_LAST_MONTH <> '' THEN a1.OPNAME ELSE '0' END) AS STOCK_LAST_MONTH,				#Stok Awal bulan, dari stok bulan lalu.
 					a1.TGL,								#Tanggal day of month.
 					a1.PRODUCT_ID,						#
 					a1.STORE_ID,						#
 					a2.PRODUCT_NM,						#
 					a3.STORE_NM							#															
-				FROM ptr_kasir_inv1c a1 
+				FROM ptr_kasir_inv1c AS a1 
 				left join product a2 on a2.PRODUCT_ID=a1.PRODUCT_ID
 				left join store a3 on a3.STORE_ID=a1.STORE_ID
 				WHERE a1.ACCESS_GROUP='".$accessGroup."' AND a1.TAHUN=YEAR('".$TGL."') AND a1.BULAN=MONTH('".$TGL."')				
 			) inv
 			GROUP BY inv.STORE_ID,inv.PRODUCT_ID				
-		")->queryAll(); 	
+		")->queryAll(); 
+		// print_r($qrySql);die();	
 		$dataProvider= new ArrayDataProvider([	
 			'allModels'=>$qrySql,	
 			'pagination' => [
@@ -144,4 +147,19 @@ class CurrentStockSearch extends DynamicModel
  		$dataProvider->allModels = $filter->filter($qrySql);
         return $dataProvider; 
 	} 
+	public function addCondition(Filter $filter, $attribute, $partial = false)
+    {
+        $value = $this->$attribute;
+
+        if (mb_strpos($value, '>') !== false) {
+            $value = intval(str_replace('>', '', $value));
+            $filter->addMatcher($attribute, new matchers\GreaterThan(['value' => $value]));
+
+        } elseif (mb_strpos($value, '<') !== false) {
+            $value = intval(str_replace('<', '', $value));
+            $filter->addMatcher($attribute, new matchers\LowerThan(['value' => $value]));
+        } else {
+            $filter->addMatcher($attribute, new matchers\SameAs(['value' => $value, 'partial' => $partial]));
+        }
+    }
 }

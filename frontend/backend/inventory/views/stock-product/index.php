@@ -10,7 +10,9 @@ use kartik\date\DatePicker;
 use kartik\builder\Form;
 use yii\helpers\Url;
 use yii\web\View;
+use frontend\backend\master\models\Product;
 
+$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
 // print_r($dataProvider->getModels()[0]['SISA_2017-11-03']);
 // die();
 $this->title='Product Stok';
@@ -58,58 +60,64 @@ $this->title='Product Stok';
 			],					
 	];
 	
-	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','SIZE' => '10px','label'=>'TOKO','align'=>'left','group'=>true,'pageSummary'=>false]];
+	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','SIZE' => '10px','label'=>'TOKO','align'=>'left','group'=>true,'pageSummary'=>false,'filterType'=>false]];
 	// $aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '7px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false]];
-	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
-	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'STOCK_AWAL','SIZE' => '7px','label'=>'LALU','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'TTL_STOCK_BARU','SIZE' => '7px','label'=>'MASUK','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_STOCK_TERJUAL','SIZE' => '7px','label'=>'TERJUAL','align'=>'right','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>5, 'ATTR' =>['FIELD'=>'TTL_STOCK_SISA','SIZE' => '7px','label'=>'SISA','align'=>'right','group'=>false,'pageSummary'=>false]];
+	
+	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '7px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false,'filter'=>true,'filterType'=>true,'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
+	'filterInputOptions'=>['placeholder'=>'-Pilih-'],'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
+	'filterType'=>GridView::FILTER_SELECT2,'filterOptions'=>[],'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),]];
+	
+	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','filterType'=>false]];
+	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'STOCK_AWAL','SIZE' => '7px','label'=>'LALU','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true]];
+	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'TTL_STOCK_BARU','SIZE' => '7px','label'=>'MASUK','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true]];
+	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_STOCK_TERJUAL','SIZE' => '7px','label'=>'TERJUAL','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true]];
+	$aryFieldColomn[]=['ID' =>5, 'ATTR' =>['FIELD'=>'TTL_STOCK_SISA','SIZE' => '7px','label'=>'SISA','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true]];
 	$headerContent1[]=['content'=>'TOTAL STOCK','options'=>['colspan'=>4,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
 				
 	$inc=6;
+	$incTmp=0;
 	/* ==================
 	 * QTY STOCK COLUMN
 	 * ================== */
 	 if($dinamikField){
 		foreach($dinamikField[0] as $rows => $val){
-			//unset($splt);
-			//$ambilField[]=$rows; 		
+			// unset($splt);
+			// $ambilField[]=$rows; 
+			// print_r($inc);die();		
 			$splt=explode('_',$rows);	
 			if($splt[0]=='IN'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Masuk','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Masuk','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
 				$inc=$inc+1;
 			}
 			if($splt[0]=='OUT'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Keluar','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Keluar','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
 				$inc=$inc+1;
 			}
 			if($splt[0]=='SISA'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Sisa','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Sisa','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
 				$inc=$inc+1;
-				$headerContent1[]=['content'=>date('Y-m-d', strtotime($splt[1])),'options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
+				$headerContent1[]=['content'=>date('Y-m-d', strtotime($splt[1])),'options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true]];		
 			}
 		};
 	 }else{
 		 for ($i=1;$i<=31;$i++){
-			$aryFieldColomn[]=['ID' =>$incTmp, 'ATTR' =>['FIELD'=>$i,'SIZE' => '7px','label'=>$i,'align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
+			$aryFieldColomn[]=['ID' =>$incTmp, 'ATTR' =>['FIELD'=>$i,'SIZE' => '7px','label'=>$i,'align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
 			$incTmp=$incTmp+1;
 		 }
-		 $headerContent1[]=['content'=>'STOK TERJUAL','options'=>['colspan'=>$i,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];			
+		 $headerContent1[]=['content'=>'STOK TERJUAL','options'=>['colspan'=>$i,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true]];			
 	 };
 	 
 	 //OPNAME
-	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR','SIZE' => '7px','label'=>'Closing','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR','SIZE' => '7px','label'=>'Closing','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
 	 $inc=$inc+1;
-	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR_ACTUAL','SIZE' => '7px','label'=>'Actual','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
-	 $headerContent1[]=['content'=>'STOK OPNAME','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];		
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR_ACTUAL','SIZE' => '7px','label'=>'Actual','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
+	 $headerContent1[]=['content'=>'STOK OPNAME','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true]];		
 
 	$valFields = ArrayHelper::map($aryFieldColomn, 'ID', 'ATTR');
 	foreach($valFields as $key =>$value[]){	
@@ -290,7 +298,7 @@ $this->title='Product Stok';
 	$gvInvOut= GridView::widget([
 		'id'=>'prodak-inv',
 		'dataProvider' => $dataProvider,
-		//'filterModel' => $searchModelDetail,
+		'filterModel' => $searchModel,
 		'filterRowOptions'=>['style'=>'background-color:'.$colorHeader.'; align:center'],
 		'beforeHeader'=>[
 			'0'=>[					

@@ -27,10 +27,10 @@ use kartik\widgets\DateTimePicker;;
 							'convertFormat' => true,
 							'pluginOptions' => [
 								'autoclose'=>true,
-								// 'startView'=>'year',
-								// 'minViewMode'=>'months',
+								'startView'=>'year',
+								'minViewMode'=>'months',
 								// 'todayHighlight' => true,
-								 'format' => 'yyyy-MM-dd'
+								 'format' => 'yyyy-MM'
 							],
 						])->label('PILIH TAHUN');		
 					?>
