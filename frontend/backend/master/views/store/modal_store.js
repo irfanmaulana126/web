@@ -9,6 +9,10 @@
 /*
  * BUTTON CREATE
 */
+$("#store-button-restore-modal").on("shown", function () {
+    google.maps.event.trigger(map, "resize");
+});
+
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 //$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
 $(document).on('click','#store-button-create', function(ehead){ 			  

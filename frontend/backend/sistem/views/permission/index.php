@@ -17,7 +17,9 @@ use yii\web\View;
 use kartik\tree\TreeView;
 use kartik\tree\TreeViewInput;
 use common\models\Locate;
-use common\models\Product;
+// use common\models\Product;
+
+use frontend\backend\sistem\models\Product;
 use common\models\UserLogin;
 
 $this->title = Yii::t('app', 'ESM - Marketing Dashboard');      /* title pada header page */
@@ -43,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		//KD_BARCODE
 		[
-			'attribute'=>'OUTLET_CODE',
+			'attribute'=>'STORE_ID',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
 			'hAlign'=>'right',
@@ -57,7 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],
 		//CABANG LOCATE 
 		[
-			'attribute'=>'LOCATE_PROVINCE',
+			'attribute'=>'PROVINCE_NM',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
@@ -72,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],		
 		//SABANG LOCATE SUB
 		[
-			'attribute'=>'LOCATE_CITY',
+			'attribute'=>'CITY_NAME',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -87,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		],		
 		//STORE NAME
 		[
-			'attribute'=>'OUTLET_NM',
+			'attribute'=>'STORE_NM',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -332,12 +334,10 @@ $this->params['breadcrumbs'][] = $this->title;
 					], 
 					//'options'=>['disabled' => true],
 				]); */
-				// $test=Product::find()->addOrderBy('id', 'lvl');
 				// print_r($test);
 				echo \kartik\tree\TreeView::widget([
 					'id'=>'xx1',
-					'query' => Product::find()->addOrderBy('ACCESS_UNIX', 'ACCESS_LEVEL'),
-					//'query' => Product::find()->addOrderBy('root', 'lvl'),
+					'query' => Product::find()->addOrderBy('ACCESS_GROUP'),
 					'headingOptions' => ['label' => 'Categories'],
 					//'rootOptions' => ['label'=>'<span class="text-primary">Root</span>'],
 					'rootOptions' => [
