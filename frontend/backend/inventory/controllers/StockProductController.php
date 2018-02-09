@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\data\ArrayDataProvider;
 use yii\base\DynamicModel;
 use yii\web\Response;
+use frontend\backend\inventory\models\CurrentStockSearch;
 use frontend\backend\inventory\models\StockOutSearch;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
 
@@ -58,8 +59,8 @@ class StockProductController extends Controller
 		$cari=['thn'=>$paramCari];	
 		
 		//DINAMIK MODEL PARAMS
-		$searchModel = new StockOutSearch($cari);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$searchModel = new CurrentStockSearch($cari);
+        $dataProvider = $searchModel->searchDayOfMonthStock(Yii::$app->request->queryParams);
 		// print_r($dataProvider);die();
 		
 		//LOAD DEFAULT INDEX
