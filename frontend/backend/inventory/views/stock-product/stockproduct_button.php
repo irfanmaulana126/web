@@ -24,7 +24,7 @@ use yii\base\DynamicModel;
 		$options1 = ['value'=>$url,
 					'id'=>'stockproduct-button-periode',
 					'data-pjax' => false,
-					'class'=>"btn btn-info btn-xs",
+					'class'=>"btn btn-warning btn-xs",
 					'title'=>'Pencarian'
 		];
 		$icon1 = '<span class="fa-stack fa-sm text-left">
@@ -47,7 +47,7 @@ use yii\base\DynamicModel;
 					'value'=>$url,
 					'id'=>'stockproduct-export-excel',
 					'data-pjax' => 0,
-					'class'=>"btn btn-primary btn-xs",
+					'class'=>"btn btn-success btn-xs",
 					'title'=>'Export Excel'
 		];
 		$icon1 = '<span class="fa-stack fa-sm text-left">

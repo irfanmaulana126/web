@@ -10,16 +10,25 @@ use kartik\date\DatePicker;
 use kartik\builder\Form;
 use yii\helpers\Url;
 use yii\web\View;
+use kartik\widgets\Alert;
 use frontend\backend\master\models\Product;
 
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
-// print_r($dataProvider->getModels()[0]['SISA_2017-11-03']);
+// print_r($dataProvider->getModels());
 // die();
 $this->title='Product Stok';
 	$this->registerCss("
 		#prodak-inv .kv-grid-container{
 			height:500px
 		}
+		
+	#prodak-inv .panel-heading {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		color:#000;
+	}
+	#prodak-inv .panel-footer {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 	");
 	$this->registerJs($this->render('stockproduct_script.js'),View::POS_READY);
 	echo $this->render('stockproduct_button'); //echo difinition
@@ -60,21 +69,29 @@ $this->title='Product Stok';
 			],					
 	];
 	
-	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','SIZE' => '10px','label'=>'TOKO','align'=>'left','group'=>true,'pageSummary'=>false,'filterType'=>false]];
+	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','SIZE' => '10px','label'=>'TOKO','align'=>'left','group'=>true,'pageSummary'=>false,'BCOLOR'=>false,'filterType'=>false,'COLUMN_COLOR'=>false]];
 	// $aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
 	
-	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','SIZE' => '7px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false,'filter'=>true,'filterType'=>true,'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
-	'filterInputOptions'=>['placeholder'=>'-Pilih-'],'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
-	'filterType'=>GridView::FILTER_SELECT2,'filterOptions'=>[],'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),]];
+	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>
+	['FIELD'=>'PRODUCT_NM',
+	'SIZE' => '7px',
+	'label'=>'PRODUK',
+	'align'=>'left',
+	'group'=>false,
+	'pageSummary'=>false,
+	'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
+	'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+	'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
+	'filterType'=>GridView::FILTER_SELECT2,
+	'filterOptions'=>[],
+	'BCOLOR'=>false,
+	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),'COLUMN_COLOR'=>false]];
 	
-	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','filterType'=>false]];
-	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'STOCK_AWAL','SIZE' => '7px','label'=>'LALU','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true]];
-	$aryFieldColomn[]=['ID' =>3, 'ATTR' =>['FIELD'=>'TTL_STOCK_BARU','SIZE' => '7px','label'=>'MASUK','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true]];
-	$aryFieldColomn[]=['ID' =>4, 'ATTR' =>['FIELD'=>'TTL_STOCK_TERJUAL','SIZE' => '7px','label'=>'TERJUAL','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true]];
-	$aryFieldColomn[]=['ID' =>5, 'ATTR' =>['FIELD'=>'TTL_STOCK_SISA','SIZE' => '7px','label'=>'SISA','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true]];
-	$headerContent1[]=['content'=>'TOTAL STOCK','options'=>['colspan'=>4,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
+	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','filterType'=>false,'COLUMN_COLOR'=>false]];
+	$aryFieldColomn[]=['ID' =>2, 'ATTR' =>['FIELD'=>'STOCK_AWAL','SIZE' => '7px','label'=>'LALU','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>false,'BCOLOR'=>false]];
+	$headerContent1[]=['content'=>'STOCK BULAN','options'=>['colspan'=>1,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
 				
-	$inc=6;
+	$inc=3;
 	$incTmp=0;
 	/* ==================
 	 * QTY STOCK COLUMN
@@ -88,47 +105,59 @@ $this->title='Product Stok';
 			if($splt[0]=='IN'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Masuk','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Masuk','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>'#d9edf7','mergeHeader'=>true,'COLUMN_COLOR'=>'#d9edf7']];
 				$inc=$inc+1;
 			}
 			if($splt[0]=='OUT'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Keluar','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Keluar','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>'#dff0d8','mergeHeader'=>true,'COLUMN_COLOR'=>'#dff0d8']];
 				$inc=$inc+1;
 			}
 			if($splt[0]=='SISA'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Sisa','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Sisa','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>'#faf2cc','mergeHeader'=>true,'COLUMN_COLOR'=>'#faf2cc']];
 				$inc=$inc+1;
 				$headerContent1[]=['content'=>date('Y-m-d', strtotime($splt[1])),'options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true]];		
 			}
 		};
 	 }else{
 		 for ($i=1;$i<=31;$i++){
-			$aryFieldColomn[]=['ID' =>$incTmp, 'ATTR' =>['FIELD'=>$i,'SIZE' => '7px','label'=>$i,'align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
+			$aryFieldColomn[]=['ID' =>$incTmp, 'ATTR' =>['FIELD'=>$i,'SIZE' => '7px','label'=>$i,'align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true,'COLUMN_COLOR'=>'red']];
 			$incTmp=$incTmp+1;
 		 }
-		 $headerContent1[]=['content'=>'STOK TERJUAL','options'=>['colspan'=>$i,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true]];			
+		 $headerContent1[]=['content'=>'STOK TERJUAL','options'=>['colspan'=>$i,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true,'COLUMN_COLOR'=>'red']];			
 	 };
 	 
 	 //OPNAME
-	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR','SIZE' => '7px','label'=>'Closing','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
+	$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_BARU','SIZE' => '7px','label'=>'MASUK','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#f7d9f7','BCOLOR'=>'#f7d9f7']];
+	$inc=$inc+1;
+	$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_TERJUAL','SIZE' => '7px','label'=>'TERJUAL','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#00c0ef','BCOLOR'=>'#00c0ef']];
+	$inc=$inc+1;
+	$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_SISA','SIZE' => '7px','label'=>'SISA','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#00a65a','BCOLOR'=>'#00a65a']];
+	$headerContent1[]=['content'=>'TOTAL STOCK BULAN INI','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','COLUMN_COLOR'=>'red']];
+	
 	 $inc=$inc+1;
-	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR_ACTUAL','SIZE' => '7px','label'=>'Actual','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true]];
-	 $headerContent1[]=['content'=>'STOK OPNAME','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true]];		
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR','SIZE' => '7px','label'=>'Closing','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true,'COLUMN_COLOR'=>'#f39c12','BCOLOR'=>'#f39c12']];
+	 $inc=$inc+1;
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_OPNAME','SIZE' => '7px','label'=>'opname','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true,'COLUMN_COLOR'=>'#12aaf3','BCOLOR'=>'#12aaf3']];
+	 $inc=$inc+1;
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR_ACTUAL','SIZE' => '7px','label'=>'Actual','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true,'COLUMN_COLOR'=>'#12f376','BCOLOR'=>'#12f376']];
+	 $headerContent1[]=['content'=>'STOK OPNAME','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true,'COLUMN_COLOR'=>'red']];		
 
 	$valFields = ArrayHelper::map($aryFieldColomn, 'ID', 'ATTR');
+	// print_r($valFields);die();
 	foreach($valFields as $key =>$value[]){	
 		if ($value[$key]['FIELD']=='PRODUCT_NM' OR $value[$key]['FIELD']=='STORE_NM'){
 			$attDinamikField[]=[
 				'attribute'=>$value[$key]['FIELD'],
 				'label'=>$value[$key]['label'],
-				// 'filterType'=>$gvfilterType,
-				// 'filter'=>$gvfilter,
-				// 'filterWidgetOptions'=>$filterWidgetOpt,	
-				//'filterInputOptions'=>$filterInputOpt,				
+				'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
+				'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+				'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
+				'filterType'=>GridView::FILTER_SELECT2,
+				'filterOptions'=>[],				
 				'hAlign'=>'right',
 				'vAlign'=>'middle',
 				'hidden'=>false,
@@ -153,8 +182,7 @@ $this->title='Product Stok';
 						'width'=>$value[$key]['SIZE'],
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'8px',
-						//'background-color'=>$value[$key]['BCOLOR'],
-						//'color'=>'#5a96e7'
+						// 'background-color'=>$value[$key]['BCOLOR'],
 					]
 				],
 				'contentOptions'=>[
@@ -163,6 +191,7 @@ $this->title='Product Stok';
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>$value[$key]['SIZE'],
 						'font-weight'=>'bold',
+						// 'color'=>'#5a96e7'
 					]
 				],				
 				'group'=>$value[$key]['group'],
@@ -237,7 +266,7 @@ $this->title='Product Stok';
 						'width'=>'20px',
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>'8px',
-						//'background-color'=>$value[$key]['BCOLOR'],
+						'background-color'=>$value[$key]['BCOLOR'],
 					]
 				],  
 				//'format'=>['decimal', 2],
@@ -248,6 +277,7 @@ $this->title='Product Stok';
 						'font-family'=>'tahoma, arial, sans-serif',
 						'font-size'=>$value[$key]['SIZE'],
 						'font-weight'=>'bold',
+						'background-color'=>$value[$key]['COLUMN_COLOR'],
 						]
 				],				
 				'group'=>$value[$key]['group'],
@@ -316,6 +346,10 @@ $this->title='Product Stok';
 			'after'=>false			
 		],
 		'pjax'=>true,
+		'rowOptions' => function($model, $key, $index, $grid){
+            if($model['STOCK_AKHIR_ACTUAL']<=0){return ['class' => 'danger'];}	
+        },
+		// 'columnOptions' =>['class' => 'danger'],
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
@@ -342,6 +376,27 @@ $this->title='Product Stok';
 	]);
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<?php if (Yii::$app->session->hasFlash('success')){ ?>
+			<?php
+				echo Alert::widget([
+					'type' => Alert::TYPE_SUCCESS,
+					'title' => 'Well done!',
+					'icon' => 'glyphicon glyphicon-ok-sign',
+					'body' => Yii::$app->session->getFlash('success'),
+					'showSeparator' => true,
+					'delay' => 1000
+				]);
+			?>
+		<?php } elseif (Yii::$app->session->hasFlash('error')) {
+			echo Alert::widget([
+				'type' => Alert::TYPE_DANGER,
+				'title' => 'Oh snap!',
+				'icon' => 'glyphicon glyphicon-remove-sign',
+				'body' => Yii::$app->session->getFlash('error'),
+				'showSeparator' => true,
+				'delay' => 1000
+			]);
+		}?>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">		
 		<?=$gvInvOut?>
