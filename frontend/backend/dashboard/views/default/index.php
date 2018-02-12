@@ -7,6 +7,7 @@ use ptrnov\fusionchart\Chart;
 use ptrnov\fusionchart\ChartAsset;
 use yii\bootstrap\Modal;
 use yii\web\JsExpression;
+use kartik\widgets\Growl;
 ChartAsset::register($this);
 $this->title = 'Dashboard';
 $this->params['breadcrumbs'][] = $this->title;
@@ -41,8 +42,24 @@ $this->params['breadcrumbs'][] = $this->title;
 			// 'height'=>'450px',
 			// 'align'=>TabsX::ALIGN_LEFT,						
 		// ]);	
+		
 	?>
 <div id="loaderPtr"></div>
+<?php echo Growl::widget([
+			'type' => Growl::TYPE_SUCCESS,
+			'title' => 'Well done!',
+			'icon' => 'glyphicon glyphicon-ok-sign',
+			'body' => 'You successfully read this important alert message.',
+			'showSeparator' => true,
+			'delay' => 0,
+			'pluginOptions' => [
+				'showProgressbar' => true,
+				'placement' => [
+					'from' => 'top',
+					'align' => 'right',
+				]
+			]
+		]);?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt;">
 			<?=$_indexChart1?>
 </div>

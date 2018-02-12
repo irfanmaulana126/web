@@ -236,7 +236,31 @@ $this->registerCss("
 			// }
 		// }
 	}
-	
+	function tombolCreateKasir($url, $model){
+		// if(getPermission()){
+			//Jika BTN_CREATE Show maka BTN_CVIEW Show.
+			// if(getPermission()->BTN_VIEW==1 OR getPermission()->BTN_CREATE==1){
+				$title1 = Yii::t('app',' Tambah device');
+				
+				$url = url::to(['/master/store/device','id'=>$model->STORE_ID]);
+				$options1 = [
+					//'value'=>url::to(['/master/item','outlet_code'=>$model->OUTLET_CODE]),
+					'id'=>'store-button-kasir',
+					'class'=>"btn btn-default btn-xs",      
+					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+				];
+				$icon1 = '
+					<span class="fa-stack fa-xs">																	
+						<i class="fa fa-circle-thin fa-stack-2x " style="color:'.bgIconColor().'"></i>
+						<i class="fa fa-mobile fa-stack-1x" style="color:black"></i>
+					</span>
+				';      
+				$label1 = $icon1 . '  ' . $title1;
+				$content = Html::a($label1,$url,$options1);		
+				return $content;
+			// }
+		// }
+	}
 	/**
 	 * ROWS BUTTON : STORE - PAYMENT (per-Store).
 	*/

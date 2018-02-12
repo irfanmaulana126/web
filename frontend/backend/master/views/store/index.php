@@ -41,15 +41,15 @@ $this->title = 'Store';
 		.tmp-button-delete a:hover {
 			color:red;
 		}
-		#w17 :link {
+		#w20 :link {
 			color: black;
 		}
 		/* mouse over link */
-		#w17-container a:hover {
+		#w20-container a:hover {
 			color: #5a96e7;
 		}
 		/* selected link */
-		#w17-container a:active {
+		#w20-container a:active {
 			color: blue;
 		}
 	");
@@ -94,7 +94,11 @@ $this->title = 'Store';
 		'4'=>['id'=>'5','TITTLE_NM'=>'<span class="fa-stack fa-lg text-left">
 						  <b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
 						  <b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
-						</span><b> DAFTAR USER LOGIN </b>']
+						</span><b> DAFTAR USER LOGIN </b>'],
+		'5'=>['id'=>'6','TITTLE_NM'=>'<span class="fa-stack fa-lg text-left">
+						  <b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+						  <b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
+						</span><b> DAFTAR PERANGKAT KASIR </b>']
 	];	
 	//$key = 'STORE_ID';
 	$cookies = Yii::$app->request->cookies;
@@ -110,6 +114,7 @@ $this->title = 'Store';
 		'2'=>['STORE_ID'=>$storeId],
 		'3'=>['STORE_ID'=>$storeId],
 		'4'=>['STORE_ID'=>$storeId],
+		'5'=>['STORE_ID'=>$storeId],
 	];	
 	
 	foreach($aryData1 as $rows =>$val){
