@@ -1,15 +1,14 @@
 <?php
 
-namespace frontend\backend\master\models;
+namespace frontend\backend\sistem\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\backend\master\models\StoreKasir;
-use frontend\backend\master\models\User;
+use frontend\backend\sistem\models\StoreKasir;
 
 /**
- * StoreKasirSearch represents the model behind the search form of `frontend\backend\master\models\StoreKasir`.
+ * StoreKasirSearch represents the model behind the search form of `frontend\backend\sistem\models\StoreKasir`.
  */
 class StoreKasirSearch extends StoreKasir
 {
@@ -85,15 +84,5 @@ class StoreKasirSearch extends StoreKasir
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY]);
 
         return $dataProvider;
-    }
-    public function getUser()
-    {
-        return $this->hasOne(User::className(),['ACCESS_GROUP'=>'ACCESS_GROUP']);
-    }
-
-    public function getOwner(){
-        $result=$this->user;
-        $result = (empty($result->ACCESS_LEVEL)) ? '' : $result->ACCESS_LEVEL ;
-        return $result;
     }
 }

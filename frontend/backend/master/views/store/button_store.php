@@ -244,10 +244,10 @@ $this->registerCss("
 				
 				$url = url::to(['/master/store/device','id'=>$model->STORE_ID]);
 				$options1 = [
-					//'value'=>url::to(['/master/item','outlet_code'=>$model->OUTLET_CODE]),
-					'id'=>'store-button-kasir',
+					'value'=>$url,
+					'id'=>'kasir-button-row-bayar',
 					'class'=>"btn btn-default btn-xs",      
-					'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+					'style'=>['text-align'=>'left','width'=>'100%', 'color'=>'#000','height'=>'25px','border'=> 'none'],
 				];
 				$icon1 = '
 					<span class="fa-stack fa-xs">																	
@@ -256,7 +256,7 @@ $this->registerCss("
 					</span>
 				';      
 				$label1 = $icon1 . '  ' . $title1;
-				$content = Html::a($label1,$url,$options1);		
+				$content = Html::button($label1,$options1);			
 				return $content;
 			// }
 		// }
@@ -518,6 +518,62 @@ $this->registerCss("
 		$content = Html::button($label1,$options1);		
 		return '<li>'.$content.'</li>';
 	}
-	
+	function tombolSwitch($url, $model){
+		$title1 = Yii::t('app',' Switch UUID');
+		$options1 = [
+			'value'=>url::to(['/master/store/switch','KASIR_ID'=>$model['KASIR_ID']]),
+			'id'=>'kasir-button-row-switch',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-mobile fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	function tombolSettingBayar($url, $model){
+		$title1 = Yii::t('app',' Setting Pembayaran');
+		$options1 = [
+			'value'=>url::to(['/master/store/bayar','KASIR_ID'=>$model['KASIR_ID']]),
+			'id'=>'kasir-button-row-bayar',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-mobile fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	/*
+	 * BUTTON Hapus
+	*/
+	function tombolHapusKasir($url, $model){
+		$title1 = Yii::t('app',' Hapus');
+		$options1 = [
+			'href'=>url::to(['/master/store/deletekasir','KASIR_ID'=>$model['KASIR_ID']]),
+			'class'=>"btn btn-default btn-xs",
+			'data'=>['confirm'=>'Apakah kamu yakin ingin mengapus data ini','method'=>'post',],    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-trash fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
 	
 ?>

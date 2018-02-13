@@ -22,6 +22,12 @@ $this->registerCss("
 	#store-button-restore-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	#paket .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#kasir-button-row-bayar-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 	#store-button-create-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
@@ -450,4 +456,136 @@ $this->registerCss("
 		]
 	]);
 		echo "<div id='databarang-button-row-stock-content'></div>";
+	Modal::end();
+	/*
+	 * BUTTON - Stock
+	*/
+	Modal::begin([
+		'id' => 'kasir-button-row-switch-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-mobile fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> Switch UUID</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='kasir-button-row-switch-content'></div>";
+	Modal::end();
+	/*
+	 * BUTTON - Stock
+	*/
+	Modal::begin([
+		'id' => 'kasir-button-row-bayar-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-mobile fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> SETTING PEMBAYAYARAN PERANGKAT</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='kasir-button-row-bayar-content'></div>";
+	Modal::end();
+
+	Modal::begin([
+		//'id' => 'sync_save',
+		'id' => 'paket',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> DAFTAR PAKET</b>
+		',	
+		'size' => 'modal-lg',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			//'toggleButton' => ['label' => 'click me'],
+		],
+		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+	
+	echo "<table class='table table-bordered table-responsive'>
+    <thead>
+      <tr>
+        <th></th>
+        <th style='text-align: center;background-color: #4c83ff;'>Satu Bulan/MOBILE</th>
+        <th style='text-align: center;background-color: #4c83ff;'>Tiga Bulan/MOBILE</th>
+        <th style='text-align: center;background-color: #4c83ff;'>Enam Bulan/MOBILE</th>
+        <th style='text-align: center;background-color: #4c83ff;'>Satu Tahun/MOBILE</th>
+        <th style='text-align: center;background-color: #4c83ff;'>Satu Tahun/EDC</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Paket Duration</td>
+        <td>30</td>
+        <td>90</td>
+        <td>180</td>
+        <td>360</td>
+        <td>360</td>
+      </tr>
+      <tr>
+        <td>Paket Duration Bonus</td>
+        <td>0</td>
+        <td>15</td>
+        <td>30</td>
+        <td>60</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td>HARGA BULAN</td>
+        <td>50000</td>
+        <td>50000</td>
+        <td>50000</td>
+        <td>50000</td>
+        <td>50000</td>
+      </tr>
+      <tr>
+        <td>HARGA HARI</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>HARGA PAKET</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>HARGA PAKET HARI</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>";
 	Modal::end();

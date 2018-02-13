@@ -72,7 +72,7 @@ class StoreSearch extends Store
             'INDUSTRY_GRP_ID' => $this->INDUSTRY_GRP_ID,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'STATUS' => $this->STATUS,
+            'STATUS' => [0,1,2,4],
             'YEAR_AT' => $this->YEAR_AT,
             'MONTH_AT' => $this->MONTH_AT,
         ]);

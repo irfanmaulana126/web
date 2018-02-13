@@ -94,6 +94,13 @@ $this->registerCss("
 	#gv-store .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	#gv-perangkat .panel-heading {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		color:#000;
+	}
+	#gv-perangkat .panel-footer {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 	#dv-info .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 		color:#000;
@@ -187,6 +194,9 @@ echo $this->render('modal_store'); //echo difinition
 				'filterWidgetOptions'=>[
 					'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
 				],
+				'value'=>function($data) {				
+					return Html::tag('div', $data->STORE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+				},
 				'filterInputOptions'=>['placeholder'=>'Cari STORE'],
 				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
@@ -212,6 +222,9 @@ echo $this->render('modal_store'); //echo difinition
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'value'=>function($data) {				
+				return Html::tag('div', $data->PROVINCE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$headerColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -231,6 +244,9 @@ echo $this->render('modal_store'); //echo difinition
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'value'=>function($data) {				
+				return Html::tag('div', $data->CITY_NAME, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$headerColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
@@ -259,7 +275,7 @@ echo $this->render('modal_store'); //echo difinition
 	];
 	
 	
-	$gvAttributeItem[]=[
+	$gvAttributeItemS[]=[
 		'class' => 'kartik\grid\ActionColumn',
 		'template' => '{review}{payment}{edit}{delete}',
 		'header'=>'ACTION',
@@ -301,7 +317,7 @@ echo $this->render('modal_store'); //echo difinition
 	$gvStore=GridView::widget([
 		'id'=>'gv-store',
 		'dataProvider' => $dataProviderstore,
-		'filterModel' => $searchModelstore,
+		// 'filterModel' => $searchModelstore,
 		'columns'=>$gvAttributeItem,		 
 		'pjax'=>true,
 		'pjaxSettings'=>[
@@ -321,6 +337,16 @@ echo $this->render('modal_store'); //echo difinition
 		'toolbar' => [
 			''
 		],
+		'rowOptions'   => function ($model, $key, $index, $grid) {			
+			$btnclick= ['onclick' => '
+				$.pjax.reload({
+                    url: "'.Url::to(["/sistem/user-profile/"]).'?storeid='.$model->STORE_ID.'",
+					container: "#gv-perangkat",
+					//timeout: 1000,
+				});
+			'];
+			return $btnclick;
+		},
 		'panel' => [
 			//'heading'=>false,
 			'heading'=>'
@@ -331,7 +357,7 @@ echo $this->render('modal_store'); //echo difinition
 			'type'=>'info',
 			'before'=>false,
 			'after'=>false,
-			'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.tombolReqStore().' '.tombolRestore().'</div>',
+			// 'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.tombolReqStore().' '.tombolRestore().'</div>',
 			// 'before'=> tombolReqStore(),
 			'showFooter'=>'aas',
 		], 
@@ -487,8 +513,85 @@ echo $this->render('modal_store'); //echo difinition
 	<hr>
 	Next For Dompet
 	<hr>
-        <?php if (!empty(Yii::$app->user->identity->ACCESS_LEVEL)=="OWNER") {?>
+	<div class="row">
+	<div class="col-md-6">
+	<?php if (!empty(Yii::$app->user->identity->ACCESS_LEVEL)=="OWNER") {?>
             <?=$gvStore?>
         <?php } ?>
+	</div>
+	<div class="col-md-6">
+	<?php if (!empty(Yii::$app->user->identity->ACCESS_LEVEL)=="OWNER") {?>
+		<?= GridView::widget([
+		'id'=>'gv-perangkat',
+        'dataProvider' => $dataProviderKasir,
+        'columns' => [
+			[
+				'attribute'=>'KASIR_NM',
+				'label'=>'NAMA PERANGKAT',
+				'filterType'=>true,
+				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
+				'hAlign'=>'right',
+				'vAlign'=>'middle',
+				'mergeHeader'=>false,
+				'format'=>'html',
+				'noWrap'=>false,
+				'format'=>'raw',
+				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
+				'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
+			],
+			[
+				'attribute'=>'PERANGKAT_UUID',
+				'label'=>'UUID',
+				'filterType'=>true,
+				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
+				'hAlign'=>'right',
+				'vAlign'=>'middle',
+				'mergeHeader'=>false,
+				'format'=>'html',
+				'noWrap'=>false,
+				'format'=>'raw',
+				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
+				'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
+			],
+        ],'pjax'=>true,
+		'pjaxSettings'=>[
+			'options'=>[
+				'enablePushState'=>false,
+				'id'=>'gv-perangkat',
+		    ],						  
+		],
+		'hover'=>true, //cursor select
+		'responsive'=>true,
+		'responsiveWrap'=>true,
+		'bordered'=>true,
+		'striped'=>true,
+		'autoXlFormat'=>true,
+		'export' => false,
+		'panel'=>[''],
+		'toolbar' => [
+			''
+		],
+		'panel' => [
+			//'heading'=>false,
+			'heading'=>'
+				<span class="fa-stack fa-sm">
+				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
+				  <i class="fa fa-mobile fa-stack-1x"></i>
+				</span> PERANGKAT'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;"> </div></div> ',  
+			'type'=>'info',
+			'before'=>false,
+			'after'=>false,
+			// 'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.tombolReqStore().' '.tombolRestore().'</div>',
+			// 'before'=> tombolReqStore(),
+			'showFooter'=>'aas',
+		], 
+		// 'floatOverflowContainer'=>true,
+		//'floatHeader'=>true,
+	]);  ?>
+        <?php } ?>
+	</div>
+
+	</div>
+        
     </div>
 </div>
