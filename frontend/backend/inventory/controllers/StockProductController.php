@@ -57,18 +57,26 @@ class StockProductController extends Controller
 		
 		//PUBLIC PARAMS	
 		$cari=['thn'=>$paramCari];	
-		
+		// print_r();die();
 		//DINAMIK MODEL PARAMS
 		$searchModel = new CurrentStockSearch($cari);
         $dataProvider = $searchModel->searchDayOfMonthStock(Yii::$app->request->queryParams);
-		// print_r($dataProvider);die();
-		
-		//LOAD DEFAULT INDEX
-		return $this->render('index', [
-			'searchModel' => $searchModel,
-			'dataProvider' => $dataProvider,
-			'paramCari'=>$paramCari
-		]);	       
+		// print_r(isset($dataProvider->allModels));die();
+		if(empty($dataProvider->allModels)){
+			Yii::$app->session->setFlash('error', "Data Tidak ada");
+			// $this->redirect(array('/inventory/stock-product'));
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+				'paramCari'=>$paramCari
+			]);
+		}else{
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+				'paramCari'=>$paramCari
+			]);
+		}
     }
 	
 	/**====================================
@@ -108,12 +116,13 @@ class StockProductController extends Controller
 		 
 		if ($modelPeriode->load(Yii::$app->request->post())) {
 		$id=$modelPeriode->TAHUN;
-		// print_r($id);die();
+		// print_r($id."-01");die();
 		//DINAMIK MODEL PARAMS
-			$searchModel = new StockOutSearch(['thn'=>$id]);
-        $dataProvider = $searchModel->searchPrint(Yii::$app->request->queryParams);
+		$searchModel = new CurrentStockSearch(['thn'=>$id."-01"]);
+        $dataProvider = $searchModel->searchDayOfMonthStockExport(Yii::$app->request->queryParams);
 		$dinamikField=$dataProvider->allModels;
-		
+		// print_r($dinamikField);die();
+		if (!empty($dinamikField)){
 		$headerMerge[]=['DATA_PRODUK'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'15']];
 		$headerMerge[]=['DATA_PRODUK1'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'17']];
 		$headerMerge[]=['TOTAL_STOK'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'3,0','width'=>'7']];
@@ -122,17 +131,11 @@ class StockProductController extends Controller
 		$headerMerge[]=['TOTAL_STOK3'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'7']];
 			
 		$aryFieldColomn[]="NAMA_TOKO";
-		$aryFieldColomn[]="PRODUK";
-		$aryFieldColomn[]="LALU";
-		$aryFieldColomn[]="MASUK";
-		$aryFieldColomn[]="TERJUAL";
-		$aryFieldColomn[]="SISA";
+		$aryFieldColomn[]="PRODUK";		
+		$aryFieldColomn[]="Bulan LALU";
 		$aryFieldColomnHeader[]="DATA_PRODUK";
 		$aryFieldColomnHeader[]="DATA_PRODUK1";
 		$aryFieldColomnHeader[]="TOTAL_STOK";
-		$aryFieldColomnHeader[]="TOTAL_STOK1";
-		$aryFieldColomnHeader[]="TOTAL_STOK2";
-		$aryFieldColomnHeader[]="TOTAL_STOK3";
 		if($dinamikField){
 			foreach($dinamikField[0] as $rows => $val){
 				//unset($splt);
@@ -165,15 +168,24 @@ class StockProductController extends Controller
 					$headerMerge[]=[$rows=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'7']];
 				};
 			};
+		
+			$aryFieldColomn[]="MASUK";
+			$aryFieldColomn[]="TERJUAL";
+			$aryFieldColomn[]="SISA";	
+		$aryFieldColomnHeader[]="TOTAL_STOK";
+		$aryFieldColomnHeader[]="TOTAL_STOK1";
+		$aryFieldColomnHeader[]="TOTAL_STOK2";
 			//sheet_title-row1
 			$aryFieldColomnHeader[]='STOK_OPNAME'; 
 			$aryFieldColomnHeader[]='STOK OPNAME1';
+			$aryFieldColomnHeader[]='STOK OPNAME2';
 			
 			//headerStyle-row1
 			$headerMerge[]=['STOK_OPNAME'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'7']];
 			
 			//sheet_title-row2
 			$aryFieldColomn[]="Closing";
+			$aryFieldColomn[]="opname";
 			$aryFieldColomn[]="Actual";
 			
 			//headerStyle-row2
@@ -250,7 +262,11 @@ class StockProductController extends Controller
 		// die();
 		$excel_file = "ProdukStock";
 		$this->export4excel($excel_content, $excel_file,0);
-		}else{
+	}else{
+		Yii::$app->session->setFlash('error', "Data Tidak ada");
+		$this->redirect(array('/inventory/stock-product'));
+	}
+}else{
 			return $this->renderAjax('form_cari_export',[
 				'modelPeriode' => $modelPeriode
 			]);

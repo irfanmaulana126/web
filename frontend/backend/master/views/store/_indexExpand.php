@@ -13,6 +13,7 @@ use yii\data\ArrayDataProvider;
 use common\models\Store;
 use frontend\backend\master\models\ProductSearch;
 use frontend\backend\master\models\CustomerSearch;
+use frontend\backend\master\models\StoreKasirSearch;
 use frontend\backend\hris\models\Karyawan;
 use common\models\Userlogin;
 	
@@ -299,6 +300,18 @@ use common\models\Userlogin;
 			'storeId'=>$storeId,
 			'dataProviderUserOps'=>$dataProviderUserOps
 		]);
+		
+	$modalStoreKasir=StoreKasirSearch::find()->where(['STORE_ID'=>$storeId])->all();;
+		$dataProviderStoreKasir= new ArrayDataProvider([
+			'allModels'=>$modalStoreKasir,	
+			'pagination' => [
+				'pageSize' => 200,
+			],
+		]);
+		$Action6=$this->render('_detailStoreKasir',[
+			'storeId'=>$storeId,
+			'dataProviderStoreKasir'=>$dataProviderStoreKasir
+		]);
 	$items = [
 		[
 			'label'=>'<span class="fa-stack fa-sm text-left">
@@ -335,6 +348,13 @@ use common\models\Userlogin;
 			<b class="fa fa-user-secret fa-stack-1x" style="color:#FEFEFE"></b>
 		  </span><b> DAFTAR USER LOGIN </b>',
 			'content'=>$Action5
+		],
+		[
+			'label'=>'<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#40B0B5"></b>
+			<b class="fa fa-mobile fa-stack-1x" style="color:#FEFEFE"></b>
+		  </span><b> PERANGKAT KASIR </b>',
+			'content'=>$Action6
 		],
 	];
 	

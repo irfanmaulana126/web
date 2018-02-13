@@ -27,6 +27,8 @@ use frontend\backend\master\models\ProductHarga;
 use frontend\backend\master\models\ProductHargaSearch;
 use frontend\backend\master\models\ProductStock;
 use frontend\backend\master\models\ProductStockSearch;
+use frontend\backend\master\models\StoreKasir;
+use frontend\backend\master\models\StoreKasirSearch;
 
 class StoreController extends Controller
 {
@@ -143,6 +145,16 @@ class StoreController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+    public function actionDevice($id)
+    {
+        // print_r($id);die();
+        $model = new StoreKasir();
+        $model->STORE_ID=$id;
+            if ($model->save(false)) {                
+                Yii::$app->session->setFlash('success', "Perangkat derhasil dibuat");
+                return $this->redirect(['index']);   
+            }
     }
     public function actionUpdate($id)
     {

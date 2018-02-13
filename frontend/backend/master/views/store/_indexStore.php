@@ -407,7 +407,7 @@ echo $this->render('modal_store'); //echo difinition
 	$gvAttributeItem[]=[
 		'class' => 'kartik\grid\ActionColumn',
 		// 'template' => '{product}{view}{review}{payment}',
-		'template' => '{review}{payment}{edit}{delete}',
+		'template' => '{device}{edit}{delete}',
 		'header'=>'ACTION',
 		'dropdown' => true,
 		'dropdownOptions'=>[
@@ -434,16 +434,11 @@ echo $this->render('modal_store'); //echo difinition
 					return  tombolDelete($url, $model);
 				}	
 			},
-			'review' =>function($url, $model,$key){
-				if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-					return  tombolReview($url, $model);
+			'device' =>function($url, $model,$key){
+				if($model->STATUS!=3 && $model->STATUS!=2 && $model->owner=="OWNER"){ //Jika sudah close tidak bisa di edit.
+					return  tombolCreateKasir($url, $model);
 				}					
 			},
-			'payment' =>function($url, $model,$key){
-				if($model->STATUS!=1 && $model->DATE_END>=date('Y-m-d')){ //Jika sudah close tidak bisa di edit.
-					return  tombolPayment($model);
-				}					
-			}
 		], 
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$headerColor,'#ffffff'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','0',''),
