@@ -150,11 +150,19 @@ class StoreController extends Controller
     {
         // print_r($id);die();
         $model = new StoreKasir();
-        $model->STORE_ID=$id;
-            if ($model->save(false)) {                
+        if ($model->load(Yii::$app->request->post())) {            
+            $model->STORE_ID=$id;
+            // print_r($model);die();
+            if ($model->save(false)) {
+                
                 Yii::$app->session->setFlash('success', "Perangkat derhasil dibuat");
-                return $this->redirect(['index']);   
+                return $this->redirect(['index#w20-tab5']);   
             }
+        } else {
+           return $this->renderAjax('_form_setting', [
+                'model' => $model,
+            ]);
+        }
     }
     public function actionUpdate($id)
     {
@@ -506,5 +514,76 @@ class StoreController extends Controller
         return $this->renderAjax('/data-barang/_form_stock', [
             'model' => $model,
         ]);
+    }
+    /**
+     * Updates an existing StoreKasir model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionSwitch($KASIR_ID)
+    {
+        $model = StoreKasir::findOne($KASIR_ID);;
+
+        if ($model->load(Yii::$app->request->post())) {
+            
+            // print_r($model->PERANGKAT_UUID);die();
+            Yii::$app->db->createCommand()
+            ->update('STORE_KASIR', ['PERANGKAT_UUID' => $model->PERANGKAT_UUID], 'KASIR_ID="'.$model->KASIR.'"')
+            ->execute();
+            Yii::$app->db->createCommand()
+            ->update('STORE_KASIR', ['PERANGKAT_UUID' => null], 'KASIR_ID="'.$model->KASIR_ID.'"')
+            ->execute();
+
+                return $this->redirect(['index#w20-tab5']);
+        }
+
+        return $this->renderAjax('_form_switch', [
+            'model' => $model,
+        ]);
+    }
+    /**
+     * Updates an existing StoreKasir model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionBayar($KASIR_ID)
+    {
+        $model = StoreKasir::findOne($KASIR_ID);;
+
+        if ($model->load(Yii::$app->request->post())) {
+            // print_r($model);die();
+            if ($model->save(false)) {
+                
+                Yii::$app->session->setFlash('success', "Perangkat derhasil dibuat");
+                return $this->redirect(['index#w20-tab5']);   
+            }
+        }
+
+        return $this->renderAjax('_form_setting', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Deletes an existing StoreKasir model.
+     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * @param string $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionDeleteKasir($id)
+    {
+       // $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
+       $model = StoreKasir::findOne($id);
+       $model->STATUS ="3";
+       $model->update();
+       // Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
+
+       Yii::$app->session->setFlash('success', "Penghapusan Berhasil");
+       return $this->redirect(['index']);
     }
 }

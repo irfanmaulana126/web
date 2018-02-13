@@ -9,6 +9,8 @@ use frontend\backend\sistem\models\UserProfileSearch;
 use frontend\backend\sistem\models\UserImage;
 use frontend\backend\sistem\models\Store;
 use frontend\backend\sistem\models\StoreSearch;
+use frontend\backend\sistem\models\StoreKasir;
+use frontend\backend\sistem\models\StoreKasirSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -76,11 +78,24 @@ class UserProfileController extends Controller
         } 
         $searchModelstore = new StoreSearch(['ACCESS_GROUP'=>$user]);
         $dataProviderstore = $searchModelstore->search(Yii::$app->request->queryParams);
-
+        
+        $paramCari=Yii::$app->getRequest()->getQueryParam('storeid');
+        // print_r($paramCari);die();
+        if ($paramCari==''){
+            $modelGrp =StoreKasirSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STORE_ID'=>SORT_ASC])->one();
+            $searchModelKasir = new StoreKasirSearch(['STORE_ID'=>$modelGrp->STORE_ID]);
+            $dataProviderKasir = $searchModelKasir->search(Yii::$app->request->queryParams);
+        }else{
+            $searchModelKasir = new StoreKasirSearch(['ACCESS_GROUP'=>$user,'KASIR_ID'=>$paramCari]);
+            $dataProviderKasir = $searchModelKasir->search(Yii::$app->request->queryParams);
+        }
+        
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModelstore' => $searchModelstore,
             'dataProviderstore' => $dataProviderstore,
+            'searchModelKasir' => $searchModelKasir,
+            'dataProviderKasir' => $dataProviderKasir,
             'dataProviderimage'=>$dataProviderimage
         ]);
     }

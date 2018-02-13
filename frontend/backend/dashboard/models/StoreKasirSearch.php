@@ -1,15 +1,14 @@
 <?php
 
-namespace frontend\backend\master\models;
+namespace frontend\backend\dashboard\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\backend\master\models\StoreKasir;
-use frontend\backend\master\models\User;
+use frontend\backend\dashboard\models\StoreKasir;
 
 /**
- * StoreKasirSearch represents the model behind the search form of `frontend\backend\master\models\StoreKasir`.
+ * StoreKasirSearch represents the model behind the search form of `frontend\backend\dashboard\models\StoreKasir`.
  */
 class StoreKasirSearch extends StoreKasir
 {
@@ -64,13 +63,13 @@ class StoreKasirSearch extends StoreKasir
             'DOMPET_AUTODEBET' => $this->DOMPET_AUTODEBET,
             'PAYMENT_METHODE' => $this->PAYMENT_METHODE,
             'PAKET_ID' => $this->PAKET_ID,
-            'DATE_START' => $this->DATE_START,
-            'DATE_END' => $this->DATE_END,
             'KONTRAK_DATE' => $this->KONTRAK_DATE,
             'STATUS' => $this->STATUS,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
         ]);
+        $query->andWhere(['NOT',['DATE_START' => NULL]]);
+        $query->andWhere(['NOT',['DATE_END' => NULL]]);
 
         $query->andFilterWhere(['like', 'KASIR_ID', $this->KASIR_ID])
             ->andFilterWhere(['like', 'KASIR_NM', $this->KASIR_NM])
@@ -85,15 +84,5 @@ class StoreKasirSearch extends StoreKasir
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY]);
 
         return $dataProvider;
-    }
-    public function getUser()
-    {
-        return $this->hasOne(User::className(),['ACCESS_GROUP'=>'ACCESS_GROUP']);
-    }
-
-    public function getOwner(){
-        $result=$this->user;
-        $result = (empty($result->ACCESS_LEVEL)) ? '' : $result->ACCESS_LEVEL ;
-        return $result;
     }
 }

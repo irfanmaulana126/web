@@ -231,6 +231,25 @@ $(document).on('click','#databarang-button-row-edit-promo', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+/*
+ * BUTTON EDIT Promo
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#kasir-button-row-switch', function(ehead){ 			  
+	$('#kasir-button-row-switch-modal').modal('show')
+	.find('#kasir-button-row-switch-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#kasir-button-row-bayar', function(ehead){ 			  
+	$('#kasir-button-row-bayar-modal').modal('show')
+	.find('#kasir-button-row-bayar-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
 /**
  * ======================================== TIPS ========================================
  * HELPER INCLUDE FILE

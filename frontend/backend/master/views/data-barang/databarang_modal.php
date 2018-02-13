@@ -495,28 +495,7 @@ $this->registerCss("
 	/*
 	 * BUTTON - EDIT Harga
 	*/
-	Modal::begin([
-		//'id' => 'sync_save',
-		'id' => 'cal',
-		'header' => '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
-				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b>Calculator HPP</b>
-		',	
-		'size' => 'modal-md',
-		'options' => ['class'=>'slide'],
-		'headerOptions'=>[
-			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
-			//'toggleButton' => ['label' => 'click me'],
-		],
-		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
-	]);
-	
+		
 	/*
 	 * BUTTON UPLOAD OPNAME.
 	*/
@@ -543,6 +522,27 @@ $this->registerCss("
 	]);
 		echo "<div id='databarang-button-upload-content'></div>";
 	Modal::end();
+	Modal::begin([
+		//'id' => 'sync_save',
+		'id' => 'cal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b>Calculator HPP</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			//'toggleButton' => ['label' => 'click me'],
+		],
+		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
 	?>
 	
 <?php $form = ActiveForm::begin(); ?>

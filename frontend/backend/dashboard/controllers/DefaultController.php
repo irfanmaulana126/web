@@ -47,7 +47,7 @@ class DefaultController extends Controller
 	
     public function actionIndex()
     {
-		Yii::$app->session->setFlash('ee');
+		// Yii::$app->session->setFlash('ee');
         return $this->render('index');
     }
 	
