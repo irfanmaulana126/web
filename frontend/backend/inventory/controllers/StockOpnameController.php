@@ -9,6 +9,8 @@ use yii\web\NotFoundHttpException;
 use yii\data\ArrayDataProvider;
 use yii\base\DynamicModel;
 use yii\web\Response;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 use frontend\backend\inventory\models\StockOutSearch;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
 
@@ -89,18 +91,28 @@ class StockOpnameController extends Controller
 	* @since 1.2
 	* ====================================
 	*/
-	public function actionClosingStock(){
-		$modelPeriode = new \yii\base\DynamicModel([
-			'TAHUNBULAN','TAHUN','BULAN'
-		]);		
-		$modelPeriode->addRule(['TAHUNBULAN'], 'required')
-         ->addRule(['TAHUNBULAN','TAHUN','BULAN'], 'safe');
-		 
-		if (!$modelPeriode->load(Yii::$app->request->post())) {
-			return $this->renderAjax('form_cari',[
-				'modelPeriode' => $modelPeriode
+	public function actionClosingStock($paramcari){
+
+		if (!empty($paramcari)=='1') {
+			// print_r($paramcari);die();
+			//PUBLIC PARAMS	
+			$cari=['thn'=>$paramcari];	
+			
+			//DINAMIK MODEL PARAMS
+			$searchModel = new StockOutSearch($cari);
+			$dataProvider = $searchModel->searchOpname(Yii::$app->request->queryParams);
+			//LOAD DEFAULT INDEX
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+				'paramCari'=>$paramcari
 			]);
+		} else {
+			
+			Yii::$app->session->setFlash('error', "Tanggal Belum diinputkan");
+			return $this->redirect(['index']);
 		}
+		
 	}
 	
 	/**====================================
@@ -110,17 +122,72 @@ class StockOpnameController extends Controller
 	* @since 1.2
 	* ====================================
 	*/
-	public function actionDownload(){
-		$modelPeriode = new \yii\base\DynamicModel([
-			'TAHUNBULAN','TAHUN','BULAN'
-		]);		
-		$modelPeriode->addRule(['TAHUNBULAN'], 'required')
-         ->addRule(['TAHUNBULAN','TAHUN','BULAN'], 'safe');
-		 
-		if (!$modelPeriode->load(Yii::$app->request->post())) {
-			return $this->renderAjax('form_download',[
-				'modelPeriode' => $modelPeriode
-			]);
+	public function actionDownload($paramcari){
+		
+		if (!empty($paramcari)=='1') {
+			//PUBLIC PARAMS	
+
+		$searchModeldownload = new StockOutSearch(['thn'=>$paramcari]);
+        $dataProviderdownload = $searchModeldownload->searchOpname(Yii::$app->request->queryParams);
+		$dinamikFielddownload=$dataProviderdownload->allModels;
+		
+		$excel_dataProdukStokdownload = Postman4ExcelBehavior::excelDataFormat($dinamikFielddownload);
+        $excel_titleProdukStokdownload = $excel_dataProdukStokdownload['excel_title'];
+        $excel_ceilsProdukStokdownload = $excel_dataProdukStokdownload['excel_ceils'];
+
+		
+		// print_r($dinamikFielddownload);
+		// die();
+		//DATA IMPORT
+		$excel_contentdownload = [
+			[
+				'sheet_name' => 'Produk-Stok',
+                'sheet_title' => [
+					['Nama Toko','Access Group','Produk','Lalu','Masuk','Terjual','Sisa','Closing','Actual']
+				],
+				'ceils' => $excel_ceilsProdukStokdownload,
+				'freezePane' => 'A2',
+				'columnGroup'=>false,
+				'autoSize'=>false,
+				'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
+                'headerStyle'=>[	
+					[
+						'STORE_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'ACCESS_GROUP' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'NAMA_TOKO' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
+						'TTL_LALU' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'TTL_MASUK' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'TTL_JUAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'TTL_SISA' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'Closing' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'Actual' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+					]						
+				],
+				'contentStyle'=>[
+					[						
+						'STORE_NM' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'ACCESS_GROUP' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'NAMA_TOKO'=>['font-size'=>'8','valign'=>'center','align'=>'left'],
+						'TTL_LALU' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'TTL_MASUK' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'TTL_JUAL' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'TTL_SISA' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'Closing' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
+						'Actual' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT']
+					]
+				],
+               'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+               'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
+			],
+		];
+		// print_r($excel_content);
+		// die();
+		$excel_filedownload = "Stock Opname After Closing";
+		$this->export4excel($excel_contentdownload, $excel_filedownload,0);
+		
+		} else {			
+			Yii::$app->session->setFlash('error', "Tanggal Belum diinputkan");
+			return $this->redirect(['index']);
 		}
 	}
 	
@@ -132,13 +199,43 @@ class StockOpnameController extends Controller
 	* ====================================
 	*/
 	public function actionUploadFile(){
-		$modelPeriode = new \yii\base\DynamicModel([
-			'uploadExport'
-		]);		
-		$modelPeriode->addRule(['uploadExport'], 'required')
-         ->addRule(['uploadExport'], 'safe');
+		$modelPeriode = new StockOutSearch;
 		 
-		if (!$modelPeriode->load(Yii::$app->request->post())) {
+		if ($modelPeriode->load(Yii::$app->request->post())) {
+			$modelPeriode->uploadExport = UploadedFile::getInstance($modelPeriode, 'uploadExport');
+			// print_r($fileType);die();	
+            if ($modelPeriode->upload()) {			
+				$file='uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension.'';
+				try{
+					$FileType = \PHPExcel_IOFactory::identify($file);
+					$objReader = \PHPExcel_IOFactory::createReader($FileType);
+					$objPHPExcel = $objReader->load($file);
+				}catch(Exception $e){
+					die('error');
+				}
+				$sheet = $objPHPExcel->getSheet(0);
+				$highestRow = $sheet->getHighestRow();
+				$highestColumn=$sheet->getHighestColumn();
+				// print_r($highestRow);die();
+				for($row = 1; $row <= $highestRow; $row++){
+					$rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+
+					// if ($row==1) {
+					// 	continue;
+					// }
+
+					// $branch = new model;
+					// $branch_id = $rowData[0][0];
+					// $branch->field_database = $rowData[0][1];
+					// $branch->save();
+
+					// print_r($branch->getErrors());
+					// print_r($rowData);
+				}
+				unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+				return $this->redirect(['index']);
+            }
+		}else{
 			return $this->renderAjax('form_upload',[
 				'modelPeriode' => $modelPeriode
 			]);
@@ -163,7 +260,7 @@ class StockOpnameController extends Controller
 		$id=$modelPeriode->TAHUN;
 		// print_r($id);die();
 		//DINAMIK MODEL PARAMS
-		$searchModel = new StockOutSearch(['thn'=>$id]);
+		$searchModel = new StockOutSearch(['thn'=>$id."-01"]);
         $dataProvider = $searchModel->searchOpname(Yii::$app->request->queryParams);
 		$dinamikField=$dataProvider->allModels;
 
@@ -218,7 +315,7 @@ class StockOpnameController extends Controller
 		];
 		// print_r($excel_content);
 		// die();
-		$excel_file = "Stock Opname";
+		$excel_file = "Stock Opname Closing fix";
 		$this->export4excel($excel_content, $excel_file,0);
 		}else{
 			return $this->renderAjax('form_cari_export',[

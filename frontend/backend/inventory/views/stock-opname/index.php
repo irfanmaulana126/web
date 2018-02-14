@@ -10,9 +10,7 @@ use kartik\date\DatePicker;
 use kartik\builder\Form;
 use yii\helpers\Url;
 use yii\web\View;
-
-// print_r($dataProvider->getModels()[0]['SISA_2017-11-03']);
-// die();
+use kartik\widgets\Alert;
 
 $this->title='Stok Opname';
 	$this->registerCss("
@@ -265,11 +263,11 @@ $this->title='Stok Opname';
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolClosingStock().' '.tombolDownloadFormat().' '.tombolUploadFormat().' '.tombolExportExcel($paramCari).'</div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' <i class="fa fa-toggle-right"></i> '.tombolClosingStock($paramCari).' <i class="fa fa-toggle-right"></i> '.tombolDownloadFormat($paramCari).' <i class="fa fa-toggle-right"></i> '.tombolUploadFormat().' <i class="fa fa-toggle-right"></i> '.tombolExportExcel($paramCari).'</div> ',
 			'before'=>false,
 			'after'=>false			
 		],
-		'pjax'=>true,
+		'pjax'=>false,
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
@@ -296,6 +294,27 @@ $this->title='Stok Opname';
 	]);
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+	<?php if (Yii::$app->session->hasFlash('success')){ ?>
+			<?php
+				echo Alert::widget([
+					'type' => Alert::TYPE_SUCCESS,
+					'title' => 'Well done!',
+					'icon' => 'glyphicon glyphicon-ok-sign',
+					'body' => Yii::$app->session->getFlash('success'),
+					'showSeparator' => true,
+					'delay' => 1000
+				]);
+			?>
+		<?php } elseif (Yii::$app->session->hasFlash('error')) {
+			echo Alert::widget([
+				'type' => Alert::TYPE_DANGER,
+				'title' => 'Oh snap!',
+				'icon' => 'glyphicon glyphicon-remove-sign',
+				'body' => Yii::$app->session->getFlash('error'),
+				'showSeparator' => true,
+				'delay' => 1000
+			]);
+		}?>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">		
 		<?=$gvProdukStockOpname?>

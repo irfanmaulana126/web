@@ -14,7 +14,7 @@ use kartik\widgets\DateTimePicker;
    <?php $form = ActiveForm::begin([
 			'options'=>['enctype'=>'multipart/form-data'], // important,
 			'method' => 'post',
-			'action' => ['/absensi/absen-import/upload'],
+			'action' => ['/inventory/stock-opname/upload-file'],
    ]); ?>
 		<div style="height:100%;font-family: verdana, arial, sans-serif ;font-size: 6pt;">
 		<div class="row" >

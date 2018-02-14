@@ -23,12 +23,13 @@ class StockOutSearch extends DynamicModel
 	public $PRODUCT_ID;
 	public $PRODUCT_NM;
 	public $TTL_QTY;
-
+	public $uploadExport;
 	
 	public function rules()
     {
         return [
-           [['ACCESS_GROUP','STORE_ID','STORE_NM','NAMA_TOKO','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','TTL_QTY','thn'], 'safe'],
+			[['uploadExport'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx, xls'],
+			[['ACCESS_GROUP','STORE_ID','STORE_NM','NAMA_TOKO','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','TTL_QTY','thn'], 'safe'],
 		];	
 
     }	
@@ -231,13 +232,15 @@ class StockOutSearch extends DynamicModel
 		$qrySql= Yii::$app->production_api->createCommand("
 					SELECT  st.STORE_NM AS NAMA_TOKO,
 							(inv.PRODUCT_NM) AS PRODUK,
-							(inv.STOCK_AWAL) AS TTL_LALU,
+							(CASE WHEN inv.STOCK_AWAL IS NOT NULL THEN inv.STOCK_AWAL ELSE 0 END) AS TTL_LALU,
 							SUM(inv.STOCK_BARU) AS TTL_MASUK,
 							SUM(inv.STOCK_TERJUAL) AS TTL_JUAL,
 							(CASE WHEN inv.STOCK_AWAL IS NOT NULL THEN (inv.STOCK_AWAL + SUM(inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL)) 
 							ELSE (SUM(inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL)) END) AS TTL_SISA,
 							".$rsltField.",
-							(inv.STOCK_AKHIR) AS Closing,(inv.STOCK_AKHIR_ACTUAL) AS Actual							
+							(CASE WHEN inv.STOCK_AKHIR IS NOT NULL THEN inv.STOCK_AKHIR ELSE 0 END) AS Closing,
+							(CASE WHEN inv.STOCK_AKHIR_ACTUAL IS NOT NULL THEN inv.STOCK_AKHIR_ACTUAL ELSE 0 END) AS Actual
+												
 					FROM
 					(SELECT
 							(CASE WHEN x1.ACCESS_GROUP<>'' THEN x1.ACCESS_GROUP ELSE x2.ACCESS_GROUP END) AS  ACCESS_GROUP,
@@ -314,12 +317,13 @@ class StockOutSearch extends DynamicModel
 		$qrySql= Yii::$app->production_api->createCommand("
 					SELECT  st.STORE_NM,inv.STORE_ID,
 							(inv.PRODUCT_NM) AS PRODUK,
-							(inv.STOCK_AWAL) AS TTL_LALU,
+							(CASE WHEN inv.STOCK_AWAL IS NOT NULL THEN inv.STOCK_AWAL ELSE 0 END) AS TTL_LALU,
 							SUM(inv.STOCK_BARU) AS TTL_MASUK,
 							SUM(inv.STOCK_TERJUAL) AS TTL_JUAL,
 							(CASE WHEN inv.STOCK_AWAL IS NOT NULL THEN (inv.STOCK_AWAL + SUM(inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL)) 
 							ELSE (SUM(inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL)) END) AS TTL_SISA,
-							(inv.STOCK_AKHIR) AS Closing,(inv.STOCK_AKHIR_ACTUAL) AS Actual
+							(CASE WHEN inv.STOCK_AKHIR IS NOT NULL THEN inv.STOCK_AKHIR ELSE 0 END) AS Closing,
+							(CASE WHEN inv.STOCK_AKHIR_ACTUAL IS NOT NULL THEN inv.STOCK_AKHIR_ACTUAL ELSE 0 END) AS Actual
 					FROM
 					(SELECT
 							(CASE WHEN x1.ACCESS_GROUP<>'' THEN x1.ACCESS_GROUP ELSE x2.ACCESS_GROUP END) AS  ACCESS_GROUP,
@@ -512,5 +516,14 @@ class StockOutSearch extends DynamicModel
  		$this->addCondition($filter, 'TTL_QTY', true);	 		
  		$dataProvider->allModels = $filter->filter($qrySql);
         return $dataProvider; 
-	} 
+	}
+	public function upload()
+    {
+        if ($this->validate()) {
+            $this->uploadExport->saveAs('uploads/' . $this->uploadExport->baseName . '.' . $this->uploadExport->extension);
+            return true;
+        } else {
+            return false;
+        }
+    } 
 }
