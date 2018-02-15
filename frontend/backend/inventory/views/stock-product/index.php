@@ -97,30 +97,41 @@ $this->title='Product Stok';
 	 * QTY STOCK COLUMN
 	 * ================== */
 	 if($dinamikField){
+		$a=0;
+		
 		foreach($dinamikField[0] as $rows => $val){
 			// unset($splt);
 			// $ambilField[]=$rows; 
-			// print_r($inc);die();		
+			// print_r($inc);die();			
+			if($inc % 3==0){
+				$warna='#dff0d8';
+			}elseif($inc % 3!=0){
+				$warna='#faf2cc';
+			}else{
+				$warna='#faf2cd';
+			}
 			$splt=explode('_',$rows);	
 			if($splt[0]=='IN'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Masuk','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>'#d9edf7','mergeHeader'=>true,'COLUMN_COLOR'=>'#d9edf7']];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Masuk','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>'#d9edf7','mergeHeader'=>true,'COLUMN_COLOR'=>$warna]];
 				$inc=$inc+1;
 			}
 			if($splt[0]=='OUT'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Keluar','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>'#dff0d8','mergeHeader'=>true,'COLUMN_COLOR'=>'#dff0d8']];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Keluar','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>'#d9edf7','mergeHeader'=>true,'COLUMN_COLOR'=>$warna]];
 				$inc=$inc+1;
 			}
 			if($splt[0]=='SISA'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Sisa','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>'#faf2cc','mergeHeader'=>true,'COLUMN_COLOR'=>'#faf2cc']];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'SIZE'=>'7px','label'=>'Sisa','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>'#d9edf7','mergeHeader'=>true,'COLUMN_COLOR'=>$warna]];
 				$inc=$inc+1;
 				$headerContent1[]=['content'=>date('Y-m-d', strtotime($splt[1])),'options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true]];		
 			}
+			$a=$a+1;
+			
 		};
 	 }else{
 		 for ($i=1;$i<=31;$i++){
@@ -131,17 +142,19 @@ $this->title='Product Stok';
 	 };
 	 
 	 //OPNAME
-	$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_BARU','SIZE' => '7px','label'=>'MASUK','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#f7d9f7','BCOLOR'=>'#f7d9f7']];
-	$inc=$inc+1;
-	$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_TERJUAL','SIZE' => '7px','label'=>'TERJUAL','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#00c0ef','BCOLOR'=>'#00c0ef']];
-	$inc=$inc+1;
-	$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_SISA','SIZE' => '7px','label'=>'SISA','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#00a65a','BCOLOR'=>'#00a65a']];
-	$headerContent1[]=['content'=>'TOTAL STOCK BULAN INI','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','COLUMN_COLOR'=>'red']];
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_BARU','SIZE' => '7px','label'=>'MASUK','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#00c0ef','BCOLOR'=>'#00c0ef']];
+	 $inc=$inc+1;
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_TERJUAL','SIZE' => '7px','label'=>'TERJUAL','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#00c0ef','BCOLOR'=>'#00c0ef']];
+	 $inc=$inc+1;
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_REFUND','SIZE' => '7px','label'=>'REFUND','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#00c0ef','BCOLOR'=>'#00c0ef']];
+	 $inc=$inc+1;
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_SISA','SIZE' => '7px','label'=>'SISA','align'=>'right','group'=>false,'pageSummary'=>false,'filterType'=>false,'mergeHeader'=>true,'COLUMN_COLOR'=>'#00c0ef','BCOLOR'=>'#00c0ef']];
+	 $headerContent1[]=['content'=>'TOTAL STOCK BULAN INI','options'=>['colspan'=>4,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','COLUMN_COLOR'=>'red']];
 	
 	 $inc=$inc+1;
-	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR','SIZE' => '7px','label'=>'Closing','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true,'COLUMN_COLOR'=>'#f39c12','BCOLOR'=>'#f39c12']];
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR','SIZE' => '7px','label'=>'Closing','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true,'COLUMN_COLOR'=>'#12f376','BCOLOR'=>'#12f376']];
 	 $inc=$inc+1;
-	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_OPNAME','SIZE' => '7px','label'=>'opname','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true,'COLUMN_COLOR'=>'#12aaf3','BCOLOR'=>'#12aaf3']];
+	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'TTL_STOCK_OPNAME','SIZE' => '7px','label'=>'opname','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true,'COLUMN_COLOR'=>'#12f376','BCOLOR'=>'#12f376']];
 	 $inc=$inc+1;
 	 $aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>'STOCK_AKHIR_ACTUAL','SIZE' => '7px','label'=>'Actual','align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader,'mergeHeader'=>true,'COLUMN_COLOR'=>'#12f376','BCOLOR'=>'#12f376']];
 	 $headerContent1[]=['content'=>'STOK OPNAME','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;','mergeHeader'=>true,'COLUMN_COLOR'=>'red']];		
