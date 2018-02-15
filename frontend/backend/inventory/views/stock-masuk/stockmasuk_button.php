@@ -58,7 +58,27 @@ use yii\base\DynamicModel;
 		$content = Html::button($label1,$options1);
 		return $content;		
 	}
-	
+	/*
+	 * BUTTON DOWNLOAD FORMAT & LIST DATA PRODUCK OPNAME
+	*/
+	function tombolUploadFormat(){
+		$title= Yii::t('app','Upload Stock');
+		$url = Url::toRoute(['/inventory/stock-masuk/upload-file']);
+		$options1 = ['value'=>$url,
+					'id'=>'stockopname-button-upload',
+					'data-pjax' => false,
+					'class'=>"btn btn-warning btn-xs",
+					'title'=>'Upload Data Actual Stock'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-upload fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}
 		
 	/*
 	 * LINK EXPORT EXCEL.

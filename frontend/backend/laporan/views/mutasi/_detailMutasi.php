@@ -47,11 +47,12 @@ use kartik\widgets\ActiveForm;
 	$attSroreData=[	
 		[
 			'attribute' =>'StoreNm',
+			'label'=>'STORE NAME',
 			'type'=>DetailView::INPUT_TEXTAREA,
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>($modelToko->StoreNm=='') ?  '' : $modelToko->StoreNm,
 		],
 		[
 			'attribute' =>'TGL_OPEN',
@@ -59,7 +60,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+			'value'=>($modelToko->TGL_OPEN=='') ?  '' : $modelToko->TGL_OPEN,
 		],
 		[
 			'attribute' =>'TGL_CLOSE',
@@ -67,7 +68,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+			'value'=>($modelToko->TGL_CLOSE=='') ?  '' : $modelToko->TGL_CLOSE,
 		],
 		[
 			'attribute' =>'ACCESS_ID',
@@ -75,7 +76,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+			'value'=>($modelToko->ACCESS_ID=='') ?  '' : $modelToko->ACCESS_ID,
 		],
 		[
 			'attribute' =>'CASHINDRAWER',
@@ -83,7 +84,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+			'value'=>($modelToko->CASHINDRAWER=='') ?  '' : $modelToko->CASHINDRAWER,
 		],
 		[
 			'attribute' =>'ADDCASH',
@@ -91,7 +92,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+			'value'=>($modelToko->ADDCASH=='') ?  '' : $modelToko->ADDCASH,
 		],
 		[
 			'attribute' =>'SELLCASH',
@@ -99,7 +100,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+			'value'=>($modelToko->SELLCASH=='') ?  '' : $modelToko->SELLCASH,
 		],
 		[
 			'attribute' =>'TOTALCASH',
@@ -107,7 +108,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+			'value'=>($modelToko->TOTALCASH=='') ?  '' : $modelToko->TOTALCASH,
 		],
 		/* [
 			'attribute' =>'ALAMAT',

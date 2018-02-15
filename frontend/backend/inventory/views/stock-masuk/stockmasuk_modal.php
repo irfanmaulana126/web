@@ -107,4 +107,30 @@ $this->registerCss("
 		echo "<div id='stockmasuk-button-export-content'></div>";
 	Modal::end();
 	
+	/*
+	 * BUTTON UPLOAD OPNAME.
+	*/
+	Modal::begin([
+		//'id' => 'sync_save',
+		'id' => 'stockopname-button-upload-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
+				<i class="fa fa-upload fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> UPLOAD FILE STOCK</b>
+		',	
+		'size' => 'modal-sm',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			//'toggleButton' => ['label' => 'click me'],
+		],
+		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='stockopname-button-upload-content'></div>";
+	Modal::end();
 ?>

@@ -27,7 +27,14 @@ $this->registerCss("
 		#import-absen-log .kv-grid-table .actual-delete :link {
 			color: #fdfdfd;
 		}		
-		
+			
+		#header-sales-trans .panel-heading {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+			color: #000;
+		}
+		#header-sales-trans .panel-footer {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		}
 		/* mouse over link */
 		a:hover {
 			color: #5a96e7;

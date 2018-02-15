@@ -50,25 +50,27 @@ use dosamigos\gallery\Gallery;
 			];
 	}; */			
 
-	 $items[] = [
-					'src'=>$model['imageNm']!=''?$model['imageNm']:'data:image/jpg;charset=utf-8;base64,'.$gambarkosong,
-					'imageOptions'=>[
-						'width'=>"840px",
-						'height'=>"800px",
-						'padding-bottom'=>'20px',
-						'class'=>'img-rounded'
-					],
-					'options'=>[
-						'title' => 'test1'
-					], 
-			];
+	//  $items[] = [
+	// 				'src'=>$model['STORAN_IMAGE']!=''?$model['STORAN_IMAGE']:'data:image/jpg;charset=utf-8;base64,'.$gambarkosong,
+	// 				'imageOptions'=>[
+	// 					'width'=>"840px",
+	// 					'height'=>"800px",
+	// 					'padding-bottom'=>'20px',
+	// 					'class'=>'img-rounded'
+	// 				],
+	// 				'options'=>[
+	// 					'title' => 'test1'
+	// 				], 
+	// 		];
 	/* 2 amigos two galerry author mix:wawan and ptr.nov ver 1.0*/
-	$viewItemImge =dosamigos\gallery\Gallery::widget([
-		  'items' =>  $items]);
-	echo Html::panel([
-			'heading' =>false,// '<div> LIST IMAGE </div>',
-			'body'=>$viewItemImge,
-		],
-		Html::TYPE_INFO
-	);
+	// $viewItemImge = \dosamigos\gallery\Gallery::widget([
+	// 	  'items' =>  $items]);
+	// echo Html::panel([
+	// 		'heading' =>false,// '<div> LIST IMAGE </div>',
+	// 		'body'=>$viewItemImge,
+	// 	],
+	// 	Html::TYPE_INFO
+	// );
+	$data = $model['STORAN_IMAGE']!=''?$model['STORAN_IMAGE']:'data:image/jpg;charset=utf-8;base64,'.$gambarkosong;
+	echo '<img src="'.$data.'" alt="">'
 ?>

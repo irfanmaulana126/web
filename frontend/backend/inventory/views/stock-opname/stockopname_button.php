@@ -37,14 +37,11 @@ use yii\base\DynamicModel;
 		return $content;		
 	}
 	
-	/*
-	 * BUTTON CLOSING STOCK
-	*/
-	function tombolClosingStock(){
+	function tombolClosingStock($paramCari){
 		$title= Yii::t('app','Closing Stock');
-		$url = Url::toRoute(['/inventory/stock-opname/closing-stock']);
-		$options1 = ['value'=>$url,
-					'id'=>'stockopname-button-closing',
+		$url = Url::toRoute(['/inventory/stock-opname/closing-stock?paramcari='.$paramCari.'']);
+		$options1 = [
+					// 'id'=>'stockopname-button-closing',
 					'data-pjax' => false,
 					'class'=>"btn btn-danger btn-xs",
 					'title'=>'Closing Stok Otomatis Ahir Bulan'
@@ -55,18 +52,18 @@ use yii\base\DynamicModel;
 				</span>
 		';
 		$label1 = $icon1.' '.$title ;
-		$content = Html::button($label1,$options1);
+		$content = Html::a($label1,$url,$options1);
 		return $content;		
 	}
 	
 	/*
 	 * BUTTON DOWNLOAD FORMAT & LIST DATA PRODUCK OPNAME
 	*/
-	function tombolDownloadFormat(){
+	function tombolDownloadFormat($paramCari){
 		$title= Yii::t('app','Download Opname');
-		$url = Url::toRoute(['/inventory/stock-opname/download']);
-		$options1 = ['value'=>$url,
-					'id'=>'stockopname-button-download',
+		$url = Url::toRoute(['/inventory/stock-opname/download?paramcari='.$paramCari.'']);
+		$options1 = [
+					// 'id'=>'stockopname-button-download',
 					'data-pjax' => false,
 					'class'=>"btn btn-success btn-xs",
 					'title'=>'Download Format List Product Opname'
@@ -77,7 +74,7 @@ use yii\base\DynamicModel;
 				</span>
 		';
 		$label1 = $icon1.' '.$title ;
-		$content = Html::button($label1,$options1);
+		$content = Html::a($label1,$url,$options1);
 		return $content;		
 	}
 	
@@ -109,8 +106,7 @@ use yii\base\DynamicModel;
 	function tombolExportExcel(){
 		$title1 = Yii::t('app', ' Export Excel');
 		$url = Url::toRoute(['/inventory/stock-opname/export']);
-		$options1 = [
-					'value'=>$url,
+		$options1 = ['value'=>$url,
 					'id'=>'stockopname-export-excel',
 					'data-pjax' => 0,
 					'class'=>"btn btn-primary btn-xs",
