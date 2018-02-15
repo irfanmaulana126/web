@@ -42,3 +42,14 @@ $(document).on('click','#stockmasuk-export-excel', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+/*
+ * BUTTON UPLOAD FORMAT.
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#stockopname-button-upload', function(ehead){ 			  
+	$('#stockopname-button-upload-modal').modal('show')
+	.find('#stockopname-button-upload-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});

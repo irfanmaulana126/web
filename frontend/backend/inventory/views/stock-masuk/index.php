@@ -10,6 +10,8 @@ use kartik\date\DatePicker;
 use kartik\builder\Form;
 use yii\helpers\Url;
 use yii\web\View;
+use frontend\backend\master\models\Product;
+$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
 
 // print_r($dataProvider->getModels()[0]['SISA_2017-11-03']);
 // die();
@@ -17,6 +19,14 @@ $this->title="Stock Masuk";
 	$this->registerCss("
 		#stok-masuk .kv-grid-container{
 			height:500px
+		}
+
+		#stok-masuk .panel-heading {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+			color:#000;
+		}
+		#stok-masuk .panel-footer {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 		}
 	");
 	$this->registerJs($this->render('stockmasuk_script.js'),View::POS_READY);
@@ -60,7 +70,12 @@ $this->title="Stock Masuk";
 	
 	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','WIDTH'=>'100px','SIZE' => '10px','label'=>'TOKO','align'=>'left','group'=>true,'pageSummary'=>false]];
 	// $aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
-	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','WIDTH'=>'100px','SIZE' => '7px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false]];
+	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','WIDTH'=>'100px','SIZE' => '7px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false,
+	'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
+	'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+	'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
+	'filterType'=>GridView::FILTER_SELECT2,
+	'filterOptions'=>[],]];
 	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
 				
 	$inc=2;
@@ -98,7 +113,12 @@ $this->title="Stock Masuk";
 				// 'filterType'=>$gvfilterType,
 				// 'filter'=>$gvfilter,
 				// 'filterWidgetOptions'=>$filterWidgetOpt,	
-				//'filterInputOptions'=>$filterInputOpt,				
+				//'filterInputOptions'=>$filterInputOpt,
+				'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
+	'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+	'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
+	'filterType'=>GridView::FILTER_SELECT2,
+	'filterOptions'=>[],				
 				'hAlign'=>'right',
 				'vAlign'=>'middle',
 				'hidden'=>false,
@@ -268,7 +288,7 @@ $this->title="Stock Masuk";
 	$gvProdukStock= GridView::widget([
 		'id'=>'stok-masuk',
 		'dataProvider' => $dataProvider,
-		//'filterModel' => $searchModelDetail,
+		'filterModel' => $searchModel,
 		'filterRowOptions'=>['style'=>'background-color:'.$colorHeader.'; align:center'],
 		'beforeHeader'=>[
 			'0'=>[					
@@ -281,7 +301,7 @@ $this->title="Stock Masuk";
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolCardStock().' '.tombolExportExcel($paramCari).'</div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolCardStock().' '.tombolExportExcel($paramCari).' '.tombolUploadFormat().'</div> ',
 			'before'=>false,
 			'after'=>false			
 		],

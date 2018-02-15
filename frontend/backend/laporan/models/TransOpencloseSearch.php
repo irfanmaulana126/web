@@ -91,7 +91,6 @@ class TransOpencloseSearch extends TransOpenclose
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
-
         return $dataProvider;
     }
 }

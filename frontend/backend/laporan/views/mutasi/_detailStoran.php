@@ -51,7 +51,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=> ($modelStoran->ACCESS_ID=='') ?  '' : $modelStoran->ACCESS_ID ,
 		],
 		[
 			'attribute' =>'BANK_NM',
@@ -59,7 +59,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>($modelStoran->BANK_NM=='') ?  '' : $modelStoran->BANK_NM,
 		],
 		[
 			'attribute' =>'BANK_NO',
@@ -67,7 +67,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>($modelStoran->BANK_NO=='') ?  '' : $modelStoran->BANK_NO,
 		],
 		[
 			'attribute' =>'NOMINAL_STORAN',
@@ -75,7 +75,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>($modelStoran->NOMINAL_STORAN=='') ?  '' : $modelStoran->NOMINAL_STORAN,
 		],
 		[
 			'attribute' =>'SISA_STORAN',
@@ -83,7 +83,7 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>($modelStoran->SISA_STORAN=='') ?  '' : $modelStoran->SISA_STORAN,
 		],
 		[
 			'attribute' =>'DCRP_DETIL',
@@ -91,12 +91,13 @@ use kartik\widgets\ActiveForm;
 			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
 			//'displayOnly'=>true,	
 			'format'=>'raw', 
-            //'value'=>'<kbd>'.$modelToko->ITEM_NM.'</kbd>',
+            'value'=>($modelStoran->DCRP_DETIL=='') ?  '' : $modelStoran->DCRP_DETIL,
 		],
 		[
 			'attribute'=>'imageNm',
-			//'value'=>Html::img($modelStoran['imageNm'],['width'=>'120','height'=>'120']),
-			'value'=>Html::button(Html::img($modelStoran['imageNm'],['width'=>'120','height'=>'120']), [
+			'label'=>'IMAGE',
+			'value'=>($modelStoran['imageNm']=='') ?  '' : Html::img($modelStoran['imageNm'],['width'=>'120','height'=>'120']),
+			'value'=>($modelStoran['imageNm']=='') ?  '' : Html::button(Html::img($modelStoran['imageNm'],['width'=>'120','height'=>'120']), [
 						'value'=>url::to(['/laporan/mutasi/disply-image','id'=>$modelStoran->OPENCLOSE_ID]),
 						'id'=>'modal-view-button',
 						'data-pjax' => true,
@@ -223,7 +224,7 @@ use kartik\widgets\ActiveForm;
 	
 	
 	
-	$dvStoreData=DetailView::widget([
+	$dvStoreData = DetailView::widget([
 		'id'=>'dv-storean-data',
 		'model' => $modelStoran,
 		'attributes'=>$attSroreData,

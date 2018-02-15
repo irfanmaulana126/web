@@ -149,6 +149,7 @@ class StockOpnameController extends Controller
 				'freezePane' => 'A2',
 				'columnGroup'=>false,
 				'autoSize'=>false,
+				'unlockCell'=>'D,I,'.(count($excel_ceilsProdukStokdownload)+1).'',
 				'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					[

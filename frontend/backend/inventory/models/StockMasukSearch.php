@@ -23,12 +23,13 @@ class StockMasukSearch extends DynamicModel
 	public $PRODUCT_ID;
 	public $PRODUCT_NM;
 	public $QTY;
-
+	public $uploadExport;
 	
 	public function rules()
     {
         return [
-           [['ACCESS_GROUP','STORE_ID','STORE_NM','NAMA_TOKO','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','QTY','thn'], 'safe'],
+			[['uploadExport'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx, xls'],
+			[['ACCESS_GROUP','STORE_ID','STORE_NM','NAMA_TOKO','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','QTY','thn'], 'safe'],
 		];	
 
     }	
@@ -176,7 +177,7 @@ class StockMasukSearch extends DynamicModel
 		$rsltField=$dpFieldtext->getModels()[0]['@fildText'];
 		$qrySql= Yii::$app->production_api->createCommand("
 			SELECT 
-				st.STORE_NM,rslt1.PRODUCT_NM,".$rsltField." 
+				st.STORE_NM,rslt1.PRODUCT_ID,rslt1.PRODUCT_NM,".$rsltField." 
 			FROM
 			(
 				SELECT 
@@ -250,5 +251,14 @@ class StockMasukSearch extends DynamicModel
         } else {
             $filter->addMatcher($attribute, new matchers\SameAs(['value' => $value, 'partial' => $partial]));
         }
-    }
+	}
+	public function upload()
+    {
+        if ($this->validate()) {
+            $this->uploadExport->saveAs('uploads/' . $this->uploadExport->baseName . '.' . $this->uploadExport->extension);
+            return true;
+        } else {
+            return false;
+        }
+    } 
 }

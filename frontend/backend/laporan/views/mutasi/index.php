@@ -25,7 +25,27 @@ $this->registerCss("
 		#openclose .kv-grid-table .actual-delete :link {
 			color: #fdfdfd;
 		}		
-		
+		#book-openclose .panel-heading {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+			color: #000;
+		}
+		#book-openclose .panel-footer {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		}
+		#dv-mutasi-data .panel-heading {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+			color: #000;
+		}
+		#dv-mutasi-data .panel-footer {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		}
+		#dv-storean-data .panel-heading {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+			color: #000;
+		}
+		#dv-storean-data .panel-footer {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		}
 		/* mouse over link */
 		a:hover {
 			color: #5a96e7;
@@ -50,6 +70,8 @@ $this->registerCss("
 	");
 $this->title = 'Trans Opencloses';
 $this->params['breadcrumbs'][] = $this->title;
+$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+    
 	$aryStt= [
 		['STATUS' => 0, 'STT_NM' => 'OPEN'],		  
 		['STATUS' => 1, 'STT_NM' => 'CLOSE'],
@@ -58,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
 	$aryFieldTmp= [		  
-		['ID' =>0, 'ATTR' =>['FIELD'=>'storeNm','SIZE' => '180px','label'=>'Toko','align'=>'left','mergeHeader'=>false,'FILTER'=>true,'filterColspn'=>0]],		  
+		['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','SIZE' => '180px','label'=>'Toko','align'=>'left','mergeHeader'=>false,'FILTER'=>true,'filterColspn'=>0,'FILTER'=>ArrayHelper::map(TransOpenclose::find()->where(['ACCESS_GROUP'=>$user])->groupBy(['STORE_ID'])->orderBy(['STORE_ID'=>SORT_DESC])->all(),'STORE_ID','storeNm'),]],		  
 		['ID' =>1, 'ATTR' =>['FIELD'=>'TGL_OPEN','SIZE' => '6px','label'=>'Waktu Buka','align'=>'center','mergeHeader'=>false,'FILTER'=>true,'filterColspn'=>2]],	
 		['ID' =>2, 'ATTR' =>['FIELD'=>'TGL_CLOSE','SIZE' => '6px','label'=>'Waktu Tutup','align'=>'center','mergeHeader'=>true,'FILTER'=>false,'filterColspn'=>0]],
 		//['ID' =>3, 'ATTR' =>['FIELD'=>'STATUS','SIZE' => '6px','label'=>'Status','align'=>'center','mergeHeader'=>true,'FILTER'=>true]]			
@@ -134,7 +156,12 @@ $this->params['breadcrumbs'][] = $this->title;
 				'style'=>'background-color:rgba(255, 255, 255, 1); align:center'
 			];	
 		}; 
-		
+		if ($value[$key]['FIELD']=='STORE_ID') {
+			$gvfilterType=GridView::FILTER_SELECT2;
+			$filterWidgetOpt=['pluginOptions' =>Yii::$app->gv->gvPliginSelect2()];
+			$filterInputOpt=['placeholder'=>'Select'];
+			$filterOptions=Yii::$app->gv->gvFilterContainHeader('0','50px',$bColor);
+		}
 		$attLapOpenClosing[]=[		
 			'attribute'=>$value[$key]['FIELD'],
 			'label'=>$value[$key]['label'],
@@ -154,6 +181,12 @@ $this->params['breadcrumbs'][] = $this->title;
 						return 'Belum Close';
 					}else{
 						return $data->$x;
+					}
+				}elseif($x=='STORE_ID'){
+					if($data->STORE_ID==''){
+						return ' ';
+					}else{
+						return $data->storeNm;
 					}
 				}else{
 					return $data->$x;
@@ -255,7 +288,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		'type'=>'info',
 		'after'=>false,
 		'before'=>false,
-		'footer'=>false,
+		'showFooter'=>true,
 	],
 	'pjax'=>true,
 	'pjaxSettings'=>[
@@ -292,10 +325,16 @@ $this->params['breadcrumbs'][] = $this->title;
 	$detailMutasi= Yii::$app->controller->renderPartial('_detailMutasi',[
 			'modelToko'=>$model
 		]);
-		$modelStoran= TransStoran::find()->where(['OPENCLOSE_ID'=>$model->OPENCLOSE_ID])->one();
-		$detailStoran= Yii::$app->controller->renderPartial('_detailStoran',[
+
+	$modelStoran= TransStoran::find()->where(['OPENCLOSE_ID'=>$model->OPENCLOSE_ID])->one();
+	
+	if (empty($modelStoran)) {
+		$modelStoran = new TransStoran;
+	}
+	// print_r($model->OPENCLOSE_ID);die();
+	$detailStoran= Yii::$app->controller->renderPartial('_detailStoran',[
 			'modelStoran'=>$modelStoran
-		]);
+	]);
 	//print_r($model);
 
 ?>
@@ -345,7 +384,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<i class="fa fa-image fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> BUKTI SETORAN </b>
 		',	
-		'size' => Modal::SIZE_LARGE,
+		'size' => 'modal-md',
 		//'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:rgba(129, 192, 223, 0.55)',

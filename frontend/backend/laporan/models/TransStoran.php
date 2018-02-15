@@ -72,20 +72,20 @@ class TransStoran extends \yii\db\ActiveRecord
             'ID' => 'ID',
             'ACCESS_GROUP' => 'Access  Group',
             'STORE_ID' => 'Store  ID',
-            'ACCESS_ID' => 'Access  ID',
-            'OPENCLOSE_ID' => 'Openclose  ID',
-            'TGL_STORAN' => 'Tgl  Storan',
-            'TOTALCASH' => 'Totalcash',
-            'NOMINAL_STORAN' => 'Nominal  Storan',
-            'SISA_STORAN' => 'Sisa  Storan',
-            'BANK_NM' => 'Bank  Nm',
-            'BANK_NO' => 'Bank  No',
+            'ACCESS_ID' => 'ACCESS ID',
+            'OPENCLOSE_ID' => 'OPENCLOSE ID',
+            'TGL_STORAN' => 'TANGGAL SETORAN',
+            'TOTALCASH' => 'TOTAL CASH',
+            'NOMINAL_STORAN' => 'NOMINAL STORAN',
+            'SISA_STORAN' => 'SISA STORAN',
+            'BANK_NM' => 'BANK NAME',
+            'BANK_NO' => 'BANK NUMBER',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
             'UPDATE_AT' => 'Update  At',
             'STATUS' => 'Status',
-            'DCRP_DETIL' => 'Dcrp  Detil',
+            'DCRP_DETIL' => 'DCRP',
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];
@@ -99,7 +99,7 @@ class TransStoran extends \yii\db\ActiveRecord
 		if ($rslt){
 			return $rslt;
 		}else{
-			return "none";
+			return "";
 		}; 
 	}
 }

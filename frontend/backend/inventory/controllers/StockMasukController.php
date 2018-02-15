@@ -9,6 +9,7 @@ use yii\web\NotFoundHttpException;
 use yii\data\ArrayDataProvider;
 use yii\base\DynamicModel;
 use yii\web\Response;
+use yii\web\UploadedFile;
 use frontend\backend\inventory\models\StockMasukSearch;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
 
@@ -129,11 +130,14 @@ class StockMasukController extends Controller
 		
 		$headerMerge[]=['DATA_PRODUK'=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'15']];
 		$headerMerge[]=['DATA_PRODUK1'=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'17']];
+		$headerMerge[]=['DATA_PRODUK2'=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'17']];
 		
 		$aryFieldColomn[]="NAMA_TOKO";
+		$aryFieldColomn[]="KODE PRODUK";
 		$aryFieldColomn[]="NAMA PRODUK";
 		$aryFieldColomnHeader[]="DATA_PRODUK";
 		$aryFieldColomnHeader[]="DATA_PRODUK1";	
+		$aryFieldColomnHeader[]="DATA_PRODUK2";	
 
 		if($dinamikField){
 			foreach($dinamikField[0] as $rows => $val){
@@ -161,7 +165,7 @@ class StockMasukController extends Controller
         $excel_titleProdukStok = $excel_dataProdukStok['excel_title'];
         $excel_ceilsProdukStok = $excel_dataProdukStok['excel_ceils'];
 		
-		// print_r($setHeaderMerge);
+		// print_r($excel_ceilsProdukStok);
 		// die();
 		//DATA IMPORT
 		$excel_content = [
@@ -174,6 +178,7 @@ class StockMasukController extends Controller
 			    'ceils' => $excel_ceilsProdukStok,
 				'freezePane' => 'A3',
 				'autoSize'=>false,
+				'unlockCell'=>'D,AG,'.(count($excel_ceilsProdukStok)+2).'',
 				'columnGroup'=>false,
 				'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
 				// 'headerStyle'=>$setHeaderMerge,
@@ -190,5 +195,55 @@ class StockMasukController extends Controller
 			]);	
 		}				
 		
+	}
+	/**====================================
+	* UPLOAD OPNAME - FORMAT
+	* @return mixed
+	* @author piter [ptr.nov@gmail.com]
+	* @since 1.2
+	* ====================================
+	*/
+	public function actionUploadFile(){
+		$modelPeriode = new StockMasukSearch;
+		 
+		if ($modelPeriode->load(Yii::$app->request->post())) {
+			$modelPeriode->uploadExport = UploadedFile::getInstance($modelPeriode, 'uploadExport');
+			// print_r($fileType);die();	
+            if ($modelPeriode->upload()) {			
+				$file='uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension.'';
+				try{
+					$FileType = \PHPExcel_IOFactory::identify($file);
+					$objReader = \PHPExcel_IOFactory::createReader($FileType);
+					$objPHPExcel = $objReader->load($file);
+				}catch(Exception $e){
+					die('error');
+				}
+				$sheet = $objPHPExcel->getSheet(0);
+				$highestRow = $sheet->getHighestRow();
+				$highestColumn=$sheet->getHighestColumn();
+				// print_r($highestRow);die();
+				for($row = 1; $row <= $highestRow; $row++){
+					$rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+
+					// if ($row==1) {
+					// 	continue;
+					// }
+
+					// $branch = new model;
+					// $branch_id = $rowData[0][0];
+					// $branch->field_database = $rowData[0][1];
+					// $branch->save();
+
+					// print_r($branch->getErrors());
+					// print_r($rowData);
+				}
+				unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+				return $this->redirect(['index']);
+            }
+		}else{
+			return $this->renderAjax('form_upload',[
+				'modelPeriode' => $modelPeriode
+			]);
+		}
 	}
 }

@@ -6,14 +6,16 @@ use Yii;
 use yii\web\Controller;
 use frontend\backend\laporan\models\TransOpenclose;
 use frontend\backend\laporan\models\TransOpencloseSearch;
-use frontend\backend\laporan\models\TransStoran;
+use frontend\backend\laporan\models\TransStoranImage;
 
 class MutasiController extends Controller
 {
     public function actionIndex()
     {
+
+		$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 		$paramCari=Yii::$app->getRequest()->getQueryParam('id');
-        $searchModel = new TransOpencloseSearch();
+        $searchModel = new TransOpencloseSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -44,7 +46,8 @@ class MutasiController extends Controller
 			// return true;
 			// $model = new \yii\base\DynamicModel(['tanggal']);
 			// $model->addRule(['tanggal'], 'safe');
-			$modelStoran= TransStoran::find()->where(['ID'=>$id])->one();
+			$modelStoran= TransStoranImage::find()->where(['OPENCLOSE_ID'=>$id])->one();
+			// print_r($modelStoran);die();
 			return $this->renderAjax('_viewImageModal',[
 				'model'=>$modelStoran
 			]);

@@ -17,6 +17,14 @@ $this->title='Stok Opname';
 		#prodak-stok-opname .kv-grid-container{
 			height:500px
 		}
+		
+		#prodak-stok-opname .panel-heading {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+			color:#000;
+		}
+		#prodak-stok-opname .panel-footer {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		}
 	");
 	$this->registerJs($this->render('stockopname_script.js'),View::POS_READY);
 	echo $this->render('stockopname_button'); //echo difinition
