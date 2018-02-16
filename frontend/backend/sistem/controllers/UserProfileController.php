@@ -83,7 +83,11 @@ class UserProfileController extends Controller
         // print_r($paramCari);die();
         if ($paramCari==''){
             $modelGrp =StoreKasirSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STORE_ID'=>SORT_ASC])->one();
-            $searchModelKasir = new StoreKasirSearch(['STORE_ID'=>$modelGrp->STORE_ID]);
+            if(!empty($modelGrp)){
+                $searchModelKasir = new StoreKasirSearch(['STORE_ID'=>$modelGrp->STORE_ID]);
+            }else{
+            $searchModelKasir = new StoreKasirSearch(['ACCESS_GROUP'=>$user]);
+            }
             $dataProviderKasir = $searchModelKasir->search(Yii::$app->request->queryParams);
         }else{
             $searchModelKasir = new StoreKasirSearch(['ACCESS_GROUP'=>$user,'KASIR_ID'=>$paramCari]);
