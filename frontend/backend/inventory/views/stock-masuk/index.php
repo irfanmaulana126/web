@@ -12,7 +12,8 @@ use yii\helpers\Url;
 use yii\web\View;
 use frontend\backend\master\models\Product;
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
-
+$incTmp=0;
+$splt=0;
 // print_r($dataProvider->getModels()[0]['SISA_2017-11-03']);
 // die();
 $this->title="Stock Masuk";
