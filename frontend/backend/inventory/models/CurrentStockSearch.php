@@ -28,7 +28,7 @@ class CurrentStockSearch extends DynamicModel
 	public function rules()
     {
         return [
-           [['ACCESS_GROUP','STORE_ID','STORE_NM','NAMA_TOKO','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','TTL_QTY','thn'], 'safe'],
+           [['UNIX_INV_MONTH','TGL','ACCESS_GROUP','STORE_ID','STORE_NM','NAMA_TOKO','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','TTL_QTY','thn'], 'safe'],
 		];	
 
     }	
@@ -90,9 +90,12 @@ class CurrentStockSearch extends DynamicModel
 				#=== 1. STOK REFUND - pengembalian stock karena cancel Transaksi     ===
 				#=== 2. STOCK OPNAME (BALANCE OPNAME, sisa stock closing dan actual) ===
 				#===========================PR =========================================
+				inv.UNIX_INV_MONTH,
 				inv.STORE_NM,
 				inv.STORE_ID,
-				inv.PRODUCT_NM,							
+				inv.PRODUCT_ID,
+				inv.PRODUCT_NM,
+				inv.TGL,				
 				".$rsltField.",							
 				inv.STOCK_AWAL,																					#Stok Bulan Lalu, menjadi stock Awal bulan.
 				sum(inv.STOCK_BARU) AS TTL_STOCK_BARU,															#Penambahan Stok di Bulan berjalan.
@@ -104,7 +107,8 @@ class CurrentStockSearch extends DynamicModel
 				sum(STOCK_LAST_MONTH +inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL+STOCK_OPNAME) AS STOCK_AKHIR_ACTUAL	#Actual Stock setelah opname.
 			from
 			(
-				SELECT  
+				SELECT
+					UNIX_INV_MONTH,
 					(CASE WHEN a1.LALU <> '' THEN a1.LALU ELSE '0' END) AS STOCK_AWAL,							#Sisa stok bulan lalu
 					(CASE WHEN a1.MASUK <> '' THEN a1.MASUK ELSE '0' END) AS STOCK_BARU,						#Penambahan stok bulan berjalan.
 					(CASE WHEN a1.TERJUAL <> '' THEN a1.TERJUAL ELSE '0' END) AS STOCK_TERJUAL,					#Stok penjualan bulan berjalan.
