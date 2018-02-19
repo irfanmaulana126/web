@@ -12,8 +12,6 @@ use yii\web\Response;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
 use frontend\backend\inventory\models\StockOutSearch;
-use frontend\backend\inventory\models\ProductStockClosing;
-use frontend\backend\inventory\models\ProductStockClosingSearch;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
 
 class StockOpnameController extends Controller
@@ -38,7 +36,7 @@ class StockOpnameController extends Controller
     }
     public function actionIndex()
     {
-		$paramCari='2018-02-19';
+		$paramCari='';
 		//PencarianIndex
 		$modelPeriode = new \yii\base\DynamicModel([
 			'TAHUNBULAN','TAHUN','BULAN'
@@ -51,21 +49,12 @@ class StockOpnameController extends Controller
 		};		
 		
 		//PUBLIC PARAMS	
-		$cari=[
-			'TAHUN'=>date('Y', strtotime($paramCari)),
-			'BULAN'=>date('m', strtotime($paramCari)),
-		
-		];	
+		$cari=['thn'=>$paramCari];	
 		
 		//DINAMIK MODEL PARAMS
-		// $searchModel = new StockOutSearch($cari);
-        // $dataProvider = $searchModel->searchOpname(Yii::$app->request->queryParams);
+		$searchModel = new StockOutSearch($cari);
+        $dataProvider = $searchModel->searchOpname(Yii::$app->request->queryParams);
 		
-		//DINAMIK MODEL PARAMS
-		$searchModel = new ProductStockClosingSearch($cari);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		
-		// print_r($dataProvider->getModels());
 		//LOAD DEFAULT INDEX
 		return $this->render('index', [
 			'searchModel' => $searchModel,
