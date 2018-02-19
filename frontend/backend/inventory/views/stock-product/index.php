@@ -35,7 +35,7 @@ $this->title='Product Stok';
 	echo $this->render('stockproduct_modal'); //echo difinition
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-list-alt fa-stack-2x" style="color:#000000"></b>
-			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>PRODUK STOK</b></div> 
+			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>PRODUK STOK BERJALAN</b></div> 
 			 ';
 				
 	$colorHeader='rgba(230, 230, 230, 1)';
@@ -175,12 +175,15 @@ $this->title='Product Stok';
 				'vAlign'=>'middle',
 				'hidden'=>false,
 				'noWrap'=>true,	
+				'format'=>'raw',
 				'value'=>function($data)use($key,$value){
 					$x=$value[$key]['FIELD'];	
 					$splt=explode('_',$x);
 					//if($splt[0]=='SISA'){					
 					if($x=='STORE_ID'){
 						return 'NAMA TOKO :  '.$data['STORE_NM'];
+					}elseif($x=='PRODUCT_NM'){
+						return Html::tag('div', $data['PRODUCT_NM'], ['data-toggle'=>'tooltip','data-placement'=>'right','title'=>'Double click to Kartu Stok ','style'=>'cursor:default;']);				
 					}else{						
 						if($data[$x]){
 							return $data[$x];
@@ -335,20 +338,62 @@ $this->title='Product Stok';
 							
 			];	
 		}
-	};
-	
+	};	
 	
 	$gvInvOut= GridView::widget([
 		'id'=>'prodak-inv',
 		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
-		'filterRowOptions'=>['style'=>'background-color:'.$colorHeader.'; align:center'],
+		//'filterModel' => $searchModel,
+		//'filterRowOptions'=>['style'=>'background-color:'.$colorHeader.'; align:center'],		
 		'beforeHeader'=>[
 			'0'=>[					
 				'columns'=>$headerContent1,
 			]
 		],
 		'columns' =>$attDinamikField,	
+		'rowOptions'   => function ($model, $key, $index, $grid) {
+			//$urlDestination=Url::to(['/efenbi-rasasayang/item-group/index', 'id' => $model->ID]);
+			//$urlDestination=Url::to(['/master/product', 'storeid' => $model->STORE_ID]);
+			//if 
+			
+			$btnclick= ['ondblclick' =>'				
+				var data0 = "produkId=" + "'.$model["PRODUCT_ID"].'" + "tgl=" + "'.$model["TGL"].'";
+				var data1 = "'.$model["PRODUCT_ID"].'";
+				var data2 = "'.$model["TGL"].'";
+				$.ajax({
+					async: false,
+					type : "POST",
+					url: "/inventory/stock-product/kartu-stok",
+					data: {produkId:data1,tgl:data2},
+					// data: "storeId="+ "ok zone",
+					// processData: false,
+					// contentType: false,
+					//dataType: "json",
+					success  : function(result) {
+						// console.log(value);
+						$("#stok-card-modal").modal("show")
+						.find("#stok-card-content").html(result);						
+					}
+				});
+			'];
+			
+			// $.ajax({
+					// url: '/purchasing/purchase-order/cancel_podetail',
+					// type: 'POST',
+					//contentType: 'application/json; charset=utf-8',
+					// data:'id='+idx,
+					// dataType: 'json',
+					// success: function(result) {
+						// if (result == 1){
+							// $.pjax.reload({container:'#gv-po-detail'});
+						// }
+					// }
+				// });
+			//$btnclick2= ['ondblclick' =>'location.href="'.$urlDestination.'"'];
+			//print_r($btnclick2);
+			//die();
+			return $btnclick;
+		},		
 		'toolbar' => [
 			'{export}',
 		],	
@@ -359,9 +404,9 @@ $this->title='Product Stok';
 			'after'=>false			
 		],
 		'pjax'=>true,
-		'rowOptions' => function($model, $key, $index, $grid){
-            if($model['STOCK_AKHIR_ACTUAL']<=0){return ['class' => 'danger'];}	
-        },
+		// 'rowOptions' => function($model, $key, $index, $grid){
+            // if($model['STOCK_AKHIR_ACTUAL']<=0){return ['class' => 'danger'];}	
+        // },
 		// 'columnOptions' =>['class' => 'danger'],
 		'pjaxSettings'=>[
 			'options'=>[
