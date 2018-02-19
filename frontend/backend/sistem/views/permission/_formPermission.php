@@ -61,9 +61,9 @@ use yii\widgets\ActiveForm;
 			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
-				if ($model->BTN_VIEW == 1) {
+				if ($model->BTN_REVIEW == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
-				} else if ($model->BTN_VIEW == 0) {
+				} else if ($model->BTN_REVIEW	 == 0) {
 					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},
@@ -82,9 +82,9 @@ use yii\widgets\ActiveForm;
 			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
-				if ($model->BTN_VIEW == 1) {
+				if ($model->BTN_CREATE == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
-				} else if ($model->BTN_VIEW == 0) {
+				} else if ($model->BTN_CREATE == 0) {
 					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},
@@ -103,9 +103,9 @@ use yii\widgets\ActiveForm;
 			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
-				if ($model->BTN_VIEW == 1) {
+				if ($model->BTN_EDIT == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
-				} else if ($model->BTN_VIEW == 0) {
+				} else if ($model->BTN_EDIT == 0) {
 					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},
@@ -124,9 +124,9 @@ use yii\widgets\ActiveForm;
 			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
-				if ($model->BTN_VIEW == 1) {
+				if ($model->BTN_DELETE == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
-				} else if ($model->BTN_VIEW == 0) {
+				} else if ($model->BTN_DELETE == 0) {
 					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},
@@ -145,9 +145,9 @@ use yii\widgets\ActiveForm;
 			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
-				if ($model->BTN_VIEW == 1) {
+				if ($model->BTN_SIGN1 == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
-				} else if ($model->BTN_VIEW == 0) {
+				} else if ($model->BTN_SIGN1 == 0) {
 					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},
@@ -166,9 +166,9 @@ use yii\widgets\ActiveForm;
 			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
-				if ($model->BTN_VIEW == 1) {
+				if ($model->BTN_SIGN2 == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
-				} else if ($model->BTN_VIEW == 0) {
+				} else if ($model->BTN_SIGN2 == 0) {
 					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},
@@ -187,9 +187,9 @@ use yii\widgets\ActiveForm;
 			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
-				if ($model->BTN_VIEW == 1) {
+				if ($model->BTN_SIGN3 == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
-				} else if ($model->BTN_VIEW == 0) {
+				} else if ($model->BTN_SIGN3 == 0) {
 					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},
@@ -208,9 +208,9 @@ use yii\widgets\ActiveForm;
 			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
-				if ($model->BTN_VIEW == 1) {
+				if ($model->BTN_SIGN4 == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
-				} else if ($model->BTN_VIEW == 0) {
+				} else if ($model->BTN_SIGN4 == 0) {
 					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},
@@ -229,9 +229,9 @@ use yii\widgets\ActiveForm;
 			'noWrap'=>false,
 			'format' => 'raw',
 			'value'=>function($model){
-				if ($model->BTN_VIEW == 1) {
+				if ($model->BTN_SIGN5 == 1) {
 					return Html::a('<i class="fa fa-unlock "></i>');
-				} else if ($model->BTN_VIEW == 0) {
+				} else if ($model->BTN_SIGN5 == 0) {
 					return Html::a('<i class="fa fa-lock"></i>');					
 				}
 			},

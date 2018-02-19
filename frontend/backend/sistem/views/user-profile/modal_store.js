@@ -266,6 +266,17 @@ $(document).on('click','#userprofile-button-row-dompet', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+/*
+ * BUTTON HISTORI
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#userprofile-button-row-histori', function(ehead){ 			  
+	$('#userprofile-button-row-histori-modal').modal('show')
+	.find('#userprofile-button-row-histori-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
 /**
  * ======================================== TIPS ========================================
  * HELPER INCLUDE FILE

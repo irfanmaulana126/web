@@ -169,6 +169,21 @@ class UserProfileController extends Controller
             'model' => $model,
         ]);
     }
+    public function actionDompet()
+    {
+        return $this->renderAjax('cara_top_up');
+    }
+    public function actionHistoriDompet($ACCESS_GROUP,$TGL)
+    {
+        // print_r($TGL.'-01');die();
+        $model = Yii::$app->production_api->createCommand("
+        SELECT * FROM `dompet_transaksi` WHERE ACCESS_GROUP='$ACCESS_GROUP' AND TGL LIKE '$TGL-%';
+		")->queryAll();
+        // print_r($model);die();
+        return $this->renderAjax('histori_dompet', [
+        'model' => $model,
+        ]);
+    }
 
     /**
      * Deletes an existing UserProfile model.

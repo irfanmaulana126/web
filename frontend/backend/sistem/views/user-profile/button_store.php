@@ -520,13 +520,25 @@ $this->registerCss("
 		return $content;
 	}
 	function tombolTopup($model){
-		$title1 = Yii::t('app',' Isi Saldo Dompet');
+		$title1 = Yii::t('app',' Cara Isi Dompet');
 		$options1 = [
-			'value'=>url::to(['/sistem/user-profile/dompet','ACCESS_ID' => $model['ACCESS_ID']]),
+			'value'=>url::to(['/sistem/user-profile/dompet']),
 			'id'=>'userprofile-button-row-dompet',
 			'class'=>"btn btn-success btn-md",    
 		];
-		$icon1 = '<span class="fa fa-money fa-lg"></span>';      
+		$icon1 = '<span class="fa fa-map fa-lg"></span>';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return $content;
+	}
+	function tombolHistoriDompet($model){
+		$title1 = Yii::t('app',' Histori Dompet');
+		$options1 = [
+			'value'=>url::to(['/sistem/user-profile/histori-dompet','ACCESS_GROUP' => $model['ACCESS_ID'],'TGL'=>date('Y-m')]),
+			'id'=>'userprofile-button-row-histori',
+			'class'=>"btn btn-success btn-md",    
+		];
+		$icon1 = '<span class="fa fa-calendar-check-o fa-lg"></span>';      
 		$label1 = $icon1 . '  ' . $title1;
 		$content = Html::button($label1,$options1);		
 		return $content;
