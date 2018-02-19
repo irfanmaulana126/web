@@ -255,6 +255,17 @@ $(document).on('click','#userprofile-button-row-profil', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+/*
+ * BUTTON PROFILE
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#userprofile-button-row-dompet', function(ehead){ 			  
+	$('#userprofile-button-row-dompet-modal').modal('show')
+	.find('#userprofile-button-row-dompet-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
 /**
  * ======================================== TIPS ========================================
  * HELPER INCLUDE FILE

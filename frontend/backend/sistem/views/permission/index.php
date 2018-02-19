@@ -19,10 +19,11 @@ use kartik\tree\TreeViewInput;
 use common\models\Locate;
 // use common\models\Product;
 
-use frontend\backend\sistem\models\Product;
+use frontend\backend\sistem\models\User;
 use common\models\UserLogin;
-
-$this->title = Yii::t('app', 'ESM - Marketing Dashboard');      /* title pada header page */
+$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+	
+$this->title = Yii::t('app', 'User Permission');      /* title pada header page */
 $this->params['breadcrumbs'][] = $this->title;  
 // $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 // echo $this->render('modal_store'); //echo difinition
@@ -336,9 +337,9 @@ $this->params['breadcrumbs'][] = $this->title;
 				]); */
 				// print_r($test);
 				echo \kartik\tree\TreeView::widget([
-					'id'=>'xx1',
-					'query' => Product::find()->addOrderBy('ACCESS_GROUP'),
-					'headingOptions' => ['label' => 'Categories'],
+					// 'id'=>'xx1',
+					'query' => User::find()->where(['ACCESS_GROUP'=>$user])->addOrderBy('ACCESS_GROUP'),
+					'headingOptions' => ['label' => 'User'],
 					//'rootOptions' => ['label'=>'<span class="text-primary">Root</span>'],
 					'rootOptions' => [
 						'label'=>'<i class="fa fa-tree">PT.Trial</i>',  // custom root label

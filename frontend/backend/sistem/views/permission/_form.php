@@ -16,7 +16,7 @@ use common\models\ModulPermissionSearch;
  * Param - tree-manager
 */
 extract($params);
-$keyField = $node['ACCESS_UNIX'];
+$keyField = $node['ACCESS_GROUP'];
 $username = $node['username'];
       
 /**
@@ -30,7 +30,7 @@ $username = $node['username'];
 <div class="row">
 	<?php 
 		//get Data Search
-		//echo $ACCESS_UNIX;
+		//echo $ACCESS_GROUP;
 		//echo $username;
 		$searchModelpermision = new ModulPermissionSearch([
 			//'USER_UNIX'=>'20170404081601',//$keyField

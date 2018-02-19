@@ -519,6 +519,18 @@ $this->registerCss("
 		$content = Html::button($label1,$options1);		
 		return $content;
 	}
+	function tombolTopup($model){
+		$title1 = Yii::t('app',' Isi Saldo Dompet');
+		$options1 = [
+			'value'=>url::to(['/sistem/user-profile/dompet','ACCESS_ID' => $model['ACCESS_ID']]),
+			'id'=>'userprofile-button-row-dompet',
+			'class'=>"btn btn-success btn-md",    
+		];
+		$icon1 = '<span class="fa fa-money fa-lg"></span>';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return $content;
+	}
 	
 	
 ?>

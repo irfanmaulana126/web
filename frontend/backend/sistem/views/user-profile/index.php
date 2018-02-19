@@ -22,6 +22,9 @@ $genderx = (empty($dataProvider->gender)) ? '' : $dataProvider->gender;
     
 //print_r($userProvinsi);
 $this->registerCss("
+	h1 {
+		color:green;
+	}
 	.custom-file-input::-webkit-file-upload-button {
 		visibility: hidden;
 	}
@@ -45,10 +48,20 @@ $this->registerCss("
 	.custom-file-input:active::before {
 		background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
 	}
-	.w3-example {
-		background-color: #f1f1f1;
+	.w3-example {    
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 		width: 170px;
 		height: 220px;
+		border-radius: 5px;
+		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+	}
+	.w3-example-box {    
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		width: 400px;
+		height: 30px;
+		border-radius: 5px;
+		text-align: center;
+		padding-top: 5px;
 		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
 	}
 	input[type='file']{
@@ -394,7 +407,7 @@ echo $this->render('modal_store'); //echo difinition
 <div class="row">
     <div class="col-sm-2">
 		<div class="w3-example">
-			<div class="penampung">
+			<div class="penampung" style="padding-top: 10px;">
 				<?php if(empty($dataProviderimage->ACCESS_IMAGE)){?>
 					<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" class="image img-circle" style="width:150px;height:150px;margin-left:10px">
 				<?php }else{?>
@@ -511,7 +524,33 @@ echo $this->render('modal_store'); //echo difinition
     </div>
 </div>
 	<hr>
-	Next For Dompet
+	<div class="row">
+	<div class="col-md-6">
+		<div class="w3-example-box"><b> Isi Dompet Kamu per Tanggal <?php echo date('d-m-Y');?> adalah </b> </div> 
+		<?php if(empty($dataProvidersaldo->SALDO_DOMPET)){?>
+			<h1>Rp 0,-</h1>
+		<?php }else{?>
+			<h1>Rp <?php echo $dataProvidersaldo->SALDO_DOMPET;?>,-</h1>
+		<?php }?>
+	</div>
+	<div class="col-md-6">
+		<div class="col-md-6">
+		Pending Top Up : Rp <kbd>-</kbd> 
+		<br>
+		<br>
+		Saldo Mengendap : Rp <?php echo (empty($dataProvidersaldo->SALDO_MENEGNDAP)) ? '<kbd>-</kbd>' : '<span class="label label-info">'.$dataProvidersaldo->SALDO_MENEGNDAP.'</span>'; ?>
+		<br>
+		<br>
+		Saldo Jualan : Rp <?php echo (empty($dataProvidersaldo->SALDO_JUALAN)) ? '<kbd>-</kbd>' : '<span class="label label-primary">'.$dataProvidersaldo->SALDO_JUALAN.'</span>'; ?>
+		</div>
+	<div class="col-md-6">
+	<div class="pull-right" style="margin-top:30px;">		
+			<?php echo tombolTopup($dataProvider);?>
+		</div>
+	</div>
+
+	</div>
+	</div>
 	<hr>
 	<div class="row">
 	<div class="col-md-6">
