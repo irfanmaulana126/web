@@ -464,7 +464,7 @@ echo $this->render('modal_store'); //echo difinition
 			//print_r($btnclick2);
 			//die();
 			return $btnclick;
-		},		 
+		},		
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[

@@ -28,7 +28,7 @@ class CurrentStockSearch extends DynamicModel
 	public function rules()
     {
         return [
-           [['ACCESS_GROUP','STORE_ID','STORE_NM','NAMA_TOKO','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','TTL_QTY','thn'], 'safe'],
+           [['UNIX_INV_MONTH','TGL','ACCESS_GROUP','STORE_ID','STORE_NM','NAMA_TOKO','TAHUN', 'BULAN','PRODUCT_ID','PRODUCT_NM','TTL_QTY','thn'], 'safe'],
 		];	
 
     }	
@@ -90,31 +90,37 @@ class CurrentStockSearch extends DynamicModel
 				#=== 1. STOK REFUND - pengembalian stock karena cancel Transaksi     ===
 				#=== 2. STOCK OPNAME (BALANCE OPNAME, sisa stock closing dan actual) ===
 				#===========================PR =========================================
+				inv.UNIX_INV_MONTH,
 				inv.STORE_NM,
 				inv.STORE_ID,
-				inv.PRODUCT_NM,							
+				inv.PRODUCT_ID,
+				inv.PRODUCT_NM,
+				inv.TGL,				
 				".$rsltField.",							
 				inv.STOCK_AWAL,																					#Stok Bulan Lalu, menjadi stock Awal bulan.
 				sum(inv.STOCK_BARU) AS TTL_STOCK_BARU,															#Penambahan Stok di Bulan berjalan.
 				sum(inv.STOCK_TERJUAL) AS TTL_STOCK_TERJUAL,													#Stok terjual di bulan berjalan.
+				sum(inv.STOCK_REFUND) AS TTL_REFUND,																	#Stok pengembalian,di bulan berjalan.
 				sum(STOCK_LAST_MONTH +inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL) AS TTL_STOCK_SISA,					#Sisa stok dari, penjumlahan sisa stok bulan lalu, penambahan dan penjualan bulan berjalan.			
 				sum(STOCK_LAST_MONTH +inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL+STOCK_OPNAME) AS STOCK_AKHIR,		#Stock Akhir Closing tanpa opname.
 				sum(inv.STOCK_OPNAME) AS TTL_STOCK_OPNAME,														#total Balance Stok Opname.
 				sum(STOCK_LAST_MONTH +inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL+STOCK_OPNAME) AS STOCK_AKHIR_ACTUAL	#Actual Stock setelah opname.
 			from
 			(
-				SELECT  
-					(CASE WHEN a1.LALU <> '' THEN a1.LALU ELSE '0' END) AS STOCK_AWAL,				#Sisa stok bulan lalu
-					(CASE WHEN a1.MASUK <> '' THEN a1.MASUK ELSE '0' END) AS STOCK_BARU,				#Penambahan stok bulan berjalan.
-					(CASE WHEN a1.TERJUAL <> '' THEN a1.TERJUAL ELSE '0' END) AS STOCK_TERJUAL,		#Stok penjualan bulan berjalan.
-					(CASE WHEN a1.OPNAME <> '' THEN a1.OPNAME ELSE '0' END)AS STOCK_OPNAME,			#Stok opname bulan berjalan.
-					(CASE WHEN a1.SISA <> '' THEN a1.OPNAME ELSE '0' END) AS STOCK_SISA,				#Sisa stock daily of month.
-					(CASE WHEN a1.STOCK_LAST_MONTH <> '' THEN a1.OPNAME ELSE '0' END) AS STOCK_LAST_MONTH,				#Stok Awal bulan, dari stok bulan lalu.
-					a1.TGL,								#Tanggal day of month.
-					a1.PRODUCT_ID,						#
-					a1.STORE_ID,						#
-					a2.PRODUCT_NM,						#
-					a3.STORE_NM							#															
+				SELECT
+					UNIX_INV_MONTH,
+					(CASE WHEN a1.LALU <> '' THEN a1.LALU ELSE '0' END) AS STOCK_AWAL,							#Sisa stok bulan lalu
+					(CASE WHEN a1.MASUK <> '' THEN a1.MASUK ELSE '0' END) AS STOCK_BARU,						#Penambahan stok bulan berjalan.
+					(CASE WHEN a1.TERJUAL <> '' THEN a1.TERJUAL ELSE '0' END) AS STOCK_TERJUAL,					#Stok penjualan bulan berjalan.
+					(CASE WHEN a1.REFUND <> '' THEN a1.REFUND ELSE '0' END) AS STOCK_REFUND,					#Stok pengembalian bulan berjalan.
+					(CASE WHEN a1.OPNAME <> '' THEN a1.OPNAME ELSE '0' END)AS STOCK_OPNAME,						#Stok opname bulan berjalan.
+					(CASE WHEN a1.SISA <> '' THEN a1.OPNAME ELSE '0' END) AS STOCK_SISA,						#Sisa stock daily of month.
+					(CASE WHEN a1.STOCK_LAST_MONTH <> '' THEN a1.OPNAME ELSE '0' END) AS STOCK_LAST_MONTH,		#Stok Awal bulan, dari stok bulan lalu.
+					a1.TGL,																						#Tanggal day of month.
+					a1.PRODUCT_ID,																				#
+					a1.STORE_ID,																				#
+					a2.PRODUCT_NM,																				#
+					a3.STORE_NM																					#															
 				FROM ptr_kasir_inv1c AS a1 
 				left join product a2 on a2.PRODUCT_ID=a1.PRODUCT_ID
 				left join store a3 on a3.STORE_ID=a1.STORE_ID

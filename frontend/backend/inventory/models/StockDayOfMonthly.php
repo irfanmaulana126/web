@@ -3,7 +3,7 @@
 namespace frontend\backend\inventory\models;
 
 use Yii;
-
+use frontend\backend\master\models\Product;
 /**
  * This is the model class for table "ptr_kasir_inv1c".
  *
@@ -42,7 +42,7 @@ class StockDayOfMonthly extends \yii\db\ActiveRecord
     {
         return [
             [['UNIX_INV_MONTH', 'PRODUCT_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
-            [['TGL', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['TGL', 'CREATE_AT', 'UPDATE_AT','produkNm'], 'safe'],
             [['BULAN', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['LALU', 'MASUK', 'TERJUAL', 'OPNAME', 'SISA', 'STOCK_LAST_MONTH'], 'number'],
             [['UNIX_INV_MONTH', 'PRODUCT_ID'], 'string', 'max' => 100],
@@ -79,4 +79,16 @@ class StockDayOfMonthly extends \yii\db\ActiveRecord
             'MONTH_AT' => 'Month  At',
         ];
     }
+	
+	public function getProdukTbl(){
+		return $this->hasOne(Product::className(), ['PRODUCT_ID' => 'PRODUCT_ID']);
+	}	
+	public function getProdukNm(){
+		$rslt = $this->produkTbl['PRODUCT_NM'];
+		if ($rslt){
+			return $rslt;
+		}else{
+			return "none";
+		}; 
+	}
 }
