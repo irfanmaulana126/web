@@ -525,7 +525,7 @@ echo $this->render('modal_store'); //echo difinition
 </div>
 	<hr>
 	<div class="row">
-	<div class="col-md-6">
+	<div class="col-md-5">
 		<div class="w3-example-box"><b> Isi Dompet Kamu per Tanggal <?php echo date('d-m-Y');?> adalah </b> </div> 
 		<?php if(empty($dataProvidersaldo->SALDO_DOMPET)){?>
 			<h1>Rp 0,-</h1>
@@ -534,8 +534,8 @@ echo $this->render('modal_store'); //echo difinition
 		<?php }?>
 	</div>
 	<div class="col-md-6">
-		<div class="col-md-6">
-		Pending Top Up : Rp <kbd>-</kbd> 
+		<div class="col-md-8">
+		ID Virtual Acount Anda : <?php echo (empty($dataProvidersaldo->VA_ID)) ? '<kbd>-</kbd>' : '<span class="label label-warning">'.$dataProvidersaldo->VA_ID.'</span>'; ?>
 		<br>
 		<br>
 		Saldo Mengendap : Rp <?php echo (empty($dataProvidersaldo->SALDO_MENEGNDAP)) ? '<kbd>-</kbd>' : '<span class="label label-info">'.$dataProvidersaldo->SALDO_MENEGNDAP.'</span>'; ?>
@@ -543,9 +543,12 @@ echo $this->render('modal_store'); //echo difinition
 		<br>
 		Saldo Jualan : Rp <?php echo (empty($dataProvidersaldo->SALDO_JUALAN)) ? '<kbd>-</kbd>' : '<span class="label label-primary">'.$dataProvidersaldo->SALDO_JUALAN.'</span>'; ?>
 		</div>
-	<div class="col-md-6">
-	<div class="pull-right" style="margin-top:30px;">		
+	<div class="col-md-4">
+	<div class="pull-right">		
 			<?php echo tombolTopup($dataProvider);?>
+			<br>
+			<br>
+			<?php echo tombolHistoriDompet($dataProvider);?>
 		</div>
 	</div>
 
