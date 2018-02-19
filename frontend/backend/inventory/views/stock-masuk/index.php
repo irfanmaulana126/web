@@ -10,6 +10,7 @@ use kartik\date\DatePicker;
 use kartik\builder\Form;
 use yii\helpers\Url;
 use yii\web\View;
+use kartik\widgets\Alert;
 use frontend\backend\master\models\Product;
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
 $incTmp=0;
@@ -116,20 +117,23 @@ $this->title="Stock Masuk";
 				// 'filterWidgetOptions'=>$filterWidgetOpt,	
 				//'filterInputOptions'=>$filterInputOpt,
 				'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
-	'filterInputOptions'=>['placeholder'=>'-Pilih-'],
-	'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
-	'filterType'=>GridView::FILTER_SELECT2,
-	'filterOptions'=>[],				
+				'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+				'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
+				'filterType'=>GridView::FILTER_SELECT2,
+				'filterOptions'=>[],				
 				'hAlign'=>'right',
 				'vAlign'=>'middle',
 				'hidden'=>false,
 				'noWrap'=>true,	
+				'format'=>'raw',	
 				'value'=>function($data)use($key,$value){
 					$x=$value[$key]['FIELD'];	
 					$splt=explode('_',$x);
 					//if($splt[0]=='SISA'){					
 					if($x=='STORE_ID'){
 						return 'NAMA TOKO :  '.$data['STORE_NM'];
+					}elseif($x=='PRODUCT_NM'){
+						return Html::tag('div', $data['PRODUCT_NM'], ['data-toggle'=>'tooltip','data-placement'=>'right','title'=>'Double click to Kartu Stok ','style'=>'cursor:default;']);				
 					}else{						
 						if($data[$x]){
 							return $data[$x];
@@ -289,7 +293,7 @@ $this->title="Stock Masuk";
 	$gvProdukStock= GridView::widget([
 		'id'=>'stok-masuk',
 		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
+		// 'filterModel' => $searchModel,
 		'filterRowOptions'=>['style'=>'background-color:'.$colorHeader.'; align:center'],
 		'beforeHeader'=>[
 			'0'=>[					
@@ -305,7 +309,49 @@ $this->title="Stock Masuk";
 			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolCardStock().' '.tombolExportExcel($paramCari).' '.tombolUploadFormat().'</div> ',
 			'before'=>false,
 			'after'=>false			
-		],
+		],'rowOptions'   => function ($model, $key, $index, $grid) {
+			//$urlDestination=Url::to(['/efenbi-rasasayang/item-group/index', 'id' => $model->ID]);
+			//$urlDestination=Url::to(['/master/product', 'storeid' => $model->STORE_ID]);
+			//if 
+			
+			$btnclick= ['ondblclick' =>'				
+				var data0 = "produkId=" + "'.$model["PRODUCT_ID"].'" + "tgl=" + "'.$model["INPUT_DATE"].'";
+				data1 = "'.$model["PRODUCT_ID"].'";
+				data2 = "'.$model["INPUT_DATE"].'";
+				$.ajax({
+					async: false,
+					type : "POST",
+					url: "/inventory/stock-masuk/kartu-stok",
+					data: {produkId:data1,tgl:data2},
+					// data: "storeId="+ "ok zone",
+					// processData: false,
+					// contentType: false,
+					// dataType: "json",
+					success  : function(result) {
+						// console.log(value);
+						$("#stok-card-modal").modal("show")
+						.find("#stok-card-content").html(result);						
+					}
+				});
+			'];
+			
+			// $.ajax({
+					// url: '/purchasing/purchase-order/cancel_podetail',
+					// type: 'POST',
+					//contentType: 'application/json; charset=utf-8',
+					// data:'id='+idx,
+					// dataType: 'json',
+					// success: function(result) {
+						// if (result == 1){
+							// $.pjax.reload({container:'#gv-po-detail'});
+						// }
+					// }
+				// });
+			//$btnclick2= ['ondblclick' =>'location.href="'.$urlDestination.'"'];
+			//print_r($btnclick2);
+			//die();
+			return $btnclick;
+		},
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[

@@ -12,6 +12,7 @@ use yii\web\Response;
 use yii\web\UploadedFile;
 use frontend\backend\inventory\models\StockMasukSearch;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
+use frontend\backend\inventory\models\StockDayOfMonthly; //CARD STOCK
 
 class StockMasukController extends Controller
 {
@@ -245,5 +246,25 @@ class StockMasukController extends Controller
 				'modelPeriode' => $modelPeriode
 			]);
 		}
+	}
+	public function actionKartuStok(){
+		//$paramsBody = Yii::$app->request->bodyParams;	
+		if (Yii::$app->request->isAjax) {
+			$request= Yii::$app->request;
+			$storeId=$request->post('produkId');
+			$tgl=$request->post('tgl');
+			//return $kdRo;
+			$model=StockDayOfMonthly::find()->where([
+				'PRODUCT_ID'=>$storeId,
+				'TAHUN'=>date('Y', strtotime($tgl)),
+				'BULAN'=>date('m', strtotime($tgl))
+			])->andWhere(['!=', 'MASUK', 0])->all();;
+			return $this->renderAjax('test',[
+				'model'=>$model,
+			]);
+		}
+		
+		//return '123';//array('test'=>1);
+		// print_r('asdasd');
 	}
 }

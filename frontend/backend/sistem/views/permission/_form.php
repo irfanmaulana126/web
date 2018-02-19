@@ -16,7 +16,7 @@ use common\models\ModulPermissionSearch;
  * Param - tree-manager
 */
 extract($params);
-$keyField = $node['ACCESS_GROUP'];
+$keyField = $node['ACCESS_ID'];
 $username = $node['username'];
       
 /**

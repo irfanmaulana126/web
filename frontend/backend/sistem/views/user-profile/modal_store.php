@@ -514,7 +514,7 @@ $this->registerCss("
 		'header' => '
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
-				<i class="fa fa-money fa-stack-1x" style="color:#fbfbfb"></i>
+				<i class="fa fa-map fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> TOP UP DOMPET</b>
 		',	
 		'size' => 'modal-md',
@@ -528,4 +528,27 @@ $this->registerCss("
 		]
 	]);
 		echo "<div id='userprofile-button-row-dompet-content'></div>";
+	Modal::end();
+	/*
+	 * BUTTON - HISTORI
+	*/
+	Modal::begin([
+		'id' => 'userprofile-button-row-histori-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-calendar-check-o fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> HISTORI DOMPET</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='userprofile-button-row-histori-content'></div>";
 	Modal::end();

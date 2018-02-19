@@ -269,43 +269,43 @@ $this->params['breadcrumbs'][] = $this->title;
 		] */
 	];
 
-	$gvStore=GridView::widget([
-		'id'=>'gv-store',
-		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
-		'columns'=>$gvAttributeItem,				
-		'pjax'=>true,
-		'pjaxSettings'=>[
-			'options'=>[
-				'enablePushState'=>false,
-				'id'=>'gv-store',
-		    ],						  
-		],
-		'hover'=>true, //cursor select
-		'responsive'=>true,
-		'responsiveWrap'=>true,
-		'bordered'=>true,
-		'striped'=>true,
-		'autoXlFormat'=>true,
-		'export' => false,
-		'panel'=>[''],
-		'toolbar' => [
-			''
-		],
-		'panel' => [
-			//'heading'=>false,
-			'heading'=>'
-				<span class="fa-stack fa-sm">
-				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
-				  <i class="fa fa-cubes fa-stack-1x"></i>
-				</span> CABANG - OUTLET',  
-			'type'=>'info',
-			//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
-			'showFooter'=>false,
-		],
-		'floatOverflowContainer'=>true,
-		'floatHeader'=>true,
-	]); 
+	// $gvStore=GridView::widget([
+	// 	'id'=>'gv-store',
+	// 	'dataProvider' => $dataProvider,
+	// 	'filterModel' => $searchModel,
+	// 	'columns'=>$gvAttributeItem,				
+	// 	'pjax'=>true,
+	// 	'pjaxSettings'=>[
+	// 		'options'=>[
+	// 			'enablePushState'=>false,
+	// 			'id'=>'gv-store',
+	// 	    ],						  
+	// 	],
+	// 	'hover'=>true, //cursor select
+	// 	'responsive'=>true,
+	// 	'responsiveWrap'=>true,
+	// 	'bordered'=>true,
+	// 	'striped'=>true,
+	// 	'autoXlFormat'=>true,
+	// 	'export' => false,
+	// 	'panel'=>[''],
+	// 	'toolbar' => [
+	// 		''
+	// 	],
+	// 	'panel' => [
+	// 		//'heading'=>false,
+	// 		'heading'=>'
+	// 			<span class="fa-stack fa-sm">
+	// 			  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
+	// 			  <i class="fa fa-cubes fa-stack-1x"></i>
+	// 			</span> CABANG - OUTLET',  
+	// 		'type'=>'info',
+	// 		//'before'=> tombolCreate().' '.tombolRefresh().' '.tombolExportExcel(),
+	// 		'showFooter'=>false,
+	// 	],
+	// 	'floatOverflowContainer'=>true,
+	// 	'floatHeader'=>true,
+	// ]); 
 	
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
@@ -345,9 +345,9 @@ $this->params['breadcrumbs'][] = $this->title;
 						'label'=>'<i class="fa fa-tree">PT.Trial</i>',  // custom root label
 						'class'=>'text-success'
 					], 
-					// 'nodeAddlViews' => [
-						// Module::VIEW_PART_1 => '@frontend/frontend/backend/sistem/views/view1',
-					// ]
+					'nodeAddlViews' => [
+						\kartik\tree\Module::VIEW_PART_2 => '@frontend/frontend/backend/sistem/views/_form',
+					],
 					'fontAwesome' => false,
 					'isAdmin' => true,
 					'displayValue' => 1,
