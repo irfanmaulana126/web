@@ -8,6 +8,8 @@ use frontend\backend\sistem\models\UserProfile;
 use frontend\backend\sistem\models\UserProfileSearch;
 use frontend\backend\sistem\models\UserImage;
 use frontend\backend\sistem\models\Store;
+use frontend\backend\sistem\models\DompetSaldo;
+use frontend\backend\sistem\models\DompetTransaksi;
 use frontend\backend\sistem\models\StoreSearch;
 use frontend\backend\sistem\models\StoreKasir;
 use frontend\backend\sistem\models\StoreKasirSearch;
@@ -73,8 +75,13 @@ class UserProfileController extends Controller
         
         $dataProvider = UserProfileSearch::find()->where(['ACCESS_ID'=>$user])->one();
         $dataProviderimage = UserImage::find()->where(['ACCESS_ID'=>$user])->one();
+        $dataProvidersaldo = DompetSaldo::find()->where(['ACCESS_GROUP'=>$user])->one();
+
         if (empty($dataProviderimage)) {
             $dataProviderimage = new UserImage;
+        } 
+        if (empty($dataProvidersaldo)) {
+            $dataProvidersaldo = new DompetSaldo;
         } 
         $searchModelstore = new StoreSearch(['ACCESS_GROUP'=>$user]);
         $dataProviderstore = $searchModelstore->search(Yii::$app->request->queryParams);
@@ -100,7 +107,8 @@ class UserProfileController extends Controller
             'dataProviderstore' => $dataProviderstore,
             'searchModelKasir' => $searchModelKasir,
             'dataProviderKasir' => $dataProviderKasir,
-            'dataProviderimage'=>$dataProviderimage
+            'dataProviderimage'=>$dataProviderimage,
+            'dataProvidersaldo'=>$dataProvidersaldo
         ]);
     }
 

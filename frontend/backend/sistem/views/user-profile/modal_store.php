@@ -28,6 +28,9 @@ $this->registerCss("
 	#userprofile-button-row-profil-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	#userprofile-button-row-dompet-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 	#store-button-create-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
@@ -502,4 +505,27 @@ $this->registerCss("
 		]
 	]);
 		echo "<div id='databarang-button-row-stock-content'></div>";
+	Modal::end();
+	/*
+	 * BUTTON - DOMPET
+	*/
+	Modal::begin([
+		'id' => 'userprofile-button-row-dompet-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-money fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> TOP UP DOMPET</b>
+		',	
+		'size' => 'modal-md',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+		],
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='userprofile-button-row-dompet-content'></div>";
 	Modal::end();

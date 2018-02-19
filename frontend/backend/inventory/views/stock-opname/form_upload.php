@@ -21,7 +21,7 @@ use kartik\widgets\DateTimePicker;
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<?php
 						echo $form->field($modelPeriode, 'uploadExport')->widget(FileInput::classname(), [
-							'options' => ['accept' => '*'],
+							'options' => ['accept' => '.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel'],
 							'pluginOptions' => [
 								'showPreview' => false,
 								'showUpload' => false,
