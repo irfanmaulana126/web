@@ -19,7 +19,7 @@ $this->registerJs("
 	 document.getElementById('tahun').onchange = function() { 
 		var x = document.getElementById('tahun').value;
 			$.pjax.reload({
-				url:'/sistem/user-profile/histori-dompet?ACCESS_GROUP='+".$model[0]["ACCESS_GROUP"]."+'&TGL='+x, 
+				url:'/sistem/user-profile/histori-dompet?ACCESS_GROUP='+".$ACCESS_GROUP."+'&TGL='+x, 
 				container: '#histori',
 				timeout: 1000,
 			}).done(function () {
@@ -243,13 +243,6 @@ $this->registerJs("
 ?>
 <div class="container-full">
 			<dl>
-				<!-- TAHUN !-->
-				<dt style="width:120px; float:left;">TAHUN</dt>
-				<dd>: <?php
-						$tahun=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
-						echo date('Y', strtotime($tahun));
-					?>
-				</dd>
 				<!-- BULAN !-->
 				<dt style="width:120px; float:left;">BULAN </dt>
 				<dd> <div style="width:190px;">:

@@ -182,6 +182,7 @@ class UserProfileController extends Controller
         // print_r($model);die();
         return $this->renderAjax('histori_dompet', [
         'model' => $model,
+        'ACCESS_GROUP'=>$ACCESS_GROUP,
         ]);
     }
 

@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\backend\master\models\Product;
+use yii\data\ArrayDataProvider;
 
 /**
  * ProductSearch represents the model behind the search form of `frontend\backend\master\models\Product`.
@@ -101,6 +102,16 @@ class ProductSearch extends Product
             $query->groupBy([
                 'PRODUCT_ID'
             ]);
+        return $dataProvider;
+    }
+    public function searchExcelExport($params)
+    {
+        $query = "SELECT `PRODUCT_ID`,`PRODUCT_NM`,`PRODUCT_QR`,`PRODUCT_WARNA`,`PRODUCT_SIZE`,`PRODUCT_SIZE_UNIT`,`PRODUCT_HEADLINE`,`INDUSTRY_NM`,`INDUSTRY_GRP_NM`,`DCRP_DETIL`FROM product WHERE ACCESS_GROUP=".Yii::$app->user->identity->ACCESS_GROUP."";
+       $qrySql= Yii::$app->db->createCommand($query)->queryAll();
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $qrySql,
+        ]);
+
         return $dataProvider;
     }
 }

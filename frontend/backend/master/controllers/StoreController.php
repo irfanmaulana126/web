@@ -586,4 +586,66 @@ class StoreController extends Controller
        Yii::$app->session->setFlash('success', "Penghapusan Berhasil");
        return $this->redirect(['index']);
     }
+    public function actionExport()
+    {
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+        $dataProvider = $searchModel->searchExcelExport(Yii::$app->request->queryParams);
+		$model=$dataProvider->allModels;
+		
+		$excel_dataProduk= Postman4ExcelBehavior::excelDataFormat($model);		
+        $excel_titleDataProduk = $excel_dataProduk['excel_title'];
+        $excel_ceilsDataProduk = $excel_dataProduk['excel_ceils'];
+
+		//DATA IMPORT
+        // print_r($excel_dataKaryawan);die();
+		$excel_content[] = 
+			[
+				'sheet_name' => 'data-Produk',
+                'sheet_title' => [
+					['PRODUCT_ID','PRODUCT_NM','PRODUCT_QR','PRODUCT_WARNA','PRODUCT_SIZE','PRODUCT_SIZE_UNIT','PRODUCT_HEADLINE','INDUSTRY_NM','INDUSTRY_GRP_NM','DCRP_DETIL']
+				],
+			    'ceils' => $excel_ceilsDataProduk,
+				'freezePane' => 'A2',
+				'columnGroup'=>false,
+                'autoSize'=>false,
+                'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
+                'headerStyle'=>[	
+					[
+						'PRODUCT_ID' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'PRODUCT_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'PRODUCT_QR' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_WARNA' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_SIZE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_SIZE_UNIT' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_HEADLINE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'INDUSTRY_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'INDUSTRY_GRP_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'DCRP_DETIL' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+				],
+			],
+				'contentStyle'=>[
+					[
+						'PRODUCT_ID' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'PRODUCT_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'PRODUCT_QR' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_WARNA' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_SIZE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_SIZE_UNIT' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_HEADLINE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'INDUSTRY_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'INDUSTRY_GRP_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'DCRP_DETIL' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],	
+					]
+				],
+			'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+			'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),			
+		];
+		// print_r($excel_ceilsDatakaryawan);
+		// die();
+		$excel_file = "data-";
+		$this->export4excel($excel_content, $excel_file,0); 
+
+		// return $this->redirect(['index']);
+    }
 }

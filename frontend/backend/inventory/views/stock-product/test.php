@@ -13,6 +13,22 @@ use yii\web\View;
 use kartik\widgets\Alert;
 use yii\data\ArrayDataProvider;
 
+$this->registerJs("
+	 // var x = document.getElementById('tahun').value;
+	 // console.log(x);
+	 document.getElementById('tahun').onchange = function() { 
+		var x = document.getElementById('tahun').value;
+			$.pjax.reload({
+				url:'/inventory/stock-product/change-date?PRODUCT_ID='+'".$PRODUCT_ID."'+'&TGL='+x, 
+				container: '#kartu-stok-inv',
+				timeout: 1000,
+			}).done(function () {
+				$.pjax.reload({container: '#kartu-stok-inv'});
+			});
+		
+		console.log('Changed!'+x); 
+	 }
+",View::POS_READY);
 	//echo 'STORE_ID='.$storeId.' ,TGL='.$tgl;
 	//print_r($model);
 	$aryDataProvider= new ArrayDataProvider([
@@ -197,7 +213,7 @@ use yii\data\ArrayDataProvider;
 			// 'before'=>false,
 			// 'after'=>false			
 		// ],
-		'pjax'=>false,
+		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
@@ -231,21 +247,27 @@ use yii\data\ArrayDataProvider;
 						echo $produkNm;
 					?>
 				</dd>
-				<!-- TAHUN !-->
-				<dt style="width:120px; float:left;">TAHUN</dt>
-				<dd>: <?php
-						$tahun=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
-						echo date('Y', strtotime($tahun));
+				<dt style="width:120px; float:left;">BULAN </dt>
+				<dd> <div style="width:200px;">:
+                <?php
+                        $bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
+                        echo DatePicker::widget([
+                            'name' => 'check_issue_date', 
+                            'value' => date('F-Y', strtotime($bulan)),
+                            'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
+                            'convertFormat' => true,
+                            'pluginOptions' => [
+                                'autoclose'=>true,
+                                'startView'=>'month',
+                                'minViewMode'=>'year',
+                                'format' => 'yyyy-MM',
+                                // 'todayHighlight' => true,
+                                'todayHighlight' => true
+                            ]
+                        ]);
 					?>
+                </div>
 				</dd>
-				<!-- BULAN !-->
-				<dt style="width:120px; float:left;">BULAN</dt>
-				<dd>: <?php
-						$bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
-						echo date('F', strtotime($bulan));
-					?>
-				</dd>
-			
 			</dl>
 		</div>
 

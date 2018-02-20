@@ -289,10 +289,24 @@ class StockProductController extends Controller
 			])->all();
 			return $this->renderAjax('test',[
 				'model'=>$model,
+				'PRODUCT_ID'=>$storeId,
 			]);
 		}
 		
 		//return '123';//array('test'=>1);
 		//print_r('asdasd');
+	}
+	public function actionChangeDate($PRODUCT_ID,$TGL)
+	{
+		$date=explode("-", $TGL);
+		$model=StockDayOfMonthly::find()->where([
+			'PRODUCT_ID'=>$PRODUCT_ID,
+			'TAHUN'=>$date[0],
+			'BULAN'=>$date[1]
+		])->all();
+		return $this->renderAjax('test',[
+			'model'=>$model,
+			'PRODUCT_ID'=>$PRODUCT_ID,
+		]);
 	}
 }

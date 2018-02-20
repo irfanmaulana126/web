@@ -144,7 +144,7 @@ $this->registerCss("
 		// if(getPermission()){
 			// if(getPermission()->BTN_PROCESS1==1){
 				$title1 = Yii::t('app', ' Export Excel');
-				$url = Url::toRoute(['/efenbi-rasasayang/store/export']);
+				$url = Url::toRoute(['/master/store/export']);
 				$options1 = [
 							'id'=>'store-button-export-excel',
 							'data-pjax' => true,
