@@ -445,10 +445,10 @@ class DataBarangController extends Controller
 	*/
 	public function actionUploadFile(){
 		$modelPeriode = new \yii\base\DynamicModel([
-			'uploadExport'
+			'uploadExport','STORE_ID'
 		]);		
-		$modelPeriode->addRule(['uploadExport'], 'required')
-         ->addRule(['uploadExport'], 'safe');
+		$modelPeriode->addRule(['uploadExport','STORE_ID'], 'required')
+         ->addRule(['uploadExport','STORE_ID'], 'safe');
 		 
 		if (!$modelPeriode->load(Yii::$app->request->post())) {
 			return $this->renderAjax('form_upload',[

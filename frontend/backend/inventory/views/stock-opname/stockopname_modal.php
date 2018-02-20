@@ -19,6 +19,9 @@ $this->registerCss("
 		border-radius: 5px;
 	}
 	
+	#stockopname-button-upload-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 ");
 
 /**

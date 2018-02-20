@@ -16,6 +16,7 @@ use frontend\backend\master\models\StoreSearch;
 use common\models\LocateKota;
 use frontend\backend\master\models\Industry;
 use yii\web\UploadedFile;
+use ptrnov\postman4excel\Postman4ExcelBehavior;
 use frontend\backend\master\models\Product;
 use frontend\backend\master\models\ProductImage;
 use frontend\backend\master\models\ProductUnit;
@@ -35,6 +36,12 @@ class StoreController extends Controller
 	 public function behaviors()
     {
         return [
+            
+			/*EXCEl IMPORT*/
+			'export4excel' => [
+				'class' => Postman4ExcelBehavior::className(),
+				'widgetType'=>'download',
+			],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -589,7 +596,7 @@ class StoreController extends Controller
     public function actionExport()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+        $searchModel = new Store();
         $dataProvider = $searchModel->searchExcelExport(Yii::$app->request->queryParams);
 		$model=$dataProvider->allModels;
 		
@@ -603,7 +610,7 @@ class StoreController extends Controller
 			[
 				'sheet_name' => 'data-Produk',
                 'sheet_title' => [
-					['PRODUCT_ID','PRODUCT_NM','PRODUCT_QR','PRODUCT_WARNA','PRODUCT_SIZE','PRODUCT_SIZE_UNIT','PRODUCT_HEADLINE','INDUSTRY_NM','INDUSTRY_GRP_NM','DCRP_DETIL']
+					['STORE_NM','PROVINCE_NM','CITY_NAME','LATITUDE','LONGITUDE','ALAMAT','PIC','TLP','FAX','INDUSTRY_NM','INDUSTRY_GRP_NM','DCRP_DETIL','STATUS']
 				],
 			    'ceils' => $excel_ceilsDataProduk,
 				'freezePane' => 'A2',
@@ -612,30 +619,36 @@ class StoreController extends Controller
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					[
-						'PRODUCT_ID' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
-						'PRODUCT_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
-						'PRODUCT_QR' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_WARNA' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_SIZE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_SIZE_UNIT' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_HEADLINE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'STORE_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'PROVINCE_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'CITY_NAME' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'LATITUDE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'LONGITUDE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'ALAMAT' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PIC' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'TLP' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'FAX' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
 						'INDUSTRY_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
 						'INDUSTRY_GRP_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
 						'DCRP_DETIL' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'STATUS' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
 				],
 			],
 				'contentStyle'=>[
 					[
-						'PRODUCT_ID' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
-						'PRODUCT_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
-						'PRODUCT_QR' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_WARNA' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_SIZE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_SIZE_UNIT' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_HEADLINE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'STORE_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'PROVINCE_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'CITY_NAME' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'LATITUDE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'LONGITUDE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'ALAMAT' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PIC' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'TLP' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'FAX' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
 						'INDUSTRY_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
 						'INDUSTRY_GRP_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'DCRP_DETIL' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],	
+						'DCRP_DETIL' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'STATUS' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],	
 					]
 				],
 			'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
@@ -643,7 +656,7 @@ class StoreController extends Controller
 		];
 		// print_r($excel_ceilsDatakaryawan);
 		// die();
-		$excel_file = "data-";
+		$excel_file = "data-Store";
 		$this->export4excel($excel_content, $excel_file,0); 
 
 		// return $this->redirect(['index']);
