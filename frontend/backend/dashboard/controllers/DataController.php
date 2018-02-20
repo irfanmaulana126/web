@@ -175,7 +175,7 @@ class DataController extends Controller
 			return $minggu;
 		}
 	}
-	public function beforeAction($action){
+	/* public function beforeAction($action){
         $modulIndentify=4; //OUTLET
        // Check only when the user is logged in.
        // Author piter Novian [ptr.nov@gmail.com].
@@ -203,5 +203,5 @@ class DataController extends Controller
            Yii::$app->user->logout();
            return $this->goHome(); 
        }
-   }
+   } */
 }
