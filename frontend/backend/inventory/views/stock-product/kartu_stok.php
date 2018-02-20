@@ -248,7 +248,7 @@ $this->registerJs("
 					?>
 				</dd>
 				<dt style="width:120px; float:left;">BULAN </dt>
-				<dd> <div style="width:200px;">:
+				<dd style="width:200px; float:left;">: 
                 <?php
                         $bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
                         echo DatePicker::widget([
@@ -266,7 +266,6 @@ $this->registerJs("
                             ]
                         ]);
 					?>
-                </div>
 				</dd>
 			</dl>
 		</div>

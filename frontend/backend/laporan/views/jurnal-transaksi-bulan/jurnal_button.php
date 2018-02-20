@@ -22,7 +22,7 @@ use yii\base\DynamicModel;
 		$title= Yii::t('app','Transaksi Kategori');
 		$url = Url::toRoute(['/laporan/jurnal-transaksi-bulan/view-kategori']);
 		$options1 = ['value'=>$url,
-					'id'=>'jurnal-button-akun',
+					'id'=>'jurnal-button-group',
 					'data-pjax' => false,
 					'class'=>"btn btn-success btn-xs",
 					'title'=>'Tambah'
@@ -37,7 +37,7 @@ use yii\base\DynamicModel;
 		$title= Yii::t('app','Transaksi Akun');
 		$url = Url::toRoute(['/laporan/jurnal-transaksi-bulan/view-akun']);
 		$options1 = ['value'=>$url,
-					'id'=>'jurnal-button-group',
+					'id'=>'jurnal-button-akun',
 					'data-pjax' => false,
 					'class'=>"btn btn-success btn-xs",
 					'title'=>'Tambah'
