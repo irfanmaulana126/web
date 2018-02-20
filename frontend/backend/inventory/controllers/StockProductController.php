@@ -287,7 +287,7 @@ class StockProductController extends Controller
 				'TAHUN'=>date('Y', strtotime($tgl)),
 				'BULAN'=>date('m', strtotime($tgl))
 			])->all();
-			return $this->renderAjax('test',[
+			return $this->renderAjax('kartu_stok',[
 				'model'=>$model,
 			]);
 		}

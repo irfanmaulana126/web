@@ -36,11 +36,10 @@ class StockOutSearch extends DynamicModel
 		
 	//WHERE a.MONTH_AT='".date("Y-m-d", strtotime($this->BULAN))."' AND a.ACCESS_GROUP='".$this->ACCESS_GROUP."' AND a.STORE_ID='".$this->STORE_ID."'
 	 //$query = TransPenjualanDetail::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']]);
-	public function search($params){
-		
+	public function search($params){		
       	$accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
 		$TGL=$this->thn!=''?$this->thn:date('Y-m-d');
-		//$tglOUT='2017-11-30';
+		//$TGL='2018-01-19';
 		$sql="
 			SET SESSION GROUP_CONCAT_MAX_LEN = 1000000;
 			SET @tglIN=concat(date_format(LAST_DAY('".$TGL."' - interval 0 month),'%Y-%m-'),'01');
