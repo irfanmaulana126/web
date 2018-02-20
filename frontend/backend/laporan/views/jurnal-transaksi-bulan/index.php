@@ -188,7 +188,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 	];
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-list-alt fa-stack-2x" style="color:#000000"></b>
-			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>JURNAL TRANSAKSI</b></div> 
+			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>PENCATATAN JURNAL</b></div> 
 			 ';	
 	$gvInvOut= GridView::widget([
 		'id'=>'jurnal-transaksi',
