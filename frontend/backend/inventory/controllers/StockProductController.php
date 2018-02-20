@@ -34,7 +34,35 @@ class StockProductController extends Controller
             // ],
         ];
     }
-	
+	public function beforeAction($action){
+        $modulIndentify=4; //OUTLET
+       // Check only when the user is logged in.
+       // Author piter Novian [ptr.nov@gmail.com].
+       if (!Yii::$app->user->isGuest){
+           if (Yii::$app->session['userSessionTimeout']< time() ) {
+               // timeout
+               Yii::$app->user->logout();
+               return $this->goHome(); 
+           } else {	
+               //add Session.
+               Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+               //check validation [access/url].
+               $checkAccess=Yii::$app->getUserOpt->UserMenuPermission($modulIndentify);
+               if($checkAccess['modulMenu']['MODUL_STS']==0 OR $checkAccess['ModulPermission']['STATUS']==0){				
+                   $this->redirect(array('/site/alert'));
+               }else{
+                   if($checkAccess['PageViewUrl']==true){						
+                       return true;
+                   }else{
+                       $this->redirect(array('/site/alert'));
+                   }					
+               }			 
+           }
+       }else{
+           Yii::$app->user->logout();
+           return $this->goHome(); 
+       }
+   }
 	/**====================================
 	* ACTION INDEX
 	* @return mixed
@@ -289,10 +317,24 @@ class StockProductController extends Controller
 			])->all();
 			return $this->renderAjax('kartu_stok',[
 				'model'=>$model,
+				'PRODUCT_ID'=>$storeId,
 			]);
 		}
 		
 		//return '123';//array('test'=>1);
 		//print_r('asdasd');
+	}
+	public function actionChangeDate($PRODUCT_ID,$TGL)
+	{
+		$date=explode("-", $TGL);
+		$model=StockDayOfMonthly::find()->where([
+			'PRODUCT_ID'=>$PRODUCT_ID,
+			'TAHUN'=>$date[0],
+			'BULAN'=>$date[1]
+		])->all();
+		return $this->renderAjax('kartu_stok',[
+			'model'=>$model,
+			'PRODUCT_ID'=>$PRODUCT_ID,
+		]);
 	}
 }

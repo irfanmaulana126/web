@@ -362,7 +362,7 @@ $this->registerCss("
 		'dataProvider' => $dataProvider,
 		'filterModel' => $searchModel,
 		'columns'=>$gvAttProdakItem,				
-		'pjax'=>true,
+		'pjax'=>0,
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,

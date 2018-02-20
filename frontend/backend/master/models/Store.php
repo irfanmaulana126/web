@@ -4,6 +4,7 @@ namespace frontend\backend\master\models;
 
 use Yii;
 use frontend\backend\master\models\User;
+use yii\data\ArrayDataProvider;
 /**
  * This is the model class for table "store".
  *
@@ -130,5 +131,15 @@ class Store extends \yii\db\ActiveRecord
         $result=$this->user;
         $result = (empty($result->ACCESS_LEVEL)) ? '' : $result->ACCESS_LEVEL ;
         return $result;
+    }
+    public function searchExcelExport($params)
+    {
+        $query = "SELECT `STORE_NM`,`PROVINCE_NM`,`CITY_NAME`,`LATITUDE`,`LONGITUDE`,`ALAMAT`,`PIC`,`TLP`,`FAX`,`INDUSTRY_NM`,`INDUSTRY_GRP_NM`,`DCRP_DETIL`, CASE WHEN `STATUS` = 0 THEN 'TRIAL' WHEN `STATUS` = 1 THEN 'ACTIVE' WHEN `STATUS` = 2 THEN 'DEACTIVE' ELSE 'DELETE' END FROM store WHERE ACCESS_GROUP=".Yii::$app->user->identity->ACCESS_GROUP."";
+       $qrySql= Yii::$app->db->createCommand($query)->queryAll();
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $qrySql,
+        ]);
+
+        return $dataProvider;
     }
 }

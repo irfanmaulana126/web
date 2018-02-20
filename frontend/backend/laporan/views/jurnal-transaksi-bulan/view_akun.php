@@ -55,7 +55,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
 		[
-			'attribute'=>'STORE_ID',
+			'attribute'=>'AKUN_CODE',
 			'label'=>'NAMA STORE',
 			'filterType'=>true,
 			'format'=>'raw',
@@ -64,26 +64,13 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'vAlign'=>'top',
 			'mergeHeader'=>false,
             'group'=>FALSE,
-            'value'=>'store.STORE_NM',
 			'groupedRow'=>FALSE,
 			'noWrap'=>false,
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>[
-				'style'=>[
-					'text-align'=>'left',
-					'color'=>'red',
-					'font-family'=>'tahoma, arial, sans-serif',						
-					'font-weight'=>'bold',
-				],
-            ],
-            'filter'=>ArrayHelper::map(JurnalTransaksiBulan::find()->where(['ACCESS_GROUP'=>$user])->all(),'store.STORE_NM','store.STORE_NM'),
-			'filterType'=>GridView::FILTER_SELECT2,
-			'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
-			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
-			'filterOptions'=>[],
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
 		],	
 		[
-			'attribute'=>'JUMLAH',
+			'attribute'=>'AKUN_NM',
 			'label'=>'JUMLAH',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -96,36 +83,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
 			
 			
-		],	
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'AKUN_CODE',
-			'label'=>'AKUN CODE',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-		],
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'AKUN_NM',
-			'label'=>'AKUN',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-		],
-		
+		],			
 		[
 			'attribute'=>'KTG_NM',
 			'label'=>'KTG',
@@ -142,7 +100,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		],			
 		//DEFAULT_STOCK
 		[
-			'attribute'=>'STT_PAY_NM',
+			'attribute'=>'KETERANGAN',
 			'label'=>'STATUS PAY',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -163,17 +121,11 @@ $this->title = 'Jurnal Transaksi Bulans';
 	$gvInvOut= GridView::widget([
 		'id'=>'jurnal-transaksi',
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        // 'filterModel' => $searchModel,
 		'columns' =>$gvAttProdakDiscountItem,	
 		'toolbar' => [
 			'{export}',
 		],	
-		'panel'=>[
-			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px"></div> ',
-			'before'=>false,
-			'after'=>false			
-		],
 		'pjax'=>true,
 	    'pjaxSettings'=>[
 			'options'=>[
@@ -200,42 +152,4 @@ $this->title = 'Jurnal Transaksi Bulans';
 		'floatHeader'=>true,
 	]);
 ?>
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-<?php if (Yii::$app->session->hasFlash('success')){ ?>
-			<?php
-				echo Alert::widget([
-					'type' => Alert::TYPE_SUCCESS,
-					'title' => 'Well done!',
-					'icon' => 'glyphicon glyphicon-ok-sign',
-					'body' => Yii::$app->session->getFlash('success'),
-					'showSeparator' => true,
-					'delay' => 1000
-				]);
-			?>
-		<?php } elseif (Yii::$app->session->hasFlash('error')) {
-			echo Alert::widget([
-				'type' => Alert::TYPE_DANGER,
-				'title' => 'Oh snap!',
-				'icon' => 'glyphicon glyphicon-remove-sign',
-				'body' => Yii::$app->session->getFlash('error'),
-				'showSeparator' => true,
-				'delay' => 1000
-			]);
-		}?>
-
-
-    
-<div class="row">
-<div class="col-md-12">
-<div class="pull-right">
-        <?= tombolViewAkun().' '.tombolViewGroup();?>
-	</div>
- </div>
- <br>    
- <br>    
-<div class="col-md-12">
     <?=$gvInvOut?>
-</div>    
-	
-    </div>
-    	  </div>

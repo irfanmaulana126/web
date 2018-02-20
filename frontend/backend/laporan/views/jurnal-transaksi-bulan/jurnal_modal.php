@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use kartik\widgets\ActiveForm;
 use kartik\widgets\FileInput;
 use yii\base\DynamicModel;
-
+use kartik\money\MaskMoney;
 $this->registerCss("
 	/**
 	 * CSS - Border radius Sudut.
@@ -19,7 +19,10 @@ $this->registerCss("
 		border-radius: 5px;
 	}
 	
-	#stockproduct-button-periode-modal .modal-header {
+	#jurnal-button-akun-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#jurnal-button-group-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 ");
@@ -35,65 +38,16 @@ $this->registerCss("
 	$modalHeaderColor='#fbfbfb';//' rgba(74, 206, 231, 1)';
 	
 	/*
-	 * BUTTON SEARCH PERIODE.
+	 * BUTTON - FORM CREATE
 	*/
 	Modal::begin([
 		//'id' => 'sync_save',
-		'id' => 'stockproduct-button-periode-modal',
+		'id' => 'jurnal-button-akun-modal',
 		'header' => '
 			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> SETEL PERIODE AKTIF</b>
-		',	
-		'size' => 'modal-sm',
-		'options' => ['class'=>'slide'],
-		'headerOptions'=>[
-			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
-			//'toggleButton' => ['label' => 'click me'],
-		],
-		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
-	]);
-		echo "<div id='stockproduct-button-periode-content'></div>";
-	Modal::end();
-
-	Modal::begin([
-		//'id' => 'sync_save',
-		'id' => 'stockproduct-export-excel-modal',
-		'header' => '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
-				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> SETEL PERIODE AKTIF</b>
-		',	
-		'size' => 'modal-sm',
-		'options' => ['class'=>'slide'],
-		'headerOptions'=>[
-			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
-			//'toggleButton' => ['label' => 'click me'],
-		],
-		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
-		'clientOptions' => [
-			'backdrop' => FALSE, //Static=disable, false=enable
-			'keyboard' => TRUE,	// Kyboard 
-		]
-	]);
-		echo "<div id='stockproduct-export-excel-content'></div>";
-	Modal::end();
-	
-	
-	Modal::begin([
-		//'id' => 'sync_save',
-		'id' => 'stok-card-modal',
-		'header' => '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
-				<i class="fa fa-info-circle fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> KARTU STOK </b>
+			</span><b> JURNAL AKUN</b>
 		',	
 		'size' => 'modal-lg',
 		'options' => ['class'=>'slide'],
@@ -107,6 +61,33 @@ $this->registerCss("
 			'keyboard' => TRUE,	// Kyboard 
 		]
 	]);
-		echo "<div id='stok-card-content'></div>";
+		echo "<div id='jurnal-button-akun-content'></div>";
 	Modal::end();
-?>
+
+	/*
+	 * BUTTON - FORM CREATE GROUP PRODUCT
+	*/
+	Modal::begin([
+		//'id' => 'sync_save',
+		'id' => 'jurnal-button-group-modal',
+		'header' => '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
+				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
+			</span><b> JURNAL KATGORI</b>
+		',	
+		'size' => 'modal-lg',
+		'options' => ['class'=>'slide'],
+		'headerOptions'=>[
+			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
+			//'toggleButton' => ['label' => 'click me'],
+		],
+		//'clientOptions' => ['backdrop' => 'static', 'keyboard' => TRUE]
+		'clientOptions' => [
+			'backdrop' => FALSE, //Static=disable, false=enable
+			'keyboard' => TRUE,	// Kyboard 
+		]
+	]);
+		echo "<div id='jurnal-button-group-content'></div>";
+	Modal::end();
+	

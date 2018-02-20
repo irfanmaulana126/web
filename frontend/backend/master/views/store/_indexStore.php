@@ -457,7 +457,7 @@ echo $this->render('modal_store'); //echo difinition
 				document.cookie="STORE_ID" + "=" +'.$model->STORE_ID.';
 				$.pjax.reload({
 					url: "'.Url::to(["/master/store/"]).'",
-					container: "#w17",
+					container: "#w20",
 					timeout: 1000,
 				});	'];
 			//$btnclick2= ['ondblclick' =>'location.href="'.$urlDestination.'"'];

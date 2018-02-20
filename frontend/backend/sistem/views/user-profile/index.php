@@ -264,7 +264,7 @@ echo $this->render('modal_store'); //echo difinition
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
 		],	
-		
+				
 	];
 	$gvAttributeItem[]=[
 		'attribute'=>'STATUS',

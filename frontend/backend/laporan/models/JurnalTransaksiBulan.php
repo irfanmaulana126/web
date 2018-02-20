@@ -3,6 +3,7 @@
 namespace frontend\backend\laporan\models;
 
 use Yii;
+use frontend\backend\master\models\Store;
 
 /**
  * This is the model class for table "jurnal_transaksi_c".
@@ -40,7 +41,7 @@ class JurnalTransaksiBulan extends \yii\db\ActiveRecord
     {
         return [
             [['JURNAL_BULAN'], 'required'],
-            [['TRANS_DATE', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['TRANS_DATE','STORE_ID', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['TAHUN', 'BULAN', 'STT_PAY', 'KTG_CODE'], 'integer'],
             [['JUMLAH'], 'number'],
             [['JURNAL_BULAN'], 'string', 'max' => 100],
@@ -75,5 +76,14 @@ class JurnalTransaksiBulan extends \yii\db\ActiveRecord
             'CREATE_AT' => 'Create  At',
             'UPDATE_AT' => 'Update  At',
         ];
+    }
+    public function getStore()
+    {
+      return $this->hasOne(Store::className(),['STORE_ID'=>'STORE_ID']);
+       
+    }
+    public function getSTORE_NM(){
+        $result=$this->store;
+        return $result!=''?$result->STORE_NM:'';
     }
 }
