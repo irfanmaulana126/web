@@ -29,17 +29,6 @@ $this->title = 'Jurnal Transaksi Bulans';
 	a:active {
 		color: blue;
 	}
-		#jurnal-transaksi .kv-grid-container{
-			height:400px
-		}
-		
-	#jurnal-transaksi .panel-heading {
-		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-		color:#000;
-	}
-	#jurnal-transaksi .panel-footer {
-		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-	}
 	");
 	$this->registerJs($this->render('jurnal_script.js'),View::POS_READY);
 	echo $this->render('jurnal_button'); //echo difinition
@@ -90,18 +79,18 @@ $this->title = 'Jurnal Transaksi Bulans';
 			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>JURNAL TRANSAKSI</b></div> 
 			 ';	
 	$gvInvOut= GridView::widget([
-		'id'=>'jurnal-transaksi',
+		'id'=>'jurnal-transaksi-group',
         'dataProvider' => $dataProvider,
         // 'filterModel' => $searchModel,
 		'columns' =>$gvAttProdakDiscountItem,	
 		'toolbar' => [
 			'{export}',
 		],	
-		'pjax'=>true,
+		'pjax'=>false,
 	    'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'jurnal-transaksi',
+				'id'=>'jurnal-transaksi-group',
 			],
 		],
 		'hover'=>true, //cursor select
