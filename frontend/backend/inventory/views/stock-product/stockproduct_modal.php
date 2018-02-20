@@ -22,6 +22,12 @@ $this->registerCss("
 	#stockproduct-button-periode-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	#stok-card-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#stockproduct-export-excel-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 ");
 
 /**

@@ -83,6 +83,36 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'filterOptions'=>[],
 		],	
 		[
+			'attribute'=>'TAHUN',
+			'label'=>'TAHUN',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
+			
+			
+		],	
+		[
+			'attribute'=>'BULAN',
+			'label'=>'BULAN',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
+			
+			
+		],	
+		[
 			'attribute'=>'JUMLAH',
 			'label'=>'JUMLAH',
 			'filterType'=>true,
@@ -174,7 +204,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'before'=>false,
 			'after'=>false			
 		],
-		'pjax'=>true,
+		'pjax'=>false,
 	    'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
