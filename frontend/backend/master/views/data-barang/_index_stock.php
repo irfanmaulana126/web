@@ -227,7 +227,59 @@ $this->registerCss("
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],
-		
+			
+		//DEFAULT_HARGA
+		[
+			'attribute'=>'YEAR_AT',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'filterType'=>GridView::FILTER_DATE,
+			'filterWidgetOptions'=>['pluginOptions' => [					
+				'startView'=>'years',
+				'minViewMode'=>'years',
+				'format' => 'yyyy',				 
+				'autoclose' => true,
+				'todayHighlight' => true,
+				//'format' => 'dd-mm-yyyy hh:mm',
+				'autoWidget' => false,
+				//'todayBtn' => true,
+			]
+		],
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+		],
+		//DEFAULT_HARGA
+		[
+			'attribute'=>'MONTH_AT',
+			//'label'=>'Cutomer',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'filterType'=>GridView::FILTER_DATE,
+			'filterWidgetOptions'=>['pluginOptions' => [				
+				'format' => 'm',					 
+				'autoclose' => true,
+				'startView'=>'year',
+				'minViewMode'=>'months',
+				'todayHighlight' => true,
+				//'format' => 'dd-mm-yyyy hh:mm',
+				'autoWidget' => false,
+				//'todayBtn' => true,
+			]
+		],
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+		],
 	];
 	
 	$gvAttProdakStockItemsButton[]=[			

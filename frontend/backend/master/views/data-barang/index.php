@@ -16,6 +16,7 @@ use kartik\widgets\Alert;
 use frontend\backend\master\models\ProductSearch;
 $this->title="Prodak";
 $this->registerJs($this->render('databarang_script.js'),View::POS_READY);
+
 echo $this->render('databarang_button'); //echo difinition
 echo $this->render('databarang_modal'); //echo difinition
 	$this->registerCss("
@@ -154,13 +155,29 @@ echo $this->render('databarang_modal'); //echo difinition
 				'delay' => 1000
 			]);
 		}?>
+			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right" style='padding-bottom:3px;float:right'>
+				<?php	echo '<label>Check Date</label>';
+					echo DatePicker::widget([
+						'name' => 'check_issue_date', 
+						'value' => date('Y-n'),
+						'options' => ['placeholder' => 'Select issue date ...','id'=>'tahun'],
+						'convertFormat' => true,
+						'pluginOptions' => [
+							'autoclose'=>true,
+							'startView'=>'year',
+							'minViewMode'=>'months',
+							// 'todayHighlight' => true,
+								'format' => 'yyyy-MM'
+						],
+					]);
+					?>
+				</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
-		<div class="row">
-			<div class="pull-right">
-			</div>
+		<div class="row">			
 		</div>
 		<div class="row">
-			<?=$tabIndex?>
+
+		<?=$tabIndex?>
 		</div>
 	</div>
 </div>

@@ -72,8 +72,8 @@ class ProductHargaSearch extends ProductHarga
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'product_harga.STATUS' => 1,
-            'YEAR_AT' => $this->YEAR_AT,
-            'MONTH_AT' => $this->MONTH_AT,
+            'product_harga.YEAR_AT' => $this->YEAR_AT,
+            'product_harga.MONTH_AT' => $this->MONTH_AT,
         ]);
 
         $query->andFilterWhere(['like', 'product_harga.ACCESS_GROUP', $this->ACCESS_GROUP])

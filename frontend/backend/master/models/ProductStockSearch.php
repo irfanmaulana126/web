@@ -73,8 +73,8 @@ class ProductStockSearch extends ProductStock
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'product_stock.STATUS' => 1,
-            'YEAR_AT' => $this->YEAR_AT,
-            'MONTH_AT' => $this->MONTH_AT,
+            'product_stock.YEAR_AT' => $this->YEAR_AT,
+            'product_stock.MONTH_AT' => $this->MONTH_AT,
         ]);
 
         $query->andFilterWhere(['like', 'product_stock.ACCESS_GROUP', $this->ACCESS_GROUP])

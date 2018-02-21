@@ -51,6 +51,7 @@ class Product extends \yii\db\ActiveRecord
         return 'product';
     }
 
+	public $uploadExport;
     /**
      * @inheritdoc
      */
@@ -62,6 +63,7 @@ class Product extends \yii\db\ActiveRecord
             [['INDUSTRY_ID', 'INDUSTRY_GRP_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['DCRP_DETIL'], 'string'],
+            [['uploadExport'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx, xls'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 20],
             [['GROUP_ID', 'PRODUCT_QR', 'PRODUCT_NM', 'PRODUCT_HEADLINE'], 'string', 'max' => 100],

@@ -8,6 +8,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\base\Model;
 use yii\web\UploadedFile;
+use app\models\UploadForm;
 use yii\data\ArrayDataProvider;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
 use frontend\backend\master\models\Store;
@@ -87,6 +88,17 @@ class DataBarangController extends Controller
      */
     public function actionIndex()
     {
+        $paramCari=Yii::$app->getRequest()->getQueryParam('TGL');
+        if (empty($paramCari)) {
+            $tahun = date('Y');
+            $bulan = date('n');
+        }else{
+            $tanggal=explode('-',$paramCari);
+            $tahun = $tanggal[0];
+            $bulan = $tanggal[1];
+            
+        }
+        // print_r($bulan);die();
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
         $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -94,16 +106,16 @@ class DataBarangController extends Controller
         $searchModelGroup = new ProductGroupSearch(['ACCESS_GROUP'=>$user]);
         $dataProviderGroup = $searchModelGroup->search(Yii::$app->request->queryParams);
 
-        $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user]);
+        $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user,'YEAR_AT'=>$tahun,'MONTH_AT'=>$bulan]);
         $dataProviderDiscount = $searchModelDiscount->search(Yii::$app->request->queryParams);
 
         $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user]);
         $dataProviderPromo = $searchModelPromo->search(Yii::$app->request->queryParams);
 
-        $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user]);
+        $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'YEAR_AT'=>$tahun,'MONTH_AT'=>$bulan]);
         $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
 
-        $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user]);
+        $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'YEAR_AT'=>$tahun,'MONTH_AT'=>$bulan]);
         $dataProviderStock = $searchModelStock->search(Yii::$app->request->queryParams);
         // print_r($searchModel);die();
 		 return $this->render('index', [
@@ -442,20 +454,110 @@ class DataBarangController extends Controller
 	* @author piter [ptr.nov@gmail.com]
 	* @since 1.2
 	* ====================================
-	*/
-	public function actionUploadFile(){
-		$modelPeriode = new \yii\base\DynamicModel([
-			'uploadExport','STORE_ID'
-		]);		
-		$modelPeriode->addRule(['uploadExport','STORE_ID'], 'required')
-         ->addRule(['uploadExport','STORE_ID'], 'safe');
+    */
+    public function actionUploadFile(){
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        
+        $modelPeriode = new ProductSearch;
 		 
-		if (!$modelPeriode->load(Yii::$app->request->post())) {
+		if ($modelPeriode->load(Yii::$app->request->post())) {
+            $storeId = $modelPeriode->STORE_ID;
+			$modelPeriode->uploadExport = UploadedFile::getInstance($modelPeriode, 'uploadExport');
+            // print_r($modelPeriode->uploadExport);die();
+            if ($modelPeriode->upload()) {			
+                $file='uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension.'';
+                // print_r($file);die();	
+				try{
+					$FileType = \PHPExcel_IOFactory::identify($file);
+					$objReader = \PHPExcel_IOFactory::createReader($FileType);
+					$objPHPExcel = $objReader->load($file);
+				}catch(Exception $e){
+					die('error');
+                }
+                if ($storeId=='-') {
+                    
+                    $sheet = $objPHPExcel->getSheet(0);
+                    $highestRow = $sheet->getHighestRow();
+                    $highestColumn=$sheet->getHighestColumn();
+                    $rowData = $sheet->rangeToArray('A1:'.$highestColumn.'1',NULL,TRUE,FALSE);
+                    $data=$rowData[0][0];
+                        if ($data<>"PRODUCT_ID") {                            
+                            unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                            Yii::$app->session->setFlash('error', "Template Tidak sesui");
+                            return $this->redirect('index');
+                        }else{
+                        for($row = 1; $row <= $highestRow; $row++){
+                            $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+                            // print_r($rowData[0][0]);die();
+                            
+                                // print_r($rowData[0][0]);die();
+                                if ($row==1) {
+                                    continue;
+                                }
+        
+                                if (empty($rowData[0][0])) {
+                                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                    Yii::$app->session->setFlash('error', "Terdapat Kode prodak yang kosong");
+                                    return $this->redirect('index');
+                                } else {
+                                    
+                                    $product = Product::find()->where(['PRODUCT_ID'=>$rowData[0][0]])->one();;
+                                    // $product->PRODUCT_ID = $rowData[0][0];
+                                    $product->PRODUCT_NM = $rowData[0][1];
+                                    $product->PRODUCT_QR = $rowData[0][2];
+                                    $product->PRODUCT_WARNA = $rowData[0][3];
+                                    $product->PRODUCT_SIZE = $rowData[0][4];
+                                    $product->PRODUCT_HEADLINE = $rowData[0][5];
+                                    $product->DCRP_DETIL = $rowData[0][6];
+                                    $product->save(false);
+                                }
+                                // print_r($branch->getErrors());
+                                // print_r($rowData);
+                            }
+                            unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                            return $this->redirect('index');
+                            }
+
+                } else {
+                    $sheet = $objPHPExcel->getSheet(0);
+                    $highestRow = $sheet->getHighestRow();
+                    $highestColumn=$sheet->getHighestColumn();
+                    for($row = 1; $row <= $highestRow; $row++){
+                        $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+    
+                        if ($row==1) {
+                            continue;
+                        }
+    
+                        $product = new Product;
+                        $product->ACCESS_GROUP = $user;
+                        $product->STORE_ID = $storeId;
+                        $product->PRODUCT_NM = $rowData[0][0];
+                        $product->PRODUCT_QR = $rowData[0][1];
+                        $product->PRODUCT_WARNA = $rowData[0][2];
+                        $product->PRODUCT_SIZE = $rowData[0][3];
+                        $product->PRODUCT_HEADLINE = $rowData[0][4];
+                        $product->DCRP_DETIL = $rowData[0][5];
+                        $product->CREATE_AT=date('Y-m-d H:i:s');
+                        $product->save(false);
+    
+                        // print_r($branch->getErrors());
+                        // print_r($rowData);
+                    }
+                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                    return $this->redirect('index');
+                }
+                
+            }else{
+                Yii::$app->session->setFlash('error', "Gagal Upload");
+                return $this->redirect(['index']);
+            }
+		}else{
 			return $this->renderAjax('form_upload',[
 				'modelPeriode' => $modelPeriode
 			]);
 		}
-    }
+	}
     public function actionExport()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
@@ -514,6 +616,44 @@ class DataBarangController extends Controller
 		// print_r($excel_ceilsDatakaryawan);
 		// die();
 		$excel_file = "data-Produk";
+		$this->export4excel($excel_content, $excel_file,0); 
+
+		// return $this->redirect(['index']);
+    }
+    public function actionDownloadTemplate()
+    {
+        $cel = array('0' => array('1' => '','2' => '','3' => '','4' => '','5' => '','6' => '','7' => ''));
+       $excel_content[] = 
+			[
+				'sheet_name' => 'data-Produk',
+                'sheet_title' => [
+					['PRODUCT_NM','PRODUCT_QR','PRODUCT_WARNA','PRODUCT_SIZE','PRODUCT_SIZE_UNIT','PRODUCT_HEADLINE','DCRP_DETIL']
+                ],
+                
+			    'ceils' =>$cel,
+				'freezePane' => 'A2',
+				'columnGroup'=>false,
+                'autoSize'=>false,
+                'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
+                'headerStyle'=>[	
+					[
+						'PRODUCT_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'PRODUCT_QR' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_WARNA' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_SIZE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_SIZE_UNIT' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_HEADLINE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'INDUSTRY_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'INDUSTRY_GRP_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'DCRP_DETIL' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+				],
+			],
+			'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+			'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),			
+		];
+		// print_r($excel_ceilsDatakaryawan);
+		// die();
+		$excel_file = "Template-Produk";
 		$this->export4excel($excel_content, $excel_file,0); 
 
 		// return $this->redirect(['index']);
