@@ -487,5 +487,35 @@ use yii\base\DynamicModel;
 		$content = Html::button($label1,$options1);
 		return $content;		
 	}	
-    
+    function tombolImportExcels(){
+		
+		$content = ButtonDropdown::widget([
+			'label' => 'Import Excel',
+			'options'=>[
+				'class'=>"btn btn-warning",
+				'title'=>'Upload Data Actual Stock',
+				'style'=>'padding: 5px 5px; font-size: 12px;',
+			],
+			'dropdown' => [
+				'items' => [
+					[
+						'label' => 'Cara Import',
+						 'url' => 'javascript:void(0);',
+						 'options'=>[
+							'id'=>'cara-import',
+							]
+					],
+					[
+						'label' => 'Import File', 
+						'url' => 'javascript:void(0);',
+						'options'=>[
+							'id'=>'databarang-button-upload',
+							'value'=>Url::toRoute(['/master/data-barang/upload-file'])
+							]
+						],
+				],
+			],
+		]);
+		return $content;		
+	}
 ?>

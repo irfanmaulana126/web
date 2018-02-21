@@ -70,8 +70,8 @@ class ProductDiscountSearch extends ProductDiscount
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'product_discount.STATUS' => 1,
-            'YEAR_AT' => $this->YEAR_AT,
-            'MONTH_AT' => $this->MONTH_AT,
+            'product_discount.YEAR_AT' => $this->YEAR_AT,
+            'product_discount.MONTH_AT' => $this->MONTH_AT,
         ]);
 
         $query->andFilterWhere(['like', 'product_discount.ACCESS_GROUP', $this->ACCESS_GROUP])

@@ -10,6 +10,23 @@
 /*
  * Js Modal harga hitung HPP
 */
+
+$(document).ready(function() {
+	$('#tahun').change(function(){
+		var x = document.getElementById('tahun').value;
+			$.pjax.reload({
+				url:'/master/data-barang/index?TGL='+x, 
+				container: '#gv-all-data-prodak-dicount-item',
+				container: '#gv-all-data-prodak-harga-item',
+				container: '#gv-all-data-prodak-stock-item',
+				timeout: 1000,
+			}).done(function () {
+				$.pjax.reload({container: '#gv-all-data-prodak-dicount-item'});
+				$.pjax.reload({container: '#gv-all-data-prodak-stock-item'});
+				$.pjax.reload({container: '#gv-all-data-prodak-harga-item'});
+			});
+	 });
+});
 $(document).ready(function() {
 	$('#hitung').change(function(){
 	var persedian=parseInt($('#persedian').val());
