@@ -30,9 +30,9 @@ $this->title = 'Jurnal Transaksi Bulans';
 		color: blue;
 	}
 	");
-	$this->registerJs($this->render('jurnal_script.js'),View::POS_READY);
-	echo $this->render('jurnal_button'); //echo difinition
-    echo $this->render('jurnal_modal'); //echo difinition
+	// $this->registerJs($this->render('jurnal_script.js'),View::POS_READY);
+	// echo $this->render('jurnal_button'); //echo difinition
+    // echo $this->render('jurnal_modal'); //echo difinition
     $bColor='rgb(76, 131, 255)';	
     $gvAttProdakDiscountItem=[
 		[
@@ -45,7 +45,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		],
 		[
 			'attribute'=>'KTG_NM',
-			'label'=>'NAMA STORE',
+			'label'=>'Kategori',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -60,7 +60,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		],	
 		[
 			'attribute'=>'KETERANGAN',
-			'label'=>'JUMLAH',
+			'label'=>'Keterangan',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
 			'hAlign'=>'right',

@@ -30,9 +30,9 @@ $this->title = 'Jurnal Transaksi Bulans';
 		color: blue;
 	}
 	");
-	$this->registerJs($this->render('jurnal_script.js'),View::POS_READY);
-	echo $this->render('jurnal_button'); //echo difinition
-    echo $this->render('jurnal_modal'); //echo difinition
+	// $this->registerJs($this->render('jurnal_script.js'),View::POS_READY);
+	// echo $this->render('jurnal_button'); //echo difinition
+    // echo $this->render('jurnal_modal'); //echo difinition
     $bColor='rgb(76, 131, 255)';	
     $gvAttProdakDiscountItem=[
 		[
@@ -45,7 +45,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		],
 		[
 			'attribute'=>'AKUN_CODE',
-			'label'=>'NAMA STORE',
+			'label'=>'Code Akun',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -60,7 +60,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		],	
 		[
 			'attribute'=>'AKUN_NM',
-			'label'=>'JUMLAH',
+			'label'=>'Nama Akun',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
 			'hAlign'=>'right',
@@ -69,13 +69,11 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
-			
-			
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),			
 		],			
 		[
 			'attribute'=>'KTG_NM',
-			'label'=>'KTG',
+			'label'=>'Kategori',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -88,20 +86,20 @@ $this->title = 'Jurnal Transaksi Bulans';
 			
 		],			
 		//DEFAULT_STOCK
-		[
-			'attribute'=>'KETERANGAN',
-			'label'=>'STATUS PAY',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
+		// [
+			// 'attribute'=>'KETERANGAN',
+			// 'label'=>'STATUS PAY',
+			// 'filterType'=>true,
+			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			// 'hAlign'=>'right',
+			// 'vAlign'=>'middle',
+			// 'mergeHeader'=>false,
+			// 'noWrap'=>false,
+			////gvContainHeader($align,$width,$bColor)
+			// 'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			// 'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
-		],
+		// ],
 	];
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-list-alt fa-stack-2x" style="color:#000000"></b>

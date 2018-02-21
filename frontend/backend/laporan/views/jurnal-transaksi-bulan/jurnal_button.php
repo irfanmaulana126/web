@@ -16,10 +16,10 @@ use yii\base\DynamicModel;
 */
 	
 	/*
-	 * BUTTON SEARCH PERIODE
+	 * BUTTON Akun Kategori
 	*/
 	function tombolViewGroup(){
-		$title= Yii::t('app','Transaksi Kategori');
+		$title= Yii::t('app','Kategori Akun');
 		$url = Url::toRoute(['/laporan/jurnal-transaksi-bulan/view-kategori']);
 		$options1 = ['value'=>$url,
 					'id'=>'jurnal-button-group',
@@ -31,10 +31,10 @@ use yii\base\DynamicModel;
 		return $content;		
 	}
 	/*
-	 * BUTTON SEARCH PERIODE
+	 * BUTTON Akun List
 	*/
 	function tombolViewAkun(){
-		$title= Yii::t('app','Transaksi Akun');
+		$title= Yii::t('app','List Akun');
 		$url = Url::toRoute(['/laporan/jurnal-transaksi-bulan/view-akun']);
 		$options1 = ['value'=>$url,
 					'id'=>'jurnal-button-akun',
