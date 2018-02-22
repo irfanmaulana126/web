@@ -458,7 +458,7 @@ class DataBarangController extends Controller
     public function actionUploadFile(){
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
         
-        $modelPeriode = new ProductSearch;
+        $modelPeriode = new Product;
 		 
 		if ($modelPeriode->load(Yii::$app->request->post())) {
             $storeId = $modelPeriode->STORE_ID;
@@ -483,7 +483,7 @@ class DataBarangController extends Controller
                     $data=$rowData[0][0];
                         if ($data<>"PRODUCT_ID") {                            
                             unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                            Yii::$app->session->setFlash('error', "Template Tidak sesui");
+                            Yii::$app->session->setFlash('error', "Template Tidak sesuia dikarenakan produk tidak memiliki kode produk");
                             return $this->redirect('index');
                         }else{
                         for($row = 1; $row <= $highestRow; $row++){
@@ -501,7 +501,7 @@ class DataBarangController extends Controller
                                     return $this->redirect('index');
                                 } else {
                                     
-                                    $product = Product::find()->where(['PRODUCT_ID'=>$rowData[0][0]])->one();;
+                                    $product = Product::find()->where(['PRODUCT_ID'=>$rowData[0][0]])->one();
                                     // $product->PRODUCT_ID = $rowData[0][0];
                                     $product->PRODUCT_NM = $rowData[0][1];
                                     $product->PRODUCT_QR = $rowData[0][2];
@@ -521,7 +521,14 @@ class DataBarangController extends Controller
                 } else {
                     $sheet = $objPHPExcel->getSheet(0);
                     $highestRow = $sheet->getHighestRow();
-                    $highestColumn=$sheet->getHighestColumn();
+                    $highestColumn=$sheet->getHighestColumn();                    
+                    $rowData = $sheet->rangeToArray('A1:'.$highestColumn.'1',NULL,TRUE,FALSE);
+                    $data=$rowData[0][0];
+                    if ($data=="PRODUCT_ID") {                            
+                        unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                        Yii::$app->session->setFlash('error', "Template Tidak sesui dikaranakan produk sudah memiliki kode produk");
+                        return $this->redirect('index');
+                    }else{
                     for($row = 1; $row <= $highestRow; $row++){
                         $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
     
@@ -547,7 +554,7 @@ class DataBarangController extends Controller
                     unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
                     return $this->redirect('index');
                 }
-                
+            }
             }else{
                 Yii::$app->session->setFlash('error', "Gagal Upload");
                 return $this->redirect(['index']);
@@ -657,5 +664,9 @@ class DataBarangController extends Controller
 		$this->export4excel($excel_content, $excel_file,0); 
 
 		// return $this->redirect(['index']);
+    }
+    public function actionCaraUpload()
+    {
+        return $this->renderAjax('cara_upload');
     }
 }

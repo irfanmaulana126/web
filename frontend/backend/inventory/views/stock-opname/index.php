@@ -277,7 +277,7 @@ $this->title='Stok Opname';
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' <i class="fa fa-toggle-right"></i> '.tombolClosingStock($paramCari).' <i class="fa fa-toggle-right"></i> '.tombolDownloadFormat($paramCari).' <i class="fa fa-toggle-right"></i> '.tombolUploadFormat().' <i class="fa fa-toggle-right"></i> '.tombolExportExcel($paramCari).'</div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' <i class="fa fa-toggle-right"></i> '.tombolDownloadFormat($paramCari).' <i class="fa fa-toggle-right"></i> '.tombolUploadFormat().' <i class="fa fa-toggle-right"></i> '.tombolExportExcel($paramCari).'</div> ',
 			'before'=>false,
 			'after'=>false			
 		],

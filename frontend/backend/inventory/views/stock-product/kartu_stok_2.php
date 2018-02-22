@@ -238,19 +238,42 @@ $this->registerJs("
 	
 ?>
 <div class="container-full">
+<<<<<<< HEAD
 			<dl>
 				<!-- NAMA PRODUK !-->
 				<dt style="width:150px; float:left;">Nama Produk</dt>
+=======
+			<!-- <dl>
+				NAMA PRODUK
+				<dt style="width:120px; float:left;"></dt>
+>>>>>>> 378209237413252ef732243098b1650ddec1fc38
 				<dd>: 
-					<?php
-						$produkNm=isset($model[0]['produkNm'])==true?$model[0]['produkNm']:0;
-						echo $produkNm;
-					?>
+					
 				</dd>
+<<<<<<< HEAD
 				<dt style="width:150px;">Tahun/Bulan </dt>
 				<dd style="width:200px; float:left;">: 
 					<div>
 					<?php
+=======
+			</dl> -->
+			
+<table>
+	<tr>
+		<th width="150">
+		NAMA PRODUK :
+		</th>
+		<td>
+		<?php
+			$produkNm=isset($model[0]['produkNm'])==true?$model[0]['produkNm']:0;
+			echo $produkNm;
+		?>
+		</td>
+	</tr>
+  <tr>
+    <th width="150" >BULAN :</th>
+    <td> <?php
+>>>>>>> 378209237413252ef732243098b1650ddec1fc38
                         $bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
                         echo DatePicker::widget([
                             'name' => 'check_issue_date', 
@@ -267,10 +290,17 @@ $this->registerJs("
                             ]
                         ]);
 					?>
+<<<<<<< HEAD
 					</div>
 				</dd>
 			</dl>
 		</div>
+=======
+					</td>
+  </tr>
+</table>
+		</div><br>
+>>>>>>> 378209237413252ef732243098b1650ddec1fc38
 
 			<?=$gvKartuStok?> 
 

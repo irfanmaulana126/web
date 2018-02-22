@@ -51,19 +51,19 @@ class Product extends \yii\db\ActiveRecord
         return 'product';
     }
 
-	public $uploadExport;
+    public $uploadExport;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
+            [['uploadExport'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx, xls'],
             [['STORE_ID', 'PRODUCT_ID','STOCK_LEVEL', 'YEAR_AT','PRODUCT_NM', 'MONTH_AT'], 'required'],
             [['PRODUCT_SIZE', 'STOCK_LEVEL', 'CURRENT_STOCK', 'CURRENT_HPP', 'CURRENT_PPN','CURRENT_PRICE'], 'number'],
             [['INDUSTRY_ID', 'INDUSTRY_GRP_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['DCRP_DETIL'], 'string'],
-            [['uploadExport'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx, xls'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 20],
             [['GROUP_ID', 'PRODUCT_QR', 'PRODUCT_NM', 'PRODUCT_HEADLINE'], 'string', 'max' => 100],
@@ -167,4 +167,15 @@ class Product extends \yii\db\ActiveRecord
         $result=$this->store;
         return $result!=''?$result->STORE_NM:'';
     }
+    public function upload()
+    {
+        if (!$this->validate()) {
+            $this->uploadExport->saveAs('uploads/' . $this->uploadExport->baseName . '.' . $this->uploadExport->extension);
+            // print_r('true');die();
+            return true;
+        } else {
+            // print_r('false');die();
+            return false;
+        }
+    } 
 }

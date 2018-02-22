@@ -22,7 +22,7 @@ $this->registerCss("
 	#store-button-restore-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
-	#paket .modal-header {
+	#paket-model .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 	#kasir-button-row-bayar-modal .modal-header {
@@ -506,7 +506,7 @@ $this->registerCss("
 
 	Modal::begin([
 		//'id' => 'sync_save',
-		'id' => 'paket',
+		'id' => 'paket-model',
 		'header' => '
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
@@ -526,66 +526,5 @@ $this->registerCss("
 		]
 	]);
 	
-	echo "<table class='table table-bordered table-responsive'>
-    <thead>
-      <tr>
-        <th></th>
-        <th style='text-align: center;background-color: #4c83ff;'>Satu Bulan/MOBILE</th>
-        <th style='text-align: center;background-color: #4c83ff;'>Tiga Bulan/MOBILE</th>
-        <th style='text-align: center;background-color: #4c83ff;'>Enam Bulan/MOBILE</th>
-        <th style='text-align: center;background-color: #4c83ff;'>Satu Tahun/MOBILE</th>
-        <th style='text-align: center;background-color: #4c83ff;'>Satu Tahun/EDC</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Paket Duration</td>
-        <td>30</td>
-        <td>90</td>
-        <td>180</td>
-        <td>360</td>
-        <td>360</td>
-      </tr>
-      <tr>
-        <td>Paket Duration Bonus</td>
-        <td>0</td>
-        <td>15</td>
-        <td>30</td>
-        <td>60</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>HARGA BULAN</td>
-        <td>50000</td>
-        <td>50000</td>
-        <td>50000</td>
-        <td>50000</td>
-        <td>50000</td>
-      </tr>
-      <tr>
-        <td>HARGA HARI</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>HARGA PAKET</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>HARGA PAKET HARI</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>";
+	echo "<div id='paket-conten'></div>";
 	Modal::end();

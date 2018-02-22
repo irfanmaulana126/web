@@ -19,7 +19,7 @@ $this->registerCss("
 		border-radius: 5px;
 	}
 	
-	#cara .modal-header {
+	#cara-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 	#databarang-button-upload-modal .modal-header {
@@ -531,7 +531,7 @@ $this->registerCss("
 	
 	Modal::begin([
 		//'id' => 'sync_save',
-		'id' => 'cara',
+		'id' => 'cara-modal',
 		'header' => '
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
@@ -551,8 +551,9 @@ $this->registerCss("
 		]
 	]);
 	
-	echo "";
+	echo "<div id='cara-content'></div>";
 	Modal::end();
+
 	Modal::begin([
 		//'id' => 'sync_save',
 		'id' => 'cal',
