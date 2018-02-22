@@ -12,7 +12,6 @@ use yii\helpers\Url;
 use yii\web\View;
 use kartik\widgets\Alert;
 use yii\data\ArrayDataProvider;
-
 $this->registerJs("
 	 // var x = document.getElementById('tahun').value;
 	 // console.log(x);
@@ -238,24 +237,12 @@ $this->registerJs("
 	
 ?>
 <div class="container-full">
-<<<<<<< HEAD
-			<dl>
-				<!-- NAMA PRODUK !-->
-				<dt style="width:150px; float:left;">Nama Produk</dt>
-=======
 			<!-- <dl>
 				NAMA PRODUK
 				<dt style="width:120px; float:left;"></dt>
->>>>>>> 378209237413252ef732243098b1650ddec1fc38
 				<dd>: 
 					
 				</dd>
-<<<<<<< HEAD
-				<dt style="width:150px;">Tahun/Bulan </dt>
-				<dd style="width:200px; float:left;">: 
-					<div>
-					<?php
-=======
 			</dl> -->
 			
 <table>
@@ -273,7 +260,6 @@ $this->registerJs("
   <tr>
     <th width="150" >BULAN :</th>
     <td> <?php
->>>>>>> 378209237413252ef732243098b1650ddec1fc38
                         $bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
                         echo DatePicker::widget([
                             'name' => 'check_issue_date', 
@@ -290,17 +276,10 @@ $this->registerJs("
                             ]
                         ]);
 					?>
-<<<<<<< HEAD
-					</div>
-				</dd>
-			</dl>
-		</div>
-=======
 					</td>
   </tr>
 </table>
 		</div><br>
->>>>>>> 378209237413252ef732243098b1650ddec1fc38
 
 			<?=$gvKartuStok?> 
 
