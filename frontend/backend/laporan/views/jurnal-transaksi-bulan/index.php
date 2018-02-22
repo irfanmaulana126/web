@@ -86,14 +86,14 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'attribute'=>'TAHUN',
 			'label'=>'TAHUN',
 			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
 			
 			
 		],	
@@ -101,14 +101,14 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'attribute'=>'BULAN',
 			'label'=>'BULAN',
 			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
 			
 			
 		],	
@@ -116,14 +116,14 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'attribute'=>'JUMLAH',
 			'label'=>'JUMLAH',
 			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','150px',''),
 			
 			
 		],	
@@ -139,7 +139,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','100px',''),
 		],
 		//DEFAULT_HARGA
 		[

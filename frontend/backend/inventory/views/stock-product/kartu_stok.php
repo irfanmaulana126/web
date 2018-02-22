@@ -240,16 +240,17 @@ $this->registerJs("
 <div class="container-full">
 			<dl>
 				<!-- NAMA PRODUK !-->
-				<dt style="width:120px; float:left;">NAMA PRODUK</dt>
+				<dt style="width:150px; float:left;">Nama Produk</dt>
 				<dd>: 
 					<?php
 						$produkNm=isset($model[0]['produkNm'])==true?$model[0]['produkNm']:0;
 						echo $produkNm;
 					?>
 				</dd>
-				<dt style="width:120px; float:left;">BULAN </dt>
+				<dt style="width:150px;">Tahun/Bulan </dt>
 				<dd style="width:200px; float:left;">: 
-                <?php
+					<div>
+					<?php
                         $bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
                         echo DatePicker::widget([
                             'name' => 'check_issue_date', 
@@ -266,6 +267,7 @@ $this->registerJs("
                             ]
                         ]);
 					?>
+					</div>
 				</dd>
 			</dl>
 		</div>
