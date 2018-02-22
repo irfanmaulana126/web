@@ -146,18 +146,21 @@ $this->registerJs("
 	
 ?>
 <div class="container-full">
-			<dl>
-				<!-- NAMA PRODUK !-->
-				<dt style="width:120px; float:left;">NAMA PRODUK</dt>
-				<dd>: 
-					<?php
-						$produkNm=isset($model[0]['produkNm'])==true?$model[0]['produkNm']:0;
-						echo $produkNm;
-					?>
-				</dd>
-				<dt style="width:120px; float:left;">BULAN </dt>
-				<dd> <div style="width:200px;">:
-                <?php
+<table>
+	<tr>
+		<th width="150">
+		NAMA PRODUK :
+		</th>
+		<td>
+		<?php
+			$produkNm=isset($model[0]['produkNm'])==true?$model[0]['produkNm']:0;
+			echo $produkNm;
+		?>
+		</td>
+	</tr>
+  <tr>
+    <th width="150" >BULAN :</th>
+    <td> <?php
                         $bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
                         echo DatePicker::widget([
                             'name' => 'check_issue_date', 
@@ -174,10 +177,11 @@ $this->registerJs("
                             ]
                         ]);
 					?>
-                </div>
-				</dd>
-			
-			</dl>
+					</td>
+  </tr>
+</table>
+<br>
+		</div>
 		</div>
 
 			<?=$gvKartuStok?> 

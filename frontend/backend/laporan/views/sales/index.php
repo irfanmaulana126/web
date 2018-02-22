@@ -57,7 +57,7 @@ $this->registerCss("
 			color:red;
 		}
 	");
-// $this->title = 'Trans Opencloses';
+$this->title = 'Seles';
 // $this->params['breadcrumbs'][] = $this->title;
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $aryStore=ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->all(), 'STORE_ID','STORE_NM');

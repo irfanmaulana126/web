@@ -30,6 +30,7 @@ use frontend\backend\master\models\ProductStock;
 use frontend\backend\master\models\ProductStockSearch;
 use frontend\backend\master\models\StoreKasir;
 use frontend\backend\master\models\StoreKasirSearch;
+use frontend\backend\master\models\StoreMembershipPaketSearch;
 
 class StoreController extends Controller
 {
@@ -660,5 +661,13 @@ class StoreController extends Controller
 		$this->export4excel($excel_content, $excel_file,0); 
 
 		// return $this->redirect(['index']);
+    }
+    public function actionPaket()
+    {
+        $searchModel = new StoreMembershipPaketSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        return $this->renderAjax('paket', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }
