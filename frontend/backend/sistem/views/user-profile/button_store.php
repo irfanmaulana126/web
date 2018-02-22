@@ -543,6 +543,18 @@ $this->registerCss("
 		$content = Html::button($label1,$options1);		
 		return $content;
 	}
+	function tombolCountBankProfile($model){
+		$title1 = Yii::t('app',' Account Bank');
+		$options1 = [
+			'value'=>url::to(['/sistem/user-profile/histori-dompet','ACCESS_GROUP' => $model['ACCESS_ID'],'TGL'=>date('Y-m')]),
+			'id'=>'userprofile-button-row-bank',
+			'class'=>"btn btn-success btn-md",    
+		];
+		$icon1 = '<span class="fa fa-credit-card fa-lg"></span>';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return $content;
+	}
 	
 	
 ?>

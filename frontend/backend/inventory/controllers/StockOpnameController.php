@@ -67,7 +67,7 @@ class StockOpnameController extends Controller
    }
     public function actionIndex()
     {
-		$paramCari='2018-02-19';
+		$paramCari=date('Y-m-d');
 		//PencarianIndex
 		$modelPeriode = new \yii\base\DynamicModel([
 			'TAHUNBULAN','TAHUN','BULAN'
@@ -166,9 +166,9 @@ class StockOpnameController extends Controller
 		
 		if (!empty($paramcari)=='1') {
 			//PUBLIC PARAMS	
-
-		$searchModeldownload = new StockOutSearch(['thn'=>$paramcari]);
-        $dataProviderdownload = $searchModeldownload->searchOpname(Yii::$app->request->queryParams);
+		$date = explode('-',$paramcari);
+		$searchModeldownload = new ProductStockClosingSearch(['TAHUN'=>$date['0'],'BULAN'=>$date['1']]);
+        $dataProviderdownload = $searchModeldownload->searchDownload(Yii::$app->request->queryParams);
 		$dinamikFielddownload=$dataProviderdownload->allModels;
 		
 		$excel_dataProdukStokdownload = Postman4ExcelBehavior::excelDataFormat($dinamikFielddownload);
@@ -176,45 +176,35 @@ class StockOpnameController extends Controller
         $excel_ceilsProdukStokdownload = $excel_dataProdukStokdownload['excel_ceils'];
 
 		
-		// print_r($dinamikFielddownload);
+		// print_r($excel_dataProdukStokdownload);
 		// die();
 		//DATA IMPORT
 		$excel_contentdownload = [
 			[
 				'sheet_name' => 'Produk-Stok',
-                'sheet_title' => [
-					['Nama Toko','Access Group','Produk','Lalu','Masuk','Terjual','Sisa','Closing','Actual']
-				],
+                'sheet_title' => $excel_titleProdukStokdownload,
 				'ceils' => $excel_ceilsProdukStokdownload,
 				'freezePane' => 'A2',
 				'columnGroup'=>false,
 				'autoSize'=>false,
-				'unlockCell'=>'D,I,'.(count($excel_ceilsProdukStokdownload)+1).'',
+				'unlockCell'=>'D,D,'.(count($excel_ceilsProdukStokdownload)+1).'',
 				'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					[
+						'UNIX_BULAN_ID ' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
 						'STORE_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
-						'ACCESS_GROUP' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
-						'NAMA_TOKO' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
-						'TTL_LALU' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'TTL_MASUK' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'TTL_JUAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'TTL_SISA' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Closing' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
-						'Actual' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						'PRODUCT_ID' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
+						'STOCK_INPUT_ACTUAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						
 					]						
 				],
 				'contentStyle'=>[
 					[						
-						'STORE_NM' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
-						'ACCESS_GROUP' =>['font-size'=>'8','valign'=>'center','align'=>'left'],
-						'NAMA_TOKO'=>['font-size'=>'8','valign'=>'center','align'=>'left'],
-						'TTL_LALU' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'TTL_MASUK' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'TTL_JUAL' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'TTL_SISA' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Closing' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT'],
-						'Actual' =>['font-size'=>'8','valign'=>'right','align'=>'RIGHT']
+						'UNIX_BULAN_ID ' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'STORE_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
+						'PRODUCT_ID' =>['font-size'=>'9','width'=>'17','valign'=>'center','align'=>'center'],
+						'STOCK_INPUT_ACTUAL' =>['font-size'=>'9','width'=>'7','valign'=>'center','align'=>'center'],
+						
 					]
 				],
                'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
@@ -261,15 +251,19 @@ class StockOpnameController extends Controller
 				for($row = 1; $row <= $highestRow; $row++){
 					$rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
 
-					// if ($row==1) {
-					// 	continue;
-					// }
-
-					// $branch = new model;
-					// $branch_id = $rowData[0][0];
-					// $branch->field_database = $rowData[0][1];
-					// $branch->save();
-
+					if ($row==1) {
+						continue;
+					}
+					// print_r($rowData[0][3]);die();
+					if (empty($rowData[0][0])) {
+						unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+						Yii::$app->session->setFlash('error', "UNIX_BULAN_ID Kosong");
+                        return $this->redirect(['index']);
+					} else {
+						$model = ProductStockClosingSearch::find()->where(['UNIX_BULAN_ID'=>$rowData[0][0]])->one();
+						$model->STOCK_INPUT_ACTUAL = $rowData[0][3];
+						$model->update();
+					}
 					// print_r($branch->getErrors());
 					// print_r($rowData);
 				}
@@ -300,9 +294,10 @@ class StockOpnameController extends Controller
 		if ($modelPeriode->load(Yii::$app->request->post())) {
 		$id=$modelPeriode->TAHUN;
 		// print_r($id);die();
+		$date=explode('-',$id);
 		//DINAMIK MODEL PARAMS
-		$searchModel = new StockOutSearch(['thn'=>$id."-01"]);
-        $dataProvider = $searchModel->searchOpname(Yii::$app->request->queryParams);
+		$searchModel = new ProductStockClosingSearch(['TAHUN'=>$date['0'],'BULAN'=>$date['1']]);
+        $dataProvider = $searchModel->searchExport(Yii::$app->request->queryParams);
 		$dinamikField=$dataProvider->allModels;
 
 		$excel_dataProdukStok = Postman4ExcelBehavior::excelDataFormat($dinamikField);
@@ -316,9 +311,7 @@ class StockOpnameController extends Controller
 		$excel_content = [
 			[
 				'sheet_name' => 'Produk-Stok',
-                'sheet_title' => [
-					['Nama Toko','Access Group','Produk','Lalu','Masuk','Terjual','Sisa','Closing','Actual']
-				],
+                'sheet_title' =>[$excel_titleProdukStok],
 				'ceils' => $excel_ceilsProdukStok,
 				'freezePane' => 'A2',
 				'columnGroup'=>false,

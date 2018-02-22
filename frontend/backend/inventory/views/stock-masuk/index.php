@@ -78,7 +78,7 @@ $this->title="Stock Masuk";
 	'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
 	'filterType'=>GridView::FILTER_SELECT2,
 	'filterOptions'=>[],]];
-	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];
+	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];
 				
 	$inc=2;
 	/* ==================
@@ -94,7 +94,7 @@ $this->title="Stock Masuk";
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
 				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'QTY MASUK','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
 				$inc=$inc+1;
-				$headerContent1[]=['content'=>$splt[1],'options'=>['class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];			
+				$headerContent1[]=['content'=>$splt[1],'options'=>['class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];			
 			}	
 		};
 	 }else{
@@ -102,7 +102,7 @@ $this->title="Stock Masuk";
 			$aryFieldColomn[]=['ID' =>$incTmp, 'ATTR' =>['FIELD'=>$i,'SIZE' => '7px','label'=>$i,'align'=>'right','group'=>false,'pageSummary'=>false,'BCOLOR'=>$colorHeader]];
 			$incTmp=$incTmp+1;
 		 }
-		$headerContent1[]=['content'=>$splt[1],'options'=>['class'=>'text-center','style'=>'background-color:'.$colorHeader1.';font-family: tahoma ;font-size: 6pt;']];			
+		$headerContent1[]=['content'=>$splt[1],'options'=>['class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];			
 	};
 	 
 	

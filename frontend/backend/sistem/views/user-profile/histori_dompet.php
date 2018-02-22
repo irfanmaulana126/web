@@ -242,11 +242,10 @@ $this->registerJs("
 	
 ?>
 <div class="container-full">
-			<dl>
-				<!-- BULAN !-->
-				<dt style="width:120px; float:left;">BULAN </dt>
-				<dd> <div style="width:190px;">:
-                <?php
+<table>
+  <tr>
+    <th width="70" >BULAN :</th>
+    <td> <?php
                         $bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
                         echo DatePicker::widget([
                             'name' => 'check_issue_date', 
@@ -263,11 +262,12 @@ $this->registerJs("
                             ]
                         ]);
 					?>
+					</td>
+  </tr>
+</table>
                 </div>
-				</dd>
-			
-			</dl>
 		</div>
+		<br>
 
 			<?=$gvKartuStok?> 
 

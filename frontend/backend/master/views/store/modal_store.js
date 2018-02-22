@@ -250,6 +250,14 @@ $(document).on('click','#kasir-button-row-bayar', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#paket', function(ehead){ 			  
+	$('#paket-model').modal('show')
+	.find('#paket-conten').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
 /**
  * ======================================== TIPS ========================================
  * HELPER INCLUDE FILE

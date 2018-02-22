@@ -9,10 +9,29 @@ use kartik\widgets\DepDrop;
 use yii\helpers\Url;
 use kartik\widgets\DatePicker;
 use kartik\widgets\DateTimePicker;
-
+use yii\bootstrap\ButtonDropdown;
 // $data = Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>['1','0']])->all();
 $data = Yii::$app->db->createCommand("SELECT STORE_ID,STORE_NM FROM store WHERE ACCESS_GROUP='".Yii::$app->user->identity->ACCESS_GROUP."' AND STATUS IN (1,0)")->queryall();
 array_push($data,array('STORE_ID'=>'-','STORE_NM'=>'None Store'));
+$button = ButtonDropdown::widget([
+	'label' => 'Download Template',
+	'options'=>[
+		'class'=>"btn btn-info",
+		'title'=>'Download Template',
+	],
+	'dropdown' => [
+		'items' => [
+			[
+				'label' => 'Unduh dari Data yang ada',
+				 'url' => '/master/data-barang/export',
+			],
+			[
+				'label' => 'Unduh template kosong', 
+				'url' => '/master/data-barang/download-template',
+				],
+		],
+	],
+]);
 ?>
    <?php $form = ActiveForm::begin([
 			'options'=>['enctype'=>'multipart/form-data'], // important,
@@ -45,8 +64,8 @@ array_push($data,array('STORE_ID'=>'-','STORE_NM'=>'None Store'));
 			<div class="col-md-12">
 					<?=Html::submitButton('Upload',['class' => 'btn btn-success']); ?>
 				<div class="pull-right">
-						<?=Html::Button('cara Upload',['class' => 'btn btn-warning','data-toggle'=>'modal','href'=>'#cara']); ?>
-						<?=Html::a('Download Template','/master/data-barang/download-template',['class' => 'btn btn-info']); ?>
+						<?=Html::Button('cara Upload',['class' => 'btn btn-warning','value'=>Url::toRoute(['/master/data-barang/cara-upload']),'id'=>'cara']); ?>
+						<?=$button?>
 				</div>
 			</div>
 		</div>

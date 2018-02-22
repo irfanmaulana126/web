@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use frontend\backend\master\models\StoreMembershipPaket;
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\backend\master\models\StoreKasir */
@@ -30,7 +31,7 @@ use yii\helpers\ArrayHelper;
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?= Html::Button('Daftar Paket', ['class' => 'btn btn-warning','data-toggle'=>'modal','href'=>'#paket']) ?>
+        <?= Html::Button('Daftar Paket', ['class' => 'btn btn-warning','value'=>Url::toRoute(['/master/store/paket']),'id'=>'paket']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

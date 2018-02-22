@@ -544,10 +544,10 @@ echo $this->render('modal_store'); //echo difinition
 		Saldo Jualan : Rp <?php echo (empty($dataProvidersaldo->SALDO_JUALAN)) ? '<kbd>-</kbd>' : '<span class="label label-primary">'.$dataProvidersaldo->SALDO_JUALAN.'</span>'; ?>
 		</div>
 	<div class="col-md-4">
-	<div class="pull-right">		
-			<?php echo tombolTopup($dataProvider);?>
-			<br>
-			<br>
+	<div class="pull-right">
+		<div style="margin-bottom: 10px;">
+			<?php echo tombolCountBankProfile($dataProvider);?>
+		</div>	
 			<?php echo tombolHistoriDompet($dataProvider);?>
 		</div>
 	</div>

@@ -5,6 +5,7 @@ namespace frontend\backend\inventory\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\data\ArrayDataProvider;
 use frontend\backend\inventory\models\ProductStockClosing;
 
 /**
@@ -82,4 +83,42 @@ class ProductStockClosingSearch extends ProductStockClosing
 
         return $dataProvider;
     }
+    public function searchDownload($params){
+		
+        $accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
+        $this->TAHUN;
+        $this->BULAN;
+        // print_r($this->BULAN);die();
+        $qrySql= Yii::$app->production_api->createCommand('SELECT UNIX_BULAN_ID,STORE_NM,PRODUCT_NM,STOCK_INPUT_ACTUAL FROM product_stock_closing as a inner join store as b on a.STORE_ID=b.STORE_ID Inner Join product as c on a.PRODUCT_ID=c.PRODUCT_ID 
+                WHERE b.ACCESS_GROUP="'.$accessGroup.'" AND a.TAHUN = "'.$this->TAHUN.'" AND a.BULAN="'.$this->BULAN.'" ORDER BY b.STORE_ID')->queryAll(); 	
+      $dataProvider= new ArrayDataProvider([	
+          'allModels'=>$qrySql,	
+          'pagination' => [
+              'pageSize' =>10000,
+          ],			
+      ]);
+      
+      if (!($this->load($params) && $this->validate())) {
+           return $dataProvider;
+      }
+  } 
+    public function searchExport($params){
+		
+        $accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
+        $this->TAHUN;
+        $this->BULAN;
+        // print_r($this->BULAN);die();
+        $qrySql= Yii::$app->production_api->createCommand('SELECT STORE_NM,PRODUCT_NM,TAHUN,BULAN,STOCK_AWAL,STOCK_BARU,STOCK_TERJUAL, STOCK_REFUND, STOCK_AKHIR, STOCK_BALANCE_CLOSING, STOK_CLOSING, STOCK_INPUT_ACTUAL, STOCK_BALANCE_BULAN, STOCK_AKHIR_ACTUAL FROM product_stock_closing as a inner join store as b on a.STORE_ID=b.STORE_ID Inner Join product as c on a.PRODUCT_ID=c.PRODUCT_ID 
+                WHERE b.ACCESS_GROUP="'.$accessGroup.'" AND a.TAHUN = "'.$this->TAHUN.'" AND a.BULAN="'.$this->BULAN.'" ORDER BY b.STORE_ID')->queryAll(); 	
+      $dataProvider= new ArrayDataProvider([	
+          'allModels'=>$qrySql,	
+          'pagination' => [
+              'pageSize' =>10000,
+          ],			
+      ]);
+      
+      if (!($this->load($params) && $this->validate())) {
+           return $dataProvider;
+      }
+  } 
 }

@@ -25,6 +25,9 @@ $this->registerCss("
 	#stockopname-button-upload-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	#stockopname-export-excel-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 ");
 
 /**
@@ -152,7 +155,7 @@ $this->registerCss("
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:red"></i>
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
-			</span><b> SETEL PERIODE AKTIF</b>
+			</span><b> EXPORT STOCK OPNAME</b>
 		',	
 		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],

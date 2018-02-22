@@ -247,4 +247,15 @@ $(document).on('click','#databarang-button-row-edit-promo', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+/*
+ * BUTTON EDIT Promo
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#cara', function(ehead){ 			  
+	$('#cara-modal').modal('show')
+	.find('#cara-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
 
