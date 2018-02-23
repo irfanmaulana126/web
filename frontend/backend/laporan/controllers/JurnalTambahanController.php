@@ -54,7 +54,7 @@ class JurnalTambahanController extends Controller
      */
     public function actionView($JURNAL_ID, $MONTH_AT, $YEAR_AT)
     {
-        return $this->render('view', [
+        return $this->renderAjax('view', [
             'model' => $this->findModel($JURNAL_ID, $MONTH_AT, $YEAR_AT),
         ]);
     }
@@ -68,11 +68,15 @@ class JurnalTambahanController extends Controller
     {
         $model = new JurnalTambahan();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'JURNAL_ID' => $model->JURNAL_ID, 'MONTH_AT' => $model->MONTH_AT, 'YEAR_AT' => $model->YEAR_AT]);
+        if ($model->load(Yii::$app->request->post())) {
+            $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+            $model->ACCESS_GROUP=$user;
+            $model->TRANS_DATE=date("Y-m-d H:i:s");
+            $model->save(false);
+            return $this->redirect('index');
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
@@ -91,10 +95,10 @@ class JurnalTambahanController extends Controller
         $model = $this->findModel($JURNAL_ID, $MONTH_AT, $YEAR_AT);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'JURNAL_ID' => $model->JURNAL_ID, 'MONTH_AT' => $model->MONTH_AT, 'YEAR_AT' => $model->YEAR_AT]);
+            return $this->redirect('index');
         }
 
-        return $this->render('update', [
+        return $this->renderAjax('update', [
             'model' => $model,
         ]);
     }
