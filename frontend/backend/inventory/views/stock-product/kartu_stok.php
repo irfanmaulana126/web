@@ -12,7 +12,6 @@ use yii\helpers\Url;
 use yii\web\View;
 use kartik\widgets\Alert;
 use yii\data\ArrayDataProvider;
-
 $this->registerJs("
 	 // var x = document.getElementById('tahun').value;
 	 // console.log(x);

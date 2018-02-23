@@ -410,7 +410,7 @@ $this->title='Product Stok';
 		// 'columnOptions' =>['class' => 'danger'],
 		'pjaxSettings'=>[
 			'options'=>[
-				'enablePushState'=>false,
+				'enablePushState'=>true,
 				'id'=>'prodak-inv',
 			],
 		],

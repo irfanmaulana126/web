@@ -5,23 +5,22 @@ namespace frontend\backend\laporan\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\backend\laporan\models\JurnalTransaksiBulan;
+use frontend\backend\laporan\models\JurnalTambahan;
 
 /**
- * JurnalTransaksiBulanSearch represents the model behind the search form of `frontend\backend\laporan\models\JurnalTransaksiBulan`.
+ * JurnalTambahanSearch represents the model behind the search form of `frontend\backend\laporan\models\JurnalTambahan`.
  */
-class JurnalTransaksiBulanSearch extends JurnalTransaksiBulan
+class JurnalTambahanSearch extends JurnalTambahan
 {
     /**
      * @inheritdoc
      */
-    public $STORE_NM;
     public function rules()
     {
         return [
-            [['JURNAL_BULAN','STORE_NM', 'ACCESS_GROUP', 'STORE_ID', 'TRANS_DATE', 'STT_PAY_NM', 'AKUN_CODE', 'AKUN_NM', 'KTG_NM', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
-            [['TAHUN', 'BULAN', 'STT_PAY', 'KTG_CODE'], 'integer'],
-            [['JUMLAH'], 'number'],
+            [['JURNAL_ID', 'ACCESS_GROUP', 'STORE_ID', 'TRANS_DATE', 'STT_PAY_NM', 'AKUN_CODE', 'AKUN_NM', 'KTG_NM', 'FREKUENSI_NM', 'RANGE_TGL1', 'RANGE_TGL2', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['STT_PAY', 'KTG_CODE', 'FREKUENSI', 'MONTH_AT', 'YEAR_AT'], 'integer'],
+            [['JUMLAH_TOTAL', 'JUMLAH_PEMBAGIAN'], 'number'],
         ];
     }
 
@@ -43,8 +42,8 @@ class JurnalTransaksiBulanSearch extends JurnalTransaksiBulan
      */
     public function search($params)
     {
-        $query = JurnalTransaksiBulan::find();
-        $query->joinWith(['store']);
+        $query = JurnalTambahan::find();
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -62,23 +61,28 @@ class JurnalTransaksiBulanSearch extends JurnalTransaksiBulan
         // grid filtering conditions
         $query->andFilterWhere([
             'TRANS_DATE' => $this->TRANS_DATE,
-            'TAHUN' => $this->TAHUN,
-            'BULAN' => $this->BULAN,
-            'JUMLAH' => $this->JUMLAH,
             'STT_PAY' => $this->STT_PAY,
             'KTG_CODE' => $this->KTG_CODE,
+            'JUMLAH_TOTAL' => $this->JUMLAH_TOTAL,
+            'JUMLAH_PEMBAGIAN' => $this->JUMLAH_PEMBAGIAN,
+            'FREKUENSI' => $this->FREKUENSI,
+            'RANGE_TGL1' => $this->RANGE_TGL1,
+            'RANGE_TGL2' => $this->RANGE_TGL2,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
+            'MONTH_AT' => $this->MONTH_AT,
+            'YEAR_AT' => $this->YEAR_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'JURNAL_BULAN', $this->JURNAL_BULAN])
-            ->andFilterWhere(['like', 'jurnal_transaksi_c.ACCESS_GROUP', $this->ACCESS_GROUP])
+        $query->andFilterWhere(['like', 'JURNAL_ID', $this->JURNAL_ID])
+            ->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'STT_PAY_NM', $this->STT_PAY_NM])
             ->andFilterWhere(['like', 'AKUN_CODE', $this->AKUN_CODE])
             ->andFilterWhere(['like', 'AKUN_NM', $this->AKUN_NM])
-            ->andFilterWhere(['like', 'store.STORE_NM', $this->STORE_ID])
-            ->andFilterWhere(['like', 'KTG_NM', $this->KTG_NM]);
-		$query->orderBy(['ACCESS_GROUP'=>SORT_ASC,'STORE_ID'=>SORT_ASC,'TAHUN'=>SORT_ASC,'BULAN'=>SORT_ASC]);
+            ->andFilterWhere(['like', 'KTG_NM', $this->KTG_NM])
+            ->andFilterWhere(['like', 'FREKUENSI_NM', $this->FREKUENSI_NM]);
+
         return $dataProvider;
     }
 }
