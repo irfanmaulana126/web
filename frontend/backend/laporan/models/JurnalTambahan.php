@@ -3,6 +3,7 @@
 namespace frontend\backend\laporan\models;
 
 use Yii;
+use frontend\backend\master\models\Store;
 
 /**
  * This is the model class for table "jurnal_tambahan".
@@ -41,6 +42,7 @@ class JurnalTambahan extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    
     public function rules()
     {
         return [
@@ -69,15 +71,15 @@ class JurnalTambahan extends \yii\db\ActiveRecord
             'ACCESS_GROUP' => 'Access  Group',
             'STORE_ID' => 'Store  ID',
             'TRANS_DATE' => 'Trans  Date',
-            'STT_PAY' => 'Stt  Pay',
-            'STT_PAY_NM' => 'Stt  Pay  Nm',
-            'AKUN_CODE' => 'Akun  Code',
-            'AKUN_NM' => 'Akun  Nm',
-            'KTG_CODE' => 'Ktg  Code',
-            'KTG_NM' => 'Ktg  Nm',
-            'JUMLAH_TOTAL' => 'Jumlah  Total',
-            'JUMLAH_PEMBAGIAN' => 'Jumlah  Pembagian',
-            'FREKUENSI' => 'Frekuensi',
+            'STT_PAY' => 'PAY',
+            'STT_PAY_NM' => 'PAY',
+            'AKUN_CODE' => 'KODE AKUN',
+            'AKUN_NM' => 'NAMA AKUN',
+            'KTG_CODE' => 'KATEGORI',
+            'KTG_NM' => 'NAMA KATEGORI',
+            'JUMLAH_TOTAL' => 'JUMLAH',
+            'JUMLAH_PEMBAGIAN' => 'JUMLAH PEMBAGIAN',
+            'FREKUENSI' => 'FREKUENSI',
             'FREKUENSI_NM' => 'Frekuensi  Nm',
             'RANGE_TGL1' => 'Range  Tgl1',
             'RANGE_TGL2' => 'Range  Tgl2',
@@ -86,5 +88,15 @@ class JurnalTambahan extends \yii\db\ActiveRecord
             'MONTH_AT' => 'Month  At',
             'YEAR_AT' => 'Year  At',
         ];
+    }
+    public function getStore()
+    {
+      return $this->hasOne(Store::className(),['STORE_ID'=>'STORE_ID']);
+       
+    }
+    
+    public function getSTORE_NM(){
+        $result=$this->store;
+        return $result!=''?$result->STORE_NM:'';
     }
 }

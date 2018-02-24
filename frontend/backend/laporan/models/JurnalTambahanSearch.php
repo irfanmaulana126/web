@@ -15,10 +15,12 @@ class JurnalTambahanSearch extends JurnalTambahan
     /**
      * @inheritdoc
      */
+    
+    public $STORE_NM;
     public function rules()
     {
         return [
-            [['JURNAL_ID', 'ACCESS_GROUP', 'STORE_ID', 'TRANS_DATE', 'STT_PAY_NM', 'AKUN_CODE', 'AKUN_NM', 'KTG_NM', 'FREKUENSI_NM', 'RANGE_TGL1', 'RANGE_TGL2', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['JURNAL_ID', 'STORE_NM', 'ACCESS_GROUP', 'STORE_ID', 'TRANS_DATE', 'STT_PAY_NM', 'AKUN_CODE', 'AKUN_NM', 'KTG_NM', 'FREKUENSI_NM', 'RANGE_TGL1', 'RANGE_TGL2', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['STT_PAY', 'KTG_CODE', 'FREKUENSI', 'MONTH_AT', 'YEAR_AT'], 'integer'],
             [['JUMLAH_TOTAL', 'JUMLAH_PEMBAGIAN'], 'number'],
         ];
@@ -43,7 +45,7 @@ class JurnalTambahanSearch extends JurnalTambahan
     public function search($params)
     {
         $query = JurnalTambahan::find();
-
+        $query->joinWith(['store']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -75,14 +77,15 @@ class JurnalTambahanSearch extends JurnalTambahan
         ]);
 
         $query->andFilterWhere(['like', 'JURNAL_ID', $this->JURNAL_ID])
-            ->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
-            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
+            ->andFilterWhere(['like', 'jurnal_tambahan.ACCESS_GROUP', $this->ACCESS_GROUP])
+            ->andFilterWhere(['like', 'store.STORE_NM', $this->STORE_ID])
             ->andFilterWhere(['like', 'STT_PAY_NM', $this->STT_PAY_NM])
             ->andFilterWhere(['like', 'AKUN_CODE', $this->AKUN_CODE])
             ->andFilterWhere(['like', 'AKUN_NM', $this->AKUN_NM])
             ->andFilterWhere(['like', 'KTG_NM', $this->KTG_NM])
             ->andFilterWhere(['like', 'FREKUENSI_NM', $this->FREKUENSI_NM]);
-
+            $query->orderBy(['ACCESS_GROUP'=>SORT_ASC,'STORE_ID'=>SORT_ASC]);
+        
         return $dataProvider;
     }
 }
