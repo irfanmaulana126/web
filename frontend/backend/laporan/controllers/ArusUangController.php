@@ -12,6 +12,8 @@ use frontend\backend\laporan\models\ComponenBulan;
 use frontend\backend\laporan\models\TransPenjualanHeaderSummaryMonthly;
 use frontend\backend\laporan\models\TransPenjualanHeaderSummaryMonthlySearch;
 use frontend\backend\laporan\models\TransPengeluaranSummaryMonthlySearch;
+use frontend\backend\laporan\models\JurnalTemplateTitle;
+use frontend\backend\laporan\models\JurnalTemplateTitleSearch;
 
 class ArusUangController extends Controller
 {
@@ -49,16 +51,16 @@ class ArusUangController extends Controller
 		
 		$paramCari=Yii::$app->getRequest()->getQueryParam('id');
 		if ($paramCari!=''){
-			$cari=['thn'=>$paramCari];			
+			$cari=$paramCari;			
 		}else{
-			$cari=['thn'=>date('Y')];			
+			$cari=date('Y-n');			
 		};
 		
 		/*==========================
 		* ARUS KAS MASUK & KELUAR
 		*===========================*/
-        $searchModel = new TransPenjualanHeaderSummaryMonthlySearch($cari);
-        $dataProvider = $searchModel->searchKasMasukYear(Yii::$app->request->queryParams);
+        $searchModel = new JurnalTemplateTitleSearch(['RPT_GROUP_NM'=>'ARUS KAS']);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -67,7 +67,7 @@ class JurnalTransaksiBulanController extends Controller
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
 
-        $searchModel = new JurnalTransaksiBulanSearch(['ACCESS_GROUP'=>$user]);
+        $searchModel = new JurnalTransaksiBulanSearch(['ACCESS_GROUP'=>$user,'TAHUN'=>date('Y'),'BULAN'=>date('n')]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

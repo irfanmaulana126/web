@@ -65,7 +65,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'hAlign'=>'right',
 			'vAlign'=>'top',
 			'mergeHeader'=>false,
-            'group'=>FALSE,
+            'group'=>true,
             'value'=>'store.STORE_NM',
 			'groupedRow'=>FALSE,
 			'noWrap'=>false,
@@ -83,56 +83,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
 			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
 			'filterOptions'=>[],
-		],	
-		[
-			'attribute'=>'TAHUN',
-			'label'=>'TAHUN',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
-			
-			
-		],	
-		[
-			'attribute'=>'BULAN',
-			'label'=>'BULAN',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'value'=>function($model){
-				return date('F', strtotime($model->BULAN.'-'.$model->BULAN.'-01'));	
-			},
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
-			
-			
-		],	
-		[
-			'attribute'=>'JUMLAH',
-			'label'=>'JUMLAH',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>['decimal', 2],
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','150px',''),
-			
-			
-		],	
+		],		
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'AKUN_CODE',
@@ -191,12 +142,81 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],
+		[
+			'attribute'=>'JUMLAH',
+			'label'=>'JUMLAH',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','150px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>['decimal', 2],
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','150px',''),
+			
+			
+		],	
+		[
+			'attribute'=>'TAHUN',
+			'label'=>'TAHUN',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
+			'filter'=>true,
+			'filterType'=>GridView::FILTER_DATE,
+			'filterWidgetOptions'=>['pluginOptions' => [
+					'autoclose'=>true,
+					'startView'=>'years',
+					'minViewMode'=>'years',
+					// 'todayHighlight' => true,
+						'format' => 'yyyy'
+				],],	
+			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+			'filterOptions'=>[],
+			
+		],
+		[
+			'attribute'=>'BULAN',
+			'label'=>'BULAN',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'value'=>function($model){
+				return date('F', strtotime($model->BULAN.'-'.$model->BULAN.'-01'));	
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
+			'filter'=>true,
+			'filterType'=>GridView::FILTER_DATE,
+			'filterWidgetOptions'=>['pluginOptions' => [
+					'autoclose'=>true,
+					'startView'=>'months',
+					'minViewMode'=>'months',
+					// 'todayHighlight' => true,
+						'format' => 'mm'
+				],],	
+			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+			'filterOptions'=>[],
+			
+		],	
 	];
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-list-alt fa-stack-2x" style="color:#000000"></b>
 			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>PENCATATAN JURNAL (IDR)</b></div> 
 			 ';	
-	$leftButton=$this->render('button_list');
+	// $leftButton=$this->render('button_list');
 	$gvInvOut= GridView::widget([
 		'id'=>'jurnal-transaksi',
         'dataProvider' => $dataProvider,
@@ -207,7 +227,8 @@ $this->title = 'Jurnal Transaksi Bulans';
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.$leftButton.'</div> ',
+			// 'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.$leftButton.'</div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px"></div> ',
 			'before'=>false,
 			'after'=>false			
 		],

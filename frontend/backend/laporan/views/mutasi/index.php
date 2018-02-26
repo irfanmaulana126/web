@@ -134,14 +134,13 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 		}elseif($value[$key]['FIELD']=='TGL_OPEN'){
 			$gvfilterType=GridView::FILTER_DATE;
 			$filterWidgetOpt=[	
-				'pluginOptions' => [				
-						'format' => 'yyyy-mm-dd',					 
-						'autoclose' => true,
-						'todayHighlight' => true,
-						//'format' => 'dd-mm-yyyy hh:mm',
-						'autoWidget' => false,
-						//'todayBtn' => true,
-				]
+				'pluginOptions' => [
+					'autoclose'=>true,
+					'startView'=>'year',
+					'minViewMode'=>'months',
+					// 'todayHighlight' => true,
+						'format' => 'yyyy-mm'
+				],
 			];
 			$filterOptions=[				
 				'style'=>'background-color:rgba(255, 255, 255, 1); align:center',
