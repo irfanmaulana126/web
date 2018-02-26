@@ -11,6 +11,8 @@ use kartik\builder\Form;
 use yii\helpers\Url;
 use yii\web\View;
 use kartik\widgets\Alert;
+use kartik\dropdown\DropdownX;
+
 use frontend\backend\laporan\models\JurnalTransaksiBulan;
 
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
@@ -56,7 +58,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		],
 		[
 			'attribute'=>'STORE_ID',
-			'label'=>'NAMA STORE',
+			'label'=>'NAMA TOKO',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -106,6 +108,9 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
+			'value'=>function($model){
+				return date('F', strtotime($model->BULAN.'-'.$model->BULAN.'-01'));	
+			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
@@ -121,6 +126,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
+			'format'=>['decimal', 2],
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','150px',''),
@@ -144,7 +150,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'AKUN_NM',
-			'label'=>'AKUN',
+			'label'=>'NAMA AKUN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -158,7 +164,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		
 		[
 			'attribute'=>'KTG_NM',
-			'label'=>'KTG',
+			'label'=>'KATEGORI AKUN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -173,7 +179,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		//DEFAULT_STOCK
 		[
 			'attribute'=>'STT_PAY_NM',
-			'label'=>'STATUS PAY',
+			'label'=>'STATUS',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -188,8 +194,9 @@ $this->title = 'Jurnal Transaksi Bulans';
 	];
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-list-alt fa-stack-2x" style="color:#000000"></b>
-			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>PENCATATAN JURNAL</b></div> 
+			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>PENCATATAN JURNAL (IDR)</b></div> 
 			 ';	
+	$leftButton=$this->render('button_list');
 	$gvInvOut= GridView::widget([
 		'id'=>'jurnal-transaksi',
         'dataProvider' => $dataProvider,
@@ -200,7 +207,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px"></div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.$leftButton.'</div> ',
 			'before'=>false,
 			'after'=>false			
 		],
@@ -255,17 +262,17 @@ $this->title = 'Jurnal Transaksi Bulans';
 
 
     
-<div class="row">
-<div class="col-md-12">
-<div class="pull-right">
-        <?= tombolViewAkun().' '.tombolViewGroup();?>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="pull-right">
+				<?= tombolViewAkun().' '.tombolViewGroup();?>
+			</div>
+		</div>
+		<br>    
+		<br>    
+		<div class="col-md-12">
+			<?php//=$leftButton?>
+			<?=$gvInvOut?>
+		</div>      
 	</div>
  </div>
- <br>    
- <br>    
-<div class="col-md-12">
-    <?=$gvInvOut?>
-</div>    
-	
-    </div>
-    	  </div>
