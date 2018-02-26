@@ -3,6 +3,7 @@
 namespace frontend\backend\laporan\models;
 
 use Yii;
+use frontend\backend\laporan\models\JurnalTransaksiBulan;
 
 /**
  * This is the model class for table "jurnal_template_detail".
@@ -88,5 +89,14 @@ class JurnalTemplateDetail extends \yii\db\ActiveRecord
             'MONTH_AT' => 'Month  At',
             'YEAR_AT' => 'Year  At',
         ];
+    }
+    public function getJurnaltransaksi()
+    {
+        return $this->hasOne(JurnalTransaksiBulan::className(),['AKUN_CODE'=>'AKUN_CODE','ACCESS_GROUP'=>'ACCESS_GROUP']);
+    }
+    public function getJUMLAH(){
+        $result=$this->jurnaltransaksi;
+        $result = (empty($result->JUMLAH)) ? '' : $result->JUMLAH;
+        return $result;
     }
 }

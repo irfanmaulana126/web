@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use frontend\backend\laporan\models\JurnalTemplateDetailSearch;
 
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
@@ -23,7 +24,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            ['class' => 'kartik\grid\ExpandRowColumn',
+            'value'=>function($model,$key,$index,$column){
+                return GridView::ROW_COLLAPSED;
+            },
+            'detail'=> function($model,$key,$index,$column)
+            {
+                $searchModel =  new JurnalTemplateDetailSearch();
+                $searchModel->RPT_TITLE_ID = $model->RPT_TITLE_ID;
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+                return Yii::$app->controller->renderPartial('index_detail',[
+                    'searchModel'=>$searchModel,
+                    'dataProvider'=>$dataProvider
+                ]);
+            }
+        ],
 
             'RPT_TITLE_ID',
             'RPT_TITLE_NM',
