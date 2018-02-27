@@ -5,25 +5,28 @@ use kartik\grid\GridView;
 use frontend\backend\laporan\models\JurnalTemplateDetailSearch;
 use kartik\date\DatePicker;
 use yii\web\View;
+use kartik\widgets\Select2;
+use common\models\Store;
+use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-// $this->registerJs("
-// // var x = document.getElementById('tahun').value;
-// // console.log(x);
-// document.getElementById('tahun').onchange = function() { 
-//     var x = document.getElementById('tahun').value;
-//     $.pjax.reload({
-//         url:'/laporan/arus-uang/index?id='+x, 
-//         container: '#arus-masuk-monthofyear',
-//         timeout: 1000,
-//     }).done(function () {
-//         $.pjax.reload({container: '#arus-keluar-monthofyear'});
-//     });
+$this->registerJs("
+// var x = document.getElementById('tahun').value;
+// console.log(x);
+$('#tahun, #store').change(function() { 
+    var x = document.getElementById('tahun').value;
+    var y = document.getElementById('store').value;
+    $.pjax.reload({
+        url:'/laporan/arus-uang/index?store='+y+'&id='+x, 
+        container: '#arus-masuk-monthofyear',
+        timeout: 1000,
+    })
     
-//     console.log('Changed!'+x); 
-// }
-// ",View::POS_READY);
+    console.log('Changed!'+x+y); 
+});
+",View::POS_READY);
+$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
     'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
@@ -37,8 +40,16 @@ $btn_srchChart1=DatePicker::widget([
          'todayHighlight' => true
     ]
 ]);
+$btn_srchChart2= Select2::widget([
+    'name' => 'state_10',
+    'data' =>  ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'STORE_ID','STORE_NM'),
+	'options' => ['placeholder' => 'Select a store ...','id'=>'store'],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+]);
 $btn_srchChart="<div style='padding-bottom:3px;float:right'> Periode Tahun".$btn_srchChart1."</div>";
-
+$btn_srchChart2="<div style='padding-bottom:3px;float:right'> Store".$btn_srchChart2."</div>";
 ?>
 <div class="jurnal-template-title-index">
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
@@ -47,37 +58,50 @@ $btn_srchChart="<div style='padding-bottom:3px;float:right'> Periode Tahun".$btn
 			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
                     <?php		                    
                         $tanggal=explode('-',$cari);				
-						echo '<b>RINGKASAN ARUS KEUANGAN <br>'.date('F',$tanggal[1]).' '.$tanggal[0].'</b>';				
+						echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$store->STORE_NM.' '.date('F',$tanggal[1]).' '.$tanggal[0].'</b>';				
 					?>		
 			</div>
+			<br>
+			<br>
+			<br>
 			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
 				<?=$btn_srchChart?>
 			</div>
+				<?=$btn_srchChart2?>
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:10px">
 		<div class="row">	
 			<?php         
-				 echo GridView::widget([
+				 echo GridView::widget([					 
+					'id'=>'arus-masuk-monthofyear',
 					'dataProvider' => $dataProvider,
 					'summary'=>false,
-					'showHeader'=>false,
+					'showHeader'=>false,					
+					'pjax'=>true,
+					'pjaxSettings'=>[
+						'options'=>[
+							'enablePushState'=>true,
+							'id'=>'arus-masuk-monthofyear',
+						],
+					],
 					'columns' => [
 							[	
 								'class' => 'kartik\grid\ExpandRowColumn',
 								'value'=>function($model,$key,$index,$column){
 									return GridView::ROW_EXPANDED;
 								},								
-								'detail'=> function($model,$key,$index,$column)use($tanggal)
+								'detail'=> function($model,$key,$index,$column)use($tanggal,$store)
 								{     								   
-									$searchModel =  new JurnalTemplateDetailSearch(['YEAR_AT'=>$tanggal[0],'MONTH_AT'=>$tanggal[1]]);
+									$searchModel =  new JurnalTemplateDetailSearch(['YEAR_AT'=>$tanggal[0],'MONTH_AT'=>$tanggal[1],'STORE_ID'=>$store->STORE_ID]);
 									$searchModel->RPT_TITLE_ID = $model->RPT_TITLE_ID;
 									$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 									return Yii::$app->controller->renderPartial('index_detail',[
 										'searchModel'=>$searchModel,
 										'dataProvider'=>$dataProvider,
-										'modelView'=>$dataProvider->getModels()
+										'modelView'=>$dataProvider->getModels(),
+										'store'=>$store->STORE_ID
 									]);
 								},
 								'defaultHeaderState'=>false,

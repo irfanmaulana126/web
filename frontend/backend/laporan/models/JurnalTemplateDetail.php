@@ -44,13 +44,14 @@ class JurnalTemplateDetail extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+    public $STORE_ID;
     public function rules()
     {
         return [
             [['RPT_DETAIL_ID', 'AKUN_CODE', 'RPT_TITLE_ID', 'RPT_GROUP_ID', 'MONTH_AT', 'YEAR_AT'], 'required'],
             [['RPT_SORTING', 'RPT_TITLE_ID', 'RPT_GROUP_ID', 'CAL_FORMULA', 'STATUS', 'MONTH_AT', 'YEAR_AT'], 'integer'],
             [['KETERANGAN'], 'string'],
-            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['CREATE_AT', 'UPDATE_AT','STORE_ID'], 'safe'],
             [['RPT_DETAIL_ID', 'AKUN_NM', 'KTG_NM', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 100],
             [['ACCESS_GROUP', 'CAL_FORMULA_NM'], 'string', 'max' => 50],
             [['AKUN_CODE', 'KTG_CODE', 'STATUS_NM'], 'string', 'max' => 15],
@@ -92,11 +93,11 @@ class JurnalTemplateDetail extends \yii\db\ActiveRecord
     }
     public function getJurnaltransaksi()
     {
-        return $this->hasOne(JurnalTransaksiBulan::className(),['AKUN_CODE'=>'AKUN_CODE','ACCESS_GROUP'=>'ACCESS_GROUP']);
+        return $this->hasOne(JurnalTransaksiBulan::className(),['AKUN_CODE'=>'AKUN_CODE','ACCESS_GROUP'=>'ACCESS_GROUP','BULAN'=>'MONTH_AT','TAHUN'=>'YEAR_AT']);
     }
     public function getJUMLAH(){
         $result=$this->jurnaltransaksi;
-        $result = (empty($result->JUMLAH)) ? '' : $result->JUMLAH;
+        $result = (empty($result->JUMLAH)) ? 0 : $result->JUMLAH;
         return $result;
     }
 }
