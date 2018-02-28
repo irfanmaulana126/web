@@ -37,7 +37,7 @@ use yii\web\View;
                 'label' => false,
 				'format'=>'raw',
 				'value'=>function($model)use($store){
-					$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
+					$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->MONTH_AT.'&store='.$store.'').' </span>';
 					return $icon;
 				},
 				'headerOptions'=>[

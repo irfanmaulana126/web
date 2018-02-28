@@ -11,6 +11,7 @@ use yii\helpers\ArrayHelper;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$this->title = 'Ringakasan Buku Besar';
 $this->registerJs("
 // var x = document.getElementById('tahun').value;
 // console.log(x);
@@ -18,7 +19,7 @@ $('#tahun, #store').change(function() {
     var x = document.getElementById('tahun').value;
     var y = document.getElementById('store').value;
     $.pjax.reload({
-        url:'/laporan/arus-uang/index?store='+y+'&id='+x, 
+        url:'/laporan/buku-besar/index?store='+y+'&id='+x, 
         container: '#arus-masuk-monthofyear',
         timeout: 1000,
     })
@@ -60,7 +61,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
                     <?php		                    
                         $tanggal=explode('-',$cari);				
-						echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$retVal.' '.date("F Y",strtotime($cari)).'</b>';				
+						echo '<b>RINGKASAN BUKU BESAR <br>'.$store->STORE_NM.' '.date("F Y",strtotime($cari)).'</b>';				
 					?>		
 			</div>
 			<br>
@@ -93,9 +94,9 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'value'=>function($model,$key,$index,$column){
 									return GridView::ROW_EXPANDED;
 								},								
-								'detail'=> function($model,$key,$index,$column)use($tanggal,$retVal,$retValid)
+								'detail'=> function($model,$key,$index,$column)use($tanggal,$store)
 								{     								   
-									$searchModel =  new JurnalTemplateDetailSearch(['YEAR_AT'=>$tanggal[0],'MONTH_AT'=>$tanggal[1],'STORE_ID'=>$retValid]);
+									$searchModel =  new JurnalTemplateDetailSearch(['YEAR_AT'=>$tanggal[0],'MONTH_AT'=>$tanggal[1],'STORE_ID'=>$store->STORE_ID]);
 									$searchModel->RPT_TITLE_ID = $model->RPT_TITLE_ID;
 									$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -103,7 +104,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 										'searchModel'=>$searchModel,
 										'dataProvider'=>$dataProvider,
 										'modelView'=>$dataProvider->getModels(),
-										'store'=>$retValid
+										'store'=>$store->STORE_ID
 									]);
 								},
 								'defaultHeaderState'=>false,
