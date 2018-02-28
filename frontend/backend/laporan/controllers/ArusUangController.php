@@ -14,9 +14,11 @@ use frontend\backend\laporan\models\TransPenjualanHeaderSummaryMonthlySearch;
 use frontend\backend\laporan\models\TransPengeluaranSummaryMonthlySearch;
 use frontend\backend\laporan\models\JurnalTemplateTitle;
 use frontend\backend\laporan\models\JurnalTemplateTitleSearch;
+use frontend\backend\laporan\models\PtrKasirTd1Search;
 use frontend\backend\laporan\models\PtrKasirTd1aSearch;
 use frontend\backend\laporan\models\PtrKasirTd1bSearch;
 use frontend\backend\laporan\models\PtrKasirTd1cSearch;
+use frontend\backend\laporan\models\JurnalAkun;
 use common\models\Store;
 
 class ArusUangController extends Controller
@@ -69,9 +71,10 @@ class ArusUangController extends Controller
 		/*==========================
 		* ARUS KAS MASUK & KELUAR
 		*===========================*/
+		// print_r($cari);die();
         $searchModel = new JurnalTemplateTitleSearch(['RPT_GROUP_NM'=>'ARUS KAS']);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+		
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -82,13 +85,19 @@ class ArusUangController extends Controller
 	
 	public function actionDetailBulan($akunkode,$bulan,$store)
 	{
-		$searchModel = new PtrKasirTd1aSearch(['BULAN'=>$bulan,'STORE_ID'=>$store]);
+		$date = explode('-',$bulan);
+		$searchModel = new PtrKasirTd1aSearch(['BULAN'=>$date[1],'STORE_ID'=>$store]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+		$stores=store::find()->where(['STORE_ID'=>$store])->one();					
+		$akun=JurnalAkun::find()->where(['AKUN_CODE'=>$akunkode])->one();					
+		
         return $this->render('detail_bulan', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-			'store'=>$store
+			'store'=>$stores,
+			'akun'=>$akun,
+			'akunkode'=>$akunkode,
+			'tanggal'=>$bulan
         ]);
 	}
 	public function actionDetailMinggu($akunkode,$minggu,$store)
@@ -100,6 +109,22 @@ class ArusUangController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
 			'store'=>$store
+        ]);
+	}
+	public function actionDetailProduk($akunkode,$tgl,$store,$produk)
+	{
+		$searchModel = new PtrKasirTd1Search(['TRANS_DATE'=>$tgl,'STORE_ID'=>$store,'PRODUCT_ID'=>$produk]);
+		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$stores=store::find()->where(['STORE_ID'=>$store])->one();					
+		$akun=JurnalAkun::find()->where(['AKUN_CODE'=>$akunkode])->one();	
+
+        return $this->render('index_detail_produk', [
+            'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider,
+			'store'=>$stores,
+			'akun'=>$akun,
+			'akunkode'=>$akunkode,
+			'tanggal'=>$tgl
         ]);
 	}
 	public function actionDetailHari($akunkode,$hari,$store)

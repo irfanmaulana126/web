@@ -3,8 +3,38 @@
 namespace frontend\backend\laporan\controllers;
 
 use Yii;
-class LaporanController extends \yii\web\Controller
+use yii\web\Controller;
+use frontend\backend\laporan\models\JurnalTemplateTitle;
+use frontend\backend\laporan\models\JurnalTemplateTitleSearch;
+use common\models\Store;
+class NeracaController extends Controller
 {
+    public function actionIndex()
+    {
+		$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+		$paramCari=Yii::$app->getRequest()->getQueryParam('id');
+		if ($paramCari!=''){
+			$cari=$paramCari;	
+		}else{
+			$cari=date('Y-n');
+		};
+		$paramCari2=Yii::$app->getRequest()->getQueryParam('store');
+		if ($paramCari2!=''){	
+			$stores=store::find()->where(['ACCESS_GROUP'=>$user,'STORE_ID'=>$paramCari2])->orderBy(['STATUS'=>SORT_ASC])->one();					
+		}else{
+			$stores=store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->one();				
+		};
+		
+        $searchModel = new JurnalTemplateTitleSearch(['RPT_GROUP_NM'=>'Neraca']);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+			'cari'=>$cari,
+			'store'=>$stores
+        ]);
+    }	
     public function beforeAction($action){
         $modulIndentify=4; //OUTLET
        // Check only when the user is logged in.
@@ -34,9 +64,5 @@ class LaporanController extends \yii\web\Controller
            return $this->goHome(); 
        }
    }
-    public function actionIndex()
-    {
-        return $this->render('index');
-    }
 
 }
