@@ -14,6 +14,10 @@ use frontend\backend\laporan\models\TransPenjualanHeaderSummaryMonthlySearch;
 use frontend\backend\laporan\models\TransPengeluaranSummaryMonthlySearch;
 use frontend\backend\laporan\models\JurnalTemplateTitle;
 use frontend\backend\laporan\models\JurnalTemplateTitleSearch;
+use frontend\backend\laporan\models\PtrKasirTd1aSearch;
+use frontend\backend\laporan\models\PtrKasirTd1bSearch;
+use frontend\backend\laporan\models\PtrKasirTd1cSearch;
+use common\models\Store;
 
 class ArusUangController extends Controller
 {
@@ -48,12 +52,18 @@ class ArusUangController extends Controller
    }
     public function actionIndex()
     {
-		
+		$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 		$paramCari=Yii::$app->getRequest()->getQueryParam('id');
 		if ($paramCari!=''){
-			$cari=$paramCari;			
+			$cari=$paramCari;	
 		}else{
-			$cari=date('Y-n');			
+			$cari=date('Y-n');
+		};
+		$paramCari2=Yii::$app->getRequest()->getQueryParam('store');
+		if ($paramCari2!=''){	
+			$stores=store::find()->where(['ACCESS_GROUP'=>$user,'STORE_ID'=>$paramCari2])->orderBy(['STATUS'=>SORT_ASC])->one();					
+		}else{
+			$stores=store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->one();				
 		};
 		
 		/*==========================
@@ -65,10 +75,44 @@ class ArusUangController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-			'cari'=>$cari
+			'cari'=>$cari,
+			'store'=>$stores
         ]);
     }	
 	
+	public function actionDetailBulan($akunkode,$bulan,$store)
+	{
+		$searchModel = new PtrKasirTd1aSearch(['BULAN'=>$bulan,'STORE_ID'=>$store]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('detail_bulan', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+			'store'=>$store
+        ]);
+	}
+	public function actionDetailMinggu($akunkode,$minggu,$store)
+	{
+		$searchModel = new PtrKasirTd1bSearch(['BULAN'=>$bulan,'STORE_ID'=>$store]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('detail', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+			'store'=>$store
+        ]);
+	}
+	public function actionDetailHari($akunkode,$hari,$store)
+	{
+		$searchModel = new PtrKasirTd1cSearch(['BULAN'=>$bulan,'STORE_ID'=>$store]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('detail', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+			'store'=>$store
+        ]);
+	}
 	public function actionView($id)
 	{
 		return $this->render('view');
