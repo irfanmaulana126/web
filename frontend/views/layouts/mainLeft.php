@@ -38,7 +38,7 @@ $sideMenu=SideNav::widget([
 				<div class="pull-left info" style="font-family: tahoma ;font-size: 9pt;margin-left: 30px;margin-top:15px" >
 					<p><?=Yii::$app->getUserOpt->user()['PROFILE_NM']?></p>
 				
-					<a href="#"><i class="fa fa-circle text-success" style="text-align: left,font-family: tahoma ;font-size: 9pt;"> Setting</i> </a>
+					<a href="/sistem/user-profile"><i class="fa fa-circle text-success" style="text-align: left,font-family: tahoma ;font-size: 9pt;"> Setting</i> </a>
 				</div>
 			</div>
 		<!--<div class="user-panel" style="margin-top:20px;background-color:rgba(19, 105, 144, 1)">
