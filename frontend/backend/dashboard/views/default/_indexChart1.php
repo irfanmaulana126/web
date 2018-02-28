@@ -360,26 +360,7 @@ $this->registerJs("
 <div>  		
 	<!-- KIRI !-->
 	<div class="col-lg-3 col-md-3" style="margin-bottom:10px">
-		<div class="row">		
-			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
-				<div class="panel-heading">
-					<div class="row" >
-						<div class="col-lg-3">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:#64F298"></i>
-							  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
-							</span>
-						</div>						
-						<div class="col-lg-9 text-left .small">
-							<dl>								
-								<dt class="count-grand-total-hari" style="font-size:20px;color:#7e7e7e">100</dt>
-								<dd style="font-size:11px;color:#7e7e7e">PENJUALAN HARIAN (IDR)</dd>								
-							</dl>							
-						</div>
-					</div>
-				</div>	
-			</div>	
-			<br>
+		<div class="row">					
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row" >
@@ -401,10 +382,29 @@ $this->registerJs("
 			<br>
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
+					<div class="row" >
+						<div class="col-lg-3">
+							<span class="fa-stack fa-2x">
+							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
+							  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+							</span>
+						</div>						
+						<div class="col-lg-9 text-left .small">
+							<dl>								
+								<dt class="count-grand-total-hari" style="font-size:20px;color:#7e7e7e">100</dt>
+								<dd style="font-size:11px;color:#7e7e7e">PENJUALAN HARIAN (IDR)</dd>								
+							</dl>							
+						</div>
+					</div>
+				</div>	
+			</div>	
+			<br>
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
+				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3">
 							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:#64F298"></i>
+							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(251, 130, 86, 1)"></i>
 							  <i class="fa fa-arrows-h fa-stack-1x" style="color:#FFFFFF"></i>
 							</span>
 						</div>						
@@ -423,7 +423,7 @@ $this->registerJs("
 					<div class="row">
 						<div class="col-lg-3">
 							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:#64F298"></i>
+							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(149, 61, 250, 1)"></i>
 							  <i class="fa fa-arrows-h fa-stack-1x" style="color:#FFFFFF"></i>
 							</span>
 						</div>						
@@ -529,8 +529,8 @@ $this->registerJs("
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left">
 							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:#64F298"></i>
-							  <i class="fa fa-users fa-stack-1x" style="color:#FFFFFF"></i>
+							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(71, 80, 250, 1)"></i>
+							  <i class="fa fa-address-card-o fa-stack-1x" style="color:#FFFFFF"></i>
 							</span>
 						</div>						
 						<div class="col-lg-9 text-left .small">
@@ -549,18 +549,20 @@ $this->registerJs("
 	</div>
 	<div class="col-lg-12 col-md-12">
 		<div class="row">
-			<div class="panel-heading ">
-					<div class="row">
-						<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$weeklySales?></div></div><div class="clearfix"></div>
-					</div>
-				</div>				
+			<div class="panel-heading">
+				<div class="row">
+					<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$weeklySales?></div></div><div class="clearfix"></div>
+				</div>
+			</div>				
 		</div>	
 	</div>	
 	<div class="col-lg-12 col-md-12">
-		<div class="panel-heading ">
-			<div class="row">
-				<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$monthlySales?></div></div><div class="clearfix"></div>
-			</div>
-		</div>	
+		<div class="row">
+			<div class="panel-heading ">
+				<div class="row">
+					<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$monthlySales?></div></div><div class="clearfix"></div>
+				</div>
+			</div>	
+		</div>			
 	</div>			
 </div>
