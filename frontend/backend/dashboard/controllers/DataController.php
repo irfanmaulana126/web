@@ -19,8 +19,8 @@ use yii\web\HttpException;
 
 use frontend\backend\laporan\models\RptDailyChart;
 use frontend\backend\laporan\models\RptDailyChartSearch;
-use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDailyHourSearch;
-use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryMonthly;
+// use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDailyHourSearch;
+// use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryMonthly;
 use frontend\backend\dashboard\models\ChartWeeklySales;
 use frontend\backend\dashboard\models\ChartMonthlySales;
 use frontend\backend\dashboard\models\ChartDayHourSales;
