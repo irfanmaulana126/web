@@ -79,14 +79,15 @@ class ProductStockSearch extends ProductStock
 
         $query->andFilterWhere(['like', 'product_stock.ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
-            ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])
+            ->andFilterWhere(['like', 'product_stock.PRODUCT_ID', $this->PRODUCT_ID])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'CREATE_UUID', $this->CREATE_UUID])
             ->andFilterWhere(['like', 'UPDATE_UUID', $this->UPDATE_UUID])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])
+            ->andFilterWhere(['between','product_stock.CREATE_AT',date('Y-m-d', strtotime('-10 month', strtotime(date('Y-m-d')))),date('Y-m-d', strtotime('+1 year', strtotime(date('Y-m-d'))))])
             ->andFilterWhere(['like', 'PRODUCT_NM', $this->PRODUCT_NM]);
-
+            $query->orderBy(['CREATE_AT'=>SORT_DESC]);
         return $dataProvider;
     }
 }

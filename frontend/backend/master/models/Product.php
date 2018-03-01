@@ -92,7 +92,7 @@ class Product extends \yii\db\ActiveRecord
             'PRODUCT_HEADLINE' => 'PRODUK HEADLINE',
             'UNIT_ID' => 'UNIT PRODUK',
             'STOCK_LEVEL' => 'STOCK LEVEL',
-            'CURRENT_STOCK' => 'CURRENT STOCK',
+            'CURRENT_STOCK' => 'STOCK',
             'CURRENT_HPP' => 'CURRENT HPP',
             'CURRENT_PRICE' => 'HARGA',
             'CURRENT_PPN' => 'PPN',

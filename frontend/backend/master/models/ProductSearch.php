@@ -106,6 +106,11 @@ class ProductSearch extends Product
             ]);
         return $dataProvider;
     }
+    public function getStore()
+    {
+            return $this->hasOne(Store::className(),['STORE_ID'=>'STORE_ID']);
+        
+    }
     public function searchExcelExport($params)
     {
         $query = "SELECT `PRODUCT_ID`,`PRODUCT_NM`,`PRODUCT_QR`,`PRODUCT_WARNA`,`PRODUCT_SIZE`,`PRODUCT_SIZE_UNIT`,`PRODUCT_HEADLINE`,`INDUSTRY_NM`,`INDUSTRY_GRP_NM`,`DCRP_DETIL`FROM product WHERE ACCESS_GROUP=".Yii::$app->user->identity->ACCESS_GROUP."";
