@@ -8,6 +8,7 @@ use ptrnov\fusionchart\ChartAsset;
 use yii\bootstrap\Modal;
 use yii\web\JsExpression;
 use kartik\widgets\Growl;
+
 use frontend\backend\dashboard\models\StoreKasirSearch;
 
 ChartAsset::register($this);
@@ -53,7 +54,33 @@ $this->params['breadcrumbs'][] = $this->title;
 	?>
 <div id="loaderPtr"></div>
 
-<?php 
+
+<?php
+
+/* 	//$client = new \GuzzleHttp\Client();
+	$client = new \GuzzleHttp\Client([
+		'headers' => [ 'Content-Type' => 'application/json' ]
+	]);
+	$dataBody = [			
+			"ACCESS_GROUP" => "170726220936"		
+	];
+	$res = $client->post('192.168.212.101/laporan/counters/per-access-group',
+						[
+							'body' =>json_encode($dataBody)
+						]);
+	// echo $res->getStatusCode();
+	// echo $res->getBody();
+	//$data=$res->getBody();
+	//echo $data->CNT_STORE_AKTIF;
+	$data1=json_decode($res->getBody());
+	$data2=json_decode($res->getBody())->PER_ACCESS_GROUP;
+	$data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
+	$rslt=$data->ACCESS_GROUP;
+	echo $rslt;
+	//die();  */
+		
+
+
 // print_r($model);die();
 	foreach ($model as $key) {
 		$tglbayar = strtotime($key->DATE_START);
