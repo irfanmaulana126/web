@@ -88,6 +88,123 @@ class DataBarangController extends Controller
      */
     public function actionIndex()
     {
+		return $this->render('index');
+    }
+    public function actionIndexProduk()
+    {
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		return $this->render('_index_all_product', [
+			'searchModel'=>$searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionIndexDiscount()
+    {
+        
+		$paramCari=Yii::$app->getRequest()->getQueryParam('productid');
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        if(!empty($paramCari)){
+            $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
+            $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+        }else{
+            $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+            $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+        }
+        $dataProviderDiscount = $searchModelDiscount->search(Yii::$app->request->queryParams);
+        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		return $this->render('_index_discount', [
+            'searchModel'=>$searchModel,
+            'dataProvider' => $dataProvider,
+			'searchModelDiscount'=>$searchModelDiscount,
+            'dataProviderDiscount' => $dataProviderDiscount,
+            'product'=>$product
+        ]);
+    }
+    public function actionIndexPromo()
+    {
+        $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        if(!empty($paramCari)){
+            $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
+            $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+        }else{
+            $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+            $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+        }
+        $dataProviderPromo = $searchModelPromo->search(Yii::$app->request->queryParams);
+        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		return $this->render('_index_promo', [
+            'searchModel'=>$searchModel,
+            'dataProvider' => $dataProvider,
+			'searchModelPromo'=>$searchModelPromo,
+            'dataProviderPromo' => $dataProviderPromo,
+            'product'=>$product
+        ]);
+    }
+    public function actionIndexHarga()
+    {
+        $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        if(!empty($paramCari)){
+            $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
+            $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+        }else{
+            $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+            $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+        }
+        $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
+        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		return $this->render('_index_harga', [
+            'searchModel'=>$searchModel,
+            'dataProvider' => $dataProvider,
+			'searchModelHarga'=>$searchModelHarga,
+            'dataProviderHarga' => $dataProviderHarga,
+            'product'=>$product
+        ]);
+    }
+    public function actionIndexStock()
+    {
+        $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        if(!empty($paramCari)){
+            $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
+            $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+        }else{
+            $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+            $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+        }
+        $dataProviderStock = $searchModelStock->search(Yii::$app->request->queryParams);
+        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		return $this->render('_index_stock', [
+            'searchModel'=>$searchModel,
+            'dataProvider' => $dataProvider,
+			'searchModelStock'=>$searchModelStock,
+            'dataProviderStock' => $dataProviderStock,
+            'product'=>$product
+        ]);
+    }
+    public function actionIndexGroup()
+    {
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        $searchModelGroup = new ProductGroupSearch(['ACCESS_GROUP'=>$user]);
+        $dataProviderGroup = $searchModelGroup->search(Yii::$app->request->queryParams);
+		return $this->render('_index_product_group', [
+			'searchModelGroup'=>$searchModelGroup,
+            'dataProviderGroup' => $dataProviderGroup,
+        ]);
+    }
+    /**
+     * Lists all Item models.
+     * @return mixed
+     */
+    public function actionIndexOld()
+    {
         $paramCari=Yii::$app->getRequest()->getQueryParam('TGL');
         if (empty($paramCari)) {
             $tahun = date('Y');
@@ -118,7 +235,7 @@ class DataBarangController extends Controller
         $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'YEAR_AT'=>$tahun,'MONTH_AT'=>$bulan]);
         $dataProviderStock = $searchModelStock->search(Yii::$app->request->queryParams);
         // print_r($searchModel);die();
-		 return $this->render('index', [
+		 return $this->render('indexOld', [
 			'searchModel'=>$searchModel,
             'dataProvider' => $dataProvider,
 			'searchModelGroup'=>$searchModelGroup,
@@ -131,25 +248,7 @@ class DataBarangController extends Controller
             'dataProviderHarga' => $dataProviderHarga,
 			'searchModelStock'=>$searchModelStock,
             'dataProviderStock' => $dataProviderStock,
-        ]);
-		
-		/* $paramCari=Yii::$app->getRequest()->getQueryParam('outlet_code');
-		//Get 
-		$modelOutlet=Store::find()->where(['OUTLET_CODE'=>$paramCari])->one();//->andWhere('FIND_IN_SET("'.$this->ACCESS_UNIX.'", ACCESS_UNIX)')->one();
-		if($modelOutlet){
-		    $searchModel = new ItemSearch(['OUTLET_CODE'=>$paramCari]);
-			$dataProvider = $searchModel->search(Yii::$app->request->queryParams);			
-		
-		///OUTLET ID.
-		
-        return $this->render('index', [
-			'outletNm'=>$modelOutlet!=''?$modelOutlet->OUTLET_NM:'none',
-            'searchModel' => $searchModel!=''?$searchModel:false,
-            'dataProvider' => $dataProvider,
-        ]);
-		}else{
-			$this->redirect(array('/site/alert'));
-		} */
+        ]);		
     }
     
      /**
@@ -165,7 +264,7 @@ class DataBarangController extends Controller
             $model->CREATE_AT=date('Y-m-d H:i:s');
             if($model->save(false)) {                
                 Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
-                return $this->redirect(['index']);
+                return $this->redirect(['index-produk']);
             }
             else {
                 $transaction->rollBack();
@@ -207,9 +306,11 @@ class DataBarangController extends Controller
             // $model->save();
            if ($model->save(false)) {
             Yii::$app->session->setFlash('success', "Penyimpanan Discount Berhasil");
-            return $this->redirect(['index']);
+            return $this->redirect(['index-discount']);
            }
         } else{
+            $product = ProductDiscountSearch::find()->where(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID])->orderBy(['PERIODE_TGL1'=>SORT_DESC])->one();
+            $productdetail = ProductSearch::find()->joinWith('store')->where(['store.ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'store.STORE_ID'=>$STORE_ID])->one();
             $searchModel = new ProductDiscountSearch(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID]);
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
     
@@ -217,6 +318,8 @@ class DataBarangController extends Controller
                 'model' =>  $model,
                 'searchModel'=>$searchModel,
                 'dataProvider' => $dataProvider,
+                'product'=>$product,
+                'productdetail'=>$productdetail
             ]);
         }
     }
@@ -237,9 +340,11 @@ class DataBarangController extends Controller
             $model->START_TIME=date('H:i:s');
            if ($model->save(false)) {
             Yii::$app->session->setFlash('success', "Penyimpanan Promo Berhasil");
-            return $this->redirect(['index']);
+            return $this->redirect(['index-promo']);
            }
         }
+        $product = ProductDiscountSearch::find()->where(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID])->orderBy(['PERIODE_TGL1'=>SORT_DESC])->one();
+        $productdetail = ProductSearch::find()->joinWith('store')->where(['store.ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'store.STORE_ID'=>$STORE_ID])->one();
         $searchModel = new ProductPromoSearch(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
@@ -247,6 +352,8 @@ class DataBarangController extends Controller
             'model' =>  $model,
 			'searchModel'=>$searchModel,
             'dataProvider' => $dataProvider,
+            'product'=>$product,
+            'productdetail'=>$productdetail
         ]);
     }
     /**
@@ -266,9 +373,11 @@ class DataBarangController extends Controller
             // print_r($model);die();
            if ($model->save(false)) {
             Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
-            return $this->redirect(['index']);
+            return $this->redirect(['index-harga']);
            }
         }
+        $product = ProductDiscountSearch::find()->where(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID])->orderBy(['PERIODE_TGL1'=>SORT_DESC])->one();
+        $productdetail = ProductSearch::find()->joinWith('store')->where(['store.ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'store.STORE_ID'=>$STORE_ID])->one();
         $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'STORE_ID'=>$STORE_ID]);
         $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
 
@@ -276,6 +385,8 @@ class DataBarangController extends Controller
             'model' =>  $model,
 			'searchModelHarga'=>$searchModelHarga,
             'dataProviderHarga' => $dataProviderHarga,
+            'product'=>$product,
+            'productdetail'=>$productdetail
         ]);
     }
     /**
@@ -294,12 +405,14 @@ class DataBarangController extends Controller
             $model->INPUT_DATE=date('Y-m-d');
            if ($model->save(false)) {
             Yii::$app->session->setFlash('success', "Penyimpanan Stock Berhasil");
-            return $this->redirect(['index']);
+            return $this->redirect(['index-stock']);
            }
         }
-
+        $productdetail = ProductSearch::find()->joinWith('store')->where(['store.ACCESS_GROUP'=>$ACCESS_GROUP,'PRODUCT_ID'=>$PRODUCT_ID,'store.STORE_ID'=>$STORE_ID])->one();
+        
         return $this->renderAjax('_form_stock', [
             'model' => $model,
+            'productdetail'=>$productdetail
         ]);
     }
     /**
@@ -314,7 +427,7 @@ class DataBarangController extends Controller
         $model->update();
         // print_r($model);die();                    
         Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
-        return $this->redirect(['index']);
+        return $this->redirect(['index-produk']);
         
     }
      /**
@@ -406,7 +519,7 @@ class DataBarangController extends Controller
             //     }
             
             Yii::$app->session->setFlash('success', "Perubahan Data Berhasil");
-            return $this->redirect(['index']);
+            return $this->redirect(['index-produk']);
             }                               
             
         } else {
@@ -484,7 +597,7 @@ class DataBarangController extends Controller
                         if ($data<>"PRODUCT_ID") {                            
                             unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
                             Yii::$app->session->setFlash('error', "Template Tidak sesuia dikarenakan produk tidak memiliki kode produk");
-                            return $this->redirect('index');
+                            return $this->redirect('index-produk');
                         }else{
                         for($row = 1; $row <= $highestRow; $row++){
                             $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
@@ -498,7 +611,7 @@ class DataBarangController extends Controller
                                 if (empty($rowData[0][0])) {
                                     unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
                                     Yii::$app->session->setFlash('error', "Terdapat Kode prodak yang kosong");
-                                    return $this->redirect('index');
+                                    return $this->redirect('index-produk');
                                 } else {
                                     
                                     $product = Product::find()->where(['PRODUCT_ID'=>$rowData[0][0]])->one();
@@ -515,7 +628,7 @@ class DataBarangController extends Controller
                                 // print_r($rowData);
                             }
                             unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                            return $this->redirect('index');
+                            return $this->redirect('index-produk');
                             }
 
                 } else {
@@ -527,7 +640,7 @@ class DataBarangController extends Controller
                     if ($data=="PRODUCT_ID") {                            
                         unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
                         Yii::$app->session->setFlash('error', "Template Tidak sesui dikaranakan produk sudah memiliki kode produk");
-                        return $this->redirect('index');
+                        return $this->redirect('index-produk');
                     }else{
                     for($row = 1; $row <= $highestRow; $row++){
                         $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
@@ -552,12 +665,12 @@ class DataBarangController extends Controller
                         // print_r($rowData);
                     }
                     unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                    return $this->redirect('index');
+                    return $this->redirect('index-produk');
                 }
             }
             }else{
                 Yii::$app->session->setFlash('error', "Gagal Upload");
-                return $this->redirect(['index']);
+                return $this->redirect(['index-produk']);
             }
 		}else{
 			return $this->renderAjax('form_upload',[

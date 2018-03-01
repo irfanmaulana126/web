@@ -147,7 +147,24 @@ $gvAttProdakDiscountItem=[
 </div>
 <div class="col-md-6">
 <?php $form = ActiveForm::begin(); ?>
+        <?= Html::label('STORE', 'xxx') ?>
+        <?= Html::textInput('XXX', $productdetail->STORE_NM, ['class' => 'form-control','readOnly'=>true]) ?>
+        <br>
+        <?= Html::label('PRODUK', 'xxx') ?>
+        <?= Html::textInput('XXX', $productdetail->PRODUCT_NM, ['class' => 'form-control','readOnly'=>true]) ?>
+        <br>
     <?php
+        if (empty($product->PERIODE_TGL2)) {
+            $date = date('Y-m-d');
+        } else {
+            if ($product->PERIODE_TGL2 < date('Y-m-d')) {
+                $date = date('Y-m-d');
+            } else {
+                $date = date('Y-m-d', strtotime('+1 days', strtotime($product->PERIODE_TGL2)));
+            }
+            
+        }
+        
         echo '<label class="control-label">PERIODE TANGGAL</label>';
        echo DatePicker::widget([
             'model' => $model,
@@ -160,13 +177,13 @@ $gvAttProdakDiscountItem=[
             'pluginOptions' => [
                 'autoclose' => true,
                 'format' => 'yyyy-mm-dd',
-                "startDate" => date('Y-m-d'),
+                "startDate" => $date, 
             ]
         ]);
     ?>
     <br>
     <?= $form->field($model,'DISCOUNT')->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false]) ?>
-            
+                
     <br>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

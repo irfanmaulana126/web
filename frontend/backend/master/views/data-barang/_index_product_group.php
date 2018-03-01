@@ -14,8 +14,13 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
+use kartik\widgets\Alert;
 use frontend\backend\master\models\Product;
+$this->title="Prodak - Group";
+$this->registerJs($this->render('databarang_script.js'),View::POS_READY);
 
+echo $this->render('databarang_button'); //echo difinition
+echo $this->render('databarang_modal'); //echo difinition
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -188,4 +193,28 @@ $this->registerCss("
 		// 'floatHeader'=>true,
 	]); 	
 ?>
+
+<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<?php if (Yii::$app->session->hasFlash('success')){ ?>
+			<?php
+				echo Alert::widget([
+					'type' => Alert::TYPE_SUCCESS,
+					'title' => 'Well done!',
+					'icon' => 'glyphicon glyphicon-ok-sign',
+					'body' => Yii::$app->session->getFlash('success'),
+					'showSeparator' => true,
+					'delay' => 1000
+				]);
+			?>
+		<?php } elseif (Yii::$app->session->hasFlash('error')) {
+			echo Alert::widget([
+				'type' => Alert::TYPE_DANGER,
+				'title' => 'Oh snap!',
+				'icon' => 'glyphicon glyphicon-remove-sign',
+				'body' => Yii::$app->session->getFlash('error'),
+				'showSeparator' => true,
+				'delay' => 1000
+			]);
+		}?>
 	<?=$gvAllStoreItem?>
+</div>

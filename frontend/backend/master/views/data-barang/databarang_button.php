@@ -190,79 +190,75 @@ use yii\base\DynamicModel;
 		return '<li>'.$content.'</li>';
 	}
 	
-	function tombolDiscount($url, $model){
-		$title1 = Yii::t('app',' Discount');
+	function tombolDiscount($access,$product,$store){
+		$title1 = Yii::t('app','');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/discount','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'value'=>url::to(['/master/data-barang/discount','ACCESS_GROUP'=>$access,'PRODUCT_ID'=>$product,'STORE_ID'=>$store]),
 			'id'=>'databarang-button-row-discount',
-			'class'=>"btn btn-default btn-xs",    
-			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+			'class'=>"btn btn-success btn-xs",  
 		];
 		$icon1 = '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
-				<i class="fa fa-cubes fa-stack-1x" style="color:black"></i>
-			</span>
+		<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+			<b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
+		</span>
 		';      
 		$label1 = $icon1 . '  ' . $title1;
 		$content = Html::button($label1,$options1);		
-		return '<li>'.$content.'</li>';
+		return $content;
 	}
 	
-	function tombolHarga($url, $model){
-		$title1 = Yii::t('app','Harga');
+	function tombolHarga($access,$product,$store){
+		$title1 = Yii::t('app','');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/harga','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'value'=>url::to(['/master/data-barang/harga','ACCESS_GROUP'=>$access,'PRODUCT_ID'=>$product,'STORE_ID'=>$store]),
 			'id'=>'databarang-button-row-harga',
-			'class'=>"btn btn-default btn-xs",    
-			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+			'class'=>"btn btn-success btn-xs",    
 		];
 		$icon1 = '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
-				<i class="fa fa-money fa-stack-1x" style="color:black"></i>
-			</span>
+		<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+			<b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
+		</span>
 		';      
 		$label1 = $icon1 . '  ' . $title1;
 		$content = Html::button($label1,$options1);		
-		return '<li>'.$content.'</li>';
+		return $content;
 	}
 
-	function tombolPromo($url, $model){
-		$title1 = Yii::t('app',' Promo');
+	function tombolPromo($access,$product,$store){
+		$title1 = Yii::t('app',' ');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/promo','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'value'=>url::to(['/master/data-barang/promo','ACCESS_GROUP'=>$access,'PRODUCT_ID'=>$product,'STORE_ID'=>$store]),
 			'id'=>'databarang-button-row-promo',
-			'class'=>"btn btn-default btn-xs",    
-			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+			'class'=>"btn btn-success btn-xs",    
 		];
 		$icon1 = '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
-				<i class="fa fa-gift fa-stack-1x" style="color:black"></i>
-			</span>
+		<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+			<b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
+		</span>
 		';      
 		$label1 = $icon1 . '  ' . $title1;
 		$content = Html::button($label1,$options1);		
-		return '<li>'.$content.'</li>';
+		return $content;
 	}
-	function tombolStock($url, $model){
-		$title1 = Yii::t('app',' Stock');
+	function tombolStock($access,$product,$store){
+		$title1 = Yii::t('app',' ');
 		$options1 = [
-			'value'=>url::to(['/master/data-barang/stock','ACCESS_GROUP'=>$model['ACCESS_GROUP'],'PRODUCT_ID'=>$model['PRODUCT_ID'],'STORE_ID'=>$model['STORE_ID']]),
+			'value'=>url::to(['/master/data-barang/stock','ACCESS_GROUP'=>$access,'PRODUCT_ID'=>$product,'STORE_ID'=>$store]),
 			'id'=>'databarang-button-row-stock',
-			'class'=>"btn btn-default btn-xs",    
-			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+			'class'=>"btn btn-success btn-xs",    
 		];
 		$icon1 = '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
-				<i class="fa fa-tags fa-stack-1x" style="color:black"></i>
-			</span>
+		<span class="fa-stack fa-sm text-left">
+			<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+			<b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
+		</span>
 		';      
 		$label1 = $icon1 . '  ' . $title1;
 		$content = Html::button($label1,$options1);		
-		return '<li>'.$content.'</li>';
+		return $content;
 	}
 	
 
@@ -472,6 +468,183 @@ use yii\base\DynamicModel;
 	function tombolImportExcel(){
 		$title= Yii::t('app','Import Excel');
 		$url = Url::toRoute(['/master/data-barang/upload-file']);
+		$options1 = ['value'=>$url,
+					'id'=>'databarang-button-upload',
+					'data-pjax' => false,
+					'class'=>"btn btn-warning btn-xs",
+					'title'=>'Upload Data Actual Stock'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-upload fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}	
+
+    /*
+	 * HEADER BUTTON : Button - EXPORT EXCEL.
+	*/
+	function tombolExportExceldiscount(){
+		// if(getPermission()){
+			// if(getPermission()->BTN_PROCESS1==1){
+				$title1 = Yii::t('app', ' Export Excel');
+				$url = Url::toRoute(['/master/data-barang/export-discount']);
+				$options1 = [
+							'id'=>'store-button-export-excel',
+							'data-pjax' => true,
+							'class'=>"btn btn-primary btn-xs"  
+				];
+				$icon1 = '<span class="fa-stack fa-sm text-left">
+							<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+							<b class="fa fa-file-excel-o fa-stack-1x" style="color:#000000"></b>
+						</span>';
+				$label1 = $icon1 . ' ' . $title1;
+				$content = Html::a($label1,$url,$options1);
+				return $content;
+			// }
+		// }
+	}
+	/*
+	 * BUTTON DOWNLOAD FORMAT & LIST DATA PRODUCK OPNAME
+	*/
+	function tombolImportExceldiscount(){
+		$title= Yii::t('app','Import Excel');
+		$url = Url::toRoute(['/master/data-barang/upload-file-discount']);
+		$options1 = ['value'=>$url,
+					'id'=>'databarang-button-upload',
+					'data-pjax' => false,
+					'class'=>"btn btn-warning btn-xs",
+					'title'=>'Upload Data Actual Stock'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-upload fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}	
+    /*
+	 * HEADER BUTTON : Button - EXPORT EXCEL.
+	*/
+	function tombolExportExcelharga(){
+		// if(getPermission()){
+			// if(getPermission()->BTN_PROCESS1==1){
+				$title1 = Yii::t('app', ' Export Excel');
+				$url = Url::toRoute(['/master/data-barang/export-harga']);
+				$options1 = [
+							'id'=>'store-button-export-excel',
+							'data-pjax' => true,
+							'class'=>"btn btn-primary btn-xs"  
+				];
+				$icon1 = '<span class="fa-stack fa-sm text-left">
+							<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+							<b class="fa fa-file-excel-o fa-stack-1x" style="color:#000000"></b>
+						</span>';
+				$label1 = $icon1 . ' ' . $title1;
+				$content = Html::a($label1,$url,$options1);
+				return $content;
+			// }
+		// }
+	}
+	/*
+	 * BUTTON DOWNLOAD FORMAT & LIST DATA PRODUCK OPNAME
+	*/
+	function tombolImportExcelharga(){
+		$title= Yii::t('app','Import Excel');
+		$url = Url::toRoute(['/master/data-barang/upload-file-harga']);
+		$options1 = ['value'=>$url,
+					'id'=>'databarang-button-upload',
+					'data-pjax' => false,
+					'class'=>"btn btn-warning btn-xs",
+					'title'=>'Upload Data Actual Stock'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-upload fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}	
+    /*
+	 * HEADER BUTTON : Button - EXPORT EXCEL.
+	*/
+	function tombolExportExcelpromo(){
+		// if(getPermission()){
+			// if(getPermission()->BTN_PROCESS1==1){
+				$title1 = Yii::t('app', ' Export Excel');
+				$url = Url::toRoute(['/master/data-barang/export-promo']);
+				$options1 = [
+							'id'=>'store-button-export-excel',
+							'data-pjax' => true,
+							'class'=>"btn btn-primary btn-xs"  
+				];
+				$icon1 = '<span class="fa-stack fa-sm text-left">
+							<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+							<b class="fa fa-file-excel-o fa-stack-1x" style="color:#000000"></b>
+						</span>';
+				$label1 = $icon1 . ' ' . $title1;
+				$content = Html::a($label1,$url,$options1);
+				return $content;
+			// }
+		// }
+	}
+	/*
+	 * BUTTON DOWNLOAD FORMAT & LIST DATA PRODUCK OPNAME
+	*/
+	function tombolImportExcelpromo(){
+		$title= Yii::t('app','Import Excel');
+		$url = Url::toRoute(['/master/data-barang/upload-file-promo']);
+		$options1 = ['value'=>$url,
+					'id'=>'databarang-button-upload',
+					'data-pjax' => false,
+					'class'=>"btn btn-warning btn-xs",
+					'title'=>'Upload Data Actual Stock'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-upload fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}	
+    /*
+	 * HEADER BUTTON : Button - EXPORT EXCEL.
+	*/
+	function tombolExportExcelstock(){
+		// if(getPermission()){
+			// if(getPermission()->BTN_PROCESS1==1){
+				$title1 = Yii::t('app', ' Export Excel');
+				$url = Url::toRoute(['/master/data-barang/export-stock']);
+				$options1 = [
+							'id'=>'store-button-export-excel',
+							'data-pjax' => true,
+							'class'=>"btn btn-primary btn-xs"  
+				];
+				$icon1 = '<span class="fa-stack fa-sm text-left">
+							<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+							<b class="fa fa-file-excel-o fa-stack-1x" style="color:#000000"></b>
+						</span>';
+				$label1 = $icon1 . ' ' . $title1;
+				$content = Html::a($label1,$url,$options1);
+				return $content;
+			// }
+		// }
+	}
+	/*
+	 * BUTTON DOWNLOAD FORMAT & LIST DATA PRODUCK OPNAME
+	*/
+	function tombolImportExcelstock(){
+		$title= Yii::t('app','Import Excel');
+		$url = Url::toRoute(['/master/data-barang/upload-file-stock']);
 		$options1 = ['value'=>$url,
 					'id'=>'databarang-button-upload',
 					'data-pjax' => false,

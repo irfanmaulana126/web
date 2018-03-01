@@ -17,7 +17,12 @@ use kartik\field\FieldRange;
 <div class="product-discount-form">
 
 <?php $form = ActiveForm::begin(); ?>
-
+    <?= Html::label('STORE', 'xxx') ?>
+        <?= Html::textInput('XXX', $productdetail->STORE_NM, ['class' => 'form-control','readOnly'=>true]) ?>
+        <br>
+        <?= Html::label('PRODUK', 'xxx') ?>
+        <?= Html::textInput('XXX', $productdetail->PRODUCT_NM, ['class' => 'form-control','readOnly'=>true]) ?>
+        <br>
     <?= $form->field($model,'INPUT_STOCK')->textInput(['type'=>'number','min'=>1,'allowEmpty' => true,'integerOnly' => false]) ?>
             
     <br>

@@ -1,26 +1,3 @@
-<!-- 'ID',
-            'ACCESS_GROUP',
-            'STORE_ID',
-            'PRODUCT_ID',
-            'LAST_STOCK',
-            //'INPUT_DATE',
-            //'INPUT_TIME',
-            //'INPUT_STOCK',
-            //'CURRENT_DATE',
-            //'CURRENT_TIME',
-            //'CURRENT_STOCK',
-            //'SISA_STOCK',
-            //'CREATE_BY',
-            //'CREATE_AT',
-            //'UPDATE_BY',
-            //'UPDATE_AT',
-            //'CREATE_UUID',
-            //'UPDATE_UUID',
-            //'STATUS',
-            //'DCRP_DETIL:ntext',
-            //'YEAR_AT',
-            //'MONTH_AT', -->
-
 <?php
 use yii\helpers\Html;
 use kartik\grid\GridView;
@@ -37,8 +14,13 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
+use kartik\widgets\Alert;
 use frontend\backend\master\models\ProductStockSearch;
+$this->title="Prodak - Stock";
+$this->registerJs($this->render('databarang_script.js'),View::POS_READY);
 
+echo $this->render('databarang_button'); //echo difinition
+echo $this->render('databarang_modal'); //echo difinition
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -66,7 +48,7 @@ $this->registerCss("
 	$bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>STOCK PRODUCT</b>
+				</span><b>STOCK PRODUCT <span style="color:white">('.strtoupper($product->PRODUCT_NM).')</span></b>
 	';
 	$gvAttProdakStockItems=[
 		[
@@ -76,35 +58,6 @@ $this->registerCss("
 			'header'=>'No.',
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
-		],
-		[
-			'attribute'=>'STORE_NM',
-			'filterType'=>true,
-			'format'=>'raw',
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
-			'hAlign'=>'right',
-			'vAlign'=>'top',
-			'mergeHeader'=>false,
-			'group'=>true,
-			'groupedRow'=>true,
-			'noWrap'=>false,
-			'value' => function ($model, $key, $index, $widget) {
-				if (empty($model->STORE_NM)) {
-					return '-';
-				} else {
-					return "Nama Toko : <span class='label label-success'>".$model->STORE_NM."</span> ";
-				}
-			},
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>[
-				'style'=>[
-					'text-align'=>'left',
-					'color'=>'red',
-					'font-family'=>'tahoma, arial, sans-serif',						
-					'font-weight'=>'bold',
-				],
-			]
 		],	
 		[
 			'attribute'=>'PRODUCT_NM',
@@ -114,6 +67,8 @@ $this->registerCss("
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
+			'group'=>true,
+			'groupedRow'=>true,
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
@@ -227,59 +182,6 @@ $this->registerCss("
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],
-			
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'YEAR_AT',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'filterType'=>GridView::FILTER_DATE,
-			'filterWidgetOptions'=>['pluginOptions' => [					
-				'startView'=>'years',
-				'minViewMode'=>'years',
-				'format' => 'yyyy',				 
-				'autoclose' => true,
-				'todayHighlight' => true,
-				//'format' => 'dd-mm-yyyy hh:mm',
-				'autoWidget' => false,
-				//'todayBtn' => true,
-			]
-		],
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-		],
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'MONTH_AT',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'filterType'=>GridView::FILTER_DATE,
-			'filterWidgetOptions'=>['pluginOptions' => [				
-				'format' => 'm',					 
-				'autoclose' => true,
-				'startView'=>'year',
-				'minViewMode'=>'months',
-				'todayHighlight' => true,
-				//'format' => 'dd-mm-yyyy hh:mm',
-				'autoWidget' => false,
-				//'todayBtn' => true,
-			]
-		],
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-		],
 	];
 	
 	$gvAttProdakStockItemsButton[]=[			
@@ -336,13 +238,47 @@ $this->registerCss("
 		'toolbar' => false,
 		'panel' => [
 			// 'heading'=>false,
-			'heading'=>'<div style="float:right"> </div>'.$pageNm,
+			'heading'=>$pageNm,
 			'type'=>'success',
+			'before'=>'<div class="pull-right">'.tombolImportExcelStock().' '.tombolExportExcelStock().' '.tombolStock($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
 			'before'=>false,
 			'showFooter'=>true,
 		],
 		'floatOverflowContainer'=>true,
 		'floatHeader'=>true,
 	]); 	
+	$produk=$this->render('produk_detail_stock',[
+		'searchModel' => $searchModel,
+		'dataProvider' => $dataProvider,
+	]);
 ?>
-			<?=$gvAllProdakStockItem?>
+
+<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<?php if (Yii::$app->session->hasFlash('success')){ ?>
+			<?php
+				echo Alert::widget([
+					'type' => Alert::TYPE_SUCCESS,
+					'title' => 'Well done!',
+					'icon' => 'glyphicon glyphicon-ok-sign',
+					'body' => Yii::$app->session->getFlash('success'),
+					'showSeparator' => true,
+					'delay' => 1000
+				]);
+			?>
+		<?php } elseif (Yii::$app->session->hasFlash('error')) {
+			echo Alert::widget([
+				'type' => Alert::TYPE_DANGER,
+				'title' => 'Oh snap!',
+				'icon' => 'glyphicon glyphicon-remove-sign',
+				'body' => Yii::$app->session->getFlash('error'),
+				'showSeparator' => true,
+				'delay' => 1000
+			]);
+		}?>
+	<div class="col-md-4">
+		<?=$produk?>
+	</div>
+	<div class="col-md-8">	
+		<?=$gvAllProdakStockItem?>
+	</div>
+</div>

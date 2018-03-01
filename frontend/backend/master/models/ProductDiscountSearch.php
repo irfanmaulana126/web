@@ -77,10 +77,12 @@ class ProductDiscountSearch extends ProductDiscount
         $query->andFilterWhere(['like', 'product_discount.ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'product_discount.STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'product_discount.PRODUCT_ID', $this->PRODUCT_ID])
-            ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])
+            ->andFilterWhere(['between','product_discount.PERIODE_TGL2',date('Y-m-d', strtotime('-10 month', strtotime(date('Y-m-d')))),date('Y-m-d', strtotime('+1 year', strtotime(date('Y-m-d'))))])
             ->andFilterWhere(['like', 'product_discount.PRODUCT_ID', $this->PRODUCT_NM]);
+        $query->orderBy(['PERIODE_TGL1'=>SORT_DESC]);
+        
 
         return $dataProvider;
     }
