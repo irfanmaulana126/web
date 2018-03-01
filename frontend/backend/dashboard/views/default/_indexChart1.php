@@ -12,11 +12,6 @@ use ptrnov\fusionchart\Chart;
 use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
 
-use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDailySearch;
-use frontend\backend\dashboard\models\TransPenjualanHeaderSummaryDaily;
-use frontend\backend\laporan\models\RptDailyChartSearch;
-
-
 
 //$client = new \GuzzleHttp\Client();
 $client = new Client([
@@ -40,24 +35,7 @@ $data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
 
 	//print_r($data);
 
-		$searchModel = new RptDailyChartSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		$model=$dataProvider->getModels();
-		
-		// $searchModelDaily = new TransPenjualanHeaderSummaryDailySearch();
-        // $dataProviderDaily = $searchModelDaily->search(['TGL'=>'2017-11-01']);
-		$modelDaily= TransPenjualanHeaderSummaryDaily::find()
-		->select('SUM(TOTAL_SALES) AS TOTAL_SALES,SUM(JUMLAH_TRANSAKSI) AS JUMLAH_TRANSAKSI,SUM(TOTAL_PRODUCT) AS TOTAL_PRODUCT')
-		->where(['TGL'=>date("Y-m-d"),'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']])->groupBy('ACCESS_GROUP')->one();
-		// $modelDaily=$dataProviderDaily->getModels();
-		// print_r($modelDaily);
-		// die();
-
-// $xaxis=0;
-// $canvasEndY=200;
-
-//global $xaxis;
-//global $canvasEndY;
+	
 
 
 	$hourly3DaysTafik= Chart::Widget([
@@ -312,6 +290,20 @@ $this->registerJs("
 			}
 		});
 	});
+	$('.jumlah-customer').each(function () {
+		$(this).prop('Counter',0).animate({
+			Counter: $(this).text()
+		}, {
+			duration: 4000,
+			easing: 'swing',
+			step: function (now) {
+				$(this).text(Math.ceil(now));
+			},
+			complete: function() {
+				$(this).text('".number_format($data->CNT_CUS_MEMBER)."');	//JUMLAH_KARYAWAN_AKTIF
+			}
+		});
+	});
 	$('.jumlah-toko').each(function () {
 		$(this).prop('Counter',0).animate({
 			Counter: $(this).text()
@@ -354,6 +346,62 @@ $this->registerJs("
 			}
 		});
 	});
+	$('.frekuensi-transaksi-harian').each(function () {
+		$(this).prop('Counter',0).animate({
+			Counter: $(this).text()
+		}, {
+			duration: 7000,
+			easing: 'swing',
+			step: function (now) {
+				$(this).text(Math.ceil(now));
+			},
+			complete: function() {
+				$(this).text('".number_format($data->CNT_JUMLAH_TRANSAKSI)."');		//FREKUENSI TRANSAKSI HARIAN
+			}
+		});
+	});
+	$('.penjualan-harian').each(function () {
+		$(this).prop('Counter',0).animate({
+			Counter: $(this).text()
+		}, {
+			duration: 7000,
+			easing: 'swing',
+			step: function (now) {
+				$(this).text(Math.ceil(now));
+			},
+			complete: function() {
+				$(this).text('".number_format($data->CNT_PENJUALAN_HARIAN)."');		//PENJUALAN HARIAN
+			}
+		});
+	});	
+	$('.penjualan-mingguan').each(function () {
+		$(this).prop('Counter',0).animate({
+			Counter: $(this).text()
+		}, {
+			duration: 7000,
+			easing: 'swing',
+			step: function (now) {
+				$(this).text(Math.ceil(now));
+			},
+			complete: function() {
+				$(this).text('".number_format($data->CNT_PENJUALAN_MINGGUAN)."');		//PENJUALAN MINGGUAN
+			}
+		});
+	});
+	$('.penjualan-bulanan').each(function () {
+		$(this).prop('Counter',0).animate({
+			Counter: $(this).text()
+		}, {
+			duration: 7000,
+			easing: 'swing',
+			step: function (now) {
+				$(this).text(Math.ceil(now));
+			},
+			complete: function() {
+				$(this).text('".number_format($data->CNT_PENJUALAN_BULANAN)."');		//PENJUALAN MINGGUAN
+			}
+		});
+	});
 ",$this::POS_END);
 
 ?>
@@ -364,7 +412,7 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row" >
-						<div class="col-lg-3">
+						<div class="col-lg-3 text-left" style="float:left">
 							<span class="fa-stack fa-2x">
 							  <i class="fa fa-circle fa-stack-2x" style="color:#0ec1db"></i>
 							  <i class="fa fa-dashboard fa-stack-1x" style="color:#FFFFFF"></i>
@@ -372,8 +420,8 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small">
 							<dl>
-								<dt class="count-trans-total-hari" style="font-size:20px;color:#7e7e7e">100</dt>
-								<dd style="font-size:11px;color:#7e7e7e">JUMLAH TRANSAKSI</dd>
+								<dt class="frekuensi-transaksi-harian" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_JUMLAH_TRANSAKSI?></dt>
+								<dd style="font-size:10px;color:#7e7e7e">FREKUENSI TRANSAKSI HARIAN</dd>
 							</dl>							
 						</div>
 					</div>
@@ -383,16 +431,16 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row" >
-						<div class="col-lg-3">
+						<div class="col-lg-3 text-left" style="float:left">
 							<span class="fa-stack fa-2x">
 							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
 							  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
 							</span>
 						</div>						
-						<div class="col-lg-9 text-left .small">
+						<div class="col-lg-9 text-left .small" style="padding-left:-50px">
 							<dl>								
-								<dt class="count-grand-total-hari" style="font-size:20px;color:#7e7e7e">100</dt>
-								<dd style="font-size:11px;color:#7e7e7e">PENJUALAN HARIAN (IDR)</dd>								
+								<dt class="penjualan-harian" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_PENJUALAN_HARIAN?></dt>
+								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN HARIAN (IDR)</dd>								
 							</dl>							
 						</div>
 					</div>
@@ -402,16 +450,16 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-3 text-left" style="float:left">
 							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(251, 130, 86, 1)"></i>
-							  <i class="fa fa-arrows-h fa-stack-1x" style="color:#FFFFFF"></i>
+							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(149, 61, 250, 1)"></i>
+							  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
 							</span>
 						</div>						
 						<div class="col-lg-9 text-left .small">
 							<dl>
-								<dt class="rata-rata-penjualan" style="font-size:20px;color:#7e7e7e">100</dt>
-								<dd style="font-size:11px;color:#7e7e7e">RATA-RATA PENJUALAN (IDR)</dd>
+								<dt class="penjualan-mingguan" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_PENJUALAN_MINGGUAN?></dt>
+								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN MINGGUAN (IDR)</dd>
 							</dl>							
 						</div>
 					</div>
@@ -421,16 +469,16 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-3">
+						<div class="col-lg-3 text-left" style="float:left">
 							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(149, 61, 250, 1)"></i>
-							  <i class="fa fa-arrows-h fa-stack-1x" style="color:#FFFFFF"></i>
+							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(251, 130, 86, 1)"></i>
+							  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
 							</span>
 						</div>						
 						<div class="col-lg-9 text-left .small">
 							<dl>
-								<dt class="rata-rata-penjualan" style="font-size:20px;color:#7e7e7e">100</dt>
-								<dd style="font-size:11px;color:#7e7e7e">RATA-RATA PENJUALAN (IDR)</dd>
+								<dt class="penjualan-bulanan" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_PENJUALAN_BULANAN?></dt>
+								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN BULANAN (IDR)</dd>
 							</dl>							
 						</div>
 					</div>
@@ -469,11 +517,11 @@ $this->registerJs("
 						<div class="col-lg-9 text-left .small">
 							<dl>
 								<dt style="font-size:13px;color:#7e7e7e">
-									<div class="jumlah-karyawan" style="float:left">100</div>
+									<div class="jumlah-toko" style="float:left"><?=$data->CNT_STORE?></div>
 									<div style="float:left">/</div>
-									<div class="jumlah-karyawan-aktif" style="float:left">100</div>	
+									<div class="jumlah-toko-aktif" style="float:left"><?=$data->CNT_STORE_AKTIF?></div>	
 									<div style="float:left">/</div>
-									<div class="jumlah-perangkat-aktif">100</div>									
+									<div class="jumlah-perangkat-aktif"><?=$data->CNT_PERNGKAT_AKTIF?></div>									
 								</dt> 
 								<dd style="font-size:10px;color:#7e7e7e">JUMLAH TOKO</dd>
 							</dl>							
@@ -493,7 +541,7 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small">
 							<dl style="font-size:13px;color:#7e7e7e">
-								<dt class="jumlah-produk" style="font-size:13px;color:#7e7e7e">100</dt>
+								<dt class="jumlah-produk" style="font-size:13px;color:#7e7e7e"><?=$data->CNT_PRODUK?></dt>
 								<dd style="font-size:10px;color:#7e7e7e">JUMLAH PRODUK</dd>
 							</dl>							
 						</div>
@@ -513,9 +561,9 @@ $this->registerJs("
 						<div class="col-lg-9 text-left .small">
 							<dl>
 								<dt style="font-size:13px;color:#7e7e7e">
-									<div class="jumlah-karyawan" style="float:left">100</div>
+									<div class="jumlah-karyawan" style="float:left"><?=$data->CNT_KARYAWAN?></div>
 									<div style="float:left">/</div>
-									<div class="jumlah-karyawan-aktif">100</div>						
+									<div class="jumlah-karyawan-aktif"><?=$data->CNT_KARYAWAN_AKTIF?></div>						
 								</dt>
 								<dd style="font-size:10px;color:#7e7e7e">JUMLAH KARYAWAN</dd>
 							</dl>							
@@ -536,7 +584,7 @@ $this->registerJs("
 						<div class="col-lg-9 text-left .small">
 							<dl>
 								<dt style="font-size:13px;color:#7e7e7e">
-									<div class="jumlah-karyawan">100</div>		
+									<div class="jumlah-customer"><?=$data->CNT_CUS_MEMBER?></div>		
 								</dt>
 								<dd style="font-size:10px;color:#7e7e7e">JUMLAH MEMBER</dd>
 							</dl>							
