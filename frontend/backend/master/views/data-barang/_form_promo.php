@@ -160,7 +160,7 @@ $gvAttProdakPromoItem=[
     if (empty($product->PERIODE_TGL2)) {
         $date = date('Y-m-d');
     } else {
-        if ($product->PERIODE_TGL2 < date('Y-m-d')) {
+        if ($product->PERIODE_TGL2 <= date('Y-m-d')) {
             $date = date('Y-m-d');
         } else {
             $date = date('Y-m-d', strtotime('+1 days', strtotime($product->PERIODE_TGL2)));

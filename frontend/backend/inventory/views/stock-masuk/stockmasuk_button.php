@@ -42,7 +42,7 @@ use yii\base\DynamicModel;
 	*/
 	function tombolCardStock(){
 		$title= Yii::t('app','');
-		$url = Url::toRoute(['/inventory/stock-masuk/pencarian-index']);
+		$url = Url::toRoute(['/inventory/stock-masuk/card-stock']);
 		$options1 = ['value'=>$url,
 					'id'=>'stockmasuk-button-card',
 					'data-pjax' => false,
