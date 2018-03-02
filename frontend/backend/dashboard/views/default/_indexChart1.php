@@ -42,7 +42,13 @@ $data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
 		//'urlSource'=>'/dashboard/data/daily-transaksi',
 		//'urlSource'=>'/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1&TGL=2018-01-23',
 		 // 'urlSource'=>'/dashboard/data/daily-transaksi?ACCESS_GROUP=170726220936&TGL=2018-02-01',
-		 'urlSource'=>'/dashboard/data/daily-transaksi',
+		//'urlSource'=>'/dashboard/data/daily-transaksi',
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>'170726220936',
+			'TGL'=>'2018-02-27'
+		],
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
@@ -147,7 +153,7 @@ $this->registerJs("
 		}).responseText;
 		var myDataChart= jsonData;
 		console.log(myDataChart); */
-		var settings = {
+		/* var settings = {
 			
 		  'async': true,
 		  'crossDomain': true,
@@ -156,7 +162,7 @@ $this->registerJs("
 			// request.setRequestHeader('X-Forwarded-Proto', 'http');
 		  // },
 		  'url': 'http://192.168.212.101/laporan/counters/per-access-group',
-		 // 'url': '".Url::to('http://production.kontrolgampang.com/laporan/counters/per-access-group')."',
+		 // 'url': 'http://production.kontrolgampang.com/laporan/counters/per-access-group')',
 		  'method': 'POST',
 		  'processData': false,
 		  'contentType': 'application/x-www-form-urlencoded; charset=UTF-8',	
@@ -165,7 +171,7 @@ $this->registerJs("
 		}
 		$.ajax(settings).done(function (response) {
 		  console.log(response);
-		}); 
+		});  */
 	});
 							
 	// var settings = {
