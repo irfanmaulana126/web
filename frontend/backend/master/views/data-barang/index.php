@@ -28,9 +28,9 @@ $this->title="Prodak";
             <?= Html::button('Lanjut',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-stock']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Lanjut']);?>
         </div>
         <div class="col-md-12">
-            <h3>Custumer</h3>
+            <h3>Customer</h3>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, dolore magnam omnis ex rem mollitia dolorem molestias animi quo, ut doloribus aliquid numquam voluptates sapiente adipisci, assumenda quibusdam blanditiis rerum.</p>
-            <?= Html::button('Lanjut',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-custumer']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Lanjut']);?>
+            <?= Html::button('Lanjut',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-customer']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Lanjut']);?>
         </div>
     </div>      
     <div class="col-md-6">

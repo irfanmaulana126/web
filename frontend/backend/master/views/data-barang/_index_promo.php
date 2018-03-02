@@ -45,6 +45,26 @@ $this->registerCss("
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 ");
+function sttMsgDscp($stt){
+	if($stt==0){ //TRIAL
+		 return Html::a('<span class="fa-stack fa-xl">
+					<i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					<i class="fa fa-check fa-stack-1x" style="color:#ff9800"></i>
+				</span>','',['title'=>'Pending']);
+	}elseif($stt==1){
+		 return Html::a('<span class="fa-stack fa-xl">
+					<i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					<i class="fa fa-check fa-stack-1x" style="color:#4caf50"></i>
+				</span>','',['title'=>'Active']);
+	}elseif($stt==2){
+		return Html::a('<span class="fa-stack fa-xl">
+						<i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+						<i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
+					</span>','',['title'=>'Delete']);
+	}
+};	
+	
+$dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Pending. '.sttMsgDscp(1).'=Active. '.sttMsgDscp(2).'=Delete. ';
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 	$bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
@@ -74,11 +94,6 @@ $this->registerCss("
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),
-			'filter'=>ArrayHelper::map(ProductPromoSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['ACCESS_GROUP'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_ID','product.PRODUCT_NM'),
-			'filterType'=>GridView::FILTER_SELECT2,
-			'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
-			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
-			'filterOptions'=>[],
 			
 		],		
 		//DEFAULT_STOCK
@@ -145,6 +160,39 @@ $this->registerCss("
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],
+		[
+			'label'=>'STATUS',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format' => 'raw',	
+			'value'=>function($model, $key, $index, $grid){
+				if($model['PERIODE_TGL2']<=date('Y-m-d')){
+					return Html::a('<span class="fa-stack fa-xl">
+							<i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+							<i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
+						</span>','',['title'=>'Delete']);
+				}
+				else if($model['PERIODE_TGL1']<=date('Y-m-d') && $model['PERIODE_TGL2']>=date('Y-m-d') && $model['STATUS']==1) {
+					return Html::a('<span class="fa-stack fa-xl">
+					<i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					<i class="fa fa-check fa-stack-1x" style="color:#4caf50"></i>
+				  </span>','',['title'=>'Active']);
+				}	
+				else{
+					return Html::a('<span class="fa-stack fa-xl">
+					<i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+					<i class="fa fa-check fa-stack-1x" style="color:#ff9800"></i>
+				  </span>','',['title'=>'Pending']);
+				}},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','100px',''),
+			
+		],
 		
 	];
 	
@@ -199,13 +247,25 @@ $this->registerCss("
 		'autoXlFormat'=>true,
 		'export' => false,
 		'panel'=>[''],
+		'rowOptions' => function($model, $key, $index, $grid){
+            if($model['PERIODE_TGL2']<=date('Y-m-d')){
+				return ['class' => 'danger'];
+			}
+			else if($model['PERIODE_TGL1']<=date('Y-m-d') && $model['PERIODE_TGL2']>=date('Y-m-d') && $model['STATUS']==1) {
+				return ['class' => 'success'];
+			}	
+			else{
+				return ['class' => 'warning'];
+			}	
+        },
 		'toolbar' => false,
 		'panel' => [
 			// 'heading'=>false,
 			'heading'=>$pageNm,
 			'type'=>'success',
 			'before'=>false,
-			'before'=>'<div class="pull-right">'.tombolImportExcelPromo().' '.tombolExportExcelPromo().' '.tombolPromo($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
+			// 'before'=>'<div class="pull-right">'.tombolImportExcelPromo().' '.tombolExportExcelPromo().' '.tombolPromo($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
+			'before'=>$dscLabel.'<div class="pull-right">'.tombolPromo($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
 			'showFooter'=>false,
 		],
 		// 'floatOverflowContainer'=>true,

@@ -7,6 +7,9 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\backend\master\models\Customer;
 
+/**
+ * CustomerSearch represents the model behind the search form of `frontend\backend\master\models\Customer`.
+ */
 class CustomerSearch extends Customer
 {
     /**
@@ -14,19 +17,28 @@ class CustomerSearch extends Customer
      */
     public function rules()
     {
-       return [
-            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
-            [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['DCRP_DETIL'], 'string'],
-            [['YEAR_AT', 'MONTH_AT'], 'required'],
-            [['ACCESS_GROUP'], 'string', 'max' => 15],
-            [['STORE_ID'], 'string', 'max' => 25],
-            [['NAME', 'EMAIL'], 'string', 'max' => 150],
-            [['PHONE'], 'string', 'max' => 100],
-            [['CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
+        return [
+            [['CUSTOMER_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['ACCESS_GROUP', 'STORE_ID', 'NAME', 'EMAIL', 'PHONE', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function scenarios()
+    {
+        // bypass scenarios() implementation in the parent class
+        return Model::scenarios();
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
     public function search($params)
     {
         $query = Customer::find();
@@ -47,19 +59,22 @@ class CustomerSearch extends Customer
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'ID' => $this->ID,
+            'CUSTOMER_ID' => $this->CUSTOMER_ID,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
-			'ACCESS_GROUP' => $this->ACCESS_GROUP,
-            'STORE_ID' => $this->STORE_ID
+            'YEAR_AT' => $this->YEAR_AT,
+            'MONTH_AT' => $this->MONTH_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
-            ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
+        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'NAME', $this->NAME])
             ->andFilterWhere(['like', 'EMAIL', $this->EMAIL])
-            ->andFilterWhere(['like', 'PHONE', $this->PHONE]);
+            ->andFilterWhere(['like', 'PHONE', $this->PHONE])
+            ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
+            ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
+            ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
 
         return $dataProvider;
     }
