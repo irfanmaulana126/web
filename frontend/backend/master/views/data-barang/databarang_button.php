@@ -23,7 +23,7 @@ use yii\base\DynamicModel;
 		$url = Url::toRoute(['/master/data-barang/create']);
 		$options1 = ['value'=>$url,
 					'id'=>'databarang-button',
-					'data-pjax' => false,
+					'data-pjax' => 0,
 					'class'=>"btn btn-success btn-xs",
 					'title'=>'Tambah'
 		];
@@ -470,7 +470,7 @@ use yii\base\DynamicModel;
 		$url = Url::toRoute(['/master/data-barang/upload-file']);
 		$options1 = ['value'=>$url,
 					'id'=>'databarang-button-upload',
-					'data-pjax' => false,
+					'data-pjax' => 0,
 					'class'=>"btn btn-warning btn-xs",
 					'title'=>'Upload Data Actual Stock'
 		];
@@ -515,7 +515,7 @@ use yii\base\DynamicModel;
 		$url = Url::toRoute(['/master/data-barang/upload-file-discount']);
 		$options1 = ['value'=>$url,
 					'id'=>'databarang-button-upload',
-					'data-pjax' => false,
+					'data-pjax' => 0,
 					'class'=>"btn btn-warning btn-xs",
 					'title'=>'Upload Data Actual Stock'
 		];
@@ -559,7 +559,7 @@ use yii\base\DynamicModel;
 		$url = Url::toRoute(['/master/data-barang/upload-file-harga']);
 		$options1 = ['value'=>$url,
 					'id'=>'databarang-button-upload',
-					'data-pjax' => false,
+					'data-pjax' => 0,
 					'class'=>"btn btn-warning btn-xs",
 					'title'=>'Upload Data Actual Stock'
 		];
@@ -582,7 +582,7 @@ use yii\base\DynamicModel;
 				$url = Url::toRoute(['/master/data-barang/export-promo']);
 				$options1 = [
 							'id'=>'store-button-export-excel',
-							'data-pjax' => true,
+							'data-pjax' => 0,
 							'class'=>"btn btn-primary btn-xs"  
 				];
 				$icon1 = '<span class="fa-stack fa-sm text-left">
@@ -603,7 +603,7 @@ use yii\base\DynamicModel;
 		$url = Url::toRoute(['/master/data-barang/upload-file-promo']);
 		$options1 = ['value'=>$url,
 					'id'=>'databarang-button-upload',
-					'data-pjax' => false,
+					'data-pjax' => 0,
 					'class'=>"btn btn-warning btn-xs",
 					'title'=>'Upload Data Actual Stock'
 		];
@@ -647,7 +647,7 @@ use yii\base\DynamicModel;
 		$url = Url::toRoute(['/master/data-barang/upload-file-stock']);
 		$options1 = ['value'=>$url,
 					'id'=>'databarang-button-upload',
-					'data-pjax' => false,
+					'data-pjax' => 0,
 					'class'=>"btn btn-warning btn-xs",
 					'title'=>'Upload Data Actual Stock'
 		];

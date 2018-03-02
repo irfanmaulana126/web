@@ -52,7 +52,7 @@ class ProductHarga extends \yii\db\ActiveRecord
         return [
             [['PRODUCT_ID', 'YEAR_AT', 'margin','MONTH_AT','PERIODE_TGL1', 'PERIODE_TGL2','HPP', 'HARGA_JUAL','PPN'], 'required'],
             [['PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
-            [['HARGA_JUAL','PPN'], 'number'],
+            [['HARGA_JUAL','PPN','margin'], 'number'],
             [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['DCRP_DETIL'], 'string'],
             [['ACCESS_GROUP'], 'string', 'max' => 15],
