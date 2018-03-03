@@ -3,16 +3,16 @@
 namespace frontend\backend\master\controllers;
 
 use Yii;
-use frontend\backend\master\models\Supplier;
-use frontend\backend\master\models\SupplierSearch;
+use frontend\backend\master\models\Customer;
+use frontend\backend\master\models\CustomerSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SupplierController implements the CRUD actions for Supplier model.
+ * CustomerController implements the CRUD actions for Customer model.
  */
-class SupplierController extends Controller
+class CustomerController extends Controller
 {
     /**
      * @inheritdoc
@@ -28,7 +28,6 @@ class SupplierController extends Controller
             ],
         ];
     }
-
     public function beforeAction($action){
         $modulIndentify=4; //OUTLET
        // Check only when the user is logged in.
@@ -59,12 +58,12 @@ class SupplierController extends Controller
        }
    }
     /**
-     * Lists all Supplier models.
+     * Lists all Customer models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new SupplierSearch();
+        $searchModel = new CustomerSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -74,87 +73,93 @@ class SupplierController extends Controller
     }
 
     /**
-     * Displays a single Supplier model.
-     * @param string $id
+     * Displays a single Customer model.
+     * @param string $CUSTOMER_ID
+     * @param integer $YEAR_AT
+     * @param integer $MONTH_AT
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView($CUSTOMER_ID)
     {
         return $this->renderAjax('view', [
-            'model' => $this->findModel($id),
+            'model' => $this->findModel($CUSTOMER_ID),
         ]);
     }
 
     /**
-     * Creates a new Supplier model.
+     * Creates a new Customer model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Supplier();
+        $model = new Customer();
 
         if ($model->load(Yii::$app->request->post())) {
-
             $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
             $model->ACCESS_GROUP=$user;
-            $model->save(false);
-            return $this->redirect(array('/master/data-barang/index-supplier'));
+            $model->save(false);            
+            return $this->redirect(array('/master/data-barang/index-customer'));
+        }else{
+            return $this->renderAjax('create', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->renderAjax('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
-     * Updates an existing Supplier model.
+     * Updates an existing Customer model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param string $CUSTOMER_ID
+     * @param integer $YEAR_AT
+     * @param integer $MONTH_AT
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($CUSTOMER_ID)
     {
-        $model = $this->findModel($id);
+        $model = $this->findModel($CUSTOMER_ID);
 
-       
         if ($model->load(Yii::$app->request->post())) {
             $model->save(false);
-            return $this->redirect(array('/master/data-barang/index-supplier'));
+            return $this->redirect(array('/master/data-barang/index-customer'));
+        }else{
+            return $this->renderAjax('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->renderAjax('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
-     * Deletes an existing Supplier model.
+     * Deletes an existing Customer model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param string $CUSTOMER_ID
+     * @param integer $YEAR_AT
+     * @param integer $MONTH_AT
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($CUSTOMER_ID)
     {
-            $model = $this->findModel($id);
-            $model->STATUS = 3;
-            $model->save(false);
-            return $this->redirect(array('/master/data-barang/index-supplier'));
+        $model = $this->findModel($CUSTOMER_ID);
+        $model->STATUS = 3;
+        $model->save(false);
+        return $this->redirect(array('/master/data-barang/index-customer'));
     }
 
     /**
-     * Finds the Supplier model based on its primary key value.
+     * Finds the Customer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Supplier the loaded model
+     * @param string $CUSTOMER_ID
+     * @param integer $YEAR_AT
+     * @param integer $MONTH_AT
+     * @return Customer the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
+    protected function findModel($CUSTOMER_ID)
     {
-        if (($model = Supplier::findOne($id)) !== null) {
+        if (($model = Customer::findOne(['CUSTOMER_ID' => $CUSTOMER_ID])) !== null) {
             return $model;
         }
 

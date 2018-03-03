@@ -77,6 +77,7 @@ class SupplierSearch extends Supplier
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY]);
+        $query->orderBy(['SUPPLIER_ID'=>SORT_DESC]);
 
         return $dataProvider;
     }

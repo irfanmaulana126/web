@@ -2,12 +2,13 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
-/* @var $model frontend\backend\master\models\Supplier */
+/* @var $model frontend\backend\master\models\Customer */
 
 ?>
-<div class="supplier-create">
+<div class="customer-update">
+
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
