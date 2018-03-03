@@ -17,7 +17,8 @@ use Yii;
  * @property string $CREATE_AT Tanggal dibuat
  * @property string $UPDATE_BY USER UPDATE
  * @property string $UPDATE_AT Tanggal di update
- * @property int $STATUS 0=DEFAULT SATUAN. 1=STORE SATUAN.
+ * @property int $STATUS 0=DEFAULT SATUAN.
+ 1=STORE SATUAN.
  * @property string $DCRP_DETIL
  * @property int $YEAR_AT partisi unix
  * @property int $MONTH_AT partisi unix
@@ -71,5 +72,16 @@ class Customer extends \yii\db\ActiveRecord
             'YEAR_AT' => 'Year  At',
             'MONTH_AT' => 'Month  At',
         ];
+    }
+
+    public function getStore()
+    {
+            return $this->hasOne(Store::className(),['STORE_ID'=>'STORE_ID']);
+        
+    }
+
+    public function getSTORE_NM(){
+        $result=$this->store;
+        return $result!=''?$result->STORE_NM:'';
     }
 }

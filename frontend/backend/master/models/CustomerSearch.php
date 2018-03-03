@@ -75,6 +75,7 @@ class CustomerSearch extends Customer
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
+        $query->orderBy(['CUSTOMER_ID'=>SORT_DESC]);
 
         return $dataProvider;
     }

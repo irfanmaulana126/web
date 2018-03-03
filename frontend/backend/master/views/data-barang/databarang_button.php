@@ -39,6 +39,48 @@ use yii\base\DynamicModel;
 	/*
 	 * BUTTON SEARCH PERIODE
 	*/
+	function tombolCreatesup(){
+		$title= Yii::t('app','');
+		$url = Url::toRoute(['/master/supplier/create']);
+		$options1 = ['value'=>$url,
+					'id'=>'databarang-button',
+					'data-pjax' => 0,
+					'class'=>"btn btn-success btn-xs",
+					'title'=>'Tambah'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}
+	/*
+	 * BUTTON SEARCH PERIODE
+	*/
+	function tombolCreatecus(){
+		$title= Yii::t('app','');
+		$url = Url::toRoute(['/master/customer/create']);
+		$options1 = ['value'=>$url,
+					'id'=>'customer-button',
+					'data-pjax' => 0,
+					'class'=>"btn btn-success btn-xs",
+					'title'=>'Tambah'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-plus fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}
+	/*
+	 * BUTTON SEARCH PERIODE
+	*/
 	function tombolCreategroupproduct(){
 		$title= Yii::t('app','');
 		$url = Url::toRoute(['/master/product-group/create']);
@@ -175,6 +217,136 @@ use yii\base\DynamicModel;
 		$title1 = Yii::t('app',' Hapus');
 		$options1 = [
 			'href'=>url::to(['/master/data-barang/delete','id'=>$model['ID']]),
+			'class'=>"btn btn-default btn-xs",
+			'data'=>['confirm'=>'Apakah kamu yakin ingin mengapus data ini','method'=>'post',],    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-trash fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	/*
+	 *  BUTTON VIEW
+	*/
+	function tombolViewcus($url, $model){
+		$title1 = Yii::t('app',' View');
+		$options1 = [
+			'value'=>url::to(['/master/customer/view','CUSTOMER_ID'=>$model['CUSTOMER_ID']]),
+			'id'=>'customer-button-row-view',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-eye fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	
+	/*
+	 * BUTTON EDIT
+	*/
+	function tombolEditcus($url, $model){
+		$title1 = Yii::t('app',' Edit');
+		$options1 = [
+			'value'=>url::to(['/master/customer/update','CUSTOMER_ID'=>$model['CUSTOMER_ID']]),
+			'id'=>'customer-button-row-edit',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-edit fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+    
+    /*
+	 * BUTTON Hapus
+	*/
+	function tombolHapuscus($url, $model){
+		$title1 = Yii::t('app',' Hapus');
+		$options1 = [
+			'href'=>url::to(['/master/customer/delete','CUSTOMER_ID'=>$model['CUSTOMER_ID']]),
+			'class'=>"btn btn-default btn-xs",
+			'data'=>['confirm'=>'Apakah kamu yakin ingin mengapus data ini','method'=>'post',],    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-trash fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	/*
+	 *  BUTTON VIEW
+	*/
+	function tombolViewsup($url, $model){
+		$title1 = Yii::t('app',' View');
+		$options1 = [
+			'value'=>url::to(['/master/supplier/view','id'=>$model['SUPPLIER_ID']]),
+			'id'=>'databarang-button-row-view',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-eye fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	
+	/*
+	 * BUTTON EDIT
+	*/
+	function tombolEditsup($url, $model){
+		$title1 = Yii::t('app',' Edit');
+		$options1 = [
+			'value'=>url::to(['/master/supplier/update','id'=>$model['SUPPLIER_ID']]),
+			'id'=>'databarang-button-row-edit',
+			'class'=>"btn btn-default btn-xs",    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-edit fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+    
+    /*
+	 * BUTTON Hapus
+	*/
+	function tombolHapussup($url, $model){
+		$title1 = Yii::t('app',' Hapus');
+		$options1 = [
+			'href'=>url::to(['/master/supplier/delete','id'=>$model['SUPPLIER_ID']]),
 			'class'=>"btn btn-default btn-xs",
 			'data'=>['confirm'=>'Apakah kamu yakin ingin mengapus data ini','method'=>'post',],    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
