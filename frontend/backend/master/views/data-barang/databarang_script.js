@@ -57,6 +57,22 @@ $(document).on('click','#databarang-button', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#customer-button', function(ehead){ 			  
+	$('#customer-button-modal').modal('show')
+	.find('#customer-button-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#supplier-button', function(ehead){ 			  
+	$('#supplier-button-modal').modal('show')
+	.find('#supplier-button-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
 /*
  * BUTTON UPLOAD FORMAT.
 */
@@ -100,6 +116,52 @@ $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 $(document).on('click','#databarang-button-row-edit', function(ehead){ 			  
 	$('#databarang-button-row-edit-modal').modal('show')
 	.find('#databarang-button-row-edit-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+/*
+ * BUTTON VIEW KARYAWAN
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#supplier-button-row-view', function(ehead){ 			  
+	$('#supplier-button-row-view-modal').modal('show')
+	.find('#supplier-button-row-view-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON EDIT KARYAWAN
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#supplier-button-row-edit', function(ehead){ 			  
+	$('#supplier-button-row-edit-modal').modal('show')
+	.find('#supplier-button-row-edit-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+/*
+ * BUTTON VIEW KARYAWAN
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#customer-button-row-view', function(ehead){ 			  
+	$('#customer-button-row-view-modal').modal('show')
+	.find('#customer-button-row-view-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+
+/*
+ * BUTTON EDIT KARYAWAN
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#customer-button-row-edit', function(ehead){ 			  
+	$('#customer-button-row-edit-modal').modal('show')
+	.find('#customer-button-row-edit-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });

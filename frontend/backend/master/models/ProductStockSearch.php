@@ -15,12 +15,11 @@ class ProductStockSearch extends ProductStock
     /**
      * @inheritdoc
      */
-    public $PRODUCT_NM;
     public function rules()
     {
         return [
             [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'PRODUCT_NM','STORE_ID', 'PRODUCT_ID', 'INPUT_DATE', 'INPUT_TIME', 'CURRENT_DATE', 'CURRENT_TIME', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'CREATE_UUID', 'UPDATE_UUID', 'DCRP_DETIL'], 'safe'],
+            [['STOK_UNIK', 'ACCESS_GROUP', 'STORE_ID', 'PRODUCT_ID', 'SUPPLIER_ID', 'SUPPLIER_NM', 'INPUT_DATE', 'INPUT_TIME', 'CURRENT_DATE', 'CURRENT_TIME', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'CREATE_UUID', 'UPDATE_UUID', 'DCRP_DETIL'], 'safe'],
             [['LAST_STOCK', 'INPUT_STOCK', 'CURRENT_STOCK', 'SISA_STOCK'], 'number'],
         ];
     }
@@ -45,6 +44,7 @@ class ProductStockSearch extends ProductStock
     {
         $query = ProductStock::find();
         $query->joinWith(['product']);
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -77,17 +77,21 @@ class ProductStockSearch extends ProductStock
             'product_stock.MONTH_AT' => $this->MONTH_AT,
         ]);
 
+
+  
         $query->andFilterWhere(['like', 'product_stock.ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'product_stock.PRODUCT_ID', $this->PRODUCT_ID])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
+            ->andFilterWhere(['like', 'SUPPLIER_ID', $this->SUPPLIER_ID])
             ->andFilterWhere(['like', 'CREATE_UUID', $this->CREATE_UUID])
             ->andFilterWhere(['like', 'UPDATE_UUID', $this->UPDATE_UUID])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])
             ->andFilterWhere(['between','product_stock.CREATE_AT',date('Y-m-d', strtotime('-10 month', strtotime(date('Y-m-d')))),date('Y-m-d', strtotime('+1 year', strtotime(date('Y-m-d'))))])
             ->andFilterWhere(['like', 'PRODUCT_NM', $this->PRODUCT_NM]);
             $query->orderBy(['CREATE_AT'=>SORT_DESC]);
+
         return $dataProvider;
     }
 }
