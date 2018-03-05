@@ -47,7 +47,7 @@ $this->registerCss("
 				  <i class="fa fa-share fa-1x"></i>
 				</span><b>All-PRODUCT</b>
 	';
-	$gvAttProdakItem=[
+	$gvAttPeriodeItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
@@ -123,32 +123,13 @@ $this->registerCss("
 			
         ],	
 	];
-	$gvAttProdakItem[]=[			
+	$gvAttPeriodeItem[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
-		'header'=>'ACTION',
-		'dropdown' => true,
-		'dropdownOptions'=>[
-			'class'=>'pull-right dropdown',
-			'style'=>'width:100%;background-color:#E6E6FA'				
-		],
-		'dropdownButton'=>[
-			'label'=>'ACTION',
-			'class'=>'btn btn-info btn-xs',
-			'style'=>'width:100%'		
-		],
+		'template' => '{edit}',
 		'buttons' => [
-			'view' =>function ($url, $model){
-				// return  tombolView($url, $model);
-			},
 			'edit' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				// return  tombolEdit($url, $model);
-				//}					
-			},
-			'hapus' =>function($url, $model,$key){
-				// return  tombolHapus($url, $model);
+				return  tombolEditPeriode($url, $model);			
 			},
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
@@ -158,7 +139,7 @@ $this->registerCss("
 		'id'=>'gv-periode-presensi',
         'dataProvider' => $dataProviderPeriode,
         'filterModel' => $searchModelPeriode,
-		'columns'=>$gvAttProdakItem,				
+		'columns'=>$gvAttPeriodeItem,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[

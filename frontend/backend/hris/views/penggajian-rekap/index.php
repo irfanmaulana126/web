@@ -30,7 +30,14 @@ $this->registerCss("
 	}
 	#gv-penggajian-rekap .kv-grid-container{
 			height:500px
-		}
+	}
+	#gv-penggajian-rekap .panel-heading {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		color: #444;
+	}
+	#gv-penggajian-rekap .panel-footer {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 ");
 
 
@@ -44,7 +51,7 @@ echo $this->render('penggajianrekap_column'); //echo difinition
 	$bColor='rgba(87,114,111, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-money fa-stack-2x" style="color:#000000"></b>
-			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b> REKAP PENGGAJIAN</b></div> 
+			 </span> <div style="float:left;padding:10px 20px 0px 5px;color: black;"><b> REKAP PENGGAJIAN</b></div> 
 	 ';
 	
 	$attDinamikField=[
@@ -290,7 +297,8 @@ $gvPenggajianRekap=GridView::widget([
 	'panel' => [
 		//'heading'=>false,
 		//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolExportExcel().' '.periodePersensi(). '   '.'</div>',  
+		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px;color: black;">'.tombolExportExcel().' '.periodePersensi(). '   '.'</div>',  
+		// 'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolExportExcel().' '.periodePersensi(). '   '.'</div>',  
 		'type'=>'info',
 		//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
 		'before'=>false,
@@ -299,7 +307,7 @@ $gvPenggajianRekap=GridView::widget([
 	],
 	'summary'=>false,
 	'floatOverflowContainer'=>false,
-	'floatHeader'=>true,
+	'floatHeader'=>false,
 ]); 	
 ?>
 

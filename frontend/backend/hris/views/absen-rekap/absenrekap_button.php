@@ -36,6 +36,28 @@ use yii\base\DynamicModel;
 		$content = Html::button($label1,$options1);
 		return $content;		
 	}
+	/*
+	 * BUTTON SEARCH PERIODE
+	*/
+	
+	function tombolSearchPeriode(){
+		$title= Yii::t('app','');
+		$url = Url::toRoute(['/hris/absen-rekap/pencarian-index']);
+		$options1 = ['value'=>$url,
+					'id'=>'absen-button-periode',
+					'data-pjax' => false,
+					'class'=>"btn btn-warning btn-xs",
+					'title'=>'Pencarian'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-search fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}
 	
 	/*
 	 * LINK EXPORT EXCEL.

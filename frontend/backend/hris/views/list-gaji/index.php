@@ -46,9 +46,9 @@ echo $this->render('karyawan_gaji_button'); //echo difinition
 echo $this->render('modal_gaji'); //echo difinition			
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
-	$pageNm='<span class="fa-stack fa-xs text-right">				  
-				  <i class="fa fa-user fa-1x"></i>
-				</span><b>GAJI PEGAWAI</b>
+	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
+			<b class="fa fa-user fa-stack-2x" style="color:#000000"></b>
+			</span> <div style="float:left;padding:10px 20px 0px 5px;color:black;"><b> GAJI PEGAWAI</b></div> 
 	';
 	$gvAttProdakItem=[
 		[
@@ -79,7 +79,7 @@ echo $this->render('modal_gaji'); //echo difinition
 		//ITEM NAME
 		[
 			'attribute'=>'Namakaryawan',
-			//'label'=>'Cutomer',
+			'label'=>'NAMA KARYAWAN',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -94,7 +94,7 @@ echo $this->render('modal_gaji'); //echo difinition
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'GENDER',
-			//'label'=>'Cutomer',
+			'label'=>'JENIS KELAMIN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -104,29 +104,13 @@ echo $this->render('modal_gaji'); //echo difinition
 			'format'=>'raw',
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
-		],	
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'ALAMAT',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-        ],		
+		],		
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'STS_NIKAH',
-			//'label'=>'Cutomer',
+			'label'=>'STATUS NIKAH',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -136,13 +120,13 @@ echo $this->render('modal_gaji'); //echo difinition
 			'format'=>'raw',
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
         ],		
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'TLP',
-			//'label'=>'Cutomer',
+			'label'=>'TELEPON',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -152,13 +136,13 @@ echo $this->render('modal_gaji'); //echo difinition
 			'format'=>'raw',
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
-        ],		
+		],
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'HP',
-			//'label'=>'Cutomer',
+			'label'=>'HP',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -168,13 +152,29 @@ echo $this->render('modal_gaji'); //echo difinition
 			'format'=>'raw',
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
-        ],		
+		],	
+		//DEFAULT_HARGA
+		[
+			'attribute'=>'ALAMAT',
+			'label'=>'ALAMAT',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>'raw',
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
+			
+        ],				
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'UPAH_HARIAN',
-			//'label'=>'Cutomer',
+			'label'=>'UPAH HARIAN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -190,7 +190,7 @@ echo $this->render('modal_gaji'); //echo difinition
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'STT_POT_TELAT',
-			//'label'=>'Cutomer',
+			'label'=>'TELAT',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -198,15 +198,19 @@ echo $this->render('modal_gaji'); //echo difinition
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'value'=>function($model)
+			{
+				return ($model->STT_POT_TELAT==1) ? 'DIBAYAR' : 'TIDAK DIBAYAR' ;
+			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
         ],		
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'STT_POT_PULANG',
-			//'label'=>'Cutomer',
+			'label'=>'PULANG',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -214,15 +218,19 @@ echo $this->render('modal_gaji'); //echo difinition
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'value'=>function($model)
+			{
+				return ($model->STT_POT_PULANG==1) ? 'DIBAYAR' : 'TIDAK DIBAYAR' ;
+			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
         ],		
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'STT_IZIN',
-			//'label'=>'Cutomer',
+			'label'=>'IZIN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -230,15 +238,19 @@ echo $this->render('modal_gaji'); //echo difinition
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'value'=>function($model)
+			{
+				return ($model->STT_IZIN==1) ? 'DIBAYAR' : 'TIDAK DIBAYAR' ;
+			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
         ],		
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'STT_LEMBUR',
-			//'label'=>'Cutomer',
+			'label'=>'LEMBUR',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -246,9 +258,13 @@ echo $this->render('modal_gaji'); //echo difinition
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'value'=>function($model)
+			{
+				return ($model->STT_LEMBUR==1) ? 'DIBAYAR' : 'TIDAK DIBAYAR' ;
+			},
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
         ],		
 	];

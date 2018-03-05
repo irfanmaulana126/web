@@ -48,7 +48,7 @@ $this->registerCss("
 				  <i class="fa fa-share fa-1x"></i>
 				</span><b>All-PRODUCT</b>
 	';
-	$gvAttProdakItem=[
+	$gvAttJamKerjaItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
@@ -79,6 +79,7 @@ $this->registerCss("
 			'class' => 'kartik\grid\EditableColumn',
 			'attribute'=>'STATUS',
 			//'label'=>'Cutomer',
+			'refreshGrid'=>true,
 			'editableOptions'=> [
 					'header'=>'STATUS PEMBAYARAN', 
 					'asPopover' => true,
@@ -254,22 +255,6 @@ $this->registerCss("
         ],	
 		//DEFAULT_HARGA
 		[
-			'attribute'=>'SHIFT_SEQ',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-        ],	
-		//DEFAULT_HARGA
-		[
 			'attribute'=>'RADIUS_KOORDINAT',
 			//'label'=>'Cutomer',
 			'filterType'=>true,
@@ -318,29 +303,15 @@ $this->registerCss("
         ],	
 		
 	];
-	$gvAttProdakItembutton[]=[			
+	$gvAttJamKerjaItem[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
-		'header'=>'ACTION',
-		'dropdown' => true,
-		'dropdownOptions'=>[
-			'class'=>'pull-right dropdown',
-			'style'=>'width:100%;background-color:#E6E6FA'				
-		],
-		'dropdownButton'=>[
-			'label'=>'ACTION',
-			'class'=>'btn btn-info btn-xs',
-			'style'=>'width:100%'		
-		],
+		'template' => '{edit}',
 		'buttons' => [
-			'view' =>function ($url, $model){
-				// return  tombolView($url, $model);
-			},
 			'edit' =>function($url, $model,$key){
-								
-			},
-			'hapus' =>function($url, $model,$key){
+				if ($model->STATUS == 1) {
+					return tombolEditShift($url, $model);				
+				}
 			},
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
@@ -350,7 +321,7 @@ $this->registerCss("
 		'id'=>'gv-jam-presensi',
         'dataProvider' => $dataProviderJam,
         'filterModel' => $searchModelJam,
-		'columns'=>$gvAttProdakItem,				
+		'columns'=>$gvAttJamKerjaItem,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[

@@ -65,15 +65,55 @@ class AbsenRekapController extends Controller
      */
     public function actionIndex()
     {
+        $paramCari='';
+		//PencarianIndex
+		$modelPeriode = new \yii\base\DynamicModel([
+			'TAHUNBULAN','TAHUN','BULAN'
+		]);		
+		$modelPeriode->addRule(['TAHUNBULAN'], 'required')
+         ->addRule(['TAHUNBULAN','TAHUN','BULAN'], 'safe');			
+		if ($modelPeriode->load(Yii::$app->request->post())) {
+			$hsl = \Yii::$app->request->post();	
+			$paramCari=$hsl['DynamicModel']['TAHUNBULAN']."-01";
+		};		
+		
+		//PUBLIC PARAMS	
+		$cari=['thn'=>$paramCari];	
+		// print_r();die();
+		//DINAMIK MODEL PARAMS
         $searchModel = new AbsenRekapSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+		// print_r(isset($dataProvider->allModels));die();
+		if(empty($dataProvider->allModels)){
+			Yii::$app->session->setFlash('error', "Data Tidak ada");
+			// $this->redirect(array('/inventory/stock-product'));
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+				// 'paramCari'=>$paramCari
+			]);
+		}else{
+			return $this->render('index', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+				// 'paramCari'=>$paramCari
+			]);
+		}
     }
 
+    public function actionPencarianIndex(){
+		$modelPeriode = new \yii\base\DynamicModel([
+			'TAHUNBULAN','TAHUN','BULAN'
+		]);		
+		$modelPeriode->addRule(['TAHUNBULAN'], 'required')
+         ->addRule(['TAHUNBULAN','TAHUN','BULAN'], 'safe');
+		 
+		if (!$modelPeriode->load(Yii::$app->request->post())) {
+			return $this->renderAjax('form_cari',[
+				'modelPeriode' => $modelPeriode
+			]);
+		}
+	}
     /**
      * Displays a single AbsenRekap model.
      * @param string $ID

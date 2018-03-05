@@ -96,7 +96,9 @@ $this->registerCss("
 		[
 			'class' => 'kartik\grid\EditableColumn',
 			'attribute'=>'IZIN_STT',
+			'label'=>'Status',
 			//'label'=>'Cutomer',
+			'refreshGrid'=>true,
 			'editableOptions'=> [
 					'header'=>'STATUS PEMBAYARAN', 
 					'size'=>'md',
@@ -104,7 +106,7 @@ $this->registerCss("
 					'options' => [
 						'pluginOptions' => [
 							'items'=>[
-								'value'=>empty($model->IZIN_STT) ? '0' : '1',
+								'value'=>empty($model->IZIN_STT) ? "0" : "1",
 							]
 						]
 					]
@@ -126,37 +128,6 @@ $this->registerCss("
 			
 		],
 	];
-	$gvAttProdakItembutton[]=[			
-		//ACTION
-		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
-		'header'=>'ACTION',
-		'dropdown' => true,
-		'dropdownOptions'=>[
-			'class'=>'pull-right dropdown',
-			'style'=>'width:100%;background-color:#E6E6FA'				
-		],
-		'dropdownButton'=>[
-			'label'=>'ACTION',
-			'class'=>'btn btn-info btn-xs',
-			'style'=>'width:100%'		
-		],
-		'buttons' => [
-			'view' =>function ($url, $model){
-				// return  tombolView($url, $model);
-			},
-			'edit' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				// return  tombolEdit($url, $model);
-				//}					
-			},
-			'hapus' =>function($url, $model,$key){
-				// return  tombolHapus($url, $model);
-			},
-		],
-		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
-		'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
-	]; 
 	$gvAllStoreItem=GridView::widget([
 		'id'=>'gv-izin-presensi',
         'dataProvider' => $dataProviderIzin,

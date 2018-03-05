@@ -61,7 +61,7 @@ class ListGajiController extends Controller
     public function actionIndex()
     {	
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $searchModel = new KaryawanSearch(['ACCESS_GROUP'=>$user]);
+        $searchModel = new KaryawanSearch(['ACCESS_GROUP'=>$user,'STATUS'=>1]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
