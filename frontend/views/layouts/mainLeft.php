@@ -12,7 +12,7 @@ use kartik\sidenav\SideNav;
 // die();
 
 //$base64 ='data:image/jpg;charset=utf-8;base64,'.Yii::$app->getUserOpt->user()['IMG64'];
-$img = Url::to('http://image.kontrolgampang.com/user/').Yii::$app->getUserOpt->user()['ACCESS_ID'].'.jpeg';      
+$img = Url::to('https://image.kontrolgampang.com/user/').Yii::$app->getUserOpt->user()['ACCESS_ID'].'.jpeg';      
 // $imageData = Url::to('http://image.kontrolgampang.com/user/').Yii::$app->getUserOpt->user()['ACCESS_ID'].'.jpeg';  
 // $ambilStr=file_get_contents($imageData);    
 //$img = base64_encode($ambilStr);
