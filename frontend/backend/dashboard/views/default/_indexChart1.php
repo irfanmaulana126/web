@@ -356,7 +356,7 @@ $this->registerJs("
 		$(this).prop('Counter',0).animate({
 			Counter: $(this).text()
 		}, {
-			duration: 7000,
+			duration: 5000,
 			easing: 'swing',
 			step: function (now) {
 				$(this).text(Math.ceil(now));
@@ -370,7 +370,7 @@ $this->registerJs("
 		$(this).prop('Counter',0).animate({
 			Counter: $(this).text()
 		}, {
-			duration: 7000,
+			duration: 5000,
 			easing: 'swing',
 			step: function (now) {
 				$(this).text(Math.ceil(now));
@@ -384,7 +384,7 @@ $this->registerJs("
 		$(this).prop('Counter',0).animate({
 			Counter: $(this).text()
 		}, {
-			duration: 7000,
+			duration: 5000,
 			easing: 'swing',
 			step: function (now) {
 				$(this).text(Math.ceil(now));
@@ -398,7 +398,7 @@ $this->registerJs("
 		$(this).prop('Counter',0).animate({
 			Counter: $(this).text()
 		}, {
-			duration: 7000,
+			duration: 5000,
 			easing: 'swing',
 			step: function (now) {
 				$(this).text(Math.ceil(now));
@@ -418,13 +418,15 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row" >
-						<div class="col-lg-3 text-left" style="float:left">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:#0ec1db"></i>
-							  <i class="fa fa-dashboard fa-stack-1x" style="color:#FFFFFF"></i>
-							</span>
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:#0ec1db"></i>
+								  <i class="fa fa-dashboard fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
 						</div>						
-						<div class="col-lg-9 text-left .small">
+						<div class="col-lg-9 text-left .small" style="padding-left:1px">
 							<dl>
 								<dt class="frekuensi-transaksi-harian" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_JUMLAH_TRANSAKSI?></dt>
 								<dd style="font-size:10px;color:#7e7e7e">FREKUENSI TRANSAKSI HARIAN</dd>
@@ -437,13 +439,15 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row" >
-						<div class="col-lg-3 text-left" style="float:left">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
-							  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
-							</span>
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
+								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
 						</div>						
-						<div class="col-lg-9 text-left .small" style="padding-left:-50px">
+						<div class="col-lg-9 text-left .small" style="padding-left:1px">
 							<dl>								
 								<dt class="penjualan-harian" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_PENJUALAN_HARIAN?></dt>
 								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN HARIAN (IDR)</dd>								
@@ -456,13 +460,15 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-3 text-left" style="float:left">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(149, 61, 250, 1)"></i>
-							  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
-							</span>
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(149, 61, 250, 1)"></i>
+								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
 						</div>						
-						<div class="col-lg-9 text-left .small">
+						<div class="col-lg-9 text-left .small" style="padding-left:1px">
 							<dl>
 								<dt class="penjualan-mingguan" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_PENJUALAN_MINGGUAN?></dt>
 								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN MINGGUAN (IDR)</dd>
@@ -475,13 +481,15 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-3 text-left" style="float:left">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(251, 130, 86, 1)"></i>
-							  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
-							</span>
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(251, 130, 86, 1)"></i>
+								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
 						</div>						
-						<div class="col-lg-9 text-left .small">
+						<div class="col-lg-9 text-left .small" style="padding-left:1px">
 							<dl>
 								<dt class="penjualan-bulanan" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_PENJUALAN_BULANAN?></dt>
 								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN BULANAN (IDR)</dd>
@@ -500,9 +508,14 @@ $this->registerJs("
 					<div class="w3-card-2 w3-round w3-white w3-center" style="margin-left:5px;margin-right:5px">				
 						<div class="panel-heading">
 							<div class="row">								
-								<div style="min-height:265px"><div style="height:285px"><?=$hourly3DaysTafik?></div></div><div class="clearfix"></div>
+								<div style="min-height:250px"><div style="height:260px"><?=$hourly3DaysTafik?></div></div><div class="clearfix"></div>
+								<div class="text-right" style="padding-right:10px;font-size:12px;color:#7e7e7e">
+									<!--<a href="https://www.w3schools.com">Rincian Per-Toko</a>!-->
+									<?php echo tombolViewModalDetailPerStore().tombolDetailPerStore()?>
+								</div>
 							</div>
 						</div>	
+						
 					</div>							
 				</div>				
 			</div>				
@@ -514,13 +527,15 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:2px;height:65px">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-3 text-left" style="float:left">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:red"></i>
-							  <i class="fa fa-laptop fa-stack-1x" style="color:#FFFFFF"></i>
-							</span>
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:red"></i>
+								  <i class="fa fa-laptop fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
 						</div>						
-						<div class="col-lg-9 text-left .small">
+						<div class="col-lg-9 text-left .small" style="padding-left:15px">
 							<dl>
 								<dt style="font-size:13px;color:#7e7e7e">
 									<div class="jumlah-toko" style="float:left"><?=$data->CNT_STORE?></div>
@@ -529,7 +544,7 @@ $this->registerJs("
 									<div style="float:left">/</div>
 									<div class="jumlah-perangkat-aktif"><?=$data->CNT_PERNGKAT_AKTIF?></div>									
 								</dt> 
-								<dd style="font-size:10px;color:#7e7e7e">JUMLAH TOKO</dd>
+								<dd style="font-size:10px;color:#7e7e7e">TOKO</dd>
 							</dl>							
 						</div>
 					</div>
@@ -539,39 +554,43 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:0px;height:65px">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-3 text-left" style="float:left">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:yellow"></i>
-							  <i class="fa fa-cubes fa-stack-1x" style="color:black"></i>
-							</span>
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:yellow"></i>
+								  <i class="fa fa-cubes fa-stack-1x" style="color:black"></i>
+								</span>
+							</a>
 						</div>						
-						<div class="col-lg-9 text-left .small">
-							<dl style="font-size:13px;color:#7e7e7e">
+						<div class="col-lg-9 text-left .small" style="padding-left:15px">
+							<dl style="font-size:13px;color:#7e7e7e" style="padding-left:2px">
 								<dt class="jumlah-produk" style="font-size:13px;color:#7e7e7e"><?=$data->CNT_PRODUK?></dt>
-								<dd style="font-size:10px;color:#7e7e7e">JUMLAH PRODUK</dd>
+								<dd style="font-size:10px;color:#7e7e7e">PRODUK</dd>
 							</dl>							
 						</div>
 					</div>
 				</div>	
 			</div>
 			<br>			
-			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:0px;height:65px">
+			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:0px;height:68px">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-3 text-left" style="float:left">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:#64F298"></i>
-							  <i class="fa fa-users fa-stack-1x" style="color:#FFFFFF"></i>
-							</span>
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:#64F298"></i>
+								  <i class="fa fa-users fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
 						</div>						
-						<div class="col-lg-9 text-left .small">
+						<div class="col-lg-9 text-left" style="padding-left:15px">
 							<dl>
 								<dt style="font-size:13px;color:#7e7e7e">
 									<div class="jumlah-karyawan" style="float:left"><?=$data->CNT_KARYAWAN?></div>
 									<div style="float:left">/</div>
 									<div class="jumlah-karyawan-aktif"><?=$data->CNT_KARYAWAN_AKTIF?></div>						
 								</dt>
-								<dd style="font-size:10px;color:#7e7e7e">JUMLAH KARYAWAN</dd>
+								<dd style="font-size:10px;color:#7e7e7e">KARYAWAN</dd>
 							</dl>							
 						</div>
 					</div>
@@ -581,18 +600,20 @@ $this->registerJs("
 			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:0px;height:65px">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-lg-3 text-left" style="float:left">
-							<span class="fa-stack fa-2x">
-							  <i class="fa fa-circle fa-stack-2x" style="color:rgba(71, 80, 250, 1)"></i>
-							  <i class="fa fa-address-card-o fa-stack-1x" style="color:#FFFFFF"></i>
-							</span>
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(71, 80, 250, 1)"></i>
+								  <i class="fa fa-address-card-o fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
 						</div>						
-						<div class="col-lg-9 text-left .small">
+						<div class="col-lg-9 text-left .small" style="padding-left:15px">
 							<dl>
 								<dt style="font-size:13px;color:#7e7e7e">
 									<div class="jumlah-customer"><?=$data->CNT_CUS_MEMBER?></div>		
 								</dt>
-								<dd style="font-size:10px;color:#7e7e7e">JUMLAH MEMBER</dd>
+								<dd style="font-size:10px;color:#7e7e7e">MEMBER</dd>
 							</dl>							
 						</div>
 					</div>

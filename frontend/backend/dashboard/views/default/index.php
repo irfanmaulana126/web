@@ -8,6 +8,7 @@ use ptrnov\fusionchart\ChartAsset;
 use yii\bootstrap\Modal;
 use yii\web\JsExpression;
 use kartik\widgets\Growl;
+use yii\web\View;
 
 use frontend\backend\dashboard\models\StoreKasirSearch;
 
@@ -15,6 +16,10 @@ ChartAsset::register($this);
 $this->title = 'Dashboard';
 $this->params['breadcrumbs'][] = $this->title;
 
+	$this->registerJs($this->render('script.js'),View::POS_READY);
+	echo $this->render('button'); //echo difinition
+    echo $this->render('modal'); //echo difinition
+	
 //print_r(Yii::$app->getUserOpt->user());
 	$_indexChart1=$this->render('_indexChart1',[
 		'totalGrandHari'=>'100',//$totalGrandHari,

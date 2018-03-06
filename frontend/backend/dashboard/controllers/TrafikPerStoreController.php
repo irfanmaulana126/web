@@ -8,9 +8,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\widgets\ActiveForm;
+use ptrnov\fusionchart\Chart;
 
 
-class DefaultController extends Controller
+class TrafikPerStoreController extends Controller
 {
 	
 	public function beforeAction($action){
@@ -50,13 +51,5 @@ class DefaultController extends Controller
 		// Yii::$app->session->setFlash('ee');
         return $this->render('index');
     }    
-	
-	public function actionTrafikPerToko()
-    {
-		// Yii::$app->session->setFlash('ee');
-        return $this->renderAjax('trafikperstore_chart');
-    }
-	
-	
-	
+		
 }
