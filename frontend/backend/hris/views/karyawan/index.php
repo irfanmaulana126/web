@@ -17,6 +17,7 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 use kartik\widgets\Alert;
+$this->title="Karyawan";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;

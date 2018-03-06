@@ -2,7 +2,6 @@
 use yii\helpers\Html;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
-//use kartik\grid\SideNav;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
 use kartik\widgets\Spinner;
@@ -16,6 +15,8 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
+use kartik\widgets\Alert;
+$this->title="Absen Rekap";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -267,6 +268,27 @@ $gvAbsenRekap=GridView::widget([
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
+		<?php if (Yii::$app->session->hasFlash('success')){ ?>
+			<?php
+				echo Alert::widget([
+					'type' => Alert::TYPE_SUCCESS,
+					'title' => 'Well done!',
+					'icon' => 'glyphicon glyphicon-ok-sign',
+					'body' => Yii::$app->session->getFlash('success'),
+					'showSeparator' => true,
+					'delay' => 1000
+				]);
+			?>
+		<?php } else if (Yii::$app->session->hasFlash('error')) {
+			echo Alert::widget([
+				'type' => Alert::TYPE_DANGER,
+				'title' => 'Oh snap!',
+				'icon' => 'glyphicon glyphicon-remove-sign',
+				'body' => Yii::$app->session->getFlash('error'),
+				'showSeparator' => true,
+				'delay' => 1000
+			]);
+		}?>
 			<?=$gvAbsenRekap?>
 			<?php //echo SideNav::widget(['items' => $items, 'headingOptions' => ['class'=>'head-style']]); ?>
 		</div>

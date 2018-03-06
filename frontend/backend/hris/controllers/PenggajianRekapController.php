@@ -7,6 +7,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\backend\hris\models\PenggajianRekapSearch;
+use frontend\backend\sistem\models\StoreSearch;
 
 
 class PenggajianRekapController extends Controller
@@ -62,6 +63,25 @@ class PenggajianRekapController extends Controller
      */
     public function actionIndex()
     {
+        $user = (empty(Yii::$app->user->identity->ACCESS_ID)) ? '' : Yii::$app->user->identity->ACCESS_ID;
+        
+        $paramCari=Yii::$app->getRequest()->getQueryParam('storeid');
+        // print_r($paramCari);die();
+        if ($paramCari==''){
+            $modelGrp =Yii::$app->db->createCommand("select * from hrd_absen_rekap where ACCESS_GROUP ='".$user."' ORDER BY STORE_ID ASC")->queryOne();
+            $cari = ['STORE_ID'=>$modelGrp['STORE_ID']];
+            // print_r($cari);die();
+            $searchModel = new PenggajianRekapSearch($cari);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        }else{
+            $searchModelKasir = new PenggajianRekapSearch(['ACCESS_GROUP'=>$user,'STORE_ID'=>$paramCari]);
+            $dataProviderKasir = $searchModelKasir->search(Yii::$app->request->queryParams);
+        }
+
+        $searchModelstore = new StoreSearch(['ACCESS_GROUP'=>$user]);
+        $dataProviderstore = $searchModelstore->search(Yii::$app->request->queryParams);
+        
+
         $searchModel = new PenggajianRekapSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		// print_r($dataProvider);
@@ -69,6 +89,7 @@ class PenggajianRekapController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'dataProviderstore' => $dataProviderstore,
         ]);
     }
 

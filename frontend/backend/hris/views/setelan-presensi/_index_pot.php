@@ -15,8 +15,6 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 use frontend\backend\master\models\Product;
-
-$this->title="Data Gaji";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -45,7 +43,7 @@ $this->registerCss("
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-PRODUCT</b>
+				</span><b>SETTING POTONGAN</b>
 	';
 	$gvAttPotonganItem=[
 		[
@@ -59,6 +57,7 @@ $this->registerCss("
 		//ITEM_ID
 		[
 			'attribute'=>'store.STORE_NM',
+			'label'=>'STORE',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','80px'),
@@ -76,7 +75,7 @@ $this->registerCss("
 		//SATUAN
 		[
 			'attribute'=>'SHIFT_ID',
-			//'label'=>'Cutomer',
+			'label'=>'SHIFT',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -92,7 +91,7 @@ $this->registerCss("
 		//DEFAULT_STOCK
 		[
 			'attribute'=>'STT_POTONGAN',
-			//'label'=>'Cutomer',
+			'label'=>'POTONGAN',
 			'filterType'=>true,
 			// 'filterType'=>GridView::FILTER_MONEY,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -109,7 +108,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'POT_PERSEN',
-			//'label'=>'Cutomer',
+			'label'=>'POTONGAN PERSEN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -125,7 +124,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'POT_RUPIAH',
-			//'label'=>'Cutomer',
+			'label'=>'POTONGAN RUPIAH',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -141,7 +140,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'POT_JAM1',
-			//'label'=>'Cutomer',
+			'label'=>'JAM AWAL',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -157,7 +156,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'POT_JAM2',
-			//'label'=>'Cutomer',
+			'label'=>'JAM AKHIR',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',

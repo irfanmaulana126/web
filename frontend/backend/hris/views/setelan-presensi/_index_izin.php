@@ -18,8 +18,6 @@ use kartik\date\DatePicker;
 use yii\web\View;
 use kartik\widgets\SwitchInput;
 use frontend\backend\master\models\Product;
-
-$this->title="Data Gaji";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -48,7 +46,7 @@ $this->registerCss("
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-PRODUCT</b>
+				</span><b>SETTING IZIN</b>
 	';
 	$gvAttProdakItem=[
 		[
@@ -63,6 +61,7 @@ $this->registerCss("
 		[
 			// 'class' => 'kartik\grid\EditableColumn',
 			'attribute'=>'store.STORE_NM',
+			'label'=>'STORE',
 			'filterType'=>true,
 			'format'=>'raw',
 			'hAlign'=>'right',
@@ -79,7 +78,7 @@ $this->registerCss("
 		//SATUAN
 		[
 			'attribute'=>'IZIN_NM',
-			//'label'=>'Cutomer',
+			'label'=>'JENIS IZIN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -96,8 +95,7 @@ $this->registerCss("
 		[
 			'class' => 'kartik\grid\EditableColumn',
 			'attribute'=>'IZIN_STT',
-			'label'=>'Status',
-			//'label'=>'Cutomer',
+			'label'=>'STATUS IZIN',
 			'refreshGrid'=>true,
 			'editableOptions'=> [
 					'header'=>'STATUS PEMBAYARAN', 

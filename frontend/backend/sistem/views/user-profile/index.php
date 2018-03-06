@@ -216,54 +216,6 @@ echo $this->render('modal_store'); //echo difinition
 				'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
 				
 			],		
-		
-		//PROVINCE
-		[
-			'attribute'=>'PROVINCE_NM',
-			'label'=>'PROVINSI',
-			// 'filter' => $aryProvinsi,
-			'filter' => ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'PROVINCE_NM','PROVINCE_NM'),
-			'filterType'=>GridView::FILTER_SELECT2,
-			'filterWidgetOptions'=>[
-				'id'=>'access',
-				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			],
-			'filterInputOptions'=>['placeholder'=>'Cari Provinsi','id'=>'provinsi'],
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-				return Html::tag('div', $data->PROVINCE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$headerColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],		
-		//CITY
-		[
-			'attribute'=>'CITY_NAME',
-			'label'=>'KOTA',
-			'filterType'=>GridView::FILTER_SELECT2,
-			'filterWidgetOptions'=>[
-				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			],
-			'filterInputOptions'=>['placeholder'=>'Cari Kota','id'=>'kota'],	
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),						
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value'=>function($data) {				
-				return Html::tag('div', $data->CITY_NAME, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-			},
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$headerColor),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
-			
-		],	
 				
 	];
 	$gvAttributeItem[]=[

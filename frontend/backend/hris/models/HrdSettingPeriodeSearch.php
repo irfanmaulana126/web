@@ -20,7 +20,14 @@ class HrdSettingPeriodeSearch extends HrdSettingPeriode
         return [
             [['ID', 'TGL1', 'TGL2', 'SEQ_BULAN', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['ACCESS_GROUP', 'STORE_ID', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
+            [['TGL1','TGL2'],'checkDate']
         ];
+    }
+    public function checkDate()
+    {
+        if ($this->TGL1 <= $this->TGL2) {
+            $this->addError("TGL1","TANGGAL 2 must be greater than or equal to TANGGAL 1");
+        }
     }
 
     /**

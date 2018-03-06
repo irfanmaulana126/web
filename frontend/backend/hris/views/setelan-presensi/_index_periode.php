@@ -15,8 +15,6 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 use frontend\backend\master\models\Product;
-
-$this->title="Data Gaji";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -45,7 +43,7 @@ $this->registerCss("
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-PRODUCT</b>
+				</span><b>SETTING PERIODE</b>
 	';
 	$gvAttPeriodeItem=[
 		[
@@ -76,7 +74,7 @@ $this->registerCss("
 		//SATUAN
 		[
 			'attribute'=>'TGL1',
-			//'label'=>'Cutomer',
+			'label'=>'TANGGAL AWAL',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -92,7 +90,7 @@ $this->registerCss("
 		//DEFAULT_STOCK
 		[
 			'attribute'=>'TGL2',
-			//'label'=>'Cutomer',
+			'label'=>'TANGGAL AKHIR',
 			'filterType'=>true,
 			// 'filterType'=>GridView::FILTER_MONEY,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -109,7 +107,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'SEQ_BULAN',
-			//'label'=>'Cutomer',
+			'label'=>'SEQ BULAN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',

@@ -21,7 +21,7 @@ use yii\base\DynamicModel;
 	function tombolEditShift($url, $model){
 		$title1 = Yii::t('app',' Edit');
 		$options1 = [
-			'value'=>url::to(['/hris/setelan-presensi/shift','STORE_ID'=>$model->STORE_ID,'ACCESS_GROUP'=>$model->ACCESS_GROUP]),
+			'value'=>url::to(['/hris/setelan-presensi/shift','ID'=>$model->ID,'STORE_ID'=>$model->STORE_ID,'ACCESS_GROUP'=>$model->ACCESS_GROUP]),
 			'id'=>'presensi-button-jam',
 			'class'=>"btn btn-info btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],

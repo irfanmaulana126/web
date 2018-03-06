@@ -121,26 +121,24 @@ class SetelanPresensiController extends Controller
             'dataProviderPot' => $dataProviderPot,
         ]);
     }
-    public function actionShift($STORE_ID,$ACCESS_GROUP)
+    public function actionShift($ID,$STORE_ID,$ACCESS_GROUP)
     {
-        $model = new HrdSettingJamkerja(['ACCESS_GROUP'=>$ACCESS_GROUP,'STORE_ID'=>$STORE_ID]);
-        $data = HrdSettingJamkerja::find()->where(['ACCESS_GROUP'=>$ACCESS_GROUP,'STORE_ID'=>$STORE_ID])->all();
+        $model = HrdSettingJamkerja::findOne(['ID'=>$ID,'ACCESS_GROUP'=>$ACCESS_GROUP,'STORE_ID'=>$STORE_ID]);
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            // return $this->redirect(['view', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
+            return $this->redirect(['/hris/setelan-presensi#w14-tab1']);
         } else {
             return $this->renderAjax('_form_jam',[
-                'model'=>$model,
-                'data'=>$data
+                'model'=>$model
             ]);
         }
     }
     public function actionPeriode($ID)
     {
-        $model = new HrdSettingPeriode(['ID'=>$ID]);
+        $model = HrdSettingPeriode::findOne(['ID'=>$ID]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/hris/setelan-presens#w14-tab2']);
+            return $this->redirect(['/hris/setelan-presensi#w14-tab2']);
         } else {
             return $this->renderAjax('_form_periode', [
                 'model' => $model,
@@ -149,10 +147,10 @@ class SetelanPresensiController extends Controller
     }
     public function actionPotongan($ID)
     {
-        $model = new HrdSettingPot(['ID'=>$ID]);
+        $model = HrdSettingPot::findOne(['ID'=>$ID]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/hris/setelan-presens#w14-tab3']);
+            return $this->redirect(['/hris/setelan-presensi#w14-tab3']);
         } else {
             return $this->renderAjax('_form_potongan', [
                 'model' => $model,
