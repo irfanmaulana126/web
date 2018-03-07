@@ -2,7 +2,6 @@
 use yii\helpers\Html;
 use kartik\widgets\Select2;
 use kartik\grid\GridView;
-//use kartik\grid\SideNav;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Breadcrumbs;
 use kartik\widgets\Spinner;
@@ -16,6 +15,8 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
+use kartik\widgets\Alert;
+$this->title="Absen Rekap";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -31,6 +32,13 @@ $this->registerCss("
 	#gv-absen-rekap .kv-grid-container{
 			height:500px
 		}
+	#gv-absen-rekap .panel-heading {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		color: #444;
+	}
+	#gv-absen-rekap .panel-footer {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 ");
 
 
@@ -44,7 +52,7 @@ echo $this->render('absenrekap_column'); //echo difinition
 	$bColor='rgba(87,114,111, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-handshake-o fa-stack-2x" style="color:#000000"></b>
-			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b> REKAP ABSENSI</b></div> 
+			 </span> <div style="float:left;padding:7px 25px 0px 15px"><b style="color: black"> REKAP ABSENSI</b></div> 
 	 ';
 	
 	$attDinamikField=[
@@ -138,7 +146,7 @@ echo $this->render('absenrekap_column'); //echo difinition
 		];
 	};
 	
-	$attDinamikField[]=[			
+	$attDinamikFields[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
 		'template' => '{view}{edit}{reminder}{deny}',
@@ -244,7 +252,8 @@ $gvAbsenRekap=GridView::widget([
 	'panel' => [
 		//'heading'=>false,
 		//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolExportExcel().'</div>',  
+		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolExportExcel().'</div>',  
+		// 'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolExportExcel().'</div>',  
 		'type'=>'info',
 		//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
 		'before'=>false,
@@ -259,6 +268,27 @@ $gvAbsenRekap=GridView::widget([
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
+		<?php if (Yii::$app->session->hasFlash('success')){ ?>
+			<?php
+				echo Alert::widget([
+					'type' => Alert::TYPE_SUCCESS,
+					'title' => 'Well done!',
+					'icon' => 'glyphicon glyphicon-ok-sign',
+					'body' => Yii::$app->session->getFlash('success'),
+					'showSeparator' => true,
+					'delay' => 1000
+				]);
+			?>
+		<?php } else if (Yii::$app->session->hasFlash('error')) {
+			echo Alert::widget([
+				'type' => Alert::TYPE_DANGER,
+				'title' => 'Oh snap!',
+				'icon' => 'glyphicon glyphicon-remove-sign',
+				'body' => Yii::$app->session->getFlash('error'),
+				'showSeparator' => true,
+				'delay' => 1000
+			]);
+		}?>
 			<?=$gvAbsenRekap?>
 			<?php //echo SideNav::widget(['items' => $items, 'headingOptions' => ['class'=>'head-style']]); ?>
 		</div>

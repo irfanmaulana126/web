@@ -111,7 +111,7 @@ class KaryawanController extends Controller
     public function actionView($id)
     {
         $model= Karyawan::findOne(['ID' => $id]);
-        return $this->renderAjax('form_edit', [
+        return $this->renderAjax('view', [
             'model' => $model,
         ]);
     }

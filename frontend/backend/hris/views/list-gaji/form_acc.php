@@ -5,6 +5,8 @@ use kartik\detail\DetailView;
 use yii\widgets\ActiveForm;
 use kartik\money\MaskMoney;
 use kartik\widgets\SwitchInput;
+use kartik\switchinput\SwitchInputAsset;
+use kartik\checkbox\CheckboxX;
 /* @var $this yii\web\View */
 /* @var $model app\backend\master\models\ItemFdiscount */
 /* @var $form yii\widgets\ActiveForm */
@@ -101,37 +103,34 @@ use kartik\widgets\SwitchInput;
     <?php $form = ActiveForm::begin(); ?>
     <?= $form->field($model, 'UPAH_HARIAN')->widget(MaskMoney::classname(), [
                             'pluginOptions'=>[
-                                'prefix'=>'Rp',
+                                'prefix'=>'Rp ',
+                                'precision' => 0
                             ],
                         ]) ?>
             <div class="col-md-6">
             
-            <?= $form->field($model, 'STT_POT_TELAT')->widget(SwitchInput::classname(),[
-                'items'=>[
-                    'value'=>empty($model->STT_POT_TELAT) ? '0' : '1',
-                ]
-            ]); ?>
+            <?= $form->field($model, 'STT_POT_TELAT')->widget(CheckboxX::classname(),[
+                'value'=>empty($model->STT_POT_TELAT) ? '0' : '1',
+                'pluginOptions'=>['threeState'=>false]
+                ]); ?>
 
-            <?= $form->field($model, 'STT_POT_PULANG')->widget(SwitchInput::classname(),[
-                'items'=>[
-                    'value'=>empty($model->STT_POT_PULANG) ? '0' : '1',
-                ]
-            ]); ?>
+            <?= $form->field($model, 'STT_POT_PULANG')->widget(CheckboxX::classname(),[
+                'value'=>empty($model->STT_POT_PULANG) ? '0' : '1',
+                'pluginOptions'=>['threeState'=>false]
+                ]); ?>
             
             </div>
             <div class="col-md-6">
             
-            <?= $form->field($model, 'STT_IZIN')->widget(SwitchInput::classname(),[
-                'items'=>[
-                    'value'=>empty($model->STT_IZIN) ? '0' : '1',
-                ]
-            ]); ?>
+            <?= $form->field($model, 'STT_IZIN')->widget(CheckboxX::classname(),[
+                'value'=>empty($model->STT_IZIN) ? '0' : '1',
+                'pluginOptions'=>['threeState'=>false]
+                ]); ?>
 
-            <?= $form->field($model, 'STT_LEMBUR')->widget(SwitchInput::classname(),[
-                'items'=>[
-                    'value'=>empty($model->STT_LEMBUR) ? '0' : '1',
-                ]
-            ]);?>
+            <?= $form->field($model, 'STT_LEMBUR')->widget(CheckboxX::classname(),[
+                'value'=>empty($model->STT_LEMBUR) ? '0' : '1',
+                'pluginOptions'=>['threeState'=>false]
+                ]);?>
 
             </div>
 

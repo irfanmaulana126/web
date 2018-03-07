@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\backend\hris\models\AbsenRekap;
+use yii\data\ArrayDataProvider;
 
 /**
  * HrdAbsenRekapSearch represents the model behind the search form about `frontend\backend\hris\models\HrdAbsenRekap`.
@@ -62,11 +63,16 @@ class AbsenRekapSearch extends AbsenRekap
             return $dataProvider;
         }
 
+        if (empty($this->WAKTU_MASUK)) {
+            $tanggal = date('Y-m');
+        } else {
+            $tanggal = $this->WAKTU_MASUK;           
+        }
+        
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
             'TGL' => $this->TGL,
-            'WAKTU_MASUK' => $this->WAKTU_MASUK,
             'WAKTU_KELUAR' => $this->WAKTU_KELUAR,
             'SHIFT_ID' => $this->SHIFT_ID,
             'SHIFT_IN' => $this->SHIFT_IN,
@@ -121,7 +127,24 @@ class AbsenRekapSearch extends AbsenRekap
             ->andFilterWhere(['like', 'ID_LEMBUR', $this->ID_LEMBUR])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
+            ->andFilterWhere(['like', 'WAKTU_MASUK', $tanggal])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
+        $query->orderBy(['WAKTU_MASUK'=>SORT_DESC]);
+
+        return $dataProvider;
+    }
+    public function searchExcelExport($params)
+    { 
+        if (empty($this->WAKTU_MASUK)) {
+        $tanggal = date('Y-m');
+        } else {
+            $tanggal = $this->WAKTU_MASUK;           
+        }
+        $query = "SELECT * FROM hrd_absen_rekap WHERE ACCESS_GROUP=".Yii::$app->user->identity->ACCESS_GROUP." AND  STATUS=1 AND WAKTU_MASUK LIKE '".$tanggal."%' " ;
+       $qrySql= Yii::$app->db->createCommand($query)->queryAll();
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $qrySql,
+        ]);
 
         return $dataProvider;
     }

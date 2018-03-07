@@ -24,7 +24,7 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
     ]) ?>
     
     <?= $form->field($model, 'KTP')->textInput() ?>
-            
+            <div class="row">
             <div class="col-md-4">
             <?= $form->field($model, 'NAMA_DPN')->textInput(['maxlength' => true]) ?>
             </div>
@@ -33,6 +33,7 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
             </div>
             <div class="col-md-4">
             <?= $form->field($model, 'NAMA_BLK')->textInput(['maxlength' => true]) ?>
+            </div>
             </div>
             
     <?= $form->field($model, 'ALAMAT')->textInput() ?>

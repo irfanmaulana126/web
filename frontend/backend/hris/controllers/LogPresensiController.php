@@ -1,7 +1,7 @@
 <?php
 
 namespace frontend\backend\hris\controllers;
-
+use Yii;
 class LogPresensiController extends \yii\web\Controller
 {
     public function actionIndex()

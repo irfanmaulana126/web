@@ -15,8 +15,6 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 use frontend\backend\master\models\Product;
-
-$this->title="Data Gaji";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -45,9 +43,9 @@ $this->registerCss("
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-PRODUCT</b>
+				</span><b>SETTING PERIODE</b>
 	';
-	$gvAttProdakItem=[
+	$gvAttPeriodeItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
@@ -76,7 +74,7 @@ $this->registerCss("
 		//SATUAN
 		[
 			'attribute'=>'TGL1',
-			//'label'=>'Cutomer',
+			'label'=>'TANGGAL AWAL',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -92,7 +90,7 @@ $this->registerCss("
 		//DEFAULT_STOCK
 		[
 			'attribute'=>'TGL2',
-			//'label'=>'Cutomer',
+			'label'=>'TANGGAL AKHIR',
 			'filterType'=>true,
 			// 'filterType'=>GridView::FILTER_MONEY,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
@@ -109,7 +107,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'SEQ_BULAN',
-			//'label'=>'Cutomer',
+			'label'=>'SEQ BULAN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -123,32 +121,13 @@ $this->registerCss("
 			
         ],	
 	];
-	$gvAttProdakItem[]=[			
+	$gvAttPeriodeItem[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
-		'header'=>'ACTION',
-		'dropdown' => true,
-		'dropdownOptions'=>[
-			'class'=>'pull-right dropdown',
-			'style'=>'width:100%;background-color:#E6E6FA'				
-		],
-		'dropdownButton'=>[
-			'label'=>'ACTION',
-			'class'=>'btn btn-info btn-xs',
-			'style'=>'width:100%'		
-		],
+		'template' => '{edit}',
 		'buttons' => [
-			'view' =>function ($url, $model){
-				// return  tombolView($url, $model);
-			},
 			'edit' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				// return  tombolEdit($url, $model);
-				//}					
-			},
-			'hapus' =>function($url, $model,$key){
-				// return  tombolHapus($url, $model);
+				return  tombolEditPeriode($url, $model);			
 			},
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
@@ -158,7 +137,7 @@ $this->registerCss("
 		'id'=>'gv-periode-presensi',
         'dataProvider' => $dataProviderPeriode,
         'filterModel' => $searchModelPeriode,
-		'columns'=>$gvAttProdakItem,				
+		'columns'=>$gvAttPeriodeItem,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[

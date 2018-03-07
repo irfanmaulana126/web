@@ -54,9 +54,9 @@ class HrdSettingPeriode extends \yii\db\ActiveRecord
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 25],
             [['CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
+            [['TGL1'],'compare', 'compareAttribute' => 'TGL2', 'operator' => '>=']
         ];
     }
-
     /**
      * @inheritdoc
      */

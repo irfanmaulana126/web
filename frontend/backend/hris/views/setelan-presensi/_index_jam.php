@@ -16,8 +16,6 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 use frontend\backend\master\models\Product;
-
-$this->title="Data Gaji";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -46,9 +44,9 @@ $this->registerCss("
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-PRODUCT</b>
+				</span><b>SETTING SHIFT </b>
 	';
-	$gvAttProdakItem=[
+	$gvAttJamKerjaItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
@@ -78,7 +76,8 @@ $this->registerCss("
 		[
 			'class' => 'kartik\grid\EditableColumn',
 			'attribute'=>'STATUS',
-			//'label'=>'Cutomer',
+			'label'=>'STATUS',
+			'refreshGrid'=>true,
 			'editableOptions'=> [
 					'header'=>'STATUS PEMBAYARAN', 
 					'asPopover' => true,
@@ -105,12 +104,12 @@ $this->registerCss("
 			'format'=>'raw',
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('center','100px',''),
 			
         ],	
 		[
 			'attribute'=>'SHIFT_NM',
-			//'label'=>'Cutomer',
+			'label'=>'JENIS SHIFT',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -124,26 +123,90 @@ $this->registerCss("
 			
 		],
 		//DEFAULT_STOCK
-		[
-			'attribute'=>'RENTANG_BAWAH',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			// 'filterType'=>GridView::FILTER_MONEY,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+		// [
+		// 	'attribute'=>'RENTANG_BAWAH',
+		// 	'label'=>'RENTANG BAWAH',
+		// 	'filterType'=>true,
+		// 	// 'filterType'=>GridView::FILTER_MONEY,
+		// 	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+		// 	'hAlign'=>'right',
+		// 	'vAlign'=>'middle',
+		// 	'mergeHeader'=>false,
+		// 	'noWrap'=>false,
+		// 	'format'=>'raw',
+		// 	//gvContainHeader($align,$width,$bColor)
+		// 	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+		// 	'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
 			
-		],
+		// ],
+		// //DEFAULT_HARGA
+		// [
+		// 	'attribute'=>'RENTANG_ATAS',
+		// 	'label'=>'RENTANG ATAS',
+		// 	'filterType'=>true,
+		// 	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+		// 	'hAlign'=>'right',
+		// 	'vAlign'=>'middle',
+		// 	'mergeHeader'=>false,
+		// 	'noWrap'=>false,
+		// 	'format'=>'raw',
+		// 	//gvContainHeader($align,$width,$bColor)
+		// 	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+		// 	'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+        // ],	
+		// //DEFAULT_HARGA
+		// [
+		// 	'attribute'=>'RENTANG_TENGAH',
+		// 	'label'=>'RENTANG TENGAH',
+		// 	'filterType'=>true,
+		// 	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+		// 	'hAlign'=>'right',
+		// 	'vAlign'=>'middle',
+		// 	'mergeHeader'=>false,
+		// 	'noWrap'=>false,
+		// 	'format'=>'raw',
+		// 	//gvContainHeader($align,$width,$bColor)
+		// 	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+		// 	'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+        // ],	
+		// //DEFAULT_HARGA
+		// [
+		// 	'attribute'=>'SHIFT_IN_BATAS_BAWAH',
+		// 	'label'=>'BATAS BAWAH MASUK',
+		// 	'filterType'=>true,
+		// 	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+		// 	'hAlign'=>'right',
+		// 	'vAlign'=>'middle',
+		// 	'mergeHeader'=>false,
+		// 	'noWrap'=>false,
+		// 	'format'=>'raw',
+		// 	//gvContainHeader($align,$width,$bColor)
+		// 	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+		// 	'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+        // ],	
+		// //DEFAULT_HARGA
+		// [
+		// 	'attribute'=>'SHIFT_IN_BATAS_ATAS',
+		// 	'label'=>'BATAS ATAS MASUK',
+		// 	'filterType'=>true,
+		// 	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+		// 	'hAlign'=>'right',
+		// 	'vAlign'=>'middle',
+		// 	'mergeHeader'=>false,
+		// 	'noWrap'=>false,
+		// 	'format'=>'raw',
+		// 	//gvContainHeader($align,$width,$bColor)
+		// 	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+		// 	'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+        // ],	
 		//DEFAULT_HARGA
 		[
-			'attribute'=>'RENTANG_ATAS',
-			//'label'=>'Cutomer',
+			'attribute'=>'SHIFT_IN',
+			'label'=>'JAM MASUK',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -158,24 +221,8 @@ $this->registerCss("
         ],	
 		//DEFAULT_HARGA
 		[
-			'attribute'=>'RENTANG_TENGAH',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-        ],	
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'SHIFT_IN_BATAS_BAWAH',
-			//'label'=>'Cutomer',
+			'attribute'=>'SHIFT_OUT',
+			'label'=>'JAM KELUAR',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -191,39 +238,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'SHIFT_IN_BATAS_SEQ',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-        ],	
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'SHIFT_IN_BATAS_ATAS',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-        ],	
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'SHIFT_IN',
-			//'label'=>'Cutomer',
+			'label'=>'BATAS SEQ MASUK',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -239,23 +254,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'SHIFT_SEQ',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-        ],	
-		//DEFAULT_HARGA
-		[
-			'attribute'=>'SHIFT_SEQ',
-			//'label'=>'Cutomer',
+			'label'=>'SHIFT SEQ',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -271,7 +270,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'RADIUS_KOORDINAT',
-			//'label'=>'Cutomer',
+			'label'=>'RADIUS KOORDINAT',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -287,7 +286,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'TOLERANSI_TELAT',
-			//'label'=>'Cutomer',
+			'label'=>'TOLERANSI TELAT',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -303,7 +302,7 @@ $this->registerCss("
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'TOLERANSI_PULANG',
-			//'label'=>'Cutomer',
+			'label'=>'TOLERANSI PULANG',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -318,29 +317,15 @@ $this->registerCss("
         ],	
 		
 	];
-	$gvAttProdakItembutton[]=[			
+	$gvAttJamKerjaItem[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
-		'header'=>'ACTION',
-		'dropdown' => true,
-		'dropdownOptions'=>[
-			'class'=>'pull-right dropdown',
-			'style'=>'width:100%;background-color:#E6E6FA'				
-		],
-		'dropdownButton'=>[
-			'label'=>'ACTION',
-			'class'=>'btn btn-info btn-xs',
-			'style'=>'width:100%'		
-		],
+		'template' => '{edit}',
 		'buttons' => [
-			'view' =>function ($url, $model){
-				// return  tombolView($url, $model);
-			},
 			'edit' =>function($url, $model,$key){
-								
-			},
-			'hapus' =>function($url, $model,$key){
+				if ($model->STATUS == 1) {
+					return tombolEditShift($url, $model);				
+				}
 			},
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
@@ -350,7 +335,7 @@ $this->registerCss("
 		'id'=>'gv-jam-presensi',
         'dataProvider' => $dataProviderJam,
         'filterModel' => $searchModelJam,
-		'columns'=>$gvAttProdakItem,				
+		'columns'=>$gvAttJamKerjaItem,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[

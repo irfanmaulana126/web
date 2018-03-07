@@ -12,9 +12,9 @@
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 //$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
-$(document).on('click','#karyawan-button', function(ehead){ 			  
-	$('#karyawan-button-modal').modal('show')
-	.find('#karyawan-button-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+$(document).on('click','#absen-button-periode', function(ehead){ 			  
+	$('#absen-button-periode-modal').modal('show')
+	.find('#absen-button-periode-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });

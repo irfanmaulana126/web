@@ -6,9 +6,30 @@
  * Version	: 2.1
  * ===============================
 */
-
 /*
  * BUTTON SEARCH PERIODE
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#gaji-button-periode', function(ehead){ 			  
+	$('#gaji-button-periode-modal').modal('show')
+	.find('#gaji-button-periode-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+/*
+ * BUTTON SEARCH PERIODE
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#export-button-periode', function(ehead){ 			  
+	$('#export-button-periode-modal').modal('show')
+	.find('#export-button-periode-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+/*
+ * BUTTON 
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};
 //$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
