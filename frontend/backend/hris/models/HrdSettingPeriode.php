@@ -54,16 +54,9 @@ class HrdSettingPeriode extends \yii\db\ActiveRecord
             [['ACCESS_GROUP'], 'string', 'max' => 15],
             [['STORE_ID'], 'string', 'max' => 25],
             [['CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
-            [['TGL1','TGL2'],'checkDate']
+            [['TGL1'],'compare', 'compareAttribute' => 'TGL2', 'operator' => '>=']
         ];
     }
-    public function checkDate()
-    {
-        if ($this->TGL1 <= $this->TGL2) {
-            $this->addError("TGL1","TANGGAL 2 must be greater than or equal to TANGGAL 1");
-        }
-    }
-
     /**
      * @inheritdoc
      */

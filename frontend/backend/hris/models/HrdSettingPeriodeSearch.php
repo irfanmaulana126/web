@@ -20,7 +20,7 @@ class HrdSettingPeriodeSearch extends HrdSettingPeriode
         return [
             [['ID', 'TGL1', 'TGL2', 'SEQ_BULAN', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['ACCESS_GROUP', 'STORE_ID', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
-            [['TGL1','TGL2'],'checkDate']
+            [['TGL2'],'compare', 'compareAttribute' => 'TGL1', 'operator' => '>=']
         ];
     }
     public function checkDate()
