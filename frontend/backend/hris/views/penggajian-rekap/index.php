@@ -32,11 +32,21 @@ $this->registerCss("
 	#gv-penggajian-rekap .kv-grid-container{
 			height:500px
 	}
+	#gv-store .kv-grid-container{
+			height:500px
+	}
 	#gv-penggajian-rekap .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 		color: #444;
 	}
 	#gv-penggajian-rekap .panel-footer {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
+	#gv-store .panel-heading {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		color: black;
+	}
+	#gv-store.panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 ");
@@ -299,7 +309,7 @@ $gvPenggajianRekap=GridView::widget([
 	'panel' => [
 		//'heading'=>false,
 		//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px;color: black;">'.tombolExportExcel().' '.periodePersensi(). '   '.'</div>',  
+		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px;color: black;"> '.tombolSearchPeriode($store).' '.tombolExportExcel($store).' '.periodePersensi($date). '   '.'</div>',  
 		// 'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolExportExcel().' '.periodePersensi(). '   '.'</div>',  
 		'type'=>'info',
 		//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',

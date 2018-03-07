@@ -34,12 +34,12 @@ $this->registerJs($this->render('presensi.js'),View::POS_READY);
      <p><small>DATA KARYAWAN</small></p>
     </div>
     <div class="process-step">
-     <button type="button" class="btn btn-default btn-circle" data-toggle="tab" href="#menu2"><i class="fa fa-file-text fa-3x"></i></button>
-     <p><small>REKAP DATA KARYAWAN</small></p>
+     <button type="button" class="btn btn-default btn-circle" data-toggle="tab" href="#menu2"><i class="fa fa-cogs fa-3x"></i></button>
+     <p><small>SETTING</small></p>
     </div>
     <div class="process-step">
-     <button type="button" class="btn btn-default btn-circle" data-toggle="tab" href="#menu3"><i class="fa fa-cogs fa-3x"></i></button>
-     <p><small>SETTING</small></p>
+     <button type="button" class="btn btn-default btn-circle" data-toggle="tab" href="#menu3"><i class="fa fa-file-text fa-3x"></i></button>
+     <p><small>REKAP DATA KARYAWAN</small></p>
     </div>
    </div>
   </div>
@@ -61,33 +61,8 @@ $this->registerJs($this->render('presensi.js'),View::POS_READY);
             </div>
         </div>      
     </div>
-    <ul class="list-unstyled list-inline pull-right">
-     <li><button type="button" class="btn btn-info next-step">Next <i class="fa fa-chevron-right"></i></button></li>
-    </ul>
    </div>
    <div id="menu2" class="tab-pane fade">
-    <div class="container-fluid">
-        <div class="col-md-6">
-            <div class="col-md-12">
-                <h3>Rekap Persensi</h3>
-                <p>Pencatatan hasil keselurahan absen kariyawan anda.</p>
-                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/absen-rekap']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
-            </div>
-        </div>      
-        <div class="col-md-6">
-            <div class="col-md-12">
-                <h3>Rekap Penggajian</h3>
-                <p>rekapitulasi penggajian karyawan yang anda miliki.</p>
-                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/penggajian-rekap']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
-            </div>
-        </div>      
-    </div>
-    <ul class="list-unstyled list-inline pull-right">
-     <li><button type="button" class="btn btn-default prev-step"><i class="fa fa-chevron-left"></i> Back</button></li>
-     <li><button type="button" class="btn btn-info next-step">Next <i class="fa fa-chevron-right"></i></button></li>
-    </ul>
-   </div>
-   <div id="menu3" class="tab-pane fade">
     <div class="container-fluid">
         <div class="col-md-6">
             <div class="col-md-12">
@@ -104,10 +79,24 @@ $this->registerJs($this->render('presensi.js'),View::POS_READY);
             </div>
         </div>      
     </div>
-    <ul class="list-unstyled list-inline pull-right">
-    <li><button type="button" class="btn btn-default prev-step"><i class="fa fa-chevron-left"></i> Back</button></li>
-     <li><button type="button" class="btn btn-success"><i class="fa fa-check"></i> Done!</button></li>
-    </ul>
+   </div>
+   <div id="menu3" class="tab-pane fade">
+    <div class="container-fluid">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <h3>Rekap Persensi</h3>
+                <p>Pencatatan hasil keselurahan absen kariyawan anda.</p>
+                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/absen-rekap']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
+            </div>
+        </div>      
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <h3>Rekap Penggajian</h3>
+                <p>rekapitulasi penggajian karyawan yang anda miliki.</p>
+                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/penggajian-rekap']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+            </div>
+        </div>      
+    </div>
    </div>
   </div>
  </div>

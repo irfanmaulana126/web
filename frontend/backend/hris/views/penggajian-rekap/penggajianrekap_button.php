@@ -18,8 +18,8 @@ use yii\base\DynamicModel;
 	/*
 	 * BUTTON SEARCH PERIODE
 	*/
-	function periodePersensi(){
-		return '<div style="float:left;padding:10px 20px 0px 5px"><b> PERIOD :'.'2017-11-22 s/d 2017-12-23'.'</b</div>';		
+	function periodePersensi($date){
+		return '<div style="float:left;padding:10px 20px 0px 5px"><b> PERIOD :'.$date['tanggal1'].' s/d '.$date['tanggal2'].'</b></div>';		
 	}
 	
 	/*
@@ -43,28 +43,7 @@ use yii\base\DynamicModel;
 		$content = Html::button($label1,$options1);
 		return $content;		
 	}
-	
-	/*
-	 * LINK EXPORT EXCEL.
-	*/
-	function tombolExportExcel(){
-		$title1 = Yii::t('app', ' Export Excel');
-		$url = Url::toRoute(['/hris/karyawan/export']);
-		$options1 = [
-					'id'=>'stockproduct-export-excel',
-					'data-pjax' => 0,
-					'class'=>"btn btn-primary btn-xs",
-					'title'=>'Export Excel'
-		];
-		$icon1 = '<span class="fa-stack fa-sm text-left">
-				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
-				  <b class="fa fa-file-excel-o fa-stack-1x" style="color:#000000"></b>
-				</span>
-		';
-		$label1 = $icon1 . ' ' . $title1;
-		$content = Html::a($label1,$url,$options1);
-		return $content;
-	}		
+		
 	
 	/*
 	 *  BUTTON VIEW
@@ -109,6 +88,45 @@ use yii\base\DynamicModel;
 		$content = Html::button($label1,$options1);		
 		return '<li>'.$content.'</li>';
 	}
+	/*
+	 * BUTTON SEARCH PERIODE
+	*/
 	
+	function tombolSearchPeriode($store){
+		$title= Yii::t('app','');
+		$url = Url::toRoute(['/hris/penggajian-rekap/pencarian-index','paramCari'=>$store]);
+		$options1 = ['value'=>$url,
+					'id'=>'gaji-button-periode',
+					'data-pjax' => false,
+					'class'=>"btn btn-warning btn-xs",
+					'title'=>'Pencarian'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-search fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}
+	function tombolExportExcel($store){
+		$title= Yii::t('app','Export Excel');
+		$url = Url::toRoute(['/hris/penggajian-rekap/pencarian-export','store'=>$store]);
+		$options1 = ['value'=>$url,
+					'id'=>'export-button-periode',
+					'data-pjax' => 0,
+					'class'=>"btn btn-primary btn-xs",
+					'title'=>'Export Excel'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+					<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+					<b class="fa fa-file-excel-o fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		$content = Html::button($label1,$options1);
+		return $content;		
+	}
 	
 ?>

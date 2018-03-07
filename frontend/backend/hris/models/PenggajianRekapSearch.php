@@ -50,10 +50,12 @@ class PenggajianRekapSearch extends DynamicModel
 		
 	//WHERE a.MONTH_AT='".date("Y-m-d", strtotime($this->BULAN))."' AND a.ACCESS_GROUP='".$this->ACCESS_GROUP."' AND a.STORE_ID='".$this->STORE_ID."'
 	 //$query = TransPenjualanDetail::find()->where(['ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP']]);
-	public function search($params){
+	public function search($params,$cari,$tanggal){
 		
       	$accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
 		// $TGL=$this->thn!=''?$this->thn:date('Y-m-d');
+		$store = $cari['STORE_ID'];
+		// print_r($tanggal);die();
 		 $TGL='2017-10-30';
 		 $sqlStr="
 			SELECT
@@ -81,8 +83,8 @@ class PenggajianRekapSearch extends DynamicModel
 					(SUM(TTL_PEMASUKAN)-SUM(TTL_POTONGAN))
 					ELSE 0 END)AS GRAND_TOTAL
 				FROM hrd_absen_rekap
-				WHERE ACCESS_GROUP='".$accessGroup."' AND (TGL BETWEEN '2017-09-23' AND '2017-10-22')
-					#AND STORE_ID='170726220936.0001' 
+				WHERE ACCESS_GROUP='".$accessGroup."' AND (TGL BETWEEN '".$tanggal['tanggal2']."' AND '".$tanggal['tanggal1']."')
+					AND STORE_ID='".$store."' 
 				GROUP BY ACCESS_GROUP,STORE_ID,KARYAWAN_ID
 			) x1 left join store x2 on x2.STORE_ID=x1.STORE_ID
 		 ";
@@ -133,5 +135,44 @@ class PenggajianRekapSearch extends DynamicModel
         } else {
             $filter->addMatcher($attribute, new matchers\SameAs(['value' => $value, 'partial' => $partial]));
         }
+	}
+	public function searchExcelExport($params,$cari)
+    { 
+		$accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];
+        $query = "SELECT
+		x1.ID,x1.ACCESS_GROUP,x1.STORE_ID,x2.STORE_NM,x1.KARYAWAN_ID,x1.KARYAWAN,x1.TGL,x1.UPAH_HARIAN,
+		x1.TOTAL_JAM_TELAT,x1.TOTAL_JAM_PULANGAWAL,x1.TOTAL_JAM_LEMBUR,x1.TOTAL_JAM_MASUK,x1.TOTAL_PERSEN_TELAT,
+		x1.TOTAL_PERSEN_PULANGAWAL,x1.TOTAL_PERSEN_LEMBUR,x1.TOTAL_RUPIAH_TELAT,x1.TOTAL_RUPIAH_PULANGAWAL,
+		x1.TOTAL_RUPIAH_LEMBUR,x1.TOTAL_PEMASUKAN,x1.TOTAL_POTONGAN,x1.GRAND_TOTAL
+	FROM
+	(
+		SELECT 
+			ID,ACCESS_GROUP,STORE_ID,KARYAWAN_ID,KARYAWAN,TGL,UPAH_HARIAN,
+			SEC_TO_TIME(SUM( TIME_TO_SEC(SELISIH_TELAT))) AS TOTAL_JAM_TELAT,  
+			SEC_TO_TIME(SUM( TIME_TO_SEC(SELISIH_AWALPULANG))) AS TOTAL_JAM_PULANGAWAL, 
+			SEC_TO_TIME(SUM( TIME_TO_SEC(KELEBIHAN_WAKTU))) AS TOTAL_JAM_LEMBUR,
+			SEC_TO_TIME(SUM( TIME_TO_SEC(TTL_MASUK))) AS TOTAL_JAM_MASUK,
+			SUM(POT_PERSEN_TELAT) AS TOTAL_PERSEN_TELAT,
+			SUM(POT_PERSEN_PULANG) AS TOTAL_PERSEN_PULANGAWAL,
+			SUM(LEMBUR_PERSEN) AS TOTAL_PERSEN_LEMBUR,
+			SUM(POT_RUPIAH_TELAT) AS TOTAL_RUPIAH_TELAT,
+			SUM(POT_RUPIAH_PULANG) AS TOTAL_RUPIAH_PULANGAWAL,
+			SUM(LEMBUR_RUPIAH) AS TOTAL_RUPIAH_LEMBUR,
+			SUM(TTL_PEMASUKAN) AS TOTAL_PEMASUKAN,
+			SUM(TTL_POTONGAN) AS TOTAL_POTONGAN,
+			(CASE WHEN SUM(TTL_PEMASUKAN) IS NOT NULL OR SUM(TTL_PEMASUKAN)<>'' THEN
+			(SUM(TTL_PEMASUKAN)-SUM(TTL_POTONGAN))
+			ELSE 0 END)AS GRAND_TOTAL
+		FROM hrd_absen_rekap
+		WHERE ACCESS_GROUP='".$accessGroup."' AND (TGL BETWEEN '".$cari['tanggal2']."' AND '".$cari['tanggal1']."')
+			AND STORE_ID='".$cari['STORE_ID']."' 
+		GROUP BY ACCESS_GROUP,STORE_ID,KARYAWAN_ID
+	) x1 left join store x2 on x2.STORE_ID=x1.STORE_ID" ;
+       $qrySql= Yii::$app->db->createCommand($query)->queryAll();
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $qrySql,
+        ]);
+
+        return $dataProvider;
     }
 }
