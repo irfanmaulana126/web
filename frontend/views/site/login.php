@@ -67,10 +67,20 @@ $form = ActiveForm::begin([
 
 ?>
 <div class="col-xs-12 col-sm-12 col-lg-12 col-lg-12" >
-		<div class="col-xs-12 col-sm-12 col-lg-12 col-lg-12" style="text-align:center;margin-bottom:20px;" >		
-				<img src="<?php echo Yii::$app->request->baseUrl; ?>/logo-kg2.png"  style="width:180px; height:80px;"/>
+		<div class="col-xs-12 col-sm-12 col-lg-12 col-lg-12" style="text-align:center;margin-bottom:20px;" >	
+			<script type="text/javascript"> //<![CDATA[ 
+				var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.comodo.com/" : "http://www.trustlogo.com/");
+				document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+			//]]>
+			</script>
+			<!--<div class="col-xs-12 col-sm-12 col-lg-12 col-lg-12" style="text-align:center;margin-bottom:20px;" >		
+					<img src="<?php //echo Yii::$app->request->baseUrl; ?>/logo-kg2.png"  style="width:180px; height:80px;"/>
+			</div>!-->
+			<script language="JavaScript" type="text/javascript">
+				TrustLogo("https://dashboard.kontrolgampang.com/logo-dashboard3.png", "CL1", "none");
+			</script>
+			
 		</div>
-
 		<div class="row">
 			 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="form-group">
