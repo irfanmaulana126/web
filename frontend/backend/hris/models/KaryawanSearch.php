@@ -99,7 +99,8 @@ class KaryawanSearch extends Karyawan
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
-		$query->orderBy(['STORE_ID'=>SORT_ASC,'STATUS'=>SORT_ASC]);
+        $query->orderBy(['STORE_ID'=>SORT_ASC,'STATUS'=>SORT_ASC,'CREATE_AT'=>SORT_DESC]);
+        
         return $dataProvider;
     }
     public function searchExcelExport($params)

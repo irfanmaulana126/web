@@ -18,8 +18,6 @@ use kartik\date\DatePicker;
 use yii\web\View;
 use kartik\widgets\SwitchInput;
 use frontend\backend\master\models\Product;
-
-$this->title="Data Gaji";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -48,7 +46,7 @@ $this->registerCss("
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-PRODUCT</b>
+				</span><b>SETTING IZIN</b>
 	';
 	$gvAttProdakItem=[
 		[
@@ -63,6 +61,7 @@ $this->registerCss("
 		[
 			// 'class' => 'kartik\grid\EditableColumn',
 			'attribute'=>'store.STORE_NM',
+			'label'=>'STORE',
 			'filterType'=>true,
 			'format'=>'raw',
 			'hAlign'=>'right',
@@ -79,7 +78,7 @@ $this->registerCss("
 		//SATUAN
 		[
 			'attribute'=>'IZIN_NM',
-			//'label'=>'Cutomer',
+			'label'=>'JENIS IZIN',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -96,7 +95,8 @@ $this->registerCss("
 		[
 			'class' => 'kartik\grid\EditableColumn',
 			'attribute'=>'IZIN_STT',
-			//'label'=>'Cutomer',
+			'label'=>'STATUS IZIN',
+			'refreshGrid'=>true,
 			'editableOptions'=> [
 					'header'=>'STATUS PEMBAYARAN', 
 					'size'=>'md',
@@ -104,7 +104,7 @@ $this->registerCss("
 					'options' => [
 						'pluginOptions' => [
 							'items'=>[
-								'value'=>empty($model->IZIN_STT) ? '0' : '1',
+								'value'=>empty($model->IZIN_STT) ? "0" : "1",
 							]
 						]
 					]
@@ -126,37 +126,6 @@ $this->registerCss("
 			
 		],
 	];
-	$gvAttProdakItembutton[]=[			
-		//ACTION
-		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{hapus}{discount}{promo}{harga}',
-		'header'=>'ACTION',
-		'dropdown' => true,
-		'dropdownOptions'=>[
-			'class'=>'pull-right dropdown',
-			'style'=>'width:100%;background-color:#E6E6FA'				
-		],
-		'dropdownButton'=>[
-			'label'=>'ACTION',
-			'class'=>'btn btn-info btn-xs',
-			'style'=>'width:100%'		
-		],
-		'buttons' => [
-			'view' =>function ($url, $model){
-				// return  tombolView($url, $model);
-			},
-			'edit' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				// return  tombolEdit($url, $model);
-				//}					
-			},
-			'hapus' =>function($url, $model,$key){
-				// return  tombolHapus($url, $model);
-			},
-		],
-		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
-		'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),
-	]; 
 	$gvAllStoreItem=GridView::widget([
 		'id'=>'gv-izin-presensi',
         'dataProvider' => $dataProviderIzin,

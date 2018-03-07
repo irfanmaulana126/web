@@ -82,7 +82,7 @@ use yii\base\DynamicModel;
 	}
 	
 	function tombolAcc($url, $model){
-		$title1 = Yii::t('app',' Acc');
+		$title1 = Yii::t('app',' EDIT');
 		$options1 = [
 			'value'=>url::to(['/hris/list-gaji/acc','ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'KARYAWAN_ID' => $model->KARYAWAN_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]),
 			'id'=>'karyawan-button-row-view',

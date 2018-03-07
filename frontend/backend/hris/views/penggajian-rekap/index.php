@@ -16,6 +16,7 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
+$this->title="Penggajian Rekap";
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -30,10 +31,18 @@ $this->registerCss("
 	}
 	#gv-penggajian-rekap .kv-grid-container{
 			height:500px
-		}
+	}
+	#gv-penggajian-rekap .panel-heading {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		color: #444;
+	}
+	#gv-penggajian-rekap .panel-footer {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 ");
 
 
+$headerColor='rgba(128, 179, 178, 1)';
 $this->registerJs($this->render('penggajianrekap_script.js'),View::POS_READY);
 echo $this->render('penggajianrekap_button'); //echo difinition
 echo $this->render('penggajianrekap_modal'); //echo difinition
@@ -44,7 +53,7 @@ echo $this->render('penggajianrekap_column'); //echo difinition
 	$bColor='rgba(87,114,111, 1)';
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-money fa-stack-2x" style="color:#000000"></b>
-			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b> REKAP PENGGAJIAN</b></div> 
+			 </span> <div style="float:left;padding:10px 20px 0px 5px;color: black;"><b> REKAP PENGGAJIAN</b></div> 
 	 ';
 	
 	$attDinamikField=[
@@ -162,7 +171,7 @@ echo $this->render('penggajianrekap_column'); //echo difinition
 		];
 	};
 	
-	$attDinamikField[]=[			
+	$attDinamikFields[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
 		'template' => '{view}{edit}{reminder}{deny}',
@@ -290,7 +299,8 @@ $gvPenggajianRekap=GridView::widget([
 	'panel' => [
 		//'heading'=>false,
 		//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolExportExcel().' '.periodePersensi(). '   '.'</div>',  
+		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px;color: black;">'.tombolExportExcel().' '.periodePersensi(). '   '.'</div>',  
+		// 'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolExportExcel().' '.periodePersensi(). '   '.'</div>',  
 		'type'=>'info',
 		//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
 		'before'=>false,
@@ -299,16 +309,128 @@ $gvPenggajianRekap=GridView::widget([
 	],
 	'summary'=>false,
 	'floatOverflowContainer'=>false,
-	'floatHeader'=>true,
+	'floatHeader'=>false,
 ]); 	
+
+function sttMsg($stt){
+	if($stt==0){ //TRIAL
+		 return Html::a('<span class="fa-stack fa-xl">
+				  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+				  <i class="fa fa-check fa-stack-1x" style="color:#ee0b0b"></i>
+				</span>','',['title'=>'Trial']);
+	}elseif($stt==1){
+		 return Html::a('<span class="fa-stack fa-xl">
+				  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+				  <i class="fa fa-check fa-stack-1x" style="color:#05944d"></i>
+				</span>','',['title'=>'Active']);
+	}elseif($stt==2){
+		return Html::a('<span class="fa-stack fa-xl">
+				  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+				  <i class="fa fa-remove fa-stack-1x" style="color:#01190d"></i>
+				</span>','',['title'=>'Deactive']);
+	}elseif($stt==3){
+		return Html::a('<span class="fa-stack fa-xl">
+				  <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+				  <i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
+				</span>','',['title'=>'Delete']);
+	}
+};	
+$gvAttributeItem=[
+	[
+		'attribute'=>'STORE_NM',
+		'label'=>'NAMA TOKO',
+		'filterType'=>true,
+		'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
+		'hAlign'=>'right',
+		'vAlign'=>'middle',
+		'mergeHeader'=>false,
+		'format'=>'html',
+		'noWrap'=>false,
+		'format'=>'raw',
+		'value'=>function($data) {				
+			return Html::tag('div', $data->STORE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+		},
+		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
+		'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
+		
+	],		
+		
+];
+$gvAttributeItem[]=[
+	'attribute'=>'STATUS',
+	'hAlign'=>'right',
+	'vAlign'=>'middle',
+	'mergeHeader'=>false,
+	'noWrap'=>false,
+	'format' => 'raw',	
+	'value'=>function($model){
+		return sttMsg($model->STATUS);				 
+	},
+	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50',$headerColor),
+	'contentOptions'=>Yii::$app->gv->gvContainBody('center','50','')			
+	];
+	$gvStore=GridView::widget([
+		'id'=>'gv-store',
+		'dataProvider' => $dataProviderstore,
+		// 'filterModel' => $searchModelstore,
+		'columns'=>$gvAttributeItem,		 
+		'pjax'=>true,
+		'pjaxSettings'=>[
+			'options'=>[
+				'enablePushState'=>false,
+				'id'=>'gv-store',
+		    ],						  
+		],
+		'hover'=>true, //cursor select
+		'responsive'=>true,
+		'responsiveWrap'=>true,
+		'bordered'=>true,
+		'striped'=>true,
+		'autoXlFormat'=>true,
+		'export' => false,
+		'panel'=>[''],
+		'toolbar' => [
+			''
+		],
+		'rowOptions'   => function ($model, $key, $index, $grid) {			
+			$btnclick= ['onclick' => '
+				$.pjax.reload({
+                    url: "'.Url::to(["/hris/penggajian-rekap/"]).'?storeid='.$model->STORE_ID.'",
+					container: "#gv-penggajian-rekap",
+					//timeout: 1000,
+				});
+			'];
+			return $btnclick;
+		},
+		'panel' => [
+			//'heading'=>false,
+			'heading'=>'
+				<span class="fa-stack fa-sm">
+				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
+				  <i class="fa fa-text-width fa-stack-1x"></i>
+				</span> LIST TOKO'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;"> </div></div> ',  
+			'type'=>'info',
+			'before'=>false,
+			'after'=>false,
+			// 'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.tombolReqStore().' '.tombolRestore().'</div>',
+			// 'before'=> tombolReqStore(),
+			'showFooter'=>'aas',
+		], 
+		'summary'=>false
+		// 'floatOverflowContainer'=>true,
+		//'floatHeader'=>true,
+	]); 
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
-			<?=$gvPenggajianRekap?>
+			<div class="col-md-3">
+				<?=$gvStore?>
+			</div>
+			<div class="col-md-9">
+				<?=$gvPenggajianRekap?>
+			</div>
 			<?php //echo SideNav::widget(['items' => $items, 'headingOptions' => ['class'=>'head-style']]); ?>
 		</div>
-	</div>
 </div>
 

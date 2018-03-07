@@ -11,10 +11,9 @@ use kartik\builder\Form;
 use yii\helpers\Url;
 use yii\data\ArrayDataProvider;
 use yii\web\View;
-use kartik\widgets\Alert;
 $this->title="Setelan Presensi";
 $this->registerJs($this->render('modal_presensi.js'),View::POS_READY);
-// echo $this->render('databarang_button'); //echo difinition
+echo $this->render('presensi_button'); //echo difinition
 echo $this->render('modal_presensi'); //echo difinition
 	$this->registerCss("
 		#expand-menu :link {
@@ -35,15 +34,15 @@ echo $this->render('modal_presensi'); //echo difinition
 		#expand-menu .kv-grid-container{
 			height:250px
 		}
-		#w11 :link {
+		#w14 :link {
 			color: black;
 		}
 		/* mouse over link */
-		#w11-container a:hover {
+		#w14-container a:hover {
 			color: #5a96e7;
 		}
 		/* selected link */
-		#w11-container a:active {
+		#w14-container a:active {
 			color: blue;
 		}
 	");
@@ -108,26 +107,5 @@ echo $this->render('modal_presensi'); //echo difinition
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-		<?php if (Yii::$app->session->hasFlash('success')){ ?>
-			<?php
-				echo Alert::widget([
-					'type' => Alert::TYPE_SUCCESS,
-					'title' => 'Well done!',
-					'icon' => 'glyphicon glyphicon-ok-sign',
-					'body' => Yii::$app->session->getFlash('success'),
-					'showSeparator' => true,
-					'delay' => 1000
-				]);
-			?>
-		<?php } elseif (Yii::$app->session->hasFlash('error')) {
-			echo Alert::widget([
-				'type' => Alert::TYPE_DANGER,
-				'title' => 'Oh snap!',
-				'icon' => 'glyphicon glyphicon-remove-sign',
-				'body' => Yii::$app->session->getFlash('error'),
-				'showSeparator' => true,
-				'delay' => 1000
-			]);
-		}?>
-			<?=$tabIndex?>
+	<?=$tabIndex?>
 </div>
