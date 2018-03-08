@@ -8,6 +8,8 @@ use ptrnov\fusionchart\ChartAsset;
 use yii\bootstrap\Modal;
 use yii\web\JsExpression;
 use kartik\widgets\Growl;
+use frontend\assets\AppAssetBackendBorder;
+AppAssetBackendBorder::register($this);
 
 use frontend\backend\dashboard\models\StoreKasirSearch;
 $this->title = 'dashboard/trafik';
@@ -52,14 +54,16 @@ ChartAsset::register($this);
 
 <!-- TENGAH !-->
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-<div class="col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px">		
+	<div class="col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px">		
 		<?php //echo = Html::encode($this->title) ?>
-		<div class="row">								
-			<div style="min-height:265px"><div style="height:300px">
-				<?=$hourly3DaysTafik?>
-			</div></div><div class="clearfix"></div>
+		<div class="row">		
+			<div class="w3-card-2 w3-round w3-white w3-center">	
+				<div style="min-height:265px">
+					<div style="height:300px">
+						<?=$hourly3DaysTafik?>
+					</div>
+				</div>
+			</div>
 		</div>
-	<div id="loaderPtr"></div>
-
-</div>	
+	</div>	
 </div>	
