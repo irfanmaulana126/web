@@ -20,10 +20,10 @@ $client = new Client([
 $dataBody = [			
 		"ACCESS_GROUP" => "170726220936"		
 ];
-$res = $client->post('192.168.212.101/laporan/counters/per-access-group',
-					[
-						'body' =>json_encode($dataBody)
-					]);
+$res = $client->post('192.168.212.101/laporan/counters/per-access-group',[
+			'body' =>json_encode($dataBody)
+		]);
+		
 // echo $res->getStatusCode();
 // echo $res->getBody();
 //$data=$res->getBody();
@@ -113,7 +113,13 @@ $data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
 	
 	//=MONTHLY SALES
 	$monthlySales= Chart::Widget([
-		'urlSource'=> '/dashboard/data/monthy-sales',
+		//'urlSource'=> '/dashboard/data/monthy-sales',
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-group',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>'170726220936',
+			'TGL'=>'2018-02-27'
+		],
 		// 'urlSource'=> '/dashboard/data/monthy-sales?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
 		// 'urlSource'=> '/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
 		'userid'=>'piter@lukison.com',
@@ -624,20 +630,20 @@ $this->registerJs("
 	</div>
 	<div class="col-lg-12 col-md-12">
 		<div class="row">
-			<div class="panel-heading">
-				<div class="row">
-					<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$weeklySales?></div></div><div class="clearfix"></div>
-				</div>
-			</div>				
-		</div>	
-	</div>	
-	<div class="col-lg-12 col-md-12">
-		<div class="row">
 			<div class="panel-heading ">
 				<div class="row">
 					<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$monthlySales?></div></div><div class="clearfix"></div>
 				</div>
 			</div>	
 		</div>			
-	</div>			
+	</div>	
+	<div class="col-lg-12 col-md-12">
+		<div class="row">
+			<div class="panel-heading">
+				<div class="row">
+					<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$weeklySales?></div></div><div class="clearfix"></div>
+				</div>
+			</div>				
+		</div>	
+	</div>		
 </div>

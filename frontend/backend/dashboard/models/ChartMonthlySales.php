@@ -74,7 +74,7 @@ class ChartMonthlySales extends Model
 						$valData=Yii::$app->arrayBantuan->array_find($modelMonth,'BULAN',$i);
 						
 						if($valData){
-							$dataval1[]=['label'=>'bln'.$valData[0]['BULAN'],'value'=>$valData[0]['TOTAL_JUAL']];
+							$dataval1[]=['label'=>'bln'.$valData[0]['BULAN'],'value'=>$valData[0]['PRODUK_TTL_JUALPPNDISCOUNT']];
 						}else{
 							$dataval1[]=['label'=>'w'.$i,'value'=>'0'];
 						};						
