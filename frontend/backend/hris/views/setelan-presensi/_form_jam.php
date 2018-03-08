@@ -13,7 +13,7 @@ use kartik\widgets\DateTimePicker;
 <div class="hrd-setting-jamkerja-form">
 
     <?php $form = ActiveForm::begin(); ?>
-           <div class="col-md-12">
+        <div class="col-md-12">           
                     <?= FieldRange::widget([
                         'form' => $form,
                         'model' => $model,

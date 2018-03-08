@@ -316,6 +316,7 @@ echo $this->render('modal_gaji'); //echo difinition
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
+		<?=tombolKembali()?>
 		<div class="row">
             <?=$gvAllStoreItem?>
 		</div>

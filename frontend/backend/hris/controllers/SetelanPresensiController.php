@@ -98,7 +98,7 @@ class SetelanPresensiController extends Controller
                     $uji=0;
                 }
             }else if ($SHIFTEDIT['SHIFT_ID']==$SHIFT3['SHIFT_ID']) {
-                if ($SHIFTEDIT['SHIFT_OUT']>=$SHIFT1['SHIFT_IN'] && $SHIFTEDIT['SHIFT_OUT']<=$SHIFT2['SHIFT_IN']) {
+                if ($SHIFTEDIT['SHIFT_OUT']<=$SHIFT1['SHIFT_IN'] && $SHIFTEDIT['SHIFT_OUT']<=$SHIFT2['SHIFT_IN']) {
                     $uji=1;
                 } else {
                     $uji=0;
@@ -134,8 +134,8 @@ class SetelanPresensiController extends Controller
                 }
             }
              else {
-                Yii::$app->session->setFlash('error', "ERROR");
-                $this->redirect(array('/hris/setelan-presensi#w14-tab1'));
+                Yii::$app->session->setFlash('error', "Terdapat data shift yang tidak sesuia harap sesuai kan shift sebelumnya terlebih dahulu");
+                $this->redirect(array('/hris/rekap/index-presensi#w14-tab1'));
             }
             
             $out = Json::encode(['output'=>$output, 'message'=>'']);
@@ -155,10 +155,38 @@ class SetelanPresensiController extends Controller
     }
     public function actionShift($ID,$STORE_ID,$ACCESS_GROUP)
     {
-        $model = HrdSettingJamkerja::findOne(['ID'=>$ID,'ACCESS_GROUP'=>$ACCESS_GROUP,'STORE_ID'=>$STORE_ID]);
+        $model = HrdSettingJamkerja::findOne(['ID'=>$ID,'ACCESS_GROUP'=>$ACCESS_GROUP,'STORE_ID'=>$STORE_ID]);        
+        $data = HrdSettingJamkerja::find()->where(['ACCESS_GROUP'=>$ACCESS_GROUP,'STORE_ID'=>$STORE_ID])->all();
         
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/hris/setelan-presensi#w14-tab1']);
+        foreach ($data as $key => $value) {
+            $datas[]=['TIME'=>$value['SHIFT_OUT'],'ID'=>$value['SHIFT_ID'],'TIME2'=>$value['SHIFT_IN']];
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            foreach ($datas as $key=>$val){
+                if ($model['SHIFT_ID']<>$val['ID']) {
+                    // print_r($model['SHIFT_ID']);die();
+                    if ($model['SHIFT_ID']==3) {
+                        // print_r(strtotime($model['SHIFT_IN']));die();
+                        if (strtotime($model['SHIFT_OUT'])>=strtotime($val['TIME2']) && strtotime($model['SHIFT_IN'])<=strtotime($datas[1]['TIME'])) {
+                            // print_r("true");die();
+                            $model->save();
+                            return $this->redirect(['/hris/rekap/index-presensi#w14-tab1']);
+                        }else {
+                            Yii::$app->session->setFlash('error', "Terdapat data shift yang tidak sesuia harap sesuai kan shift sebelumnya terlebih dahulu");
+                            return $this->redirect(['/hris/rekap/index-presensi#w14-tab1']);                        
+                        }  
+                    }else{
+                        if (strtotime($model['SHIFT_IN'])<=strtotime($val['TIME'])) {
+                            $model->save();
+                            return $this->redirect(['/hris/rekap/index-presensi#w14-tab1']);
+                        }else {
+                            Yii::$app->session->setFlash('error', "Terdapat data shift yang tidak sesuia harap sesuai kan shift sebelumnya terlebih dahulu");
+                            return $this->redirect(['/hris/rekap/index-presensi#w14-tab1']);                        
+                        }     
+                    }               
+                }
+            }
+            return $this->redirect(['/hris/rekap/index-presensi#w14-tab1']);
         } else {
             return $this->renderAjax('_form_jam',[
                 'model'=>$model
@@ -170,7 +198,7 @@ class SetelanPresensiController extends Controller
         $model = HrdSettingPeriode::findOne(['ID'=>$ID]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/hris/setelan-presensi#w14-tab2']);
+            return $this->redirect(['/hris/rekap/index-presensi#w14-tab2']);
         } else {
             return $this->renderAjax('_form_periode', [
                 'model' => $model,
@@ -182,7 +210,7 @@ class SetelanPresensiController extends Controller
         $model = HrdSettingPot::findOne(['ID'=>$ID]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/hris/setelan-presensi#w14-tab3']);
+            return $this->redirect(['/hris/rekap/index-presensi#w14-tab3']);
         } else {
             return $this->renderAjax('_form_potongan', [
                 'model' => $model,

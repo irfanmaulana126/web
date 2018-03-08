@@ -15,21 +15,6 @@ use yii\base\DynamicModel;
  * ===============================
 */
 	
-	/*
-	 * BUTTON Akun Kategori
-	*/
-	function tombolViewGroup(){
-		$title= Yii::t('app','Kategori Akun');
-		$url = Url::toRoute(['/laporan/jurnal-transaksi-bulan/view-kategori']);
-		$options1 = ['value'=>$url,
-					'id'=>'jurnal-button-group',
-					'data-pjax' => false,
-					'class'=>"btn btn-success btn-xs",
-					'title'=>'Tambah'
-		];
-		$content = Html::button($title,$options1);
-		return $content;		
-	}
 	function tombolKembali()
 	{		
 		$title= Yii::t('app','');
@@ -46,21 +31,6 @@ use yii\base\DynamicModel;
 		';
 		$label1 = $icon1.' '.$title ;
 		echo $content = Html::a($label1,$url,$options1);
-	}
-	/*
-	 * BUTTON Akun List
-	*/
-	function tombolViewAkun(){
-		$title= Yii::t('app','List Akun');
-		$url = Url::toRoute(['/laporan/jurnal-transaksi-bulan/view-akun']);
-		$options1 = ['value'=>$url,
-					'id'=>'jurnal-button-akun',
-					'data-pjax' => false,
-					'class'=>"btn btn-success btn-xs",
-					'title'=>'Tambah'
-		];
-		$content = Html::button($title,$options1);
-		return $content;		
 	}
     
 ?>

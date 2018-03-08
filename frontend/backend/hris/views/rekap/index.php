@@ -50,14 +50,14 @@ $this->registerJs($this->render('presensi.js'),View::POS_READY);
             <div class="col-md-12">
                 <h3>Data Karyawan</h3>
                 <p>Merupakan keselurahan data pegawai anda berdasarkan store yang dimiliki pada menu ini anda dapat menambahkan, mengubah serta menghapus data karyawan</p>
-                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/karyawan']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
+                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/rekap/index-karyawan']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
             </div>
         </div>      
         <div class="col-md-6">
             <div class="col-md-12">
                 <h3>Data Gaji Karyawan</h3>
                 <p>Merupakan menu untuk menentukan gaji serta pengaturan presensi setiap karyawan.</p>
-                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/list-gaji']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/rekap/index-gaji']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
             </div>
         </div>      
     </div>
@@ -68,14 +68,14 @@ $this->registerJs($this->render('presensi.js'),View::POS_READY);
             <div class="col-md-12">
                 <h3>Setelan Persensi</h3>
                 <p>Pengaturan anda terhadap penggajian pegawai anda.</p>
-                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/setelan-presensi']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/rekap/index-presensi']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
             </div>
         </div>      
         <div class="col-md-6">
             <div class="col-md-12">
                 <h3>Log Persensi</h3>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, dolore magnam omnis ex rem mollitia dolorem molestias animi quo, ut doloribus aliquid numquam voluptates sapiente adipisci, assumenda quibusdam blanditiis rerum.</p>
-                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/log-presensi']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/rekap/index-log']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
             </div>
         </div>      
     </div>
@@ -86,14 +86,14 @@ $this->registerJs($this->render('presensi.js'),View::POS_READY);
             <div class="col-md-12">
                 <h3>Rekap Persensi</h3>
                 <p>Pencatatan hasil keselurahan absen kariyawan anda.</p>
-                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/absen-rekap']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
+                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/rekap/index-absen']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
             </div>
         </div>      
         <div class="col-md-6">
             <div class="col-md-12">
                 <h3>Rekap Penggajian</h3>
                 <p>rekapitulasi penggajian karyawan yang anda miliki.</p>
-                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/penggajian-rekap']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/rekap/index-penggajian']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
             </div>
         </div>      
     </div>

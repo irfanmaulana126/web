@@ -220,6 +220,9 @@ $gvItem=GridView::widget([
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
+	<?=tombolKembali()?>
+	<br>
+	<br>
 		<div class="row">
 		<?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php

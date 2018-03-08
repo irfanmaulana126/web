@@ -58,7 +58,23 @@ use yii\base\DynamicModel;
 		$content = Html::a($label1,$url,$options1);
 		return $content;
 	}		
-	
+	function tombolKembali()
+	{		
+		$title= Yii::t('app','');
+		$url = Url::toRoute(['/hris/rekap']);
+		$options1 = [
+			'id'=>'back-trafik',
+			'class'=>"btn btn-xs",
+			'title'=>'Kembali Menu Laporan'
+		];
+		$icon1 = '<span class="fa-stack fa-md text-left">
+		<b class="fa fa-circle fa-stack-2x" style="color:black"></b>
+		<b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
+		</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		echo $content = Html::a($label1,$url,$options1);
+	}
 	/*
 	 *  BUTTON VIEW
 	*/

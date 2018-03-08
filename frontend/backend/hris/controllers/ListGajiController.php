@@ -81,7 +81,7 @@ class ListGajiController extends Controller
                 // $tes = Yii::$app->request->post('STT_POT_TELAT');
                 // print_r($model);die();
                 $model->save(false);
-                return $this->redirect(['index']);
+                return $this->redirect(['/hris/rekap/index-gaji']);
             }
         } else {
             return $this->renderAjax('form_acc', [

@@ -299,6 +299,9 @@ $dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Pending. '.sttMsgDscp(1).'=Active
 				'delay' => 1000
 			]);
 		}?>
+		<?=tombolKembali()?>
+		<br>
+		<br
 	<div class="col-md-4">
 		<?=$produk?>
 	</div>
