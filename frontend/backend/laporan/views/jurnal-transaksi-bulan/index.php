@@ -285,6 +285,7 @@ $this->title = 'Jurnal Transaksi Bulans';
     
 	<div class="row">
 		<div class="col-md-12">
+		<?=tombolKembali()?>
 			<div class="pull-right">
 				<?= tombolViewAkun().' '.tombolViewGroup();?>
 			</div>

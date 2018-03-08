@@ -313,7 +313,10 @@ function sttMsgDscp($stt){
 				'showSeparator' => true,
 				'delay' => 1000
 			]);
-		}?>
+		}?>		
+		<?=tombolKembali()?>
+		<br>
+		<br
 	<div class="col-md-4">
 		<?=$produk?>
 	</div>

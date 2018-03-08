@@ -94,7 +94,7 @@ class AbsenRekapController extends Controller
 		if(empty($dataProvider)){
 			Yii::$app->session->setFlash('error', "Data Tidak ada");
 			// $this->redirect(array('/inventory/stock-product'));
-			return $this->render('index', [
+			return $this->render('/hris/rekap/index-absen', [
 				'searchModel' => $searchModel,
 				'dataProvider' => $dataProvider,
 				// 'paramCari'=>$paramCari

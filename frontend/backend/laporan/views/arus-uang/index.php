@@ -8,6 +8,7 @@ use yii\web\View;
 use kartik\widgets\Select2;
 use common\models\Store;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -56,7 +57,23 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 <div class="jurnal-template-title-index">
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
-		<div class="row">	
+		<div class="row">
+		<?php
+		$title= Yii::t('app','');
+		$url = Url::toRoute(['/laporan/laporan']);
+		$options1 = [
+					'id'=>'back-trafik',
+					'class'=>"btn btn-xs",
+					'title'=>'Kembali Menu Laporan'
+		];
+		$icon1 = '<span class="fa-stack fa-md text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
+				  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
+				</span>
+		';
+		$label1 = $icon1.' '.$title ;
+		echo $content = Html::a($label1,$url,$options1);
+		?>	
 			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
                     <?php		                    
                         $tanggal=explode('-',$cari);				
@@ -99,7 +116,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 									$searchModel->RPT_TITLE_ID = $model->RPT_TITLE_ID;
 									$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-									return Yii::$app->controller->renderPartial('index_detail',[
+									return Yii::$app->controller->renderPartial('/arus-uang/index_detail',[
 										'searchModel'=>$searchModel,
 										'dataProvider'=>$dataProvider,
 										'modelView'=>$dataProvider->getModels(),

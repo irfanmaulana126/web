@@ -219,7 +219,10 @@ $this->registerCss("
 				'showSeparator' => true,
 				'delay' => 1000
 			]);
-		}?>
+		}?>		
+		<?=tombolKembali()?>
+		<br>
+		<br
 	<?=$gvAllStoreItem?>
 </div>
 
