@@ -34,7 +34,7 @@ use yii\helpers\Url;
             ], 
         ])->label('STORE')?>
 			
-			<?= $form->field($model, 'PRODUCT_NM')->textInput() ?>
+			<?= $form->field($model, 'PRODUCT_NM')->textInput(['style'=>'text-transform:uppercase']) ?>
 
 		<div class="form-group">
 			<?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
