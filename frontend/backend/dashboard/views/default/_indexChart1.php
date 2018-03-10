@@ -7,23 +7,56 @@ use yii\helpers\ArrayHelper;
 use yii\web\Request;
 use yii\web\View;
 use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 
 use ptrnov\fusionchart\Chart;
 use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
 
 
-//$client = new \GuzzleHttp\Client();
+$client = new \GuzzleHttp\Client();
 $client = new Client([
-	'headers' => [ 'Content-Type' => 'application/json' ]
+	'base_uri'=>'https://192.168.212.101',
+	'timeout'=>3.0,
+	'allow_redirects' => false,
 ]);
+//==FORM PARAM DATA 
 $dataBody = [			
 		"ACCESS_GROUP" => "170726220936"		
 ];
-$res = $client->post('192.168.212.101/laporan/counters/per-access-group',[
-			'body' =>json_encode($dataBody)
-		]);
-		
+$res = $client->post('laporan/counters/per-access-group',[
+    'verify' => false,
+	//'debug' => TRUE,
+	'body' =>json_encode($dataBody),	
+]); 
+
+ /* 
+$client = new Client([
+	'base_uri'=>'https://dashboard.kontrolgampang.com',
+    'verify' => '/etc/ssl/certs/kontrolgampang_bundel.crt',
+	'timeout'=>3.0,
+]);
+
+//==FORM PARAM DATA 
+$dataBody = [			
+		"ACCESS_GROUP" => "170726220936"		
+];
+$res = $client->post('laporan/counters/per-access-group',[
+    // 'verify' => false,
+	 // 'verify'  => '/etc/ssl/certs/STAR_kontrolgampang_com.crt',
+	// 'defaults' => [
+        // 'verify' => '/etc/ssl/certs/kontrolgampang_bundel.crt'
+    // ],
+	//'cert'   => '/etc/ssl/certs/STAR_kontrolgampang_com.crt',
+	//'private'   => '/etc/ssl/private/kontrolgampang.com.crt',
+	//'debug' => TRUE,
+	'body' =>json_encode($dataBody),
+	
+]);  */ 
+
+// $res = $client->request('POST', 'laporan/counters/per-access-group', ['verify' => '/etc/ssl/certs/kontrolgampang_bundel.crt']);	
+
+	
 // echo $res->getStatusCode();
 // echo $res->getBody();
 //$data=$res->getBody();
