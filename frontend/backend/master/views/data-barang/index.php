@@ -1,9 +1,26 @@
 <?php
 use yii\helpers\Html;
 use yii\web\View;
+use kartik\widgets\Growl;
 $this->title="Prodak";
 ?>
-
+<?php if (Yii::$app->session->hasFlash('error')) {
+			echo Growl::widget([
+                'type' => Growl::TYPE_DANGER,
+                'title' => 'Oh snap!',
+                'icon' => 'glyphicon glyphicon-remove-sign',
+				'body' => Yii::$app->session->getFlash('error'),
+				'showSeparator' => true,
+                'delay' => 500,
+                'pluginOptions' => [
+                    'showProgressbar' => true,
+                    'placement' => [
+                        'from' => 'top',
+                        'align' => 'right',
+                    ]
+                ]
+			]);
+		}?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 <section class="content-header">
     <h1>

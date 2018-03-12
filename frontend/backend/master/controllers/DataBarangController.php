@@ -109,89 +109,113 @@ class DataBarangController extends Controller
         
 		$paramCari=Yii::$app->getRequest()->getQueryParam('productid');
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        if(!empty($paramCari)){
-            $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
-            $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
-        }else{
-            $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
-            $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->one();
+        if (!empty($product)) {
+            if(!empty($paramCari)){
+                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
+                $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+            }else{
+                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+                $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+            }
+            $dataProviderDiscount = $searchModelDiscount->search(Yii::$app->request->queryParams);
+            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('_index_discount', [
+                'searchModel'=>$searchModel,
+                'dataProvider' => $dataProvider,
+                'searchModelDiscount'=>$searchModelDiscount,
+                'dataProviderDiscount' => $dataProviderDiscount,
+                'product'=>$product
+            ]);
+        } else {            
+            Yii::$app->session->setFlash('error', "Anda tidak memiliki Produk");
+            return $this->redirect('index');
         }
-        $dataProviderDiscount = $searchModelDiscount->search(Yii::$app->request->queryParams);
-        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		return $this->render('_index_discount', [
-            'searchModel'=>$searchModel,
-            'dataProvider' => $dataProvider,
-			'searchModelDiscount'=>$searchModelDiscount,
-            'dataProviderDiscount' => $dataProviderDiscount,
-            'product'=>$product
-        ]);
     }
     public function actionIndexPromo()
     {
         $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        if(!empty($paramCari)){
-            $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
-            $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
-        }else{
-            $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
-            $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->one();
+        if (!empty($product)) {       
+            if(!empty($paramCari)){
+                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
+                $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+            }else{
+                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+                $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+            }
+            $dataProviderPromo = $searchModelPromo->search(Yii::$app->request->queryParams);
+            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('_index_promo', [
+                'searchModel'=>$searchModel,
+                'dataProvider' => $dataProvider,
+                'searchModelPromo'=>$searchModelPromo,
+                'dataProviderPromo' => $dataProviderPromo,
+                'product'=>$product
+            ]);
+        } else {            
+            Yii::$app->session->setFlash('error', "Anda tidak memiliki Produk");
+            return $this->redirect('index');
         }
-        $dataProviderPromo = $searchModelPromo->search(Yii::$app->request->queryParams);
-        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		return $this->render('_index_promo', [
-            'searchModel'=>$searchModel,
-            'dataProvider' => $dataProvider,
-			'searchModelPromo'=>$searchModelPromo,
-            'dataProviderPromo' => $dataProviderPromo,
-            'product'=>$product
-        ]);
     }
     public function actionIndexHarga()
     {
         $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        if(!empty($paramCari)){
-            $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
-            $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
-        }else{
-            $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
-            $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->one();
+        if (!empty($product)) { 
+            if(!empty($paramCari)){
+                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
+                $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+            }else{
+                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+                $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+            }
+            $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
+            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('_index_harga', [
+                'searchModel'=>$searchModel,
+                'dataProvider' => $dataProvider,
+                'searchModelHarga'=>$searchModelHarga,
+                'dataProviderHarga' => $dataProviderHarga,
+                'product'=>$product
+            ]);
+        } else {            
+            Yii::$app->session->setFlash('error', "Anda tidak memiliki Produk");
+            return $this->redirect('index');
         }
-        $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
-        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		return $this->render('_index_harga', [
-            'searchModel'=>$searchModel,
-            'dataProvider' => $dataProvider,
-			'searchModelHarga'=>$searchModelHarga,
-            'dataProviderHarga' => $dataProviderHarga,
-            'product'=>$product
-        ]);
     }
     public function actionIndexStock()
     {
         $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        if(!empty($paramCari)){
-            $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
-            $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
-        }else{
-            $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
-            $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->one();
+        if (!empty($product)) { 
+            if(!empty($paramCari)){
+                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
+                $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+            }else{
+                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+                $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+            }
+            $dataProviderStock = $searchModelStock->search(Yii::$app->request->queryParams);
+            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            return $this->render('_index_stock', [
+                'searchModel'=>$searchModel,
+                'dataProvider' => $dataProvider,
+                'searchModelStock'=>$searchModelStock,
+                'dataProviderStock' => $dataProviderStock,
+                'product'=>$product
+            ]);
+        } else {            
+            Yii::$app->session->setFlash('error', "Anda tidak memiliki Produk");
+            return $this->redirect('index');
         }
-        $dataProviderStock = $searchModelStock->search(Yii::$app->request->queryParams);
-        $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		return $this->render('_index_stock', [
-            'searchModel'=>$searchModel,
-            'dataProvider' => $dataProvider,
-			'searchModelStock'=>$searchModelStock,
-            'dataProviderStock' => $dataProviderStock,
-            'product'=>$product
-        ]);
     }
     public function actionIndexSupplier()
     {
@@ -202,6 +226,7 @@ class DataBarangController extends Controller
 			'searchModel'=>$searchModel,
             'dataProvider' => $dataProvider,
         ]);
+        
     }
     public function actionIndexCustomer()
     {
@@ -286,6 +311,8 @@ class DataBarangController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->CREATE_AT=date('Y-m-d H:i:s');
+            $product=strtoupper($model->PRODUCT_NM);
+            $model->PRODUCT_NM=$product;
             if($model->save(false)) {                
                 $C=$model->getPrimaryKey();
                 $modelCari=Product::find()->where(['ID'=>$C['ID']])->one();
