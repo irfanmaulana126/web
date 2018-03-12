@@ -34,7 +34,7 @@ ChartAsset::register($this);
 	]);	
 	
 	$produkBar2d= Chart::Widget([
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-store',
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-transaksi',
 		'metode'=>'POST',
 		'param'=>[
 			'ACCESS_GROUP'=>'170726220936',
@@ -44,7 +44,24 @@ ChartAsset::register($this);
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'bar2d',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'bar2d-produk',								//unix name render
+		'renderid'=>'pie3d-produk',								//unix name render
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'465px'
+	]);	
+	
+	$produkBar2dRefund= Chart::Widget([
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-transaksi',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>'170726220936',
+			'TGL'=>'2018-02-27'
+		],
+		'userid'=>'piter@lukison.com',
+		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
+		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
+		'type'=>'bar2d',//msline//'bar3d',//'gantt',					//Chart Type 
+		'renderid'=>'pie3d-produk-refund',								//unix name render
 		'autoRender'=>true,
 		'width'=>'100%',
 		'height'=>'465px'
@@ -89,20 +106,22 @@ ChartAsset::register($this);
 				</div>	
 			</div>	
 		</div>	
-		<div class="col-sm-12 col-md-12 col-lg-12">
+		<div class="col-sm-12 col-md-12 col-lg-12" style="padding-bottom:10px">
 			<div class="row">
-					<div class="col-sm-6 col-md-6 col-lg-6" style="min-height:265px">
-						<div class="row" style="padding-top:10px">
-							<div class="w3-card-2 w3-round w3-white w3-center">	
-								<?=$produkBar2d?>
-							</div>
+				<div class="col-sm-6 col-md-6 col-lg-6" style="min-height:265px">
+					<div class="row" style="padding-top:10px">
+						<div class="w3-card-2 w3-round w3-white w3-center">	
+							<?=$produkBar2d?>
 						</div>
 					</div>
-					<div class="col-sm-6 col-md-6 col-lg-6" style="min-height:265px">
-						<div class="row">
-							<?php//=$produkBar2d?>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-6" style="min-height:265px">
+					<div class="row" style="padding-top:10px">
+						<div class="w3-card-2 w3-round w3-white w3-center">	
+							<?=$produkBar2dRefund?>
 						</div>
-					</div>
+					</div>						
+				</div>
 			</div>
 		</div>
 </div>
