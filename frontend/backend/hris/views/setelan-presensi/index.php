@@ -108,7 +108,9 @@ echo $this->render('modal_presensi'); //echo difinition
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-<?=tombolKembali()?>
+<div style="margin-top: -10px;margin-bottom: 10px;">
+		<?=tombolKembali()?>
+	</div>
 <?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php
 				echo Alert::widget([
