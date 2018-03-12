@@ -47,11 +47,11 @@ ChartAsset::register($this);
 		'renderid'=>'pie3d-produk',								//unix name render
 		'autoRender'=>true,
 		'width'=>'100%',
-		'height'=>'465px'
+		//'height'=>'100px'
 	]);	
 	
 	$produkBar2dRefund= Chart::Widget([
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-transaksi',
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-refund',
 		'metode'=>'POST',
 		'param'=>[
 			'ACCESS_GROUP'=>'170726220936',
@@ -61,10 +61,10 @@ ChartAsset::register($this);
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'bar2d',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'pie3d-produk-refund',								//unix name render
+		'renderid'=>'bar2d-produk-refund',								//unix name render
 		'autoRender'=>true,
 		'width'=>'100%',
-		'height'=>'465px'
+		'height'=>'400px'
 	]);	
 	
 	function tombolKembali(){
@@ -108,14 +108,16 @@ ChartAsset::register($this);
 		</div>	
 		<div class="col-sm-12 col-md-12 col-lg-12" style="padding-bottom:10px">
 			<div class="row">
-				<div class="col-sm-6 col-md-6 col-lg-6" style="min-height:265px">
-					<div class="row" style="padding-top:10px">
-						<div class="w3-card-2 w3-round w3-white w3-center">	
-							<?=$produkBar2d?>
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div style="min-height:100px">
+						<div class="row" style="padding-top:10px">
+							<div class="w3-card-2 w3-round w3-white w3-center">	
+								<?=$produkBar2d?>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6 col-md-6 col-lg-6" style="min-height:265px">
+				<div class="col-sm-6 col-md-6 col-lg-6" style="min-height:10px">
 					<div class="row" style="padding-top:10px">
 						<div class="w3-card-2 w3-round w3-white w3-center">	
 							<?=$produkBar2dRefund?>
