@@ -233,11 +233,11 @@ $this->registerCss("
 		'toolbar' => false,
 		'panel' => [
 			// 'heading'=>false,
-			'heading'=>$pageNm,
+			'heading'=>$pageNm.'<div class="pull-right">'.tombolStock($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
 			'type'=>'success',
 			'before'=>false,
 			// 'before'=>'<div class="pull-right">'.tombolImportExcelStock().' '.tombolExportExcelStock().' '.tombolStock($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
-			'before'=>'<div class="pull-right">'.tombolStock($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
+			// 'before'=>'<div class="pull-right">'.tombolStock($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
 			'showFooter'=>true,
 		],
 		'floatOverflowContainer'=>true,
