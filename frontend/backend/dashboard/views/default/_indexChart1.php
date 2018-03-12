@@ -72,15 +72,11 @@ $data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
 
 
 	$hourly3DaysTafik= Chart::Widget([
-		//'urlSource'=>'/dashboard/data/daily-transaksi',
-		//'urlSource'=>'/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1&TGL=2018-01-23',
-		 // 'urlSource'=>'/dashboard/data/daily-transaksi?ACCESS_GROUP=170726220936&TGL=2018-02-01',
-		//'urlSource'=>'/dashboard/data/daily-transaksi',
 		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
 		'metode'=>'POST',
 		'param'=>[
 			'ACCESS_GROUP'=>'170726220936',
-			'TGL'=>'2018-02-27'
+			'TGL'=>'2018-03-13'
 		],
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
@@ -680,3 +676,46 @@ $this->registerJs("
 		</div>	
 	</div>		
 </div>
+
+<?php
+$this->registerJs("
+//===AUTO UPDATE ==
+setInterval(function() {
+  //=== INIT FUSIONCHAT TRAFIK GROUP ===
+	var ptrTrafixGroup = document.getElementById('msline-sss-hour-3daystrafik');
+	var spnIdTrafixGroup= ptrTrafixGroup.getElementsByTagName('span');
+	var chartIdTrafixGroup= spnIdTrafixGroup[0].id; 
+	console.log(chartIdTrafixGroup);
+	var updateChartTrafixGroup = document.getElementById(chartIdTrafixGroup);
+	//==AJAX POST TRAFIK GROUP===
+	$.ajax({
+		  url: 'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
+		  type: 'POST',
+		  data: {'ACCESS_GROUP':'170726220936','STORE_ID':'170726220936.0001','TGL':'2018-03-13'},
+		  dataType:'json',
+		  success: function(data) {
+			//===UPDATE CHART ====
+			if (data['dataset'][0]['data']!==''){							
+				updateChartTrafixGroup.setChartData({
+					chart: data['chart'],
+					categories:data['categories'],
+					dataset: data['dataset']
+				});	
+			}else{
+				updateChartTrafixGroup.setChartData({
+					chart: data['chart'],
+					categories:data['categories'],
+					data:[{}]
+				});						
+			}					
+		  }			   
+	}); 
+	//console.log('test loop');
+}, 10000); 
+	
+	
+	
+",View::POS_READY);
+ 
+
+?>
