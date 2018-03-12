@@ -207,8 +207,8 @@ $this->registerCss("
 				'delay' => 1000
 			]);
 		}?>
+		<div style="margin-top: -10px;margin-bottom: 10px;">
 		<?=tombolKembali()?>
-		<br>
-		<br
+	</div>
 	<?=$gvAllStoreItem?>
 </div>

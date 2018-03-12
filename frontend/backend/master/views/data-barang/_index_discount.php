@@ -300,9 +300,9 @@ $dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Pending. '.sttMsgDscp(1).'=Active
 			]);
 		}?>
 		
+		<div style="margin-top: -10px;margin-bottom: 10px;">
 		<?=tombolKembali()?>
-		<br>
-		<br
+	</div>
 	<div class="col-md-4">
 		<?=$produk?>
 	</div>

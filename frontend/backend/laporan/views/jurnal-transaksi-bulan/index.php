@@ -285,13 +285,14 @@ $this->title = 'Jurnal Transaksi Bulans';
     
 	<div class="row">
 		<div class="col-md-12">
+		<div style="margin-top: -10px">
 		<?=tombolKembali()?>
-			<div class="pull-right">
+		<div class="pull-right">
 				<?= tombolViewAkun().' '.tombolViewGroup();?>
 			</div>
-		</div>
-		<br>    
-		<br>    
+	</div>
+			
+		</div> 
 		<div class="col-md-12">
 			<?php//=$leftButton?>
 			<?=$gvInvOut?>
