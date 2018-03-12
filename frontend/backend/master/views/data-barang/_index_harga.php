@@ -314,9 +314,9 @@ function sttMsgDscp($stt){
 				'delay' => 1000
 			]);
 		}?>		
+		<div style="margin-top: -10px;margin-bottom: 10px;">
 		<?=tombolKembali()?>
-		<br>
-		<br
+	</div>
 	<div class="col-md-4">
 		<?=$produk?>
 	</div>

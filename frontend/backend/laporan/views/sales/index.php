@@ -55,7 +55,10 @@ $btn_srchChart2="<div style='padding-bottom:3px;float:right'> Store".$btn_srchCh
 $retVal = (empty($store->STORE_NM)) ? '' : $store->STORE_NM ;
 $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 ?>
-<?php
+<div class="jurnal-template-title-index">
+<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div style="margin-top: -10px">
+		<?php
 		$title= Yii::t('app','');
 		$url = Url::toRoute(['/laporan/laporan']);
 		$options1 = [
@@ -66,13 +69,12 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 		$icon1 = '<span class="fa-stack fa-md text-left">
 				  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
 				  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
-				</span>
-		';
-		$label1 = $icon1.' '.$title ;
-		echo $content = Html::a($label1,$url,$options1);
-		?>
-<div class="jurnal-template-title-index">
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+				  </span>
+				  ';
+				  $label1 = $icon1.' '.$title ;
+				  echo $content = Html::a($label1,$url,$options1);
+				  ?>	
+		</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">	
 			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
