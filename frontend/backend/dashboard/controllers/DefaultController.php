@@ -63,6 +63,12 @@ class DefaultController extends Controller
         return $this->renderAjax('salesbulanan_chart');
     }
 	
+	public function actionSalesMingguan()
+    {
+		// Yii::$app->session->setFlash('ee');
+        return $this->renderAjax('salesmingguan_chart');
+    }
+	
 	
 	
 }

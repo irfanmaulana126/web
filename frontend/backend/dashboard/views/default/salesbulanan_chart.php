@@ -44,7 +44,8 @@ $btn_srchChart1=DatePicker::widget([
 		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-group',
 		'metode'=>'POST',
 		'param'=>[
-			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
+			//'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
 			'THN'=>date("Y"),//'2018-02-27'
 		],
 		// 'urlSource'=> '/dashboard/data/monthy-sales?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
@@ -80,6 +81,7 @@ $btn_srchChart1=DatePicker::widget([
 	</div>	
 </div>	
 <?php
+ //data: {'ACCESS_GROUP':'".Yii::$app->user->identity->ACCESS_GROUP."','THN':thn},
 $this->registerJs("
 $('#tahun').change(function() { 
     //==FILTER DATA ==
@@ -102,7 +104,7 @@ $('#tahun').change(function() {
 		$.ajax({
 			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-group',
 			  type: 'POST',
-			  data: {'ACCESS_GROUP':'".Yii::$app->user->identity->ACCESS_GROUP."','THN':thn},
+			  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','THN':thn},
 			  dataType:'json',
 			  success: function(data) {
 				//===UPDATE CHART ====
