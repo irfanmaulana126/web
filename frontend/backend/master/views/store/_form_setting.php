@@ -21,7 +21,7 @@ use yii\helpers\Url;
     <?= $form->field($model, 'PAYMENT_METHODE')->dropDownList(['0' => 'DEBET DOMPET', '1' => 'KARTU KREDIT', '2' => 'TRANSFER MANUAL'],['prompt'=>'Select Option']); ?>
 
     <?= $form->field($model, 'PAKET_ID')->widget(Select2::classname(), [
-            'data' => ArrayHelper::map(StoreMembershipPaket::find()->all(),'PAKET_ID','PAKET_NM'),
+            'data' => ArrayHelper::map(StoreMembershipPaket::find()->where(['PAKET_STT'=>1])->all(),'PAKET_ID','PAKET_NM'),
             'language' => 'EN',
             'options' => ['placeholder' => 'Select a state ...','id'=>'province-id'],
             'pluginOptions' => [

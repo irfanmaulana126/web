@@ -776,6 +776,7 @@ class DataBarangController extends Controller
 				'freezePane' => 'A2',
 				'columnGroup'=>false,
                 'autoSize'=>false,
+                'unlockCell'=>'C,J,'.(count($excel_ceilsDataProduk)+1000).'',
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					[
@@ -838,6 +839,7 @@ class DataBarangController extends Controller
 				'freezePane' => 'A2',
 				'columnGroup'=>false,
                 'autoSize'=>false,
+                'unlockCell'=>'C,J,'.(count($excel_ceilsDataProduk)+1).'',
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					[
