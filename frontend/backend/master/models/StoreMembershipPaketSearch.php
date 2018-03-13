@@ -67,7 +67,7 @@ class StoreMembershipPaketSearch extends StoreMembershipPaket
             'HARGA_HARI' => $this->HARGA_HARI,
             'HARGA_PAKET' => $this->HARGA_PAKET,
             'HARGA_PAKET_HARI' => $this->HARGA_PAKET_HARI,
-            'PAKET_STT' => $this->PAKET_STT,
+            'PAKET_STT' => 1,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
         ]);

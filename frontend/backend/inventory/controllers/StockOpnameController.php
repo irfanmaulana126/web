@@ -176,8 +176,10 @@ class StockOpnameController extends Controller
         $excel_ceilsProdukStokdownload = $excel_dataProdukStokdownload['excel_ceils'];
 
 		
-		// print_r($excel_dataProdukStokdownload);
+		// print_r(!empty($excel_titleProdukStokdownload));
 		// die();
+		if (!empty($excel_titleProdukStokdownload)) {
+			
 		//DATA IMPORT
 		$excel_contentdownload = [
 			[
@@ -215,7 +217,10 @@ class StockOpnameController extends Controller
 		// die();
 		$excel_filedownload = "Stock Opname After Closing";
 		$this->export4excel($excel_contentdownload, $excel_filedownload,0);
-		
+		} else {
+			Yii::$app->session->setFlash('error', "Tidak ada data pada tanggal ini");
+			return $this->redirect(['index']);
+		}		
 		} else {			
 			Yii::$app->session->setFlash('error', "Tanggal Belum diinputkan");
 			return $this->redirect(['index']);
