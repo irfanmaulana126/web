@@ -23,7 +23,6 @@ use common\models\Store;
 $this->title = 'dashboard/trafik';
 $this->params['breadcrumbs'][] = $this->title;
 
-
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
@@ -51,7 +50,7 @@ $btn_srchChart2= Select2::widget([
 		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-store',
 		'metode'=>'POST',
 		'param'=>[
-			'ACCESS_GROUP'=>'170726220936',
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
 			'STORE_ID'=>'170726220936.0001',
 			'TGL'=>date("Y-m-d"),//'2018-03-12'
 		],
@@ -69,7 +68,7 @@ $btn_srchChart2= Select2::widget([
 		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-transaksi',
 		'metode'=>'POST',
 		'param'=>[
-			'ACCESS_GROUP'=>'170726220936',
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
 			'STORE_ID'=>'170726220936.0001',
 			'TGL'=>date("Y-m-d"),//'2018-03-12'
 		],
@@ -88,7 +87,7 @@ $btn_srchChart2= Select2::widget([
 		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-refund',
 		'metode'=>'POST',
 		'param'=>[
-			'ACCESS_GROUP'=>'170726220936',
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
 			'STORE_ID'=>'170726220936.0001',
 			'TGL'=>date("Y-m-d"),//'2018-02-14'
 		],
@@ -129,18 +128,17 @@ $btn_srchChart2= Select2::widget([
 				<div style="float:left">
 					<?php //echo 'dashboard '.'<span class="fa fa-md fa fa-chevron-right text-left"></span>'.' '.Yii::$app->controller->id;?>
 				</div>
-				<div class="text-right" style="padding-right:10px;padding-bottom:10px;font-size:15px;color:#7e7e7e">
+				
+				<div class="pull-left" style="padding-left:10px;font-size:15px;color:#7e7e7e;float:left'">
 					<!--<a href="https://www.w3schools.com">Rincian Per-Toko</a>!-->
 					<?php echo tombolKembali()?>
 				</div>
-				<div class="row">
-				<div class="col-sm-12 col-md-12 col-lg-12">
-					<div>
-						<div style='padding-bottom:3px;width:200px;float:left'><?=$btn_srchChart1?></div>
-						<div style='padding-bottom:3px;width:200px;float:left;padding-left:5px'><?=$btn_srchChart2?></div>
-					</div>				
+				
+				<div class="col-sm-12 col-md-12 col-lg-12 pull-right"  style='float:left'>					
+						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left'><?=$btn_srchChart1?></div>
+						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left;padding-left:5px'><?=$btn_srchChart2?></div>									
 				</div>	
-			</div>	
+			
 			</div>	
 			<div class="row">
 				<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	

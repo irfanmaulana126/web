@@ -14,7 +14,7 @@ use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
 
 
-$client = new \GuzzleHttp\Client();
+//$client = new \GuzzleHttp\Client();
 $client = new Client([
 	'base_uri'=>'https://192.168.212.101',
 	'timeout'=>3.0,
@@ -22,7 +22,7 @@ $client = new Client([
 ]);
 //==FORM PARAM DATA 
 $dataBody = [			
-		"ACCESS_GROUP" => "170726220936"		
+		"ACCESS_GROUP" =>Yii::$app->user->identity->ACCESS_GROUP,// "170726220936"		
 ];
 $res = $client->post('laporan/counters/per-access-group',[
     'verify' => false,
@@ -75,8 +75,8 @@ $data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
 		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
 		'metode'=>'POST',
 		'param'=>[
-			'ACCESS_GROUP'=>'170726220936',
-			'TGL'=>'2018-03-13'
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
+			'TGL'=>date("Y-m-d"),//'2018-03-13'
 		],
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
@@ -130,6 +130,11 @@ $data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
 	$weeklySales= Chart::Widget([
 		// 'urlSource'=> '/dashboard/data/weekly-sales?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=2',
 		'urlSource'=> '/dashboard/data/weekly-sales',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
+			'TGL'=>date("Y-m-d"),//'2018-02-27'
+		],
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
@@ -146,8 +151,8 @@ $data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
 		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-group',
 		'metode'=>'POST',
 		'param'=>[
-			'ACCESS_GROUP'=>'170726220936',
-			'TGL'=>'2018-02-27'
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
+			'THN'=>date("Y"),//'2018-02-27'
 		],
 		// 'urlSource'=> '/dashboard/data/monthy-sales?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
 		// 'urlSource'=> '/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
@@ -391,7 +396,7 @@ $this->registerJs("
 		$(this).prop('Counter',0).animate({
 			Counter: $(this).text()
 		}, {
-			duration: 5000,
+			duration: 4000,
 			easing: 'swing',
 			step: function (now) {
 				$(this).text(Math.ceil(now));
@@ -405,7 +410,7 @@ $this->registerJs("
 		$(this).prop('Counter',0).animate({
 			Counter: $(this).text()
 		}, {
-			duration: 5000,
+			duration: 4000,
 			easing: 'swing',
 			step: function (now) {
 				$(this).text(Math.ceil(now));
@@ -419,7 +424,7 @@ $this->registerJs("
 		$(this).prop('Counter',0).animate({
 			Counter: $(this).text()
 		}, {
-			duration: 5000,
+			duration: 4000,
 			easing: 'swing',
 			step: function (now) {
 				$(this).text(Math.ceil(now));
@@ -433,7 +438,7 @@ $this->registerJs("
 		$(this).prop('Counter',0).animate({
 			Counter: $(this).text()
 		}, {
-			duration: 5000,
+			duration: 4000,
 			easing: 'swing',
 			step: function (now) {
 				$(this).text(Math.ceil(now));
@@ -545,7 +550,6 @@ $this->registerJs("
 							<div class="row">								
 								<div style="min-height:250px"><div style="height:260px"><?=$hourly3DaysTafik?></div></div><div class="clearfix"></div>
 								<div class="text-right" style="padding-right:10px;font-size:12px;color:#7e7e7e">
-									<!--<a href="https://www.w3schools.com">Rincian Per-Toko</a>!-->
 									<?php echo tombolViewModalDetailPerStore().tombolDetailPerStore()?>
 								</div>
 							</div>
@@ -661,7 +665,12 @@ $this->registerJs("
 		<div class="row">
 			<div class="panel-heading ">
 				<div class="row">
-					<div style="min-height:300px"><?php //$loadingSpinner1?><div style="height:300px"><?=$monthlySales?></div></div><div class="clearfix"></div>
+					<div style="min-height:260px"><?php //$loadingSpinner1?><div style="height:260px">
+						<?=$monthlySales?>						
+					</div>
+					<div class="text-left" style="padding-left:10px;font-size:12px;color:#7e7e7e">
+						<?php echo tombolDetailSalesBulananPerStore().tombolViewModalSalesBulananPerStore()?>
+					</div>							
 				</div>
 			</div>	
 		</div>			
@@ -681,7 +690,7 @@ $this->registerJs("
 $this->registerJs("
 //===AUTO UPDATE ==
 setInterval(function() {
-  //=== INIT FUSIONCHAT TRAFIK GROUP ===
+	//=== INIT FUSIONCHAT TRAFIK GROUP ===
 	var ptrTrafixGroup = document.getElementById('msline-sss-hour-3daystrafik');
 	var spnIdTrafixGroup= ptrTrafixGroup.getElementsByTagName('span');
 	var chartIdTrafixGroup= spnIdTrafixGroup[0].id; 
@@ -691,7 +700,7 @@ setInterval(function() {
 	$.ajax({
 		  url: 'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
 		  type: 'POST',
-		  data: {'ACCESS_GROUP':'170726220936','STORE_ID':'170726220936.0001','TGL':'2018-03-13'},
+		  data: {'ACCESS_GROUP':'".Yii::$app->user->identity->ACCESS_GROUP."','TGL':'".date("Y-m-d")."'},
 		  dataType:'json',
 		  success: function(data) {
 			//===UPDATE CHART ====
@@ -710,12 +719,37 @@ setInterval(function() {
 			}					
 		  }			   
 	}); 
-	//console.log('test loop');
-}, 10000); 
-	
-	
-	
-",View::POS_READY);
+	//=== INIT FUSIONCHAT SALES MONTH GROUP ===
+	var ptrSalesMonthGroup = document.getElementById('msline-sales-monthly');
+	var spnIdptrSalesMonthGroup= ptrSalesMonthGroup.getElementsByTagName('span');
+	var chartIdspnIdptrSalesMonthGroup= spnIdptrSalesMonthGroup[0].id; 
+	//console.log(chartIdspnIdptrSalesMonthGroup);
+	var updateChartchartIdspnIdptrSalesMonthGroup = document.getElementById(chartIdspnIdptrSalesMonthGroup);
+	//==AJAX POST SALES MONTH GROUP===
+	$.ajax({
+		  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-group',
+		  type: 'POST',
+		  //data: {'ACCESS_GROUP':'170726220936','STORE_ID':'170726220936.0001','TGL':'2018-03-13'},
+		  data: {'ACCESS_GROUP':'".Yii::$app->user->identity->ACCESS_GROUP."','TGL':'".date("Y-m-d")."'},
+		  dataType:'json',
+		  success: function(data) {
+			//===UPDATE CHART ====
+			if (data['dataset']!==''){							
+				updateChartchartIdspnIdptrSalesMonthGroup.setChartData({
+					chart: data['chart'],
+					categories:data['categories'],
+					dataset: data['dataset']
+				});	
+			}else{
+				updateChartchartIdspnIdptrSalesMonthGroup.setChartData({
+					chart: data['chart'],
+					categories:data['categories'],
+					data:[{}]
+				});						
+			}					
+		  }			   
+	}); 	
+}, 10000);",View::POS_READY);
  
 
 ?>

@@ -57,6 +57,12 @@ class DefaultController extends Controller
         return $this->renderAjax('trafikperstore_chart');
     }
 	
+	public function actionSalesBulanan()
+    {
+		// Yii::$app->session->setFlash('ee');
+        return $this->renderAjax('salesbulanan_chart');
+    }
+	
 	
 	
 }
