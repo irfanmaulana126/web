@@ -7,69 +7,11 @@ use yii\helpers\ArrayHelper;
 use yii\web\Request;
 use yii\web\View;
 use GuzzleHttp\Client;
-use GuzzleHttp\RequestOptions;
+//use GuzzleHttp\RequestOptions;
 
 use ptrnov\fusionchart\Chart;
 use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
-
-
-//$client = new \GuzzleHttp\Client();
-$client = new Client([
-	'base_uri'=>'https://192.168.212.101',
-	'timeout'=>3.0,
-	'allow_redirects' => false,
-]);
-//==FORM PARAM DATA 
-$dataBody = [			
-		"ACCESS_GROUP" =>Yii::$app->user->identity->ACCESS_GROUP,// "170726220936"		
-];
-$res = $client->post('laporan/counters/per-access-group',[
-    'verify' => false,
-	//'debug' => TRUE,
-	'body' =>json_encode($dataBody),	
-]); 
-
- /* 
-$client = new Client([
-	'base_uri'=>'https://dashboard.kontrolgampang.com',
-    'verify' => '/etc/ssl/certs/kontrolgampang_bundel.crt',
-	'timeout'=>3.0,
-]);
-
-//==FORM PARAM DATA 
-$dataBody = [			
-		"ACCESS_GROUP" => "170726220936"		
-];
-$res = $client->post('laporan/counters/per-access-group',[
-    // 'verify' => false,
-	 // 'verify'  => '/etc/ssl/certs/STAR_kontrolgampang_com.crt',
-	// 'defaults' => [
-        // 'verify' => '/etc/ssl/certs/kontrolgampang_bundel.crt'
-    // ],
-	//'cert'   => '/etc/ssl/certs/STAR_kontrolgampang_com.crt',
-	//'private'   => '/etc/ssl/private/kontrolgampang.com.crt',
-	//'debug' => TRUE,
-	'body' =>json_encode($dataBody),
-	
-]);  */ 
-
-// $res = $client->request('POST', 'laporan/counters/per-access-group', ['verify' => '/etc/ssl/certs/kontrolgampang_bundel.crt']);	
-
-	
-// echo $res->getStatusCode();
-// echo $res->getBody();
-//$data=$res->getBody();
-//echo $data->CNT_STORE_AKTIF;
-// $data1=json_decode($res->getBody());
-// $data2=json_decode($res->getBody())->PER_ACCESS_GROUP;
-$data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
-//$rslt=$data->ACCESS_GROUP;
-
-	//print_r($data);
-
-	
-
 
 	$hourly3DaysTafik= Chart::Widget([
 		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
@@ -100,31 +42,6 @@ $data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
 			'showCanvasBorder'=> "0",						//border box inside atau garis kotak dalam	
 		],
 	]);	
-
-	/* $weeklyTafik= Chart::Widget([
-		'urlSource'=> url::base().'/dashboard/foodtown/weekly-sales',
-		'userid'=>'piter@lukison.com',
-		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
-		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
-		'type'=>'column2d',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'mscolumn2d-sss-weekly-trafik',								//unix name render
-		'autoRender'=>true,
-		'width'=>'100%',
-		'height'=>'160px',
-		'chartOption'=>[				
-			'caption'=>'Daily Customers Visits',			//Header Title
-			'subCaption'=>'Custommer Call, Active Customer, Efictif Customer',			//Sub Title
-			'xaxisName'=>'Parents',							//Title Bawah/ posisi x
-			'yaxisName'=>'Total Child ', 					//Title Samping/ posisi y									
-			'theme'=>'fint',								//Theme
-			'is2D'=>"0",
-			'showValues'=> "1",
-			'palettecolors'=> "#583e78,#008ee4,#f8bd19,#e44a00,#6baa01,#ff2e2e",
-			'bgColor'=> "#ffffff",							//color Background / warna latar 
-			'showBorder'=> "0",								//border box outside atau garis kotak luar
-			'showCanvasBorder'=> "0",						//border box inside atau garis kotak dalam	
-		],
-	]);	 */	
 
 	//=WEEKLY SALES
 	$weeklySales= Chart::Widget([
@@ -176,278 +93,210 @@ $data=json_decode($res->getBody())->PER_ACCESS_GROUP[0];
 		   color:black;
 		}	
  ");
- 
+ $produkCnt=100;
 $this->registerJs("
-	$(document).ready(function () {
-		var data1 = '170726220936';
-		var form = new FormData();
-		form.append('ACCESS_GROUP', '170726220936');
-		
-		/* var  jsonData= $.ajax({
-		  url: 'http://production.kontrolgampang.com/laporan/counters/per-access-group',
-		  type: 'GET',
-		  'data':form,
-		  dataType:'json',
-		  async: false,
-		  global: false
-		}).responseText;
-		var myDataChart= jsonData;
-		console.log(myDataChart); */
-		/* var settings = {
-			
-		  'async': true,
-		  'crossDomain': true,
-		  'cache': false,
-		  // 'beforeSend': function(request) {
-			// request.setRequestHeader('X-Forwarded-Proto', 'http');
-		  // },
-		  'url': 'http://192.168.212.101/laporan/counters/per-access-group',
-		 // 'url': 'http://production.kontrolgampang.com/laporan/counters/per-access-group')',
-		  'method': 'POST',
-		  'processData': false,
-		  'contentType': 'application/x-www-form-urlencoded; charset=UTF-8',	
-		  'mimeType': 'multipart/form-data',
-		  'data':form
-		}
-		$.ajax(settings).done(function (response) {
-		  console.log(response);
-		});  */
-	});
-							
-	// var settings = {
-	  // 'async': true,
-	  // 'crossDomain': true,
-	  // 'url': 'http://production.kontrolgampang.com/laporan/counters/per-access-group',
-	  // 'method': 'POST',
-	  // 'headers': {
-		  // 'Cache-Control: no-cache, no-store, must-revalidate';
-		  // 'Pragma: no-cache';
-		  // 'Expires: 0';
-	  // },
-	  // 'processData': false,
-	  // 'contentType': false,
-	  // 'mimeType': 'multipart/form-data',
-	  // 'data':form
-	// }
-	// $.ajax(settings).done(function (response) {
-	  // console.log(response);
-	// });
-	/* $.ajax({
-		url: 'http://production.kontrolgampang.com/laporan/counters/per-access-group',
-		async: true,
-		crossDomain: true,
-		type : 'POST',
-		contentType: 'application/x-www-form-urlencoded; charset=UTF-8',		
-		//data: {ACCESS_GROUP:data1,tgl:data2},
-		data: {ACCESS_GROUP:data1},
-		// processData: false,
-		// contentType: false,
-		dataType: 'json',
-	processData: false,
-		contentType: false,
-		mimeType: 'multipart/form-data',
-		success  : function(result) {
-			console.log(value);
-								
-		}
-	}); */
+	$(document).ready(function (){
+		// var data1 = '170726220936';
+		// var form = new FormData();
+		// form.append('ACCESS_GROUP', '170726220936');		
+		var jsonDataCnt = $.ajax({
+			url: 'https://production.kontrolgampang.com/laporan/counters/per-access-group',
+			type: 'POST',
+			data: {'ACCESS_GROUP':'".Yii::$app->user->identity->ACCESS_GROUP."'},
+			dataType:'json',
+			async: false,
+		    global: false			
+		}).responseText;	
+		var myDataChart= JSON.parse(jsonDataCnt);
+		var fieldData =myDataChart['PER_ACCESS_GROUP'][0];
+		//console.log(fieldData['ACCESS_GROUP']);
 
-	$('.count-grand-total-hari').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format('100')."');	//TOTAL_PENJUALAN
-			}
+		//=== COUNT JUMLAH_PRODAK ===
+		document.getElementById('jumlah-produk-id').innerHTML=fieldData['CNT_PRODUK'];
+		$('.jumlah-produk').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PRODUK']);	
+				}
+			});
+		});
+		
+		//==== COUNT JUMLAH_KARYAWAN =====
+		document.getElementById('jumlah-karyawan-id').innerHTML=fieldData['CNT_KARYAWAN'];
+		$('.jumlah-karyawan').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_KARYAWAN']);	
+				}
+			});		
+		});
+		
+		//==== COUNT JUMLAH_KARYAWAN AKTIF=====
+		document.getElementById('jumlah-karyawan-aktif-id').innerHTML=fieldData['CNT_KARYAWAN_AKTIF'];
+		$('.jumlah-karyawan-aktif').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_KARYAWAN_AKTIF']);	
+				}
+			});
+		});
+		
+		//==== COUNT JUMLAH CUSTOMER =====
+		document.getElementById('jumlah-customer-id').innerHTML=fieldData['CNT_CUS_MEMBER'];
+		$('.jumlah-customer').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_CUS_MEMBER']);	
+				}
+			});
+		});
+		
+		//==== COUNT JUMLAH_TOKO =====
+		document.getElementById('jumlah-toko-id').innerHTML=fieldData['CNT_STORE'];
+		$('.jumlah-toko').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_STORE']);		
+				}
+			});
+		});
+		//==== COUNT JUMLAH_TOKO_AKTIF =====
+		document.getElementById('jumlah-toko-aktif-id').innerHTML=fieldData['CNT_STORE_AKTIF'];
+		$('.jumlah-toko-aktif').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_STORE_AKTIF']);		
+				}
+			});
+		});
+		//==== COUNT JUMLAH PERANGKAT TOKO_AKTIF =====
+		document.getElementById('jumlah-perangkat-aktif-id').innerHTML=fieldData['CNT_PERNGKAT_AKTIF'];
+		$('.jumlah-perangkat-aktif').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PERNGKAT_AKTIF']);
+				}
+			});
+		});
+	
+		//==== COUNT TRAFIK TRANSAKSI HARIAN =====
+		document.getElementById('frekuensi-transaksi-harian-id').innerHTML=fieldData['CNT_JUMLAH_TRANSAKSI'];
+		$('.frekuensi-transaksi-harian').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_JUMLAH_TRANSAKSI']);
+				}
+			});
+		});
+		
+		//==== COUNT PENJUALAN HARIAN =====
+		document.getElementById('penjualan-harian-id').innerHTML=fieldData['CNT_PENJUALAN_HARIAN'];
+		$('.penjualan-harian').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PENJUALAN_HARIAN'].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));		
+				}
+			});
+		});	
+		
+		//==== COUNT PENJUALAN MINGGUAN =====
+		document.getElementById('penjualan-mingguan-id').innerHTML=fieldData['CNT_PENJUALAN_MINGGUAN'];
+		$('.penjualan-mingguan').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PENJUALAN_MINGGUAN'].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+				}
+			});
+		});
+		
+		//==== COUNT PENJUALAN BULANAN =====
+		document.getElementById('penjualan-bulanan-id').innerHTML=fieldData['CNT_PENJUALAN_BULANAN'];
+		$('.penjualan-bulanan').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PENJUALAN_BULANAN'].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+				}
+			});
 		});
 	});
-	$('.count-trans-total-hari').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format('100')."');	//JUMLAH_TRANSAKSI
-			}
-		});
-	});
-	$('.rata-rata-penjualan').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format('100')."');	//RATA_RATA_PENJUALAN
-			}
-		});
-	});
-	$('.jumlah-produk').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_PRODUK)."');	//JUMLAH_PRODAK
-			}
-		});
-	});
-	$('.jumlah-karyawan').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_KARYAWAN)."');	//JUMLAH_KARYAWAN
-			}
-		});
-	});
-	$('.jumlah-karyawan-aktif').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_KARYAWAN_AKTIF)."');	//JUMLAH_KARYAWAN_AKTIF
-			}
-		});
-	});
-	$('.jumlah-customer').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_CUS_MEMBER)."');	//JUMLAH_KARYAWAN_AKTIF
-			}
-		});
-	});
-	$('.jumlah-toko').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_STORE)."');		//JUMLAH_TOKO
-			}
-		});
-	});
-	$('.jumlah-toko-aktif').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_STORE_AKTIF)."');		//JUMLAH_TOKO_AKTIF
-			}
-		});
-	});
-	$('.jumlah-perangkat-aktif').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_PERNGKAT_AKTIF)."');		//JUMLAH_TOKO_AKTIF
-			}
-		});
-	});
-	$('.frekuensi-transaksi-harian').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_JUMLAH_TRANSAKSI)."');		//FREKUENSI TRANSAKSI HARIAN
-			}
-		});
-	});
-	$('.penjualan-harian').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_PENJUALAN_HARIAN)."');		//PENJUALAN HARIAN
-			}
-		});
-	});	
-	$('.penjualan-mingguan').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_PENJUALAN_MINGGUAN)."');		//PENJUALAN MINGGUAN
-			}
-		});
-	});
-	$('.penjualan-bulanan').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 4000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			},
-			complete: function() {
-				$(this).text('".number_format($data->CNT_PENJUALAN_BULANAN)."');		//PENJUALAN MINGGUAN
-			}
-		});
-	});
+
 ",$this::POS_END);
 
 ?>
@@ -468,7 +317,9 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small" style="padding-left:1px">
 							<dl>
-								<dt class="frekuensi-transaksi-harian" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_JUMLAH_TRANSAKSI?></dt>
+								<dt class="frekuensi-transaksi-harian" style="font-size:14px;color:#7e7e7e">
+									<h1 id="frekuensi-transaksi-harian-id"></h1>
+								</dt>
 								<dd style="font-size:10px;color:#7e7e7e">FREKUENSI TRANSAKSI HARIAN</dd>
 							</dl>							
 						</div>
@@ -489,7 +340,9 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small" style="padding-left:1px">
 							<dl>								
-								<dt class="penjualan-harian" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_PENJUALAN_HARIAN?></dt>
+								<dt class="penjualan-harian" style="font-size:12px;color:#7e7e7e">
+									<h6 id="penjualan-harian-id"></h6>
+								</dt>
 								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN HARIAN (IDR)</dd>								
 							</dl>							
 						</div>
@@ -510,7 +363,9 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small" style="padding-left:1px">
 							<dl>
-								<dt class="penjualan-mingguan" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_PENJUALAN_MINGGUAN?></dt>
+								<dt class="penjualan-mingguan" style="font-size:12px;color:#7e7e7e">
+									<h1 id="penjualan-mingguan-id"></h1>
+								</dt>
 								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN MINGGUAN (IDR)</dd>
 							</dl>							
 						</div>
@@ -531,7 +386,9 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small" style="padding-left:1px">
 							<dl>
-								<dt class="penjualan-bulanan" style="font-size:14px;color:#7e7e7e"><?=$data->CNT_PENJUALAN_BULANAN?></dt>
+								<dt class="penjualan-bulanan" style="font-size:12px;color:#7e7e7e">
+									<h1 id="penjualan-bulanan-id"></h1>
+								</dt>
 								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN BULANAN (IDR)</dd>
 							</dl>							
 						</div>
@@ -576,12 +433,12 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small" style="padding-left:15px">
 							<dl>
-								<dt style="font-size:13px;color:#7e7e7e">
-									<div class="jumlah-toko" style="float:left"><?=$data->CNT_STORE?></div>
+								<dt style="font-size:12px;color:#7e7e7e">
+									<div class="jumlah-toko" style="float:left"><h1 id="jumlah-toko-id"></div>
 									<div style="float:left">/</div>
-									<div class="jumlah-toko-aktif" style="float:left"><?=$data->CNT_STORE_AKTIF?></div>	
+									<div class="jumlah-toko-aktif" style="float:left"><h1 id="jumlah-toko-aktif-id"></div>	
 									<div style="float:left">/</div>
-									<div class="jumlah-perangkat-aktif"><?=$data->CNT_PERNGKAT_AKTIF?></div>									
+									<div class="jumlah-perangkat-aktif"><h1 id="jumlah-perangkat-aktif-id"></h1></div>									
 								</dt> 
 								<dd style="font-size:10px;color:#7e7e7e">TOKO</dd>
 							</dl>							
@@ -602,8 +459,9 @@ $this->registerJs("
 							</a>
 						</div>						
 						<div class="col-lg-9 text-left .small" style="padding-left:15px">
-							<dl style="font-size:13px;color:#7e7e7e" style="padding-left:2px">
-								<dt class="jumlah-produk" style="font-size:13px;color:#7e7e7e"><?=$data->CNT_PRODUK?></dt>
+							<dl style="font-size:12px;color:#7e7e7e" style="padding-left:2px">
+								<dt class="jumlah-produk" style="font-size:13px;color:#7e7e7e">
+									<h1 id='jumlah-produk-id'></h1></dt>
 								<dd style="font-size:10px;color:#7e7e7e">PRODUK</dd>
 							</dl>							
 						</div>
@@ -624,10 +482,12 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left" style="padding-left:15px">
 							<dl>
-								<dt style="font-size:13px;color:#7e7e7e">
-									<div class="jumlah-karyawan" style="float:left"><?=$data->CNT_KARYAWAN?></div>
+								<dt style="font-size:12px;color:#7e7e7e">
+									<div class="jumlah-karyawan" style="float:left">
+										<h5 id="jumlah-karyawan-id"></h5>
+									</div>
 									<div style="float:left">/</div>
-									<div class="jumlah-karyawan-aktif"><?=$data->CNT_KARYAWAN_AKTIF?></div>						
+									<div class="jumlah-karyawan-aktif"><h5 id="jumlah-karyawan-aktif-id"></h5></div>						
 								</dt>
 								<dd style="font-size:10px;color:#7e7e7e">KARYAWAN</dd>
 							</dl>							
@@ -649,8 +509,8 @@ $this->registerJs("
 						</div>						
 						<div class="col-lg-9 text-left .small" style="padding-left:15px">
 							<dl>
-								<dt style="font-size:13px;color:#7e7e7e">
-									<div class="jumlah-customer"><?=$data->CNT_CUS_MEMBER?></div>		
+								<dt style="font-size:12px;color:#7e7e7e">
+									<div class="jumlah-customer"><h5 id="jumlah-customer-id"></h5></div>		
 								</dt>
 								<dd style="font-size:10px;color:#7e7e7e">MEMBER</dd>
 							</dl>							
@@ -694,7 +554,7 @@ setInterval(function() {
 	var ptrTrafixGroup = document.getElementById('msline-sss-hour-3daystrafik');
 	var spnIdTrafixGroup= ptrTrafixGroup.getElementsByTagName('span');
 	var chartIdTrafixGroup= spnIdTrafixGroup[0].id; 
-	console.log(chartIdTrafixGroup);
+	//console.log(chartIdTrafixGroup);
 	var updateChartTrafixGroup = document.getElementById(chartIdTrafixGroup);
 	//==AJAX POST TRAFIK GROUP===
 	$.ajax({
@@ -749,6 +609,209 @@ setInterval(function() {
 			}					
 		  }			   
 	}); 	
+	
+	//== COUNTER ===
+	// var data1 = '170726220936';
+		// var form = new FormData();
+		// form.append('ACCESS_GROUP', '170726220936');		
+		var jsonDataCnt = $.ajax({
+			url: 'https://production.kontrolgampang.com/laporan/counters/per-access-group',
+			type: 'POST',
+			data: {'ACCESS_GROUP':'".Yii::$app->user->identity->ACCESS_GROUP."'},
+			dataType:'json',
+			async: false,
+		    global: false			
+		}).responseText;	
+		var myDataChart= JSON.parse(jsonDataCnt);
+		var fieldData =myDataChart['PER_ACCESS_GROUP'][0];
+		//console.log(fieldData['ACCESS_GROUP']);
+
+		//=== COUNT JUMLAH_PRODAK ===
+		document.getElementById('jumlah-produk-id').innerHTML=fieldData['CNT_PRODUK'];
+		$('.jumlah-produk').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PRODUK']);	
+				}
+			});
+		});
+		
+		//==== COUNT JUMLAH_KARYAWAN =====
+		document.getElementById('jumlah-karyawan-id').innerHTML=fieldData['CNT_KARYAWAN'];
+		$('.jumlah-karyawan').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_KARYAWAN']);	
+				}
+			});		
+		});
+		
+		//==== COUNT JUMLAH_KARYAWAN AKTIF=====
+		document.getElementById('jumlah-karyawan-aktif-id').innerHTML=fieldData['CNT_KARYAWAN_AKTIF'];
+		$('.jumlah-karyawan-aktif').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_KARYAWAN_AKTIF']);	
+				}
+			});
+		});
+		
+		//==== COUNT JUMLAH CUSTOMER =====
+		document.getElementById('jumlah-customer-id').innerHTML=fieldData['CNT_CUS_MEMBER'];
+		$('.jumlah-customer').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_CUS_MEMBER']);	
+				}
+			});
+		});
+		
+		//==== COUNT JUMLAH_TOKO =====
+		document.getElementById('jumlah-toko-id').innerHTML=fieldData['CNT_STORE'];
+		$('.jumlah-toko').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_STORE']);		
+				}
+			});
+		});
+		//==== COUNT JUMLAH_TOKO_AKTIF =====
+		document.getElementById('jumlah-toko-aktif-id').innerHTML=fieldData['CNT_STORE_AKTIF'];
+		$('.jumlah-toko-aktif').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_STORE_AKTIF']);		
+				}
+			});
+		});
+		//==== COUNT JUMLAH PERANGKAT TOKO_AKTIF =====
+		document.getElementById('jumlah-perangkat-aktif-id').innerHTML=fieldData['CNT_PERNGKAT_AKTIF'];
+		$('.jumlah-perangkat-aktif').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PERNGKAT_AKTIF']);
+				}
+			});
+		});
+	
+		//==== COUNT TRAFIK TRANSAKSI HARIAN =====
+		document.getElementById('frekuensi-transaksi-harian-id').innerHTML=fieldData['CNT_JUMLAH_TRANSAKSI'];
+		$('.frekuensi-transaksi-harian').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_JUMLAH_TRANSAKSI']);
+				}
+			});
+		});
+		
+		//==== COUNT PENJUALAN HARIAN =====
+		document.getElementById('penjualan-harian-id').innerHTML=fieldData['CNT_PENJUALAN_HARIAN'];
+		$('.penjualan-harian').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PENJUALAN_HARIAN'].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));		
+				}
+			});
+		});	
+		
+		//==== COUNT PENJUALAN MINGGUAN =====
+		document.getElementById('penjualan-mingguan-id').innerHTML=fieldData['CNT_PENJUALAN_MINGGUAN'];
+		$('.penjualan-mingguan').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PENJUALAN_MINGGUAN'].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+				}
+			});
+		});
+		
+		//==== COUNT PENJUALAN BULANAN =====
+		document.getElementById('penjualan-bulanan-id').innerHTML=fieldData['CNT_PENJUALAN_BULANAN'];
+		$('.penjualan-bulanan').each(function () {
+			$(this).prop('Counter',0).animate({
+				Counter: $(this).text()
+			}, {
+				duration: 3000,
+				easing: 'swing',
+				step: function (now) {
+					$(this).text(Math.ceil(now));
+				},
+				complete: function() {
+					$(this).text(fieldData['CNT_PENJUALAN_BULANAN'].toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,'));
+				}
+			});
+		});
+	
+	
 }, 10000);",View::POS_READY);
  
 
