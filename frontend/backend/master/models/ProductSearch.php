@@ -113,7 +113,7 @@ class ProductSearch extends Product
     }
     public function searchExcelExport($params)
     {
-        $query = "SELECT `PRODUCT_ID`,`PRODUCT_NM`,`PRODUCT_QR`,`PRODUCT_WARNA`,`PRODUCT_SIZE`,`PRODUCT_SIZE_UNIT`,`PRODUCT_HEADLINE`,`INDUSTRY_NM`,`INDUSTRY_GRP_NM`,`DCRP_DETIL`FROM product WHERE ACCESS_GROUP=".Yii::$app->user->identity->ACCESS_GROUP."";
+        $query = "SELECT `PRODUCT_ID`,`PRODUCT_NM`,`PRODUCT_QR`,`PRODUCT_WARNA`,`PRODUCT_SIZE`,`PRODUCT_SIZE_UNIT`,`PRODUCT_HEADLINE`,`INDUSTRY_NM`,`INDUSTRY_GRP_NM`,`DCRP_DETIL`FROM product WHERE ACCESS_GROUP=".Yii::$app->user->identity->ACCESS_GROUP." AND STATUS='1' ORDER BY STORE_ID DESC";
        $qrySql= Yii::$app->db->createCommand($query)->queryAll();
         $dataProvider = new ArrayDataProvider([
             'allModels' => $qrySql,
