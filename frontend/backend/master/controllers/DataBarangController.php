@@ -519,11 +519,11 @@ class DataBarangController extends Controller
             // print(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'));die();  
                     $data=store::find()->where(['STORE_ID'=>$model['STORE_ID']])->one();
                     $dataunit=ProductUnit::find()->where(['UNIT_ID'=>$model['UNIT_ID']])->one();
-                    $model->INDUSTRY_ID=$data->INDUSTRY_ID;
-                    $model->INDUSTRY_GRP_ID=$data->INDUSTRY_GRP_ID;
-                    $model->INDUSTRY_NM=$data->INDUSTRY_NM;
-                    $model->INDUSTRY_GRP_NM=$data->INDUSTRY_GRP_NM;
-                    $model->PRODUCT_SIZE_UNIT=$dataunit->UNIT_NM;
+                    $model->INDUSTRY_ID=(empty($data->INDUSTRY_ID)) ? '' : $data->INDUSTRY_ID ;
+                    $model->INDUSTRY_GRP_ID=(empty($data->INDUSTRY_GRP_ID))?'':$data->INDUSTRY_GRP_ID;
+                    $model->INDUSTRY_NM=(empty($data->INDUSTRY_NM))?'':$data->INDUSTRY_NM;
+                    $model->INDUSTRY_GRP_NM=(empty($data->INDUSTRY_GRP_NM))?'':$data->INDUSTRY_GRP_NM;
+                    $model->PRODUCT_SIZE_UNIT=(empty($dataunit->UNIT_NM))?'':$dataunit->UNIT_NM;
                     $model->CREATE_AT=date('Y-m-d H:i:s');
                     // $model->save(false);
                     if($model->save(false)) {    
@@ -683,12 +683,7 @@ class DataBarangController extends Controller
                                     continue;
                                 }
         
-                                if (empty($rowData[0][0])) {
-                                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                                    Yii::$app->session->setFlash('error', "Terdapat Kode prodak yang kosong");
-                                    return $this->redirect('index-produk');
-                                } else {
-                                    
+                                if (!empty($rowData[0][0])) {
                                     $product = Product::find()->where(['PRODUCT_ID'=>$rowData[0][0]])->one();
                                     // $product->PRODUCT_ID = $rowData[0][0];
                                     $product->PRODUCT_NM = $rowData[0][1];
@@ -698,6 +693,14 @@ class DataBarangController extends Controller
                                     $product->PRODUCT_HEADLINE = $rowData[0][5];
                                     $product->DCRP_DETIL = $rowData[0][6];
                                     $product->save(false);
+                                } else if(empty($rowData[0][0]) && !empty($rowData[0][1])){
+                                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                    Yii::$app->session->setFlash('warning', "Terdapat Kode prodak yang kosong dan Data telah diperbarui");
+                                    return $this->redirect('index-produk');
+                                }else{
+                                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                    Yii::$app->session->setFlash('success', "Data telah diperbarui");
+                                    return $this->redirect('index-produk');
                                 }
                                 // print_r($branch->getErrors());
                                 // print_r($rowData);
@@ -776,7 +779,7 @@ class DataBarangController extends Controller
 				'freezePane' => 'A2',
 				'columnGroup'=>false,
                 'autoSize'=>false,
-                'unlockCell'=>'C,J,'.(count($excel_ceilsDataProduk)+1000).'',
+                'unlockCell'=>'B,J,'.(count($excel_ceilsDataProduk)+1000).'',
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					[
@@ -811,7 +814,7 @@ class DataBarangController extends Controller
 		];
 		// print_r($excel_ceilsDatakaryawan);
 		// die();
-		$excel_file = "data-Produk";
+		$excel_file = "Data-Produk-".$user."";
 		$this->export4excel($excel_content, $excel_file,0); 
 
 		// return $this->redirect(['index']);
@@ -839,7 +842,7 @@ class DataBarangController extends Controller
 				'freezePane' => 'A2',
 				'columnGroup'=>false,
                 'autoSize'=>false,
-                'unlockCell'=>'C,J,'.(count($excel_ceilsDataProduk)+1).'',
+                'unlockCell'=>'B,J,'.(count($excel_ceilsDataProduk)+1).'',
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					[
@@ -874,13 +877,14 @@ class DataBarangController extends Controller
 		];
 		// print_r($excel_ceilsDatakaryawan);
 		// die();
-		$excel_file = "data-Produk";
+		$excel_file = "Data-Produk-".$user."";
 		$this->export4excel($excel_content, $excel_file,0); 
 
 		// return $this->redirect(['index']);
     }
     public function actionDownloadTemplate()
     {
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
         $cel = array('0' => array('1' => '','2' => '','3' => '','4' => '','5' => '','6' => '','7' => ''));
        $excel_content[] = 
 			[
@@ -912,7 +916,7 @@ class DataBarangController extends Controller
 		];
 		// print_r($excel_ceilsDatakaryawan);
 		// die();
-		$excel_file = "Template-Produk";
+		$excel_file = "Template-Produk-".$user."";
 		$this->export4excel($excel_content, $excel_file,0); 
 
 		// return $this->redirect(['index']);

@@ -82,7 +82,8 @@ class ProductImage extends \yii\db\ActiveRecord
         }
         // store the source file name
         //$this->filename = $image->name;
-        $ext = end((explode(".", $image->name)));
+        $tmp = explode('.', $image->name);
+        $ext = end($tmp);
         // generate a unique file name
         // $this->EMP_IMG = 'wan-'.date('ymdHis').".{$ext}"; //$image->name;//Yii::$app->security->generateRandomString().".{$ext}";
         // the uploaded image instance

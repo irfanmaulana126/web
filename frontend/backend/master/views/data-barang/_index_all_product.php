@@ -406,6 +406,15 @@ $this->registerCss("
 				'showSeparator' => true,
 				'delay' => 1000
 			]);
+		}elseif (Yii::$app->session->hasFlash('warning')) {
+			echo Alert::widget([
+				'type' => Alert::TYPE_WARNING,
+				'title' => 'Warning!',
+				'icon' => 'glyphicon glyphicon-exclamation-sign',
+				'body' =>  Yii::$app->session->getFlash('warning'),
+				'showSeparator' => true,
+				'delay' => 3000
+			]);
 		}?>
 		<div style="margin-top: -10px;margin-bottom: 10px;">
 		<?=tombolKembali()?>
