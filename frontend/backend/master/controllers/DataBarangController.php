@@ -313,6 +313,11 @@ class DataBarangController extends Controller
             $model->CREATE_AT=date('Y-m-d H:i:s');
             $product=strtoupper($model->PRODUCT_NM);
             $model->PRODUCT_NM=$product;
+            $data=store::find()->where(['STORE_ID'=>$model['STORE_ID']])->one();
+            $model->INDUSTRY_ID=(empty($data->INDUSTRY_ID)) ? '' : $data->INDUSTRY_ID ;
+            $model->INDUSTRY_GRP_ID=(empty($data->INDUSTRY_GRP_ID))?'':$data->INDUSTRY_GRP_ID;
+            $model->INDUSTRY_NM=(empty($data->INDUSTRY_NM))?'':$data->INDUSTRY_NM;
+            $model->INDUSTRY_GRP_NM=(empty($data->INDUSTRY_GRP_NM))?'':$data->INDUSTRY_GRP_NM;
             if($model->save(false)) {                
                 $C=$model->getPrimaryKey();
                 $modelCari=Product::find()->where(['ID'=>$C['ID']])->one();
