@@ -50,8 +50,7 @@ $btn_srchChart2= Select2::widget([
 		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-store',
 		'metode'=>'POST',
 		'param'=>[
-			//'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
-			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
 			'STORE_ID'=>'170726220936.0001',
 			'TGL'=>date("Y-m-d"),//'2018-03-12'
 		],
@@ -69,8 +68,7 @@ $btn_srchChart2= Select2::widget([
 		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-transaksi',
 		'metode'=>'POST',
 		'param'=>[
-			//'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
-			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
 			'STORE_ID'=>'170726220936.0001',
 			'TGL'=>date("Y-m-d"),//'2018-03-12'
 		],
@@ -89,8 +87,7 @@ $btn_srchChart2= Select2::widget([
 		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-refund',
 		'metode'=>'POST',
 		'param'=>[
-			//'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
-			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
 			'STORE_ID'=>'170726220936.0001',
 			'TGL'=>date("Y-m-d"),//'2018-02-14'
 		],

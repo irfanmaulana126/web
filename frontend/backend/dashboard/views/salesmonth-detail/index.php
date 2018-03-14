@@ -20,21 +20,20 @@ ChartAsset::register($this);
 use frontend\backend\dashboard\models\StoreKasirSearch;
 use common\models\Store;
 
-$this->title = 'dashboard/trafik';
+$this->title = 'dashboard/salesmonth';
 $this->params['breadcrumbs'][] = $this->title;
 
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
-    'options' => ['placeholder' => 'Pilih Tanggal ...','id'=>'tanggal'],
+    'options' => ['placeholder' => 'Pilih Tahun&Bulan ...','id'=>'tahunbulan'],
     'convertFormat' => true,
     'pluginOptions' => [
         'autoclose'=>true,
-        //'startView'=>'month',
-        //'minViewMode'=>'months',
+        'startView'=>'years',
+        'minViewMode'=>'months',
         'format' => 'yyyy-M-d',
-        // 'todayHighlight' => true,
-         'todayHighlight' => true
+        'todayHighlight' => true
     ]
 ]);
 $btn_srchChart2= Select2::widget([
@@ -46,12 +45,11 @@ $btn_srchChart2= Select2::widget([
     ],
 ]);
 
-	$hourly3DaysTafik= Chart::Widget([
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-store',
+	$salesMonthDetail= Chart::Widget([
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-perstore',
 		'metode'=>'POST',
 		'param'=>[
-			//'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
-			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
 			'STORE_ID'=>'170726220936.0001',
 			'TGL'=>date("Y-m-d"),//'2018-03-12'
 		],
@@ -59,46 +57,46 @@ $btn_srchChart2= Select2::widget([
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'msline',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'msline-sss-hour-3daystrafik',								//unix name render
+		'renderid'=>'msline-salesmonth-detail',								//unix name render
 		'autoRender'=>true,
 		'width'=>'100%',
 		'height'=>'265px',
 	]);	
 	
-	$produkBar2d= Chart::Widget([
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-transaksi',
+	$produkTransaksiMonth= Chart::Widget([
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-produk-perstore',
 		'metode'=>'POST',
 		'param'=>[
-			//'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
-			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
-			'STORE_ID'=>'170726220936.0001',
-			'TGL'=>date("Y-m-d"),//'2018-03-12'
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,
+			'STORE_ID'=>Yii::$app->user->identity->ACCESS_GROUP.'.0001',
+			'TAHUN'=>date("Y"),
+			'BULAN'=>date("m"),
 		],
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'bar2d',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'pie3d-produk',								//unix name render
+		'renderid'=>'produk-transaksi-month',								//unix name render
 		'autoRender'=>true,
 		// 'width'=>'100%',
 		// 'height'=>'150%',
 		'autoResize'=>true,
 	]);	
 	
-	$produkBar2dRefund= Chart::Widget([
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-refund',
+	$produkRefundMonth= Chart::Widget([
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-produkrefund-perstore',
 		'metode'=>'POST',
 		'param'=>[
-			//'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
-			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
-			'STORE_ID'=>'170726220936.0001',
-			'TGL'=>date("Y-m-d"),//'2018-02-14'
+			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,
+			'STORE_ID'=>Yii::$app->user->identity->ACCESS_GROUP.'.0001',
+			'TAHUN'=>date("Y"),
+			'BULAN'=>date("m"),
 		],
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'bar2d',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'bar2d-produk-refund',								//unix name render
+		'renderid'=>'produk-refund-month',								//unix name render
 		'autoRender'=>true,
 		// 'width'=>'100%',
 		// 'height'=>'150%'
@@ -109,9 +107,9 @@ $btn_srchChart2= Select2::widget([
 		$title= Yii::t('app','');
 		$url = Url::toRoute(['/dashboard']);
 		$options1 = [
-					'id'=>'back-trafik',
+					'id'=>'back-month-detail',
 					'class'=>"btn btn-xs",
-					'title'=>'Kembali Chart Awal'
+					'title'=>'Kembali'
 		];
 		$icon1 = '<span class="fa-stack fa-md text-left">
 				  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
@@ -148,7 +146,7 @@ $btn_srchChart2= Select2::widget([
 					<?php //echo = Html::encode($this->title) ?>								
 					<div style="min-height:265px">
 						<div style="height:300px;">
-							<?=$hourly3DaysTafik?>
+							<?=$salesMonthDetail?>
 						</div>
 					</div>
 					<div id="loaderPtr"></div>					
@@ -162,7 +160,7 @@ $btn_srchChart2= Select2::widget([
 							<div style="min-height:300px">
 								<div class="row" style="padding-top:10px;padding-right:10px">
 									<div class="w3-card-2 w3-round w3-white w3-center">	
-										<?=$produkBar2d?>
+										<?=$produkTransaksiMonth?>
 									</div>
 								</div>
 							</div>
@@ -171,7 +169,7 @@ $btn_srchChart2= Select2::widget([
 							<div style="min-height:100px">
 								<div class="row" style="padding-top:10px">
 									<div class="w3-card-2 w3-round w3-white w3-center">	
-										<?=$produkBar2dRefund?>
+										<?=$produkRefundMonth?>
 									</div>
 								</div>						
 							</div>						
@@ -183,28 +181,32 @@ $btn_srchChart2= Select2::widget([
 
 <?php
 $this->registerJs("
-$('#tanggal, #store').change(function() { 
+$('#tahunbulan, #store').change(function() { 
     //==FILTER DATA ==
 	var tgl,storeId,accessGroup='';
-    var tgl = document.getElementById('tanggal').value;
+	//--TAHUN/BULAN
+ 	var thnbulan = document.getElementById('tahunbulan').value;
+	var myDate = new Date(thnbulan); 
+	//console.log(myDate.getFullYear());
+	//console.log(myDate.getMonth()+1);
     var storeId = document.getElementById('store').value;
 	var store = storeId.split('.');
 	var accessGroup = store[0];
 	//console.log('ACCESS_GROUP='+accessGroup+';STORE_ID='+storeId+';TGL='+tgl);
 	
-    if ((tgl!=='') && (storeId!=='')) {
-		//=== INIT FUSIONCHAT PRODUK TRANSAKSI ===
-		var ptrProdukTransaksi = document.getElementById('pie3d-produk');
-		var spnIdProdukTransaksi= ptrProdukTransaksi.getElementsByTagName('span');
-		var chartIdProdukTransaksi= spnIdProdukTransaksi[0].id; 
-		console.log(ptrProdukTransaksi);
-		var updateChartProdukTransaksi = document.getElementById(chartIdProdukTransaksi);
-		
-		//==AJAX POST DATA [PRODUK TRANSAKSI]===
+    if ((thnbulan!=='') && (storeId!=='')) {
+			
+		//=== INIT SALES BULANAN PRODUK TRANSAKSI ===
+		var ptrProdukTransaksiBulanan = document.getElementById('produk-transaksi-month');
+		var spnIdProdukTransaksiBulanan= ptrProdukTransaksiBulanan.getElementsByTagName('span');
+		var chartIdProdukTransaksiBulanan= spnIdProdukTransaksiBulanan[0].id; 
+		console.log(ptrProdukTransaksiBulanan);
+		var updateChartProdukTransaksiBulanan = document.getElementById(chartIdProdukTransaksiBulanan);		
+		//==AJAX POST DATA [PRODUK BULANAN]===
 		$.ajax({
-			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-transaksi',
+			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-produk-perstore',
 			  type: 'POST',
-			  data: {'ACCESS_GROUP':accessGroup,'STORE_ID':storeId,'TGL':tgl},
+			  data: {'ACCESS_GROUP':accessGroup,'STORE_ID':storeId,'TAHUN':myDate.getFullYear(),'BULAN':myDate.getMonth()+1},
 			  dataType:'json',
 			  success: function(data) {
 					//alert(data['dataset'][0]['data']);
@@ -214,17 +216,17 @@ $('#tanggal, #store').change(function() {
 					//alert(dataget.length);
 					var cnt=dataget.length<5?5:dataget.length;
 					//alert(cnt);
-					updateChartProdukTransaksi.style.height=(cnt*30)+'px';
+					updateChartProdukTransaksiBulanan.style.height=(cnt*30)+'px';
 					
 					//===UPDATE CHART ====
 					if (data['dataset'][0]['data']!==''){							
-						updateChartProdukTransaksi.setChartData({
+						updateChartProdukTransaksiBulanan.setChartData({
 							chart: data['chart'],
 							data: data['dataset'][0]['data']
 						});	
 					}else{
-						updateChartProdukTransaksi.style.height='150px';
-						updateChartProdukTransaksi.setChartData({
+						updateChartProdukTransaksiBulanan.style.height='150px';
+						updateChartProdukTransaksiBulanan.setChartData({
 							chart: data['chart'],
 							data:[{}]
 						});						
@@ -232,17 +234,17 @@ $('#tanggal, #store').change(function() {
 			  }			   
 		}); 
 		
-		//=== INIT FUSIONCHAT PRODUK REFUND ===
-		var ptrProdukRefund = document.getElementById('bar2d-produk-refund');
-		var spnIdProdukRefund= ptrProdukRefund.getElementsByTagName('span');
-		var chartIdProdukRefund= spnIdProdukRefund[0].id; 
-		console.log(ptrProdukRefund);
-		var updateChartProdukRefund = document.getElementById(chartIdProdukRefund);
+		//=== INIT SALES BULANAN PRODUK REFUND ===
+		var ptrProdukRefundBulanan = document.getElementById('produk-refund-month');
+		var spnIdProdukRefundBulanan= ptrProdukRefundBulanan.getElementsByTagName('span');
+		var chartIdProdukRefundBulanan= spnIdProdukRefundBulanan[0].id; 
+		console.log(ptrProdukRefundBulanan);
+		var updateChartProdukRefundBulanan = document.getElementById(chartIdProdukRefundBulanan);
 		//==AJAX POST DATA [PRODUK REFUND]===
 		$.ajax({
-			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-refund',
+			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-produkrefund-perstore',
 			  type: 'POST',
-			  data: {'ACCESS_GROUP':accessGroup,'STORE_ID':storeId,'TGL':tgl},
+			  data: {'ACCESS_GROUP':accessGroup,'STORE_ID':storeId,'TAHUN':myDate.getFullYear(),'BULAN':myDate.getMonth()+1},
 			  dataType:'json',
 			  success: function(data) {
 					//alert(data['dataset'][0]['data']);
@@ -252,90 +254,26 @@ $('#tanggal, #store').change(function() {
 					//alert(dataGet.length);
 					var cnt=dataGet.length<5?5:dataGet.length;
 					//alert(cnt);
-					updateChartProdukRefund.style.height=(cnt*30)+'px';
+					updateChartProdukRefundBulanan.style.height=(cnt*30)+'px';
 					
 					//===UPDATE CHART ====
 					if (data['dataset'][0]['data']!==''){							
-						updateChartProdukRefund.setChartData({
+						updateChartProdukRefundBulanan.setChartData({
 							chart: data['chart'],
 							data: data['dataset'][0]['data']
 						});	
 					}else{
-						updateChartProdukRefund.style.height='150px';
-						updateChartProdukRefund.setChartData({
+						updateChartProdukRefundBulanan.style.height='150px';
+						updateChartProdukRefundBulanan.setChartData({
 							chart: data['chart'],
 							data:[{}]
 						});						
 					}					
 			  }			   
-		}); 
-		//=== INIT FUSIONCHAT TRAFIK ===
-		var ptrTrafix = document.getElementById('msline-sss-hour-3daystrafik');
-		var spnIdTrafix= ptrTrafix.getElementsByTagName('span');
-		var chartIdTrafix= spnIdTrafix[0].id; 
-		console.log(chartIdTrafix);
-		var updateChartTrafix = document.getElementById(chartIdTrafix);
-		//==AJAX POST DATA [TRAFIK]===
-		$.ajax({
-			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-store',
-			  type: 'POST',
-			  data: {'ACCESS_GROUP':accessGroup,'STORE_ID':storeId,'TGL':tgl},
-			  dataType:'json',
-			  success: function(data) {
-				//===UPDATE CHART ====
-				if (data['dataset'][0]['data']!==''){							
-					updateChartTrafix.setChartData({
-						chart: data['chart'],
-						categories:data['categories'],
-						dataset: data['dataset']
-					});	
-				}else{
-					updateChartTrafix.setChartData({
-						chart: data['chart'],
-						categories:data['categories'],
-						data:[{}]
-					});						
-				}					
-			  }			   
-		}); 
+		});  
+		
 	};     
 });
- 
-//===AUTO UPDATE ==
-/* setInterval(function() {
-  //=== INIT FUSIONCHAT TRAFIK ===
-	var ptrTrafix = document.getElementById('msline-sss-hour-3daystrafik');
-	var spnIdTrafix= ptrTrafix.getElementsByTagName('span');
-	var chartIdTrafix= spnIdTrafix[0].id; 
-	console.log(chartIdTrafix);
-	var updateChartTrafix = document.getElementById(chartIdTrafix);
-	//==AJAX POST DATA [TRAFIK]===
-	$.ajax({
-		  url: 'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-store',
-		  type: 'POST',
-		  data: {'ACCESS_GROUP':'170726220936','STORE_ID':'170726220936.0001','TGL':'2018-03-13'},
-		  dataType:'json',
-		  success: function(data) {
-			//===UPDATE CHART ====
-			if (data['dataset'][0]['data']!==''){							
-				updateChartTrafix.setChartData({
-					chart: data['chart'],
-					categories:data['categories'],
-					dataset: data['dataset']
-				});	
-			}else{
-				updateChartTrafix.setChartData({
-					chart: data['chart'],
-					categories:data['categories'],
-					data:[{}]
-				});						
-			}					
-		  }			   
-	}); 
-	//console.log('test loop');
-}, 10000);  */
-	
-	
 	
 ",View::POS_READY);
  

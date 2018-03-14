@@ -63,7 +63,7 @@ use yii\base\DynamicModel;
 	function tombolDetailSalesBulananPerStore(){
 		//$title= Yii::t('app','Rincian Per-Toko');
 		$title= Yii::t('app','');
-		$url = Url::toRoute(['/dashboard/trafik-per-store']);
+		$url = Url::toRoute(['/dashboard/salesmonth-detail']);
 		$options1 = [
 					'id'=>'detail-sales-bulanan',
 					//'class'=>"btn btn-danger btn-xs",
@@ -105,7 +105,7 @@ use yii\base\DynamicModel;
 	function tombolDetailSalesMingguanPerStore(){
 		//$title= Yii::t('app','Rincian Per-Toko');
 		$title= Yii::t('app','');
-		$url = Url::toRoute(['/dashboard/trafik-per-store']);
+		$url = Url::toRoute(['/dashboard/salesweek-detail']);
 		$options1 = [
 					'id'=>'detail-sales-mingguan',
 					//'class'=>"btn btn-danger btn-xs",

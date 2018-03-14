@@ -23,7 +23,7 @@ use common\models\Store;
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
-    'options' => ['placeholder' => 'Pilih Tanggal ...','id'=>'tahunbulan'],
+    'options' => ['placeholder' => 'Pilih Tahun&Bulan ...','id'=>'tahunbulan'],
     'convertFormat' => true,
     'pluginOptions' => [
         'autoclose'=>true,
