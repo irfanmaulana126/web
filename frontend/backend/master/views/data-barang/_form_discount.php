@@ -164,12 +164,16 @@ $gvAttProdakDiscountItem=[
             }
             
         }
-        
+        $date1=date('Y-m-d');
+        $date2=date('Y-m-d', strtotime('+21 days', strtotime($date1)));
         echo '<label class="control-label">PERIODE TANGGAL</label>';
        echo DatePicker::widget([
             'model' => $model,
+            'model' => $model,
             'attribute' => 'PERIODE_TGL1',
+            'value'=>$date1,
             'attribute2' => 'PERIODE_TGL2',
+            'value2'=>$date2,
             'options' => ['placeholder' => 'Start date'],
             'options2' => ['placeholder' => 'End date'],
             'type' => DatePicker::TYPE_RANGE,

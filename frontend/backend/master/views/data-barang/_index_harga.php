@@ -186,7 +186,7 @@ function sttMsgDscp($stt){
 			'noWrap'=>false,
 			'format' => 'raw',	
 			'value'=>function($model, $key, $index, $grid){
-				if($model['PERIODE_TGL2']<=date('Y-m-d')){
+				if($model['PERIODE_TGL2']<date('Y-m-d')){
 					return Html::a('<span class="fa-stack fa-xl">
 							<i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
 							<i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
@@ -264,7 +264,7 @@ function sttMsgDscp($stt){
 		'panel'=>[''],
 		'toolbar' => false,
 		'rowOptions' => function($model, $key, $index, $grid){
-            if($model['PERIODE_TGL2']<=date('Y-m-d')){
+            if($model['PERIODE_TGL2']<date('Y-m-d')){
 				return ['class' => 'danger'];
 			}
 			else if($model['PERIODE_TGL1']<=date('Y-m-d') && $model['PERIODE_TGL2']>=date('Y-m-d') && $model['STATUS']==1) {
