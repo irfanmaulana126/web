@@ -23,54 +23,41 @@ $this->title = 'dashboard/trafik';
 $this->params['breadcrumbs'][] = $this->title;
 ChartAsset::register($this);
 
+$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
-    'options' => ['placeholder' => 'Pilih Tanggal ...','id'=>'tanggal'],
+    'options' => ['placeholder' => 'Pilih Tanggal ...','id'=>'tahun'],
     'convertFormat' => true,
     'pluginOptions' => [
         'autoclose'=>true,
-        //'startView'=>'month',
-        //'minViewMode'=>'months',
-        'format' => 'yyyy-M-d',
+        'startView'=>'years',
+        'minViewMode'=>'years',
+        'format' => 'yyyy',
+        //'format' => 'yyyy-M-d',
         // 'todayHighlight' => true,
          'todayHighlight' => true
     ]
 ]);
-
-
-	$hourly3DaysTafik= Chart::Widget([
-		//'urlSource'=>'/dashboard/data/daily-transaksi',
-		//'urlSource'=>'/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1&TGL=2018-01-23',
-		 // 'urlSource'=>'/dashboard/data/daily-transaksi?ACCESS_GROUP=170726220936&TGL=2018-02-01',
-		//'urlSource'=>'/dashboard/data/daily-transaksi',
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
+	//=MONTHLY SALES
+	$monthlySales= Chart::Widget([
+		//'urlSource'=> '/dashboard/data/monthy-sales',
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-group',
 		'metode'=>'POST',
 		'param'=>[
-			//'ACCESS_GROUP'=>'170726220936',
+			//'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
 			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
-			'TGL'=>date("Y-m-d"),//'2018-02-27'
+			'THN'=>date("Y"),//'2018-02-27'
 		],
+		// 'urlSource'=> '/dashboard/data/monthy-sales?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
+		// 'urlSource'=> '/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'msline',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'msline-modal-hour-strafik',								//unix name render
+		'renderid'=>'msline-sales-monthly-modal',								//unix name render
 		'autoRender'=>true,
 		'width'=>'100%',
-		'height'=>'265px',
-		'chartOption'=>[				
-			'caption'=>'Daily Customers Visits',			//Header Title
-			'subCaption'=>'Custommer Call, Active Customer, Efictif Customer',			//Sub Title
-			'xaxisName'=>'Parents',							//Title Bawah/ posisi x
-			'yaxisName'=>'Total Child ', 					//Title Samping/ posisi y									
-			'theme'=>'fint',								//Theme
-			'is2D'=>"0",
-			'showValues'=> "1",
-			'palettecolors'=> "#583e78,#008ee4,#f8bd19,#e44a00,#6baa01,#ff2e2e",
-			'bgColor'=> "#ffffff",							//color Background / warna latar 
-			'showBorder'=> "0",								//border box outside atau garis kotak luar
-			'showCanvasBorder'=> "0",						//border box inside atau garis kotak dalam	
-		],
+		'height'=>'300px',
 	]);	
 
 ?>
@@ -85,8 +72,8 @@ $btn_srchChart1=DatePicker::widget([
 			</div>				
 			<div class="w3-card-2 w3-round w3-white w3-center">	
 				<div style="min-height:265px">
-					<div style="height:300px">
-						<?=$hourly3DaysTafik?>
+					<div style="height:360px">
+						<?=$monthlySales?>
 					</div>
 				</div>
 			</div>
@@ -94,46 +81,48 @@ $btn_srchChart1=DatePicker::widget([
 	</div>	
 </div>	
 <?php
+ //data: {'ACCESS_GROUP':'".Yii::$app->user->identity->ACCESS_GROUP."','THN':thn},
 $this->registerJs("
-$('#tanggal').change(function() { 
+$('#tahun').change(function() { 
     //==FILTER DATA ==
-	var tgl='';
-    var tgl = document.getElementById('tanggal').value;
+	//var thn='';//,storeId,accessGroup='';
+    var thn = document.getElementById('tahun').value;
     // var storeId = document.getElementById('store').value;
 	// var store = storeId.split('.');
 	// var accessGroup = store[0];
 	//console.log('ACCESS_GROUP='+accessGroup+';STORE_ID='+storeId+';TGL='+tgl);
 	
-    if (tgl!=='') {
-		//=== INIT FUSIONCHAT TRAFIK ===
-		var ptrTrafix = document.getElementById('msline-modal-hour-strafik');
-		var spnIdTrafix= ptrTrafix.getElementsByTagName('span');
-		var chartIdTrafix= spnIdTrafix[0].id; 
-		console.log(chartIdTrafix);
-		var updateChartTrafix = document.getElementById(chartIdTrafix);
-		//==AJAX POST DATA [TRAFIK]===
+    //if ((tgl!=='') && (storeId!=='')) {
+    if (thn!==''){
+		//=== INIT FUSIONCHAT SALES MONTH GROUP ===
+		var ptrSalesMonthGroup = document.getElementById('msline-sales-monthly-modal');
+		var spnIdptrSalesMonthGroup= ptrSalesMonthGroup.getElementsByTagName('span');
+		var chartIdspnIdptrSalesMonthGroup= spnIdptrSalesMonthGroup[0].id; 
+		//console.log(chartIdspnIdptrSalesMonthGroup);
+		var updateChartchartIdspnIdptrSalesMonthGroup = document.getElementById(chartIdspnIdptrSalesMonthGroup);
+		//==AJAX POST SALES MONTH GROUP===
 		$.ajax({
-			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
+			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-group',
 			  type: 'POST',
-			  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_ID']."','TGL':tgl},
+			  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','THN':thn},
 			  dataType:'json',
 			  success: function(data) {
 				//===UPDATE CHART ====
-				if (data['dataset'][0]['data']!==''){							
-					updateChartTrafix.setChartData({
+				if (data['dataset']!==''){							
+					updateChartchartIdspnIdptrSalesMonthGroup.setChartData({
 						chart: data['chart'],
 						categories:data['categories'],
 						dataset: data['dataset']
 					});	
 				}else{
-					updateChartTrafix.setChartData({
+					updateChartchartIdspnIdptrSalesMonthGroup.setChartData({
 						chart: data['chart'],
 						categories:data['categories'],
 						data:[{}]
 					});						
 				}					
 			  }			   
-		}); 
+		});		
 	};     
 });
 ",View::POS_READY);

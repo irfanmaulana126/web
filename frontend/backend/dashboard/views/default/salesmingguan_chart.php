@@ -15,62 +15,47 @@ use yii\helpers\ArrayHelper;
 
 use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
+ChartAsset::register($this);
 
 use frontend\backend\dashboard\models\StoreKasirSearch;
 use common\models\Store;
 
-$this->title = 'dashboard/trafik';
-$this->params['breadcrumbs'][] = $this->title;
-ChartAsset::register($this);
-
+$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
-    'options' => ['placeholder' => 'Pilih Tanggal ...','id'=>'tanggal'],
+    'options' => ['placeholder' => 'Pilih Tanggal ...','id'=>'tahunbulan'],
     'convertFormat' => true,
     'pluginOptions' => [
         'autoclose'=>true,
-        //'startView'=>'month',
-        //'minViewMode'=>'months',
+        'startView'=>'years',
+        'minViewMode'=>'months',
+        //'format' => 'yyyy',
         'format' => 'yyyy-M-d',
         // 'todayHighlight' => true,
          'todayHighlight' => true
     ]
 ]);
-
-
-	$hourly3DaysTafik= Chart::Widget([
-		//'urlSource'=>'/dashboard/data/daily-transaksi',
-		//'urlSource'=>'/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1&TGL=2018-01-23',
-		 // 'urlSource'=>'/dashboard/data/daily-transaksi?ACCESS_GROUP=170726220936&TGL=2018-02-01',
-		//'urlSource'=>'/dashboard/data/daily-transaksi',
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
+	//= SALES MINGGUAN
+	$monthlySales= Chart::Widget([
+		//'urlSource'=> '/dashboard/data/monthy-sales',
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/sales-mingguan-group',
 		'metode'=>'POST',
 		'param'=>[
-			//'ACCESS_GROUP'=>'170726220936',
-			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
-			'TGL'=>date("Y-m-d"),//'2018-02-27'
+			//'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],//'170726220936',
+			'BULAN'=>date("m"),
+			'TAHUN'=>date("Y")
 		],
+		// 'urlSource'=> '/dashboard/data/monthy-sales?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
+		// 'urlSource'=> '/dashboard/data/test?ACCESS_GROUP=170726220936&TAHUN=2018&BULAN=1',
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'msline',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'msline-modal-hour-strafik',								//unix name render
+		'renderid'=>'msline-sales-mingguan-modal',								//unix name render
 		'autoRender'=>true,
 		'width'=>'100%',
-		'height'=>'265px',
-		'chartOption'=>[				
-			'caption'=>'Daily Customers Visits',			//Header Title
-			'subCaption'=>'Custommer Call, Active Customer, Efictif Customer',			//Sub Title
-			'xaxisName'=>'Parents',							//Title Bawah/ posisi x
-			'yaxisName'=>'Total Child ', 					//Title Samping/ posisi y									
-			'theme'=>'fint',								//Theme
-			'is2D'=>"0",
-			'showValues'=> "1",
-			'palettecolors'=> "#583e78,#008ee4,#f8bd19,#e44a00,#6baa01,#ff2e2e",
-			'bgColor'=> "#ffffff",							//color Background / warna latar 
-			'showBorder'=> "0",								//border box outside atau garis kotak luar
-			'showCanvasBorder'=> "0",						//border box inside atau garis kotak dalam	
-		],
+		'height'=>'300px',
 	]);	
 
 ?>
@@ -85,8 +70,8 @@ $btn_srchChart1=DatePicker::widget([
 			</div>				
 			<div class="w3-card-2 w3-round w3-white w3-center">	
 				<div style="min-height:265px">
-					<div style="height:300px">
-						<?=$hourly3DaysTafik?>
+					<div style="height:360px">
+						<?=$monthlySales?>
 					</div>
 				</div>
 			</div>
@@ -94,46 +79,50 @@ $btn_srchChart1=DatePicker::widget([
 	</div>	
 </div>	
 <?php
+// data: {'ACCESS_GROUP':'".Yii::$app->user->identity->ACCESS_GROUP."','THN':thn},
 $this->registerJs("
-$('#tanggal').change(function() { 
+$('#tahunbulan').change(function() { 
     //==FILTER DATA ==
-	var tgl='';
-    var tgl = document.getElementById('tanggal').value;
+	//var thn='';//,storeId,accessGroup='';
+    var thnbulan = document.getElementById('tahunbulan').value;
+	var myDate = new Date(thnbulan); 
+	//console.log(myDate.getFullYear());
     // var storeId = document.getElementById('store').value;
 	// var store = storeId.split('.');
 	// var accessGroup = store[0];
 	//console.log('ACCESS_GROUP='+accessGroup+';STORE_ID='+storeId+';TGL='+tgl);
 	
-    if (tgl!=='') {
-		//=== INIT FUSIONCHAT TRAFIK ===
-		var ptrTrafix = document.getElementById('msline-modal-hour-strafik');
-		var spnIdTrafix= ptrTrafix.getElementsByTagName('span');
-		var chartIdTrafix= spnIdTrafix[0].id; 
-		console.log(chartIdTrafix);
-		var updateChartTrafix = document.getElementById(chartIdTrafix);
-		//==AJAX POST DATA [TRAFIK]===
+    //if ((tgl!=='') && (storeId!=='')) {
+    if (thnbulan!==''){
+		//=== INIT FUSIONCHAT SALES MONTH GROUP ===
+		var ptrSalesWeekGroup = document.getElementById('msline-sales-mingguan-modal');
+		var spnIdptrSalesWeekGroup= ptrSalesWeekGroup.getElementsByTagName('span');
+		var chartIdspnIdptrSalesWeekGroup= spnIdptrSalesWeekGroup[0].id; 
+		//console.log(chartIdspnIdptrSalesWeekGroup);
+		var updateChartchartIdspnIdptrSalesWeekGroup = document.getElementById(chartIdspnIdptrSalesWeekGroup);
+		//==AJAX POST SALES MINGGUAN GROUP===
 		$.ajax({
-			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
+			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-mingguan-group',
 			  type: 'POST',
-			  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_ID']."','TGL':tgl},
+			  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','TAHUN':myDate.getFullYear(),'BULAN':myDate.getMonth()+1},
 			  dataType:'json',
 			  success: function(data) {
 				//===UPDATE CHART ====
-				if (data['dataset'][0]['data']!==''){							
-					updateChartTrafix.setChartData({
+				if (data['dataset']!==''){							
+					updateChartchartIdspnIdptrSalesWeekGroup.setChartData({
 						chart: data['chart'],
 						categories:data['categories'],
 						dataset: data['dataset']
 					});	
 				}else{
-					updateChartTrafix.setChartData({
+					updateChartchartIdspnIdptrSalesWeekGroup.setChartData({
 						chart: data['chart'],
 						categories:data['categories'],
 						data:[{}]
 					});						
 				}					
 			  }			   
-		}); 
+		});		
 	};     
 });
 ",View::POS_READY);
