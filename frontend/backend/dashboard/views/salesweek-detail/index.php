@@ -20,7 +20,7 @@ ChartAsset::register($this);
 use frontend\backend\dashboard\models\StoreKasirSearch;
 use common\models\Store;
 
-$this->title = 'dashboard/trafik';
+$this->title = 'dashboard/weekly';
 $this->params['breadcrumbs'][] = $this->title;
 
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
@@ -46,56 +46,58 @@ $btn_srchChart2= Select2::widget([
     ],
 ]);
 
-	$hourly3DaysTafik= Chart::Widget([
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-store',
+	$salesMingguan= Chart::Widget([
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/sales-mingguan-perstore',
 		'metode'=>'POST',
 		'param'=>[
-			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
-			'STORE_ID'=>'170726220936.0001',
-			'TGL'=>date("Y-m-d"),//'2018-03-12'
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],//'170726220936',
+			'BULAN'=>date("m"),
+			'TAHUN'=>date("Y")
 		],
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'msline',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'msline-sss-hour-3daystrafik',								//unix name render
+		'renderid'=>'msline-sales-minguan-detail',								//unix name render
 		'autoRender'=>true,
 		'width'=>'100%',
 		'height'=>'265px',
 	]);	
 	
-	$produkBar2d= Chart::Widget([
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-transaksi',
+	$produkMingguan= Chart::Widget([
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/sales-mingguan-produk-perstore',
 		'metode'=>'POST',
 		'param'=>[
-			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
-			'STORE_ID'=>'170726220936.0001',
-			'TGL'=>date("Y-m-d"),//'2018-03-12'
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],//'170726220936',
+			'STORE_ID'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'].".0001",
+			'BULAN'=>date("m"),
+			'TAHUN'=>date("Y")
 		],
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'bar2d',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'pie3d-produk',								//unix name render
+		'renderid'=>'produk-mingguan-detail',								//unix name render
 		'autoRender'=>true,
 		// 'width'=>'100%',
 		// 'height'=>'150%',
 		'autoResize'=>true,
 	]);	
 	
-	$produkBar2dRefund= Chart::Widget([
-		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/produk-daily-refund',
+	$produkMingguanRefund= Chart::Widget([
+		'urlSource'=>'https://production.kontrolgampang.com/laporan/sales-charts/sales-mingguan-produkrefund-perstore',
 		'metode'=>'POST',
 		'param'=>[
-			'ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,//'170726220936',
-			'STORE_ID'=>'170726220936.0001',
-			'TGL'=>date("Y-m-d"),//'2018-02-14'
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],//'170726220936',
+			'STORE_ID'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'].".0001",
+			'BULAN'=>date("m"),
+			'TAHUN'=>date("Y")
 		],
 		'userid'=>'piter@lukison.com',
 		'dataArray'=>'[]',//$actionChartGrantPilotproject,				//array scource model or manual array or sqlquery
 		'dataField'=>'[]',//['label','value'],							//field['label','value'], normaly value is numeric
 		'type'=>'bar2d',//msline//'bar3d',//'gantt',					//Chart Type 
-		'renderid'=>'bar2d-produk-refund',								//unix name render
+		'renderid'=>'produkrefund-mingguan-detail',								//unix name render
 		'autoRender'=>true,
 		// 'width'=>'100%',
 		// 'height'=>'150%'
@@ -106,7 +108,7 @@ $btn_srchChart2= Select2::widget([
 		$title= Yii::t('app','');
 		$url = Url::toRoute(['/dashboard']);
 		$options1 = [
-					'id'=>'back-trafik',
+					'id'=>'back-mingguan-detail',
 					'class'=>"btn btn-xs",
 					'title'=>'Kembali Chart Awal'
 		];
@@ -145,7 +147,7 @@ $btn_srchChart2= Select2::widget([
 					<?php //echo = Html::encode($this->title) ?>								
 					<div style="min-height:265px">
 						<div style="height:300px;">
-							<?=$hourly3DaysTafik?>
+							<?=$salesMingguan?>
 						</div>
 					</div>
 					<div id="loaderPtr"></div>					
@@ -159,7 +161,7 @@ $btn_srchChart2= Select2::widget([
 							<div style="min-height:300px">
 								<div class="row" style="padding-top:10px;padding-right:10px">
 									<div class="w3-card-2 w3-round w3-white w3-center">	
-										<?=$produkBar2d?>
+										<?=$produkMingguan?>
 									</div>
 								</div>
 							</div>
@@ -168,7 +170,7 @@ $btn_srchChart2= Select2::widget([
 							<div style="min-height:100px">
 								<div class="row" style="padding-top:10px">
 									<div class="w3-card-2 w3-round w3-white w3-center">	
-										<?=$produkBar2dRefund?>
+										<?=$produkMingguanRefund?>
 									</div>
 								</div>						
 							</div>						
