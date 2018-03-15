@@ -3,9 +3,9 @@
 use yii\helpers\Html;
 //use yii\widgets\ActiveForm;
 use kartik\widgets\ActiveForm;
+use kartik\widgets\FileInput;
 use kartik\select2\Select2;
 use frontend\backend\master\models\Supplier;
-use kartik\widgets\FileInput;
 use yii\helpers\ArrayHelper;
 use kartik\money\MaskMoney;
 use kartik\widgets\DatePicker;

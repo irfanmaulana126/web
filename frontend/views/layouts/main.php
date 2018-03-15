@@ -34,12 +34,13 @@ dmstr\web\AdminLteAsset::register($this);
 						<!-- NAV BAR !-->
 						<?php //=$this->render('main-navbarNologin')?>
 						<!-- BODY CONTAINER !-->
-						<div style="padding-top:20px;background-color:powderblue;">
+						<div style="padding-top:20px;">
 							<?= $content ?>
 						</div>
+						<!-- FOOTER !-->
+						<?=$this->render('main-footer_noLogin')?>
 					</div>
-					<!-- FOOTER !-->
-					<?=$this->render('main-footer_noLogin')?>
+					
 				<?php $this->endBody() ?>
 			<?php }; ?>
 			<! -LOGIN- Author : -ptr.nov- >

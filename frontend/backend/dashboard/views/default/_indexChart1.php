@@ -570,7 +570,7 @@ setInterval(function() {
 	var ptrTrafixGroup = document.getElementById('msline-sss-hour-3daystrafik');
 	var spnIdTrafixGroup= ptrTrafixGroup.getElementsByTagName('span');
 	var chartIdTrafixGroup= spnIdTrafixGroup[0].id; 
-	//console.log(chartIdTrafixGroup);
+	console.log(chartIdTrafixGroup);
 	var updateChartTrafixGroup = document.getElementById(chartIdTrafixGroup);
 	//==AJAX POST TRAFIK GROUP===
 	$.ajax({

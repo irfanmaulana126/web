@@ -25,7 +25,7 @@ use yii\base\DynamicModel;
 					'id'=>'databarang-button',
 					'data-pjax' => 0,
 					'class'=>"btn btn-success btn-xs",
-					'title'=>'Tambah'
+					'title'=>'Tambah Produk'
 		];
 		$icon1 = '<span class="fa-stack fa-sm text-left">
 				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>

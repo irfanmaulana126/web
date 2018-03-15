@@ -144,7 +144,7 @@ $this->registerCss("
 		'header' => '
 			<span class="fa-stack fa-xs">																	
 				<i class="fa fa-circle fa-stack-2x " style="color:green"></i>
-				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
+				<i class="fa fa-plus fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> TAMBAH BARANG</b>
 		',	
 		'size' => 'modal-sm',

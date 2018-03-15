@@ -30,9 +30,9 @@ class Template extends Component{
 			$ary='';
 			if ($pilih=='default'){
 				//$ary['Navbar-Left']='background:-webkit-gradient(linear, 10% 100%, 10% 21%, from(#0436FA), to(#579AEF))';
-				$ary['Navbar-Left']='background-color:rgba(26, 168, 191, 1)';
+				$ary['Navbar-Left']='background-color:rgba(26, 168, 191, 1);';
 				$ary['LifeMenu-Header']='background-color:rgba(26, 168, 191, 1)';
-				$ary['LifeMenu-Content']='background-color:rgba(26, 168, 191, 1)';
+				$ary['LifeMenu-Content']='background-color:rgba(26, 168, 191, 1)';//background-image:url("https://dashboard.kontrolgampang.com/logo-kg2.png")';
 				$ary['LifeMenu-Content-Item']='background-color: rgba(34, 118, 124, 1)';			
 			}elseif($pilih=='template1'){
 				//TEMPLATE1 = MERAH MAROON

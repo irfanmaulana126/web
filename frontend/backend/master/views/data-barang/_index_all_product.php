@@ -34,7 +34,7 @@ $this->registerCss("
 		color: blue;
 	}
 	#gv-all-data-prodak-item .kv-grid-container{
-		height:400px
+		height:600px
 	}
 	#gv-all-data-prodak-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
@@ -78,7 +78,7 @@ $this->registerCss("
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','30px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),
 		],
-		//ITEM_ID
+		//Grouping STORE
 		[
 			'attribute'=>'store.STORE_NM',
 			'filterType'=>true,
@@ -108,10 +108,10 @@ $this->registerCss("
 				],
 			]
 		],		
-		//ITEM NAME
+		//PRODUK NAME
 		[
 			'attribute'=>'PRODUCT_NM',
-			//'label'=>'Cutomer',
+			'label'=>'Produk',
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
@@ -127,7 +127,54 @@ $this->registerCss("
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),			
+		],	
+		//GARGA HPP
+		[
+			'attribute'=>'CURRENT_HPP',
+			'label'=>'HPP',
+			'filterType'=>false,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>true,
+			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->CURRENT_PRICE)) {
+					return 0;
+				} else {
+					return $model->CURRENT_PRICE;
+				}
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
 		],		
+		//GARGA JUAL
+		[
+			'attribute'=>'CURRENT_PRICE',
+			'label'=>'Harga Jual',
+			'filterType'=>false,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>true,
+			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->CURRENT_PRICE)) {
+					return 0;
+				} else {
+					return $model->CURRENT_PRICE;
+				}
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+		],		
+		
 		//SATUAN
 		[
 			'attribute'=>'PRODUCT_WARNA',
@@ -161,8 +208,8 @@ $this->registerCss("
 		[
 			'attribute'=>'INDUSTRY_GRP_NM',
 			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'filterType'=>false,
+			//'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
@@ -295,28 +342,6 @@ $this->registerCss("
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
 			
 		],		
-		[
-			'attribute'=>'CURRENT_PRICE',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'value' => function ($model, $key, $index, $widget) {
-				if (empty($model->CURRENT_PRICE)) {
-					return 0;
-				} else {
-					return $model->CURRENT_PRICE;
-				}
-			},
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-		]		
 	];
 	
 	$gvAttProdakItem[]=[			
@@ -373,15 +398,16 @@ $this->registerCss("
 		'toolbar' => false,
 		'panel' => [
 			// 'heading'=>false,
-			'heading'=>'<div class="pull-right">'.tombolExportExcel().' '.tombolImportExcel().' '.tombolCreate().'&nbsp;</div>'.$pageNm,
+			'heading'=>'<div class="pull-right">'.tombolKembali().' '.tombolExportExcel().' '.tombolImportExcel().' '.tombolCreate().'&nbsp;</div>'.$pageNm,
 			'type'=>'default',
 			'before'=>false,
 			'showFooter'=>false,
 			'after'=>false,
 			// 'before'=> tombolReqStore(),
 		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
+		'summary'=>false,
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
 	]); 	
 ?>
 
@@ -417,7 +443,7 @@ $this->registerCss("
 			]);
 		}?>
 		<div style="margin-top: -10px;margin-bottom: 10px;">
-		<?=tombolKembali()?>
+		<?php//=tombolKembali()?>
 	</div>
 	<?=$gvAllStoreItem?>
 </div>
