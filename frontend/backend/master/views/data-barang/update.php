@@ -133,7 +133,7 @@ $data=$image->PRODUCT_IMAGE;
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >UNIT GROUP</span>',
-							'options'=>['style' =>' background-color: lightblue;width:100px;text-align:right']
+							'options'=>['style' =>' background-color: lightblue;width:157px;text-align:right']
 						]
 					]
 				])->widget(Select2::classname(), [

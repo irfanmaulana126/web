@@ -43,7 +43,7 @@ $gvAttProdakPromoItem=[
     //ITEM NAME
     [
         'attribute'=>'PRODUCT_NM',
-        'label'=>'NAMA PRODUK',
+        'label'=>'PRODUK',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -215,7 +215,7 @@ $gvAttProdakPromoItem=[
     <?= $form->field($model,'PROMO',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >PROMO</span>',
+							'content'=>'<span >Promo</span>',
 							'options'=>['style' =>' background-color: lightblue;text-align:right;']
 						]
 					]
