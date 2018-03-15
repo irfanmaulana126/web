@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use yii\widgets\ActiveForm;
+// use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use kartik\select2\Select2;
 use common\models\Store;
 use kartik\widgets\FileInput;
@@ -28,7 +29,7 @@ $(document).ready(function() {
 ");
 $this->registerCss("   
 .product-discount-form #gv-all-data-prodak-harga-item .kv-grid-container{
-		height:300px;
+		height:200px;
     }
 .product-discount-form	#gv-all-data-prodak-harga-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
@@ -71,7 +72,7 @@ $gvAttProdakHargaItem=[
     //DEFAULT_STOCK
     [
         'attribute'=>'PERIODE_TGL1',
-        //'label'=>'Cutomer',
+        'label'=>'TGL AWAL',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -88,7 +89,7 @@ $gvAttProdakHargaItem=[
     //DEFAULT_HARGA
     [
         'attribute'=>'PERIODE_TGL2',
-        //'label'=>'Cutomer',
+        'label'=>'TGL AKHIR',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -119,6 +120,20 @@ $gvAttProdakHargaItem=[
         'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
         
     ],
+    [
+        'attribute'=>'HPP',
+        'label'=>'HPP',
+        'filterType'=>false,
+        'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+        'hAlign'=>'right',
+        'vAlign'=>'middle',
+        'mergeHeader'=>false,
+        'noWrap'=>false,
+        //gvContainHeader($align,$width,$bColor)
+        'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+        'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
+        
+    ],
 ];
 ?>
 
@@ -128,7 +143,7 @@ $gvAttProdakHargaItem=[
 <?= GridView::widget([
 		'id'=>'gv-all-data-prodak-harga-item',
 		'dataProvider' => $dataProviderHarga,
-		'filterModel' => $searchModelHarga,
+		// 'filterModel' => $searchModelHarga,
 		'columns'=>$gvAttProdakHargaItem,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
@@ -153,7 +168,8 @@ $gvAttProdakHargaItem=[
             'before'=>false,
             'footer'=>false,
 			'showFooter'=>false,
-		],
+        ],
+        'summary'=>false
 		// 'floatOverflowContainer'=>true,
 		// 'floatHeader'=>true,
 	]); 
@@ -161,52 +177,88 @@ $gvAttProdakHargaItem=[
 </div>
 <div class="col-md-6">
 <?php $form = ActiveForm::begin(); ?>
-    <?= Html::label('STORE', 'xxx') ?>
-        <?= Html::textInput('XXX', $productdetail->STORE_NM, ['class' => 'form-control','readOnly'=>true]) ?>
-        <br>
-        <?= Html::label('PRODUK', 'xxx') ?>
-        <?= Html::textInput('XXX', $productdetail->PRODUCT_NM, ['class' => 'form-control','readOnly'=>true]) ?>
-        <br>
-    <?php
-    if (empty($product->PERIODE_TGL2)) {
-        $date = date('Y-m-d');
-    } else {
-        if ($product->PERIODE_TGL2 < date('Y-m-d')) {
+<?=$form->field($model,'storeNm',[					
+				'addon' => [
+					'prepend' => [
+						'content'=>'<span >Toko </span>',
+						'options'=>['style' =>' background-color: lightblue;text-align:right']
+					]
+				]
+				])->textInput([
+					'value'=>$productdetail->STORE_NM,
+					'readOnly'=>true,
+				])->label(false);	
+		?>
+        <?=$form->field($model,'produkNm',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >Produk</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right']
+						]
+					]
+				])->textInput([
+					'value'=>$productdetail->PRODUCT_NM,
+					'readOnly'=>true,
+				])->label(false);	
+		?> 
+
+        <?php
+         if (empty($product->PERIODE_TGL2)) {
             $date = date('Y-m-d');
         } else {
-            $date = date('Y-m-d', strtotime('+1 days', strtotime($product->PERIODE_TGL2)));
+            if ($product->PERIODE_TGL2 < date('Y-m-d')) {
+                $date = date('Y-m-d');
+            } else {
+                $date = date('Y-m-d', strtotime('+1 days', strtotime($product->PERIODE_TGL2)));
+            }
+            
         }
-        
-    }
-    $date1=date('Y-m-d');
-    $date2=date('Y-m-d', strtotime('+21 days', strtotime($date1)));
-        echo '<label class="control-label">PERIODE TANGGAL</label>';
-       echo DatePicker::widget([
-            'model' => $model,
-            'attribute' => 'PERIODE_TGL1',
-            'value'=>$date1,
-            'attribute2' => 'PERIODE_TGL2',
-            'value2'=>$date2,
-            // 'options' => ['placeholder' => 'Start date'],
-            // 'options2' => ['placeholder' => 'End date'],
-            'type' => DatePicker::TYPE_RANGE,
-            'form' => $form,
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'yyyy-mm-dd',
-                "startDate" => $date,
-            ]
-        ]);
-    ?>
-    <br>
-     <?= $form->field($model, 'HPP')->widget(MaskMoney::classname(), [
+        $date1=date('Y-m-d');
+        $date2=date('Y-m-d', strtotime('+21 days', strtotime($date1)));
+        echo $form->field($model,'PERIODE_TGL1',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >Tanggal</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right']
+						]
+					]
+				])->widget(DatePicker::classname(), [
+                    'value'=>$date1,
+                    'attribute2' => 'PERIODE_TGL2',
+                        'value2'=>$date2,
+                        'options' => ['placeholder' => 'Tanggal Awal'],
+                        'options2' => ['placeholder' => 'Tanggal Akhir'],
+                        'type' => DatePicker::TYPE_RANGE,
+                        'form' => $form,
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd',
+                            "startDate" => $date,
+                        ]
+                    ])->label(false);	
+		?>     
+     <?= $form->field($model, 'HPP',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >HPP</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right']
+						]
+					]
+				])->widget(MaskMoney::classname(), [
                             'options' => ['placeholder' => 'HPP ...'],
                             'pluginOptions'=>[
                                 'prefix'=>'Rp ',
                                 'precision' => 0
                             ],
-                        ]) ?>
-     <?= $form->field($model, 'margin')->widget(MaskMoney::classname(), [
+                        ])->label(false) ?>
+     <?= $form->field($model, 'margin',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >Margin Laba</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right']
+						]
+					]
+				])->widget(MaskMoney::classname(), [
 		'options' => [
 					'placeholder' => 'Margin Harga ...',
 					'class' => 'form-control',
@@ -215,18 +267,24 @@ $gvAttProdakHargaItem=[
 					'prefix' => 'Rp ',
 					'precision' => 0
 				 ]
-				]); ?>
-    <?= $form->field($model, 'HARGA_JUAL')->widget(MaskMoney::classname(), [
+				])->label(false); ?>
+    <?= $form->field($model, 'HARGA_JUAL',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >Harga Jual</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right']
+						]
+					]
+				])->widget(MaskMoney::classname(), [
                 'options' => ['placeholder' => 'Harga Barang ...'],
+                'disabled' => true,
                 'pluginOptions'=>[
                     'prefix'=>'Rp ',
                     'precision' => 0
                 ],
-            ]) ?>
-    <br>
-    <div class="form-group">
+            ])->label(false) ?>
+    <div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?php /* echo Html::button('calculator', ['class' => 'btn btn-warning','data-toggle'=>'modal','href'=>'#cal'])*/ ?>
     </div>
 <?php ActiveForm::end(); ?>
 </div>

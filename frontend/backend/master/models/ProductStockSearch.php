@@ -85,6 +85,7 @@ class ProductStockSearch extends ProductStock
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'SUPPLIER_ID', $this->SUPPLIER_ID])
+            ->andFilterWhere(['like', 'SUPPLIER_NM', $this->SUPPLIER_NM])
             ->andFilterWhere(['like', 'CREATE_UUID', $this->CREATE_UUID])
             ->andFilterWhere(['like', 'UPDATE_UUID', $this->UPDATE_UUID])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL])

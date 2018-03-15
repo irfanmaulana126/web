@@ -21,6 +21,17 @@ $this->title="Prodak";
                 ]
 			]);
 		}?>
+        <div style="
+    position: fixed;
+    opacity: 0.5;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    top: 25%;
+    left: 29%;
+    display: block;
+    margin: inherit;
+"><img src="/logo-dashboard2.png" width="800px" alt=""></div>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 <section class="content-header">
     <h1>

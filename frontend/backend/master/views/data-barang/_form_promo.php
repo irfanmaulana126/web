@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use kartik\select2\Select2;
 use common\models\Store;
 use kartik\widgets\FileInput;
@@ -16,7 +16,7 @@ use kartik\field\FieldRange;
 
 $this->registerCss("   
 .product-discount-form #gv-all-data-prodak-harga-item .kv-grid-container{
-		height:300px;
+		height:200px;
     }
 .product-discount-form	#gv-all-data-prodak-harga-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
@@ -43,7 +43,7 @@ $gvAttProdakPromoItem=[
     //ITEM NAME
     [
         'attribute'=>'PRODUCT_NM',
-        //'label'=>'Cutomer',
+        'label'=>'NAMA PRODUK',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -59,7 +59,7 @@ $gvAttProdakPromoItem=[
     //DEFAULT_STOCK
     [
         'attribute'=>'PERIODE_TGL1',
-        //'label'=>'Cutomer',
+        'label'=>'TGL AWAL',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -76,7 +76,7 @@ $gvAttProdakPromoItem=[
     //DEFAULT_HARGA
     [
         'attribute'=>'PERIODE_TGL2',
-        //'label'=>'Cutomer',
+        'label'=>'TGL AKHIR',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -116,7 +116,7 @@ $gvAttProdakPromoItem=[
 <?= GridView::widget([
 		'id'=>'gv-all-data-prodak-harga-item',
 		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
+		// 'filterModel' => $searchModel,
 		'columns'=>$gvAttProdakPromoItem,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
@@ -133,7 +133,8 @@ $gvAttProdakPromoItem=[
 		'autoXlFormat'=>true,
 		'export' => false,
 		'panel'=>[''],
-		'toolbar' => false,
+        'toolbar' => false,
+        'summary'=>false,
 		'panel' => [
 			// 'heading'=>false,
 			'heading'=>'<div style="float:right"></div>'.$pageNm,
@@ -150,49 +151,77 @@ $gvAttProdakPromoItem=[
 
 <div class="col-md-6">
 <?php $form = ActiveForm::begin(); ?>
-<?= Html::label('STORE', 'xxx') ?>
-        <?= Html::textInput('XXX', $productdetail->STORE_NM, ['class' => 'form-control','readOnly'=>true]) ?>
-        <br>
-        <?= Html::label('PRODUK', 'xxx') ?>
-        <?= Html::textInput('XXX', $productdetail->PRODUCT_NM, ['class' => 'form-control','readOnly'=>true]) ?>
-        <br>
-    <?php
-    if (empty($product->PERIODE_TGL2)) {
-        $date = date('Y-m-d');
-    } else {
-        if ($product->PERIODE_TGL2 <= date('Y-m-d')) {
+<?=$form->field($model,'storeNm',[					
+				'addon' => [
+					'prepend' => [
+						'content'=>'<span >Toko </span>',
+						'options'=>['style' =>' background-color: lightblue;text-align:right;width: 78px;']
+					]
+				]
+				])->textInput([
+					'value'=>$productdetail->STORE_NM,
+					'readOnly'=>true,
+                    'style'=>'width: 342px;'
+				])->label(false);	
+		?>
+        <?=$form->field($model,'produkNm',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >Produk</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 78px;']
+						]
+					]
+				])->textInput([
+					'value'=>$productdetail->PRODUCT_NM,
+                    'readOnly'=>true,
+                    'style'=>'width: 342px;'
+				])->label(false);	
+		?> 
+        <?php
+         if (empty($product->PERIODE_TGL2)) {
             $date = date('Y-m-d');
         } else {
-            $date = date('Y-m-d', strtotime('+1 days', strtotime($product->PERIODE_TGL2)));
-        }
-        
-    }
-    $date1=date('Y-m-d');
-    $date2=date('Y-m-d', strtotime('+21 days', strtotime($date1)));
-        echo '<label class="control-label">PERIODE TANGGAL</label>';
-       echo DatePicker::widget([
-            'model' => $model,
-            'model' => $model,
-            'attribute' => 'PERIODE_TGL1',
-            'value'=>$date1,
-            'attribute2' => 'PERIODE_TGL2',
-            'value2'=>$date2,
-            'options' => ['placeholder' => 'Start date'],
-            'options2' => ['placeholder' => 'End date'],
-            'type' => DatePicker::TYPE_RANGE,
-            'form' => $form,
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'yyyy-mm-dd',
-                "startDate" => $date,
-            ]
-        ]);
-    ?>
-    <br>
-    <?= $form->field($model,'PROMO')->textInput() ?>
+            if ($product->PERIODE_TGL2 < date('Y-m-d')) {
+                $date = date('Y-m-d');
+            } else {
+                $date = date('Y-m-d', strtotime('+1 days', strtotime($product->PERIODE_TGL2)));
+            }
             
-    <br>
-    <div class="form-group">
+        }
+        $date1=date('Y-m-d');
+        $date2=date('Y-m-d', strtotime('+21 days', strtotime($date1)));
+        echo $form->field($model,'PERIODE_TGL1',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >Tanggal</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right']
+						]
+					]
+				])->widget(DatePicker::classname(), [
+                    'value'=>$date1,
+                    'attribute2' => 'PERIODE_TGL2',
+                        'value2'=>$date2,
+                        'options' => ['placeholder' => 'Tanggal Awal'],
+                        'options2' => ['placeholder' => 'Tanggal Akhir'],
+                        'type' => DatePicker::TYPE_RANGE,
+                        'form' => $form,
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd',
+                            "startDate" => $date,
+                        ]
+                    ])->label(false);	
+		?>  
+    <?= $form->field($model,'PROMO',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >PROMO</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;']
+						]
+					]
+				])->textInput()->label(false); ?>
+            
+    <div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 <?php ActiveForm::end(); ?>

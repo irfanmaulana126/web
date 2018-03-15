@@ -62,7 +62,7 @@ $this->registerCss("
         //ITEM_ID
 		[
 			'attribute'=>'SUPPLIER_ID',
-			//'label'=>'Cutomer',
+			'label'=>'KODE SUPLIER',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -76,7 +76,21 @@ $this->registerCss("
 		],		
 		[
 			'attribute'=>'SUPPLIER_NM',
-			//'label'=>'Cutomer',
+			'label'=>'NAMA SUPLIER',
+			'filterType'=>true,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>'raw',
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+		],		
+		[
+			'attribute'=>'PIC',
+			'label'=>'PIC',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -90,7 +104,7 @@ $this->registerCss("
 		],		
 		[
 			'attribute'=>'EMAIL',
-			//'label'=>'Cutomer',
+			'label'=>'EMAIL',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -104,7 +118,7 @@ $this->registerCss("
 		],		
 		[
 			'attribute'=>'ALAMAT',
-			//'label'=>'Cutomer',
+			'label'=>'ALAMAT',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',

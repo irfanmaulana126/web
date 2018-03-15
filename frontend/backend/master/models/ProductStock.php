@@ -3,8 +3,6 @@
 namespace frontend\backend\master\models;
 
 use Yii;
-use frontend\backend\master\models\Product;
-use frontend\backend\master\models\Store;
 
 /**
  * This is the model class for table "product_stock".
@@ -40,8 +38,6 @@ class ProductStock extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-	public $produkNm;
-	public $storeNm;
     public static function tableName()
     {
         return 'product_stock';

@@ -11,12 +11,18 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'store.STORE_NM',
-            'PRODUCT_NM',
-            'PERIODE_TGL1',
-            'PERIODE_TGL2',
-            'START_TIME',
-            'PROMO',
+            ['attribute'=>'store.STORE_NM',
+             'label'=>'STORE'  ],
+            ['attribute'=>'PRODUCT_NM',
+             'label'=>'PRODUCT'  ],
+            ['attribute'=>'PERIODE_TGL1',
+             'label'=>'TGL AWAL'  ],
+            ['attribute'=>'PERIODE_TGL2',
+             'label'=>'TGL AKHIR'  ],
+            ['attribute'=>'START_TIME',
+             'label'=>'WAKTU'  ],
+            ['attribute'=>'PROMO',
+             'label'=>'PROMO'  ],
         ],
     ]) ?>
 

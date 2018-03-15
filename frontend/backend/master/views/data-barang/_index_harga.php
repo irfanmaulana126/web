@@ -98,7 +98,7 @@ function sttMsgDscp($stt){
 		//DEFAULT_STOCK
 		[
 			'attribute'=>'PERIODE_TGL1',
-			//'label'=>'Cutomer',
+			'label'=>'TGL AWAL',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -123,7 +123,7 @@ function sttMsgDscp($stt){
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'PERIODE_TGL2',
-			//'label'=>'Cutomer',
+			'label'=>'TGL AKHIR',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -163,7 +163,7 @@ function sttMsgDscp($stt){
 		//SATUAN
 		[
 			'attribute'=>'HPP',
-			//'label'=>'Cutomer',
+			'label'=>'HPP',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',

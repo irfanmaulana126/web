@@ -120,7 +120,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> TAMBAH GROUP PRODUCT</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -147,7 +147,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> TAMBAH BARANG</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -174,7 +174,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> TAMBAH CUSTOMER</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -200,7 +200,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> TAMBAH SUPPLIER</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -276,7 +276,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> LIHAT SUPPLIER</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -301,7 +301,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> UBAH SUPPLIER</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -427,7 +427,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> LIHAT PRODUCT GROUP</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -452,7 +452,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> UBAH DATA PRODUCT GROUP</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -576,7 +576,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> LIHAT PRODUK DISCOUNT</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -601,7 +601,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> UBAH PRODUK DISCOUNT</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -628,7 +628,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> LIHAT PRODUK PROMO</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -653,7 +653,7 @@ $this->registerCss("
 				<i class="fa fa-search fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> UBAH PRODUK PROMO</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,

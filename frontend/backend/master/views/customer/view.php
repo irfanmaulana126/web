@@ -14,13 +14,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'CUSTOMER_ID',
-            'ACCESS_GROUP',
-            'STORE_ID',
-            'NAME',
-            'EMAIL',
-            'PHONE',
-            'DCRP_DETIL:ntext',
+            ['attribute'=>'NAME',
+            'label'=>'NAMA'  ],
+           ['attribute'=>'EMAIL',
+            'label'=>'EMAIL'  ],
+           ['attribute'=>'PHONE',
+            'label'=>'PHONE'  ],
+           ['attribute'=>'DCRP_DETIL',
+            'label'=>'DCRP_DETIL'  ],
         ],
     ]) ?>
 

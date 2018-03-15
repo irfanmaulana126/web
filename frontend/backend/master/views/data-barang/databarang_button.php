@@ -43,7 +43,7 @@ use yii\base\DynamicModel;
 		$title= Yii::t('app','');
 		$url = Url::toRoute(['/master/supplier/create']);
 		$options1 = ['value'=>$url,
-					'id'=>'databarang-button',
+					'id'=>'supplier-button',
 					'data-pjax' => 0,
 					'class'=>"btn btn-success btn-xs",
 					'title'=>'Tambah'
@@ -303,7 +303,7 @@ use yii\base\DynamicModel;
 		$title1 = Yii::t('app',' View');
 		$options1 = [
 			'value'=>url::to(['/master/supplier/view','id'=>$model['SUPPLIER_ID']]),
-			'id'=>'databarang-button-row-view',
+			'id'=>'supplier-button-row-view',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
 		];
@@ -325,7 +325,7 @@ use yii\base\DynamicModel;
 		$title1 = Yii::t('app',' Edit');
 		$options1 = [
 			'value'=>url::to(['/master/supplier/update','id'=>$model['SUPPLIER_ID']]),
-			'id'=>'databarang-button-row-edit',
+			'id'=>'supplier-button-row-edit',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
 		];

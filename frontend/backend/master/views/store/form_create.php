@@ -134,12 +134,12 @@ $this->registerJS('
     </div>
     <div class="col-md-6">
     
-    <?= $form->field($model, 'LATITUDE')->textInput(['id'=>'latitude']) ?>
+    <?= $form->field($model, 'LATITUDE')->textInput(['readOnly'=>true,'id'=>'latitude']) ?>
                 
     </div>
     <div class="col-md-6">
 
-    <?= $form->field($model, 'LONGITUDE')->textInput(['id'=>'longitude']) ?>
+    <?= $form->field($model, 'LONGITUDE')->textInput(['readOnly'=>true,'id'=>'longitude']) ?>
                 
     </div>
     <div class="col-md-6">
@@ -176,7 +176,7 @@ $this->registerJS('
 
 
 
-    <div class="form-group">
+    <div class="form-group text-right">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
