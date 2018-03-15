@@ -59,7 +59,7 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 				],
 			]);?>
 <br>
-			<div class="form-group">
+			<div class="form-group text-right">
 					<?=Html::submitButton('Simpan',['class' => 'btn btn-success']); ?>
 			</div>
 

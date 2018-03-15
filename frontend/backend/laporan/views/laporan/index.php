@@ -7,6 +7,17 @@ use kartik\widgets\ActiveForm;
 $this->title = 'Ringakasan Laporan';
 ?>
 
+        <div style="
+    position: fixed;
+    opacity: 0.5;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    top: 25%;
+    left: 29%;
+    display: block;
+    margin: inherit;
+"><img src="/logo-dashboard2.png" width="800px" alt=""></div>
 <section class="content-header">
     <h1>
     Laporan

@@ -82,7 +82,7 @@ $dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Pending. '.sttMsgDscp(1).'=Active
 		],	
 		[
 			'attribute'=>'PRODUCT_NM',
-			'label'=>'Nama Produk',
+			'label'=>'NAMA PRODUK',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
 			'hAlign'=>'right',
@@ -99,7 +99,7 @@ $dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Pending. '.sttMsgDscp(1).'=Active
 		//DEFAULT_STOCK
 		[
 			'attribute'=>'PERIODE_TGL1',
-			//'label'=>'Cutomer',
+			'label'=>'TGL AWAL',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -124,7 +124,7 @@ $dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Pending. '.sttMsgDscp(1).'=Active
 		//DEFAULT_HARGA
 		[
 			'attribute'=>'PERIODE_TGL2',
-			//'label'=>'Cutomer',
+			'label'=>'TGL AKHIR',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',

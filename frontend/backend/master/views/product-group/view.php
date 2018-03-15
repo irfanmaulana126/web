@@ -13,7 +13,8 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'GROUP_NM',
+            ['attribute'=>'GROUP_NM',
+            'label'=>'NAMA'  ],
             'NOTE:ntext',
         ],
     ]) ?>

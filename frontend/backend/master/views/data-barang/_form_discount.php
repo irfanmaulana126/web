@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use kartik\select2\Select2;
 use common\models\Store;
 use kartik\widgets\FileInput;
@@ -15,7 +15,7 @@ use kartik\field\FieldRange;
 /* @var $form yii\widgets\ActiveForm */
 $this->registerCss("   
 .product-discount-form #gv-all-data-prodak-harga-item .kv-grid-container{
-		height:300px;
+		height:200px;
     }
 .product-discount-form	#gv-all-data-prodak-harga-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
@@ -42,7 +42,7 @@ $gvAttProdakDiscountItem=[
     //ITEM NAME
     [
         'attribute'=>'PRODUCT_NM',
-        //'label'=>'Cutomer',
+        'label'=>'PRODUK',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -58,7 +58,7 @@ $gvAttProdakDiscountItem=[
     //DEFAULT_STOCK
     [
         'attribute'=>'PERIODE_TGL1',
-        //'label'=>'Cutomer',
+        'label'=>'TGL AWAL',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -75,7 +75,7 @@ $gvAttProdakDiscountItem=[
     //DEFAULT_HARGA
     [
         'attribute'=>'PERIODE_TGL2',
-        //'label'=>'Cutomer',
+        'label'=>'TGL AKHIR',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -114,7 +114,7 @@ $gvAttProdakDiscountItem=[
 <?= GridView::widget([
 		'id'=>'gv-all-data-prodak-harga-item',
 		'dataProvider' => $dataProvider,
-		'filterModel' => $searchModel,
+		// 'filterModel' => $searchModel,
 		'columns'=>$gvAttProdakDiscountItem,				
 		'pjax'=>true,
 		'pjaxSettings'=>[
@@ -147,14 +147,34 @@ $gvAttProdakDiscountItem=[
 </div>
 <div class="col-md-6">
 <?php $form = ActiveForm::begin(); ?>
-        <?= Html::label('STORE', 'xxx') ?>
-        <?= Html::textInput('XXX', $productdetail->STORE_NM, ['class' => 'form-control','readOnly'=>true]) ?>
-        <br>
-        <?= Html::label('PRODUK', 'xxx') ?>
-        <?= Html::textInput('XXX', $productdetail->PRODUCT_NM, ['class' => 'form-control','readOnly'=>true]) ?>
-        <br>
-    <?php
-        if (empty($product->PERIODE_TGL2)) {
+<?=$form->field($model,'storeNm',[					
+				'addon' => [
+					'prepend' => [
+						'content'=>'<span >Toko </span>',
+						'options'=>['style' =>' background-color: lightblue;text-align:right;width: 98px;']
+					]
+				]
+				])->textInput([
+					'value'=>$productdetail->STORE_NM,
+                    'readOnly'=>true,
+                    'style'=>';width: 332px;'
+				])->label(false);	
+		?>
+        <?=$form->field($model,'produkNm',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >Produk</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 98px;']
+						]
+					]
+				])->textInput([
+					'value'=>$productdetail->PRODUCT_NM,
+					'readOnly'=>true,
+                    'style'=>';width: 332px;'
+				])->label(false);	
+		?> 
+        <?php
+         if (empty($product->PERIODE_TGL2)) {
             $date = date('Y-m-d');
         } else {
             if ($product->PERIODE_TGL2 < date('Y-m-d')) {
@@ -166,30 +186,37 @@ $gvAttProdakDiscountItem=[
         }
         $date1=date('Y-m-d');
         $date2=date('Y-m-d', strtotime('+21 days', strtotime($date1)));
-        echo '<label class="control-label">PERIODE TANGGAL</label>';
-       echo DatePicker::widget([
-            'model' => $model,
-            'model' => $model,
-            'attribute' => 'PERIODE_TGL1',
-            'value'=>$date1,
-            'attribute2' => 'PERIODE_TGL2',
-            'value2'=>$date2,
-            'options' => ['placeholder' => 'Start date'],
-            'options2' => ['placeholder' => 'End date'],
-            'type' => DatePicker::TYPE_RANGE,
-            'form' => $form,
-            'pluginOptions' => [
-                'autoclose' => true,
-                'format' => 'yyyy-mm-dd',
-                "startDate" => $date, 
-            ]
-        ]);
-    ?>
-    <br>
-    <?= $form->field($model,'DISCOUNT')->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false]) ?>
-                
-    <br>
-    <div class="form-group">
+        echo $form->field($model,'PERIODE_TGL1',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >Tanggal</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 98px;']
+						]
+					]
+				])->widget(DatePicker::classname(), [
+                    'value'=>$date1,
+                    'attribute2' => 'PERIODE_TGL2',
+                        'value2'=>$date2,
+                        'options' => ['placeholder' => 'Tanggal Awal'],
+                        'options2' => ['placeholder' => 'Tanggal Akhir'],
+                        'type' => DatePicker::TYPE_RANGE,
+                        'form' => $form,
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'yyyy-mm-dd',
+                            "startDate" => $date,
+                        ]
+                    ])->label(false);	
+		?>  
+        <?= $form->field($model,'DISCOUNT',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >DISCOUNT</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right']
+						]
+					]
+				])->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false])->label(false); ?> 
+    <div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 <?php ActiveForm::end(); ?>

@@ -31,6 +31,9 @@ $this->registerCss("
 	#store-button-create-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	#kasir-button-row-switch-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 	#store-button-edit-modal .modal-header {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
@@ -86,7 +89,7 @@ $this->registerCss("
 				<i class="fa fa-pencil fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> Restore Toko </b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -468,7 +471,7 @@ $this->registerCss("
 				<i class="fa fa-mobile fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> Switch UUID</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,
@@ -491,7 +494,7 @@ $this->registerCss("
 				<i class="fa fa-mobile fa-stack-1x" style="color:#fbfbfb"></i>
 			</span><b> SETTING PEMBAYAYARAN PERANGKAT</b>
 		',	
-		'size' => 'modal-md',
+		'size' => 'modal-sm',
 		'options' => ['class'=>'slide'],
 		'headerOptions'=>[
 			'style'=> 'border-radius:5px; background-color:'.$modalHeaderColor,

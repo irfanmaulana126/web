@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use kartik\select2\Select2;
 use common\models\Store;
 use yii\helpers\ArrayHelper;
@@ -15,11 +15,19 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'GROUP_NM')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'GROUP_NM',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >NAMA GROUP</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right']
+						]
+					]
+				])->textInput(['maxlength' => true])->label(false) ?>
 
     <?= $form->field($model, 'NOTE')->textarea(['rows' => 6]) ?>
 
-    <div class="form-group">
+    <div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 

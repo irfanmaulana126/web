@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use kartik\select2\Select2;
 use common\models\Store;
 use kartik\widgets\FileInput;
@@ -33,23 +33,51 @@ $data=$image->PRODUCT_IMAGE;
 	'options'=>['enctype'=>'multipart/form-data'],
 	]); ?>	
 			
-			<?= $form->field($model, 'PRODUCT_NM')->textInput() ?>
+			<?= $form->field($model, 'PRODUCT_NM',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >NAMA PRODUK</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+						]
+					]
+				])->textInput(['style'=>'width: 413px;'])->label(false)  ?>
 
-			<?= $form->field($model, 'PRODUCT_QR')->textInput() ?>
+			<?= $form->field($model, 'PRODUCT_QR',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >PRODUCT QR</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+						]
+					]
+				])->textInput(['style'=>'width: 413px;'])->label(false)  ?>
 			
-			<?= $form->field($model, 'GROUP_ID')->widget(Select2::classname(), [
+			<?= $form->field($model, 'GROUP_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >GROUP PPRODUK</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+						]
+					]
+				])->widget(Select2::classname(), [
 					'data' => ArrayHelper::map(ProductGroup::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>1])->all(),'GROUP_ID','GROUP_NM'),
-					'language' => 'de',
+					'language' => 'en',
 					'options' => ['placeholder' => 'Select a state ...'],
 					'pluginOptions' => [
 						'allowClear' => true
 					],
-				]); ?>
+				])->label(false) ; ?>
 
-			<?= $form->field($model, 'PRODUCT_WARNA')->widget(ColorInput::classname(), [
+			<?= $form->field($model, 'PRODUCT_WARNA',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >WARNA PRODUK</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+						]
+					]
+				])->widget(ColorInput::classname(), [
 				'value' => 'red',
 				'showDefaultPalette' => false,
-				'options' => ['placeholder' => 'Choose your color ...'],
+				'options' => ['placeholder' => 'Choose your color ...','style'=>'width: 353px;'],
 				'pluginOptions' => [
 					'showInput' => true,
 					'showInitial' => true,
@@ -71,29 +99,63 @@ $data=$image->PRODUCT_IMAGE;
 						],
 					]
 				]
-			]); ?>
+			])->label(false) ; ?>
 			
-			<?= $form->field($model, 'PRODUCT_HEADLINE')->textInput() ?>
+			<?= $form->field($model, 'PRODUCT_HEADLINE',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >PRODUK HEADLINE</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+						]
+					]
+				])->textInput(['style'=>'width: 413px;'])->label(false)  ?>
 
-			<?= $form->field($model, 'STOCK_LEVEL')->textInput(['type'=>'number','min'=>1,'allowEmpty' => true,'integerOnly' => false]) ?>
+			<?= $form->field($model, 'STOCK_LEVEL',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >STOCK LEVEL</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+						]
+					]
+				])->textInput(['type'=>'number','min'=>1,'style'=>'width: 413px;','allowEmpty' => true,'integerOnly' => false])->label(false)  ?>
 			   
-			<?= $form->field($model, 'CURRENT_PPN')->textInput(['type'=>'number','min'=>0,'max'=>10,'allowEmpty' => true,'integerOnly' => false]) ?>
+			<?= $form->field($model, 'CURRENT_PPN',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >PPN</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+						]
+					]
+				])->textInput(['type'=>'number','min'=>0,'max'=>10,'style'=>'width: 413px;','allowEmpty' => true,'integerOnly' => false])->label(false)  ?>
 			<div class="row"> 
 			<div class="col-md-6">
-				<?= 
-				'<label class="control-label">Unit Group</label>';
-				echo Select2::widget([
-					'name' => 'state_2',
+				<?= $form->field($model, 'state_2',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >UNIT GROUP</span>',
+							'options'=>['style' =>' background-color: lightblue;width:100px;text-align:right']
+						]
+					]
+				])->widget(Select2::classname(), [
 					'data' => ArrayHelper::map(ProductUnitGroup::find()->all(),'UNIT_ID_GRP','UNIT_NM_GRP'),
+					'language' => 'en',
 					'options' => ['placeholder' => 'Select a state ...','id'=>'unitgrp'],
 					'pluginOptions' => [
 						'allowClear' => true
 					],
-				]); ?>
+				])->label(false) ;
+				 ?>
 			</div>
 
 			<div class="col-md-6">
-				<?= $form->field($model, 'UNIT_ID')->widget(DepDrop::classname(), [
+				<?= $form->field($model, 'UNIT_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >UNIT PRODUK</span>',
+							'options'=>['style' =>' background-color: lightblue;width:100px;text-align:right']
+						]
+					]
+				])->widget(DepDrop::classname(), [
 					'type'=>DepDrop::TYPE_SELECT2,
 					'options'=>['id'=>'subunit-id'],
 					'pluginOptions'=>[
@@ -101,10 +163,17 @@ $data=$image->PRODUCT_IMAGE;
 						'placeholder'=>'Select...',
 						'url'=>Url::to(['/master/data-barang/unit'])
 					]
-				]); ?>
+				])->label(false) ; ?>
 			</div>
 			</div>
-			<?= $form->field($model, 'PRODUCT_SIZE')->textInput(['type'=>'number','min'=>1,'allowEmpty' => true,'integerOnly' => false]) ?>
+			<?= $form->field($model, 'PRODUCT_SIZE',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >SIZE PRODUK</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+						]
+					]
+				])->textInput(['type'=>'number','min'=>1,'style'=>'width: 413px;','allowEmpty' => true,'integerOnly' => false])->label(false)  ?>
 								
 			<?= 
 			$form->field($image, 'PRODUCT_IMAGE')->widget(FileInput::classname(), [
@@ -133,7 +202,7 @@ $data=$image->PRODUCT_IMAGE;
 					'fileclear' => 'function() { log("fileclear"); }',
 					'filereset' => 'function() { log("filereset"); }',
 				]
-			]); 
+			]) ; 
 			?>
 		<div class="form-group">
 			<?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

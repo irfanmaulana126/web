@@ -90,37 +90,9 @@ $this->registerCss("
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],
-				
-		//SATUAN
 		[
-			'attribute'=>'CURRENT_DATE',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'filterType'=>GridView::FILTER_DATE,
-			'filterWidgetOptions'=>['pluginOptions' => [				
-				'format' => 'yyyy-mm-dd',					 
-				'autoclose' => true,
-				'todayHighlight' => true,
-				//'format' => 'dd-mm-yyyy hh:mm',
-				'autoWidget' => false,
-				//'todayBtn' => true,
-			]
-		],
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
-		],
-		
-		//DEFAULT_STOCK
-		[
-			'attribute'=>'LAST_STOCK',
-			//'label'=>'Cutomer',
+			'attribute'=>'SUPPLIER_NM',
+			'label'=>'SUPPLIER',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -129,10 +101,9 @@ $this->registerCss("
 			'noWrap'=>false,
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('LEFT','100px',''),
 			
 		],
-		//DEFAULT_HARGA
 		[
 			'attribute'=>'INPUT_STOCK',
 			//'label'=>'Cutomer',
@@ -145,36 +116,6 @@ $this->registerCss("
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-		],
-		//SATUAN
-		[
-			'attribute'=>'CURRENT_STOCK',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-			
-		],
-		//SATUAN
-		[
-			'attribute'=>'SISA_STOCK',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
 			
 		],
 	];

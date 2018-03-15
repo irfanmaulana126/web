@@ -1,7 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
+use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\backend\master\models\Supplier */
@@ -12,17 +13,63 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'SUPPLIER_NM')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'SUPPLIER_NM',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >NAMA</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+						]
+					]
+				])->textInput(['maxlength' => true])->label(false) ?>
 
-    <?= $form->field($model, 'EMAIL')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'PIC',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >PIC</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+						]
+					]
+				])->textInput(['maxlength' => true])->label(false) ?>
 
-    <?= $form->field($model, 'NO_TLP')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'EMAIL',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >EMAIL</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+						]
+					]
+				])->widget(MaskedInput::classname(),['clientOptions' => [
+        'alias' =>  'email'
+    ]])->label(false) ?>
 
-    <?= $form->field($model, 'PIC')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'NO_TLP',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >NO_TLP</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+						]
+					]
+				])->widget(MaskedInput::classname(),
+                ['mask' => '(021) 9999999'])->label(false) ?>
 
-    <?= $form->field($model, 'PHONE')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'PHONE',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >PHONE</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+						]
+					]
+				])->widget(MaskedInput::classname(),
+        ['mask' => '(999) 9999999'])->label('Phone')->label(false) ?>
 
-    <?= $form->field($model, 'ALAMAT')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'ALAMAT',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span >ALAMAT</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+						]
+					]
+				])->textInput(['maxlength' => true])->label(false) ?>
     
     <?= $form->field($model, 'DCRP_DETIL')->textarea(['rows' => 6]) ?>
 
