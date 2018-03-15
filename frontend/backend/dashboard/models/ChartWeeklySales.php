@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use frontend\backend\dashboard\models\WeeklySales;
 use frontend\backend\dashboard\models\Store;
+use api\modules\laporan\models\Store;
 
 class ChartWeeklySales extends Model
 {

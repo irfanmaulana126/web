@@ -40,6 +40,8 @@ class ProductStock extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
+	public $produkNm;
+	public $storeNm;
     public static function tableName()
     {
         return 'product_stock';
