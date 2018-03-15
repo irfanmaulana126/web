@@ -190,7 +190,7 @@ $gvAttProdakDiscountItem=[
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >Tanggal</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 98px;']
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 88px;']
 						]
 					]
 				])->widget(DatePicker::classname(), [
@@ -211,11 +211,11 @@ $gvAttProdakDiscountItem=[
         <?= $form->field($model,'DISCOUNT',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >DISCOUNT</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'content'=>'<span >Discount</span>',
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 88px;']
 						]
 					]
-				])->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false])->label(false); ?> 
+				])->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false,'style'=>';width: 332px;'])->label(false); ?> 
     <div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

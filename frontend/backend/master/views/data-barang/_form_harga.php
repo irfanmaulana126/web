@@ -56,7 +56,7 @@ $gvAttProdakHargaItem=[
     //ITEM NAME
     [
         'attribute'=>'PRODUCT_NM',
-        //'label'=>'Cutomer',
+        'label'=>'PRODUK',
         'filterType'=>false,
         'filter'=>false,
         'hAlign'=>'right',
@@ -180,25 +180,27 @@ $gvAttProdakHargaItem=[
 <?=$form->field($model,'storeNm',[					
 				'addon' => [
 					'prepend' => [
-						'content'=>'<span >Toko </span>',
-						'options'=>['style' =>' background-color: lightblue;text-align:right']
+						'content'=>'<span>Toko</span>',
+						'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
 					]
 				]
 				])->textInput([
 					'value'=>$productdetail->STORE_NM,
-					'readOnly'=>true,
+                    'readOnly'=>true,
+                    'style'=>';width: 315px;'
 				])->label(false);	
 		?>
         <?=$form->field($model,'produkNm',[					
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >Produk</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
 						]
 					]
 				])->textInput([
 					'value'=>$productdetail->PRODUCT_NM,
 					'readOnly'=>true,
+                    'style'=>';width: 315px;'
 				])->label(false);	
 		?> 
 
@@ -219,7 +221,7 @@ $gvAttProdakHargaItem=[
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >Tanggal</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
 						]
 					]
 				])->widget(DatePicker::classname(), [
@@ -234,6 +236,7 @@ $gvAttProdakHargaItem=[
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
                             "startDate" => $date,
+                            
                         ]
                     ])->label(false);	
 		?>     
@@ -241,11 +244,11 @@ $gvAttProdakHargaItem=[
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >HPP</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
 						]
 					]
 				])->widget(MaskMoney::classname(), [
-                            'options' => ['placeholder' => 'HPP ...'],
+                            'options' => ['placeholder' => 'HPP ...','style'=>';width: 315px;'],
                             'pluginOptions'=>[
                                 'prefix'=>'Rp ',
                                 'precision' => 0
@@ -255,12 +258,12 @@ $gvAttProdakHargaItem=[
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >Margin Laba</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
 						]
 					]
 				])->widget(MaskMoney::classname(), [
 		'options' => [
-					'placeholder' => 'Margin Harga ...',
+					'placeholder' => 'Margin Harga ...','style'=>';width: 315px;',
 					'class' => 'form-control',
 					'id'=>'margin',
 				],'pluginOptions' => [
@@ -272,11 +275,11 @@ $gvAttProdakHargaItem=[
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >Harga Jual</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
 						]
 					]
 				])->widget(MaskMoney::classname(), [
-                'options' => ['placeholder' => 'Harga Barang ...'],
+                'options' => ['placeholder' => 'Harga Barang ...','style'=>';width: 315px;'],
                 'disabled' => true,
                 'pluginOptions'=>[
                     'prefix'=>'Rp ',

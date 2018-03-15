@@ -9,7 +9,7 @@ $this->title = 'Ringakasan Laporan';
 
         <div style="
     position: fixed;
-    opacity: 0.5;
+    opacity: 0.02;
     width: 100%;
     max-width: 100%;
     height: auto;
