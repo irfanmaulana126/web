@@ -2,14 +2,14 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use kartik\widgets\DepDrop;
 use kartik\select2\Select2;
 use common\models\LocateProvince;
 use yii\helpers\ArrayHelper;
-use yii\widgets\MaskedInput;
 use frontend\backend\master\models\Industry;
 use frontend\backend\master\models\IndustryGroup;
+use yii\widgets\MaskedInput;
 
 use yii\helpers\Url;
 /* @var $this yii\web\View */
@@ -21,7 +21,8 @@ $this->registerCss("
     width:550px;
     height:300px;
     background:yellow
- }	
+ }
+	
 ");
 
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyB_BOmcuyR1X9XuFy314bhI1KX9IKfoGQA&callback=initMap',
@@ -30,11 +31,8 @@ $this->registerJS('
             var map;
             var marker;
             function initMap(){
-                if('.$model['LATITUDE'].'==0 && '.$model['LONGITUDE'].'==0){
-                    var myLatlng = new google.maps.LatLng(-6.22936,106.66);
-                }else{
-                    var myLatlng = new google.maps.LatLng('.$model['LATITUDE'].','.$model['LONGITUDE'].');
-                }
+                
+                var myLatlng = new google.maps.LatLng(-6.22936,106.66);
                 var geocoder = new google.maps.Geocoder();
                 var infowindow = new google.maps.InfoWindow();
                 var directionsService = new google.maps.DirectionsService();
@@ -88,100 +86,184 @@ $this->registerJS('
 ?>
 <div class="ppob-header-form">
 
-<?php $form = ActiveForm::begin(); ?>
-<div class="col-md-12">
-        <?= $form->field($model, 'STORE_NM')->textInput() ?>
-</div>
+    <?php $form = ActiveForm::begin(); ?>
+    <div class="col-md-12">
+            <?= $form->field($model, 'STORE_NM',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>STORE</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->textInput(['style'=>'width: 422px;'])->label(false) ?>
+    </div>
 
-<div class="col-md-6">
+    <div class="col-md-6">
+    
+    <?= $form->field($model, 'INDUSTRY_GRP_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>INDUSTRI GRP</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
+						]
+					]
+				])->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(IndustryGroup::find()->all(),'INDUSTRY_GRP_ID','INDUSTRY_GRP_NM'),
+            'language' => 'de',
+            'options' => ['placeholder' => 'Select a state ...','id'=>'industri-grp-id'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label(false); ?>
+                
+    </div>
+    
+    <div class="col-md-6">
+    
+        <?= $form->field($model, 'INDUSTRY_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>INDUSTRI</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
+						]
+					]
+				])->widget(DepDrop::classname(), [
+        'type'=>DepDrop::TYPE_SELECT2,
+            'options'=>['id'=>'industri-id'],
+            'pluginOptions'=>[
+                'depends'=>['industri-grp-id'],
+                'placeholder'=>'Select...',
+                'url'=>Url::to(['/master/store/industry'])
+            ],
+        ])->label(false); ?>
+                
+    </div>
+    <div class="col-md-4">
+        <?= $form->field($model, 'PIC',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>PIC</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 20px;']
+						]
+					]
+				])->textInput()->label(false) ?>
+    </div>
+    <div class="col-md-4">
+        <?= $form->field($model, 'TLP',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span class="fa fa-phone"><b></b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 20px;']
+						]
+					]
+				])->widget(MaskedInput::classname(),
+        ['mask' => '(999) 9999999'])->label(false) ?>
+    </div>
+    <div class="col-md-4">
+        <?= $form->field($model, 'FAX',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span class="fa fa-fax"><b></b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 20px;']
+						]
+					]
+				])->widget(MaskedInput::classname(),
+        ['mask' => '(999) 9999999'])->label(false) ?>    
+    </div>
+   
+    <div class="col-md-12">
+        <div id="myMap"></div>
+    </div>
+    <div class="col-md-6" style="margin-top: 10px;">
+    
+    <?= $form->field($model, 'LATITUDE',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>LATITUDE</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->textInput(['readOnly'=>true,'id'=>'latitude'])->label(false) ?>
+                
+    </div>
+    <div class="col-md-6" style="margin-top: 10px;">
 
-<?= $form->field($model, 'INDUSTRY_GRP_ID')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(IndustryGroup::find()->all(),'INDUSTRY_GRP_ID','INDUSTRY_GRP_NM'),
-        'language' => 'de',
-        'options' => ['placeholder' => 'Select a state ...','id'=>'industri-grp-id'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ])->label('INDUSTRI GROUP'); ?>
-            
-</div>
+    <?= $form->field($model, 'LONGITUDE',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>LONGITUDE</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
+						]
+					]
+				])->textInput(['readOnly'=>true,'id'=>'longitude'])->label(false) ?>
+                
+    </div>
+    <div class="col-md-6">
+    
+    <?= $form->field($model, 'PROVINCE_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>PROVINSI</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(LocateProvince::find()->all(),'PROVINCE_ID','PROVINCE'),
+            'language' => 'de',
+            'options' => ['placeholder' => 'Select a state ...','id'=>'province-id'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label(false); ?>
+                
+    </div>
+    <div class="col-md-6">
 
-<div class="col-md-6">
-
-    <?= $form->field($model, 'INDUSTRY_ID')->widget(DepDrop::classname(), [
-    'type'=>DepDrop::TYPE_SELECT2,
-        'options'=>['id'=>'industri-id'],
-        'pluginOptions'=>[
-            'depends'=>['industri-grp-id'],
-            'placeholder'=>'Select...',
-            'url'=>Url::to(['/master/store/industry'])
-        ],
-    ])->label('INDUSTRI'); ?>
-            
-</div>
-<div class="col-md-4">
-    <?= $form->field($model, 'PIC')->textInput() ?>
-</div>
-<div class="col-md-4">
-    <?= $form->field($model, 'TLP')->widget(MaskedInput::classname(),
-    ['mask' => '(999) 9999999'])->label('Phone') ?>
-</div>
-<div class="col-md-4">
-    <?= $form->field($model, 'FAX')->widget(MaskedInput::classname(),
-    ['mask' => '(999) 9999999']) ?>    
-</div>
-
-<div class="col-md-12">
-    <div id="myMap"></div>
-</div>
-<div class="col-md-6">
-
-<?= $form->field($model, 'LATITUDE')->textInput(['id'=>'latitude']) ?>
-            
-</div>
-<div class="col-md-6">
-
-<?= $form->field($model, 'LONGITUDE')->textInput(['id'=>'longitude']) ?>
-            
-</div>
-<div class="col-md-6">
-
-<?= $form->field($model, 'PROVINCE_ID')->widget(Select2::classname(), [
-        'data' => ArrayHelper::map(LocateProvince::find()->all(),'PROVINCE_ID','PROVINCE'),
-        'language' => 'de',
-        'options' => ['placeholder' => 'Select a state ...','id'=>'province-id'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-            
-</div>
-<div class="col-md-6">
-
-<?= $form->field($model, 'CITY_ID')->widget(DepDrop::classname(), [
-    'type'=>DepDrop::TYPE_SELECT2,
-        'options'=>['id'=>'subkota-id'],
-        'pluginOptions'=>[
-            'depends'=>['province-id'],
-            'placeholder'=>'Select...',
-            'url'=>Url::to(['/master/store/kota'])
-        ]
-    ]); ?>
-            
-</div>
-<div class="col-md-12">
-    <?= $form->field($model, 'ALAMAT')->textInput(['id'=>'address']) ?>
-</div>
-<div class="col-md-12">
-    <?= $form->field($model, 'DCRP_DETIL')->textInput() ?>
-</div>
+    <?= $form->field($model, 'CITY_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>KOTA</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 99px;']
+						]
+					]
+				])->widget(DepDrop::classname(), [
+        'type'=>DepDrop::TYPE_SELECT2,
+            'options'=>['id'=>'subkota-id'],
+            'pluginOptions'=>[
+                'depends'=>['province-id'],
+                'placeholder'=>'Select...',
+                'url'=>Url::to(['/master/store/kota'])
+            ]
+        ])->label(false); ?>
+                
+    </div>
+    <div class="col-md-12">
+        <?= $form->field($model, 'ALAMAT',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>ALAMAT</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->textInput(['id'=>'address','style'=>'width: 425px;'])->label(false) ?>
+    </div>
+    <div class="col-md-12">
+        <?= $form->field($model, 'DCRP_DETIL',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>DESKRIPSI</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->textInput(['style'=>'width: 425px;'])->label(false) ?>
+    </div>
 
 
 
-<div class="form-group">
-    <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-</div>
+    <div class="form-group text-right">
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+    </div>
 
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

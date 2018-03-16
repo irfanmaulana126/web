@@ -14,6 +14,7 @@ use kartik\field\FieldRange;
 
     <?php $form = ActiveForm::begin(); ?>
     
+    
     <?php
          if (empty($product->PERIODE_TGL2)) {
             $date = date('Y-m-d');
@@ -30,8 +31,8 @@ use kartik\field\FieldRange;
         echo $form->field($model,'PERIODE_TGL1',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >Tanggal</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'content'=>'<span><b>Tanggal</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right']
 						]
 					]
 				])->widget(DatePicker::classname(), [
@@ -46,17 +47,19 @@ use kartik\field\FieldRange;
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
                             "startDate" => $date,
+                            'style'=>'border-radius: 0px 5px 5px 0px;'
                         ]
                     ])->label(false);	
 		?>  
     <?= $form->field($model,'PROMO',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >PROMO</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'content'=>'<span><b>Promo</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 78px;']
 						]
 					]
-				])->textInput()->label(false); ?>
+				])->textInput(['style'=>'border-radius: 0px 5px 5px 0px;'])->label(false); ?>
+            
     
     <div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

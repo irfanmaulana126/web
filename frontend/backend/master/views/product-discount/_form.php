@@ -12,7 +12,8 @@ use kartik\field\FieldRange;
 <div class="product-discount-form">
 
     <?php $form = ActiveForm::begin(); ?>
-        <?php
+        
+    <?php
          if (empty($product->PERIODE_TGL2)) {
             $date = date('Y-m-d');
         } else {
@@ -26,35 +27,36 @@ use kartik\field\FieldRange;
         $date1=date('Y-m-d');
         $date2=date('Y-m-d', strtotime('+21 days', strtotime($date1)));
         echo $form->field($model,'PERIODE_TGL1',[					
-					'addon' => [
-						'prepend' => [
-							'content'=>'<span >Tanggal</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 98px;']
-						]
-					]
-				])->widget(DatePicker::classname(), [
-                    'value'=>$date1,
-                    'attribute2' => 'PERIODE_TGL2',
-                        'value2'=>$date2,
-                        'options' => ['placeholder' => 'Tanggal Awal'],
-                        'options2' => ['placeholder' => 'Tanggal Akhir'],
-                        'type' => DatePicker::TYPE_RANGE,
-                        'form' => $form,
-                        'pluginOptions' => [
-                            'autoclose' => true,
-                            'format' => 'yyyy-mm-dd',
-                            "startDate" => $date,
-                        ]
-                    ])->label(false);	
+            'addon' => [
+                'prepend' => [
+                    'content'=>'<span><b>Tanggal</b></span>',
+                    'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:87px']
+                ]
+            ]
+        ])->widget(DatePicker::classname(), [
+            'value'=>$date1,
+            'attribute2' => 'PERIODE_TGL2',
+                'value2'=>$date2,
+                'options' => ['placeholder' => 'Tanggal Awal'],
+                'options2' => ['placeholder' => 'Tanggal Akhir'],
+                'type' => DatePicker::TYPE_RANGE,
+                'form' => $form,
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-mm-dd',
+                    "startDate" => $date,
+                    'style'=>'border-radius: 0px 5px 5px 0px;'
+                ]
+            ])->label(false);	
 		?>  
-        <?= $form->field($model,'DISCOUNT',[					
+    <?= $form->field($model,'DISCOUNT',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >DISCOUNT</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'content'=>'<span><b>Discount</b></span>',
+							'options'=>['style' =>'width:76px;border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;']
 						]
 					]
-				])->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false])->label(false); ?> 
+				])->textInput(['style'=>'border-radius: 0px 5px 5px 0px;'])->label(false); ?> 
     <div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

@@ -1,14 +1,11 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\backend\master\models\Customer */
 
-$this->title = $model->NAME;
-$this->params['breadcrumbs'][] = ['label' => 'Customers', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="customer-view">
     <?= DetailView::widget([
@@ -21,8 +18,14 @@ $this->params['breadcrumbs'][] = $this->title;
            ['attribute'=>'PHONE',
             'label'=>'PHONE'  ],
            ['attribute'=>'DCRP_DETIL',
-            'label'=>'DCRP_DETIL'  ],
+            'label'=>'DCRP_DETIL' ,'valueColOptions'=>['style'=>'width:30%'] ],
         ],
+        'panel'=>[
+			'type'=>DetailView::TYPE_PRIMARY,
+		],
+		'mode'=>DetailView::MODE_VIEW,
+		'buttons1'=>'',
+		'buttons2'=>'{view}{save}',
     ]) ?>
 
 </div>

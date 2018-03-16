@@ -19,8 +19,8 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'GROUP_NM',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >NAMA GROUP</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'content'=>'<span><b>NAMA GROUP</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right']
 						]
 					]
 				])->textInput(['maxlength' => true])->label(false) ?>

@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
+use kartik\detail\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model frontend\backend\master\models\ProductDiscount */
@@ -12,7 +12,7 @@ use yii\widgets\DetailView;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            ['attribute'=>'store.STORE_NM',
+            ['attribute'=>'STORE_NM',
             'label'=>'STORE'  ],
            ['attribute'=>'PRODUCT_NM',
             'label'=>'PRODUCT'  ],
@@ -23,8 +23,14 @@ use yii\widgets\DetailView;
            ['attribute'=>'START_TIME',
             'label'=>'WAKTU'  ],
            ['attribute'=>'DISCOUNT',
-            'label'=>'DISCOUNT'  ],
+            'label'=>'DISCOUNT','valueColOptions'=>['style'=>'width:30%'] ],
         ],
+        'panel'=>[
+			'type'=>DetailView::TYPE_PRIMARY,
+		],
+		'mode'=>DetailView::MODE_VIEW,
+		'buttons1'=>'',
+		'buttons2'=>'{view}{save}',
     ]) ?>
 
 </div>

@@ -66,7 +66,7 @@ class ProductPromoSearch extends ProductPromo
             'START_TIME' => $this->START_TIME,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'product_promo.STATUS' => 1,
+            'product_promo.STATUS' => $this->STATUS,
             'YEAR_AT' => $this->YEAR_AT,
             'MONTH_AT' => $this->MONTH_AT,
         ]);

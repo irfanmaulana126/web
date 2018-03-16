@@ -32,17 +32,17 @@ $this->registerCss("
 		height:200px;
     }
 .product-discount-form	#gv-all-data-prodak-harga-item .panel-heading {
-		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		background: linear-gradient( 135deg, #2AFADF 10%, rgba(21, 175, 213, 0.14) 100%);
 		color: #000;
 	}
 .product-discount-form #gv-all-data-prodak-harga-item .panel-footer {
-		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		background: linear-gradient( 135deg, #2AFADF 10%, rgba(21, 175, 213, 0.14) 100%);
 	}
 ");
 $bColor='rgb(76, 131, 255)';
 $pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>HISTORI HARGA PRODUCT </b>
+				</b></span><b>HISTORI HARGA PRODUCT </b>
 	';
 $gvAttProdakHargaItem=[
     [
@@ -180,27 +180,27 @@ $gvAttProdakHargaItem=[
 <?=$form->field($model,'storeNm',[					
 				'addon' => [
 					'prepend' => [
-						'content'=>'<span>Toko</span>',
-						'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
+						'content'=>'<span><b>Toko</b></span>',
+						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 105px;']
 					]
 				]
 				])->textInput([
 					'value'=>$productdetail->STORE_NM,
                     'readOnly'=>true,
-                    'style'=>';width: 315px;'
+                    'style'=>';width: 315px;border-radius: 0px 5px 5px 0px;'
 				])->label(false);	
 		?>
         <?=$form->field($model,'produkNm',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >Produk</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
+							'content'=>'<span><b>Produk</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 105px;']
 						]
 					]
 				])->textInput([
 					'value'=>$productdetail->PRODUCT_NM,
 					'readOnly'=>true,
-                    'style'=>';width: 315px;'
+                    'style'=>'width: 315px;border-radius: 0px 5px 5px 0px;'
 				])->label(false);	
 		?> 
 
@@ -220,8 +220,8 @@ $gvAttProdakHargaItem=[
         echo $form->field($model,'PERIODE_TGL1',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >Tanggal</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
+							'content'=>'<span><b>Tanggal</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 105px;']
 						]
 					]
 				])->widget(DatePicker::classname(), [
@@ -236,6 +236,7 @@ $gvAttProdakHargaItem=[
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
                             "startDate" => $date,
+                            'style'=>'border-radius: 0px 5px 5px 0px;'
                             
                         ]
                     ])->label(false);	
@@ -243,12 +244,12 @@ $gvAttProdakHargaItem=[
      <?= $form->field($model, 'HPP',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >HPP</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
+							'content'=>'<span><b>HPP</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 105px;']
 						]
 					]
 				])->widget(MaskMoney::classname(), [
-                            'options' => ['placeholder' => 'HPP ...','style'=>';width: 315px;'],
+                            'options' => ['placeholder' => 'HPP ...','style'=>';width: 315px;border-radius: 0px 5px 5px 0px;'],
                             'pluginOptions'=>[
                                 'prefix'=>'Rp ',
                                 'precision' => 0
@@ -257,13 +258,13 @@ $gvAttProdakHargaItem=[
      <?= $form->field($model, 'margin',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >Margin Laba</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
+							'content'=>'<span><b>Margin Laba</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 105px;']
 						]
 					]
 				])->widget(MaskMoney::classname(), [
 		'options' => [
-					'placeholder' => 'Margin Harga ...','style'=>';width: 315px;',
+					'placeholder' => 'Margin Harga ...','style'=>';width: 315px;border-radius: 0px 5px 5px 0px;',
 					'class' => 'form-control',
 					'id'=>'margin',
 				],'pluginOptions' => [
@@ -274,12 +275,12 @@ $gvAttProdakHargaItem=[
     <?= $form->field($model, 'HARGA_JUAL',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >Harga Jual</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 105px;']
+							'content'=>'<span><b>Harga Jual</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 105px;']
 						]
 					]
 				])->widget(MaskMoney::classname(), [
-                'options' => ['placeholder' => 'Harga Barang ...','style'=>';width: 315px;'],
+                'options' => ['placeholder' => 'Harga Barang ...','style'=>';width: 315px;border-radius: 0px 5px 5px 0px;'],
                 'disabled' => true,
                 'pluginOptions'=>[
                     'prefix'=>'Rp ',
