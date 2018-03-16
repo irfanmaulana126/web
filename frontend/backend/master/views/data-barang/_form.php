@@ -18,9 +18,9 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\backend\master\models\ItemFdiscount */
 /* @var $form yii\widgets\ActiveForm */
+$warnaLabel='rgba(21, 175, 213, 0.14)';
+$widthLabel='125px';
 ?>
-
-<div class="item-fdiscount-form">
 
 <?php $form = ActiveForm::begin([
 	'options'=>['enctype'=>'multipart/form-data'],
@@ -29,13 +29,19 @@ use yii\helpers\Url;
         <?= $form->field($model, 'STORE_ID',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >STORE</span>',
-							'options'=>['style' =>' background-color: lightblue;width:125px;text-align:right']
+							'content'=>'<span ><b>Toko</b></span>',
+							'options'=>['style' =>'
+											background-color:'.$warnaLabel.';
+											width:'.$widthLabel.';
+											text-align:right;
+											border-top-left-radius:5px;
+											border-bottom-left-radius:5px;
+										']
 						]
 					]
 				])->widget(Select2::classname(),[
             'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>['1','0']])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
-            'options' => ['placeholder'=>'Select Store....'],
+            'options' => ['placeholder'=>'Pilih Toko....'],
             'pluginOptions' => [
                 'allowClear' => true
             ], 
@@ -44,8 +50,14 @@ use yii\helpers\Url;
 			<?= $form->field($model, 'PRODUCT_NM',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >NAMA PRODUK</span>',
-							'options'=>['style' =>' background-color: lightblue;width:100px;text-align:right']
+							'content'=>'<span ><b>Produk</b></span>',
+							'options'=>['style' =>' 
+											background-color:'.$warnaLabel.';
+											width:'.$widthLabel.';
+											text-align:right;
+											border-top-left-radius:5px;
+											border-bottom-left-radius:5px;
+										']
 						]
 					]
 				])->textInput(['style'=>'text-transform:uppercase'])->label(false) ?>
@@ -56,5 +68,4 @@ use yii\helpers\Url;
 <?php ActiveForm::end(); ?>
 
 
-</div>
 

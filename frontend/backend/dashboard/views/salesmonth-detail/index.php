@@ -187,8 +187,29 @@ $('#tahunbulan, #store').change(function() {
 	//--TAHUN/BULAN
  	var thnbulan = document.getElementById('tahunbulan').value;
 	var myDate = new Date(thnbulan); 
+	Date.prototype.getWeek = function() {
+	  var jan4th = new Date(this.getFullYear(),0,4);
+	  return Math.ceil((((this - jan4th) / 86400000) + jan4th.getDay()+1)/7);
+	}
+	Date.prototype.getWeekOfMonth = function() {
+	  var firstWeekday = new Date(this.getFullYear(), this.getMonth(), 1).getDay();
+	  var offsetDate = this.getDate() + firstWeekday - 1;
+	  return Math.floor(offsetDate / 7);
+	}
+	var lastday = function(){
+		return  new Date(myDate.getFullYear(),myDate.getMonth()+1, 0).getDate();
+	}
+	var first = function(){
+		return  new Date(myDate.getFullYear(),myDate.getMonth()+1,1).getDate();
+	}
 	//console.log(myDate.getFullYear());
 	//console.log(myDate.getMonth()+1);
+	console.log(myDate.getWeek()); 
+	console.log(myDate.getWeekOfMonth()); 
+	console.log(lastday()); 
+	console.log(first()); 
+	
+	
     var storeId = document.getElementById('store').value;
 	var store = storeId.split('.');
 	var accessGroup = store[0];
