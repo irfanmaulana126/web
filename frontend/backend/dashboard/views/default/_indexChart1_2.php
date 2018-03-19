@@ -567,130 +567,110 @@ $this->registerJs("
 var navDeficeInfo=window.navigator.platform;
 //console.log( window.navigator.platform.value);
 
-	//===AUTO UPDATE ==
-	setInterval(function(){	
-		//==AJAX POST TRAFIK GROUP===
-		$.ajax({
-			url: 'https://production.kontrolgampang.com/laporan/polling-charts/polling-group',
-			type: 'POST',
-			data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','PERANGKAT':navDeficeInfo},
-			dataType:'json',			
-			success: function(data) {
-				//=== INIT CHART_SALES_MONTH ===
-				if (data['POLLING_GROUP']['CHART_TRAFFICK_DAY']==1){
-					//=== INIT FUSIONCHAT TRAFIK GROUP ===
-					var ptrTrafixGroup = document.getElementById('msline-sss-hour-3daystrafik');
-					var spnIdTrafixGroup= ptrTrafixGroup.getElementsByTagName('span');
-					var chartIdTrafixGroup= spnIdTrafixGroup[0].id; 
-					//console.log(chartIdTrafixGroup);	
-					var updateChartTrafixGroup = document.getElementById(chartIdTrafixGroup);					
-					$.ajax({
-						url: 'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
-						type: 'POST',
-						data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','TGL':'".date("Y-m-d")."','PERANGKAT':navDeficeInfo},
-						dataType:'json',
-						success: function(data) {
-							//===UPDATE CHART ====
-							if (data['dataset'][0]['data']!==''){							
-								updateChartTrafixGroup.setChartData({
-									chart: data['chart'],
-									categories:data['categories'],
-									dataset: data['dataset']
-								});	
-							}else{
-								updateChartTrafixGroup.setChartData({
-									chart: data['chart'],
-									categories:data['categories'],
-									data:[{}]
-								});						
-							}					
-						}			   
-					}); 
-				}
-			}
-		});
-	}, 10000);		
-
-	//=== INIT CHART_SALES_MONTH ===
-	setInterval(function() {	
-		$.ajax({
-			//[1]===POLING===
-			url: 'https://production.kontrolgampang.com/laporan/polling-charts/polling-group',
-			type: 'POST',
-			data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','PERANGKAT':navDeficeInfo},
-			dataType:'json',
-			success: function(data) {
-				//[2]===POLING CHECK===
-				//console.log(data['POLLING_GROUP']['CHART_SALES_MONTH']);				
-				if (data['POLLING_GROUP']['CHART_SALES_MONTH']==1){					
-					var ptrSalesMonthGroup = document.getElementById('msline-sales-monthly');
-					var spnIdptrSalesMonthGroup= ptrSalesMonthGroup.getElementsByTagName('span');
-					var chartIdspnIdptrSalesMonthGroup= spnIdptrSalesMonthGroup[0].id; 
-					//console.log(chartIdspnIdptrSalesMonthGroup);
-					var updateChartchartIdspnIdptrSalesMonthGroup = document.getElementById(chartIdspnIdptrSalesMonthGroup);							
-					$.ajax({
-						//[4]==AJAX POST SALES MONTH GROUP===	
-						  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-group',
-						  type: 'POST',
-						  //data: {'ACCESS_GROUP':'170726220936','STORE_ID':'170726220936.0001','TGL':'2018-03-13'},
-						  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','TGL':'".date("Y-m-d")."','PERANGKAT':navDeficeInfo},
-						  dataType:'json',
-						  success: function(data) {
-							//===UPDATE CHART ====
-							if (data['dataset']!==''){							
-								updateChartchartIdspnIdptrSalesMonthGroup.setChartData({
-									chart: data['chart'],
-									categories:data['categories'],
-									dataset: data['dataset']
-								});	
-							}else{
-								updateChartchartIdspnIdptrSalesMonthGroup.setChartData({
-									chart: data['chart'],
-									categories:data['categories'],
-									data:[{}]
-								});						
-							}					
-						  }			   
-					});
-				}
-			}
-		});
-	}, 10000);
-
-	//=== INIT FUSIONCHAT WEEKLY GROUP ===
-	setInterval(function() {		
-		var ptrSalesWeekGroup = document.getElementById('msline-sales-weekly');
-		var spnIdptrSalesWeekGroup= ptrSalesWeekGroup.getElementsByTagName('span');
-		var chartIdspnIdptrSalesWeekGroup= spnIdptrSalesWeekGroup[0].id; 
-		//console.log(chartIdspnIdptrSalesWeekGroup);
-		var updateChartchartIdspnIdptrSalesWeekGroup = document.getElementById(chartIdspnIdptrSalesWeekGroup);
-		//==AJAX POST SALES MINGGUAN GROUP===
-		$.ajax({
-			  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-mingguan-group',
-			  type: 'POST',
-			  //data: {'ACCESS_GROUP':'170726220936','STORE_ID':'170726220936.0001','TAHUN':'2018','BULAN:'01'},
-			  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','TAHUN':'".date("Y")."','BULAN':'".date("m")."'},
-			  dataType:'json',
-			  success: function(data) {
-				//===UPDATE CHART ====
-				if (data['dataset']!==''){							
-					updateChartchartIdspnIdptrSalesWeekGroup.setChartData({
-						chart: data['chart'],
-						categories:data['categories'],
-						dataset: data['dataset']
-					});	
-				}else{
-					updateChartchartIdspnIdptrSalesWeekGroup.setChartData({
-						chart: data['chart'],
-						categories:data['categories'],
-						data:[{}]
-					});						
-				}					
-			  }			   
-		});
-	}, 10000);
+//===AUTO UPDATE ==
+setInterval(function() {
+	//=== INIT FUSIONCHAT TRAFIK GROUP ===
+	var ptrTrafixGroup = document.getElementById('msline-sss-hour-3daystrafik');
+	var spnIdTrafixGroup= ptrTrafixGroup.getElementsByTagName('span');
+	var chartIdTrafixGroup= spnIdTrafixGroup[0].id; 
+	//console.log(chartIdTrafixGroup);	
+	var updateChartTrafixGroup = document.getElementById(chartIdTrafixGroup);
+	//==AJAX POST TRAFIK GROUP===
+	$.ajax({
+		  url: 'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-group',
+		  type: 'POST',
+		  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','TGL':'".date("Y-m-d")."'},
+		  dataType:'json',
+		  success: function(data) {
+			//===UPDATE CHART ====
+			if (data['dataset'][0]['data']!==''){							
+				updateChartTrafixGroup.setChartData({
+					chart: data['chart'],
+					categories:data['categories'],
+					dataset: data['dataset']
+				});	
+			}else{
+				updateChartTrafixGroup.setChartData({
+					chart: data['chart'],
+					categories:data['categories'],
+					data:[{}]
+				});						
+			}					
+		  }			   
+	}); 
 	
-	setInterval(function() {	
+	$.ajax({
+		url: 'https://production.kontrolgampang.com/laporan/polling-charts/polling-group',
+		type: 'POST',
+		data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','PERANGKAT':navDeficeInfo},
+		dataType:'json',
+		success: function(data) {
+			//console.log(data['POLLING_GROUP']['CHART_SALES_MONTH']);
+			//=== INIT CHART_SALES_MONTH ===
+			if (data['POLLING_GROUP']['CHART_SALES_MONTH']==1){					
+				var ptrSalesMonthGroup = document.getElementById('msline-sales-monthly');
+				var spnIdptrSalesMonthGroup= ptrSalesMonthGroup.getElementsByTagName('span');
+				var chartIdspnIdptrSalesMonthGroup= spnIdptrSalesMonthGroup[0].id; 
+				//console.log(chartIdspnIdptrSalesMonthGroup);
+				var updateChartchartIdspnIdptrSalesMonthGroup = document.getElementById(chartIdspnIdptrSalesMonthGroup);
+				//==AJAX POST SALES MONTH GROUP===			
+				$.ajax({
+					  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-bulanan-group',
+					  type: 'POST',
+					  //data: {'ACCESS_GROUP':'170726220936','STORE_ID':'170726220936.0001','TGL':'2018-03-13'},
+					  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','TGL':'".date("Y-m-d")."','PERANGKAT':navDeficeInfo},
+					  dataType:'json',
+					  success: function(data) {
+						//===UPDATE CHART ====
+						if (data['dataset']!==''){							
+							updateChartchartIdspnIdptrSalesMonthGroup.setChartData({
+								chart: data['chart'],
+								categories:data['categories'],
+								dataset: data['dataset']
+							});	
+						}else{
+							updateChartchartIdspnIdptrSalesMonthGroup.setChartData({
+								chart: data['chart'],
+								categories:data['categories'],
+								data:[{}]
+							});						
+						}					
+					  }			   
+				});
+			}
+		}
+	});
+	//=== INIT FUSIONCHAT WEEKLY GROUP ===
+	var ptrSalesWeekGroup = document.getElementById('msline-sales-weekly');
+	var spnIdptrSalesWeekGroup= ptrSalesWeekGroup.getElementsByTagName('span');
+	var chartIdspnIdptrSalesWeekGroup= spnIdptrSalesWeekGroup[0].id; 
+	//console.log(chartIdspnIdptrSalesWeekGroup);
+	var updateChartchartIdspnIdptrSalesWeekGroup = document.getElementById(chartIdspnIdptrSalesWeekGroup);
+	//==AJAX POST SALES MINGGUAN GROUP===
+	$.ajax({
+		  url: 'https://production.kontrolgampang.com/laporan/sales-charts/sales-mingguan-group',
+		  type: 'POST',
+		  //data: {'ACCESS_GROUP':'170726220936','STORE_ID':'170726220936.0001','TAHUN':'2018','BULAN:'01'},
+		  data: {'ACCESS_GROUP':'".Yii::$app->getUserOpt->user()['ACCESS_GROUP']."','TAHUN':'".date("Y")."','BULAN':'".date("m")."'},
+		  dataType:'json',
+		  success: function(data) {
+			//===UPDATE CHART ====
+			if (data['dataset']!==''){							
+				updateChartchartIdspnIdptrSalesWeekGroup.setChartData({
+					chart: data['chart'],
+					categories:data['categories'],
+					dataset: data['dataset']
+				});	
+			}else{
+				updateChartchartIdspnIdptrSalesWeekGroup.setChartData({
+					chart: data['chart'],
+					categories:data['categories'],
+					data:[{}]
+				});						
+			}					
+		  }			   
+	}); 	
+	
 	//== COUNTER ===
 	// var data1 = '170726220936';
 		// var form = new FormData();
