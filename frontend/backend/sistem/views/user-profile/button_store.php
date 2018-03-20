@@ -546,7 +546,7 @@ $this->registerCss("
 	function tombolCountBankProfile($model){
 		$title1 = Yii::t('app',' Account Bank');
 		$options1 = [
-			'value'=>url::to(['/sistem/user-profile/histori-dompet','ACCESS_GROUP' => $model['ACCESS_ID'],'TGL'=>date('Y-m')]),
+			'value'=>url::to(['/sistem/user-profile/account-rek','ACCESS_GROUP' => $model['ACCESS_ID']]),
 			'id'=>'userprofile-button-row-bank',
 			'class'=>"btn btn-success btn-md",    
 		];

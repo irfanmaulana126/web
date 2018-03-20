@@ -13,6 +13,11 @@ use frontend\backend\sistem\models\DompetTransaksi;
 use frontend\backend\sistem\models\StoreSearch;
 use frontend\backend\sistem\models\StoreKasir;
 use frontend\backend\sistem\models\StoreKasirSearch;
+use frontend\backend\sistem\models\DompetRekening;
+use frontend\backend\sistem\models\DompetRekeningSearch;
+use frontend\backend\sistem\models\DompetRekeningImage;
+use frontend\backend\sistem\models\DompetRekeningImageSearch;
+use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -169,9 +174,38 @@ class UserProfileController extends Controller
             'model' => $model,
         ]);
     }
-    public function actionDompet()
-    {
-        return $this->renderAjax('cara_top_up');
+    public function actionAccountRek($ACCESS_GROUP)
+    {   
+        $model = DompetRekening::findOne(['ACCESS_GROUP'=>$ACCESS_GROUP]);
+        $modelImage = DompetRekeningImage::findOne(['ACCESS_GROUP'=>$ACCESS_GROUP]);
+        // print_r($modelImage);die();
+        if (empty($model) && empty($modelImage)) {
+            $model = new DompetRekening();
+            $modelImage = new DompetRekeningImage();
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            $model->save(false);
+            $modelImage->IMAGE = UploadedFile::getInstances($modelImage, 'IMAGE');
+            
+            if (!empty($modelImage->IMAGE)) {
+                foreach ($modelImage->IMAGE as $image) {
+                    $models= new DompetRekeningImage();
+                    $upload_file = $image;
+                    $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                    $images[]= 'data:image/*;charset=utf-8;base64,'.$data_base64;
+                }
+                // print_r($images);die();
+                $models->ACCESS_GROUP=$ACCESS_GROUP;
+                $models->IMAGE=serialize($images);
+                $models->save(false);
+            }
+            Yii::$app->session->setFlash('success', "Data Berhasil dirubah");
+            return $this->redirect(['index']);  
+        }
+        return $this->renderAjax('_form_rek', [
+            'model' => $model,
+            'modelImage' => $modelImage,
+        ]);
     }
     public function actionHistoriDompet($ACCESS_GROUP,$TGL)
     {
@@ -218,6 +252,13 @@ class UserProfileController extends Controller
         return $this->renderAjax('change', [
             'model' => $model,
         ]);
+    }
+    public function saveimage($base64)
+    {
+    $base64 = str_replace('data:image/jpg;base64,', '', $base64);
+    $base64 = base64_encode($base64);
+    $base64 = str_replace('data:image/jpg;base64,', '+', $base64);
+    return $base64;
     }
     /**
      * Finds the UserProfile model based on its primary key value.

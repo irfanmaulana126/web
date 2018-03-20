@@ -5,34 +5,33 @@ namespace frontend\backend\sistem\models;
 use Yii;
 
 /**
- * This is the model class for table "user_image".
+ * This is the model class for table "dompet_rekening_image".
  *
  * @property string $ID
- * @property string $ACCESS_ID
- * @property string $ACCESS_IMAGE
- * @property string $CREATE_BY USER pembuat
- * @property string $CREATE_AT Tanggal dibuat
- * @property string $UPDATE_BY user Ubah
- * @property string $UPDATE_AT Tanggal diubah
- * @property int $STATUS 0=disable; 1=enable
+ * @property int $ACCESS_GROUP
+ * @property resource $IMAGE
+ * @property string $CREATE_BY
+ * @property string $CREATE_AT
+ * @property string $UPDATE_BY
+ * @property string $UPDATE_AT
+ * @property int $STATUS
  * @property string $DCRP_DETIL
- * @property int $YEAR_AT partisi unix
- * @property int $MONTH_AT partisi unix
+ * @property int $YEAR_AT
+ * @property int $MONTH_AT
  */
- 
-use yii\web\UploadedFile;
 
-class UserImage extends \yii\db\ActiveRecord
+use yii\web\UploadedFile;
+class DompetRekeningImage extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
-	 
+
 	public $upload_file;
 	public $image;
     public static function tableName()
     {
-        return 'user_image';
+        return 'dompet_rekening_image';
     }
 
     /**
@@ -41,13 +40,14 @@ class UserImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
-            [['ACCESS_IMAGE', 'DCRP_DETIL'], 'string'],
-            [['upload_file'], 'file', 'skipOnEmpty' => true,'extensions'=>'jpg,png', 'mimeTypes'=>'image/jpeg, image/png'],
-			[['ACCESS_IMAGE'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png', 'mimeTypes'=>'image/jpeg, image/png'],
+            [['ID'], 'required'],
+            [['ID', 'ACCESS_GROUP', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
+            [['IMAGE', 'DCRP_DETIL'], 'string'],
+            [['upload_file'], 'file','skipOnEmpty'=>TRUE,'maxFiles'=>5,'extensions'=>'jpg, png', 'mimeTypes'=>'image/jpeg, image/png'],
+            [['IMAGE'], 'file','skipOnEmpty'=>TRUE,'maxFiles'=>5,'extensions'=>'jpg, png', 'mimeTypes'=>'image/jpeg, image/png'],
             [['CREATE_AT', 'UPDATE_AT'], 'safe'],
-            [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_ID', 'CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
+            [['CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
+            [['ID'], 'unique'],
         ];
     }
 
@@ -58,8 +58,8 @@ class UserImage extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
-            'ACCESS_ID' => 'Access  ID',
-            'ACCESS_IMAGE' => 'Access  Image',
+            'ACCESS_GROUP' => 'Access  Group',
+            'IMAGE' => 'Image',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
@@ -70,11 +70,11 @@ class UserImage extends \yii\db\ActiveRecord
             'MONTH_AT' => 'Month  At',
         ];
     }
-	public function uploadImage() {
+    public function uploadImage() {
         // get the uploaded file instance. for multiple file uploads
         // the following data will return an array (you may need to use
         // getInstances method)
-        $image = UploadedFile::getInstance($this, 'ACCESS_IMAGE');
+        $image = UploadedFile::getInstance($this, 'IMAGE');
         // if no image was uploaded abort the upload
         if (empty($image)) {
             return false;
@@ -83,6 +83,7 @@ class UserImage extends \yii\db\ActiveRecord
         //$this->filename = $image->name;
         $tmp = explode('.', $image->name);
         $ext = end($tmp);
+        print_r($image);die();
         // generate a unique file name
         // $this->EMP_IMG = 'wan-'.date('ymdHis').".{$ext}"; //$image->name;//Yii::$app->security->generateRandomString().".{$ext}";
         // the uploaded image instance
