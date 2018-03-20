@@ -19,6 +19,8 @@ use frontend\backend\laporan\models\PtrKasirTd1aSearch;
 use frontend\backend\laporan\models\PtrKasirTd1bSearch;
 use frontend\backend\laporan\models\PtrKasirTd1cSearch;
 use frontend\backend\laporan\models\JurnalAkun;
+
+use frontend\backend\laporan\models\LaporanArusKas;
 use common\models\Store;
 
 class ArusUangController extends Controller
@@ -59,7 +61,7 @@ class ArusUangController extends Controller
 		if ($paramCari!=''){
 			$cari=$paramCari;	
 		}else{
-			$cari=date('Y-n');
+			$cari=date('Y-n-d');
 		};
 		$paramCari2=Yii::$app->getRequest()->getQueryParam('store');
 		if ($paramCari2!=''){	
@@ -68,12 +70,16 @@ class ArusUangController extends Controller
 			$stores=store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->one();				
 		};
 		
+		
+		
 		/*==========================
 		* ARUS KAS MASUK & KELUAR
 		*===========================*/
-		// print_r($cari);die();
-        $searchModel = new JurnalTemplateTitleSearch(['RPT_GROUP_NM'=>'ARUS KAS']);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		//print_r(date('Y',strtotime($cari)));die();
+        // $searchModel = new JurnalTemplateTitleSearch(['RPT_GROUP_NM'=>'ARUS KAS']);
+        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$searchModel = new LaporanArusKas();
+        $dataProvider = $searchModel->searchArusKeuangan(Yii::$app->request->queryParams);
 		
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -83,7 +89,7 @@ class ArusUangController extends Controller
         ]);
     }	
 	
-	public function actionDetailBulan($akunkode,$bulan,$store)
+	/* public function actionDetailBulan($akunkode,$bulan,$store)
 	{
 		$date = explode('-',$bulan);
 		$searchModel = new PtrKasirTd1aSearch(['BULAN'=>$date[1],'STORE_ID'=>$store]);
@@ -100,6 +106,7 @@ class ArusUangController extends Controller
 			'tanggal'=>$bulan
         ]);
 	}
+	
 	public function actionDetailMinggu($akunkode,$minggu,$store)
 	{
 		$searchModel = new PtrKasirTd1bSearch(['BULAN'=>$bulan,'STORE_ID'=>$store]);
@@ -141,8 +148,8 @@ class ArusUangController extends Controller
 	public function actionView($id)
 	{
 		return $this->render('view');
-	}
-	 public function actionDetailLev1()
+	} */
+	/*  public function actionDetailLev1()
     {
 		
 		$paramCari=Yii::$app->getRequest()->getQueryParam('id');
@@ -153,11 +160,11 @@ class ArusUangController extends Controller
 		}else{
 			$cari=['thn'=>date('Y')];			
 		};
-		
+		 */
 		/*==========================
 		* ARUS KAS MASUK & KELUAR
 		*===========================*/
-        $searchModel = new TransPenjualanHeaderSummaryMonthlySearch(['thn'=>$cari['thn'],'BULAN'=>$paramBln]);
+       /*  $searchModel = new TransPenjualanHeaderSummaryMonthlySearch(['thn'=>$cari['thn'],'BULAN'=>$paramBln]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		//Kas-Keluar		
 		$searchModelKeluar = new TransPengeluaranSummaryMonthlySearch();
@@ -212,5 +219,5 @@ class ArusUangController extends Controller
 			'cari'=>$cari,
 			'bln'=>$bln
         ]);
-    }	
+    }	 */
 }

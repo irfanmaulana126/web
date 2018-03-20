@@ -46,10 +46,14 @@ class JurnalTemplateDetailSearch extends JurnalTemplateDetail
     {
         $query = JurnalTemplateDetail::find();
         $query->join('INNER JOIN','jurnal_transaksi_c',['STORE_ID'=>''.$this->STORE_ID.'']);
+		$query->orderBy('RPT_SORTING ASC');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+			'pagination' => [
+				'pageSize' =>10000,
+			],	
         ]);
 
         $this->load($params);
@@ -62,7 +66,7 @@ class JurnalTemplateDetailSearch extends JurnalTemplateDetail
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'RPT_SORTING' => $this->RPT_SORTING,
+            //'RPT_SORTING' => $this->RPT_SORTING,
             'RPT_TITLE_ID' => $this->RPT_TITLE_ID,
             'RPT_GROUP_ID' => $this->RPT_GROUP_ID,
             'CAL_FORMULA' => $this->CAL_FORMULA,
@@ -87,8 +91,8 @@ class JurnalTemplateDetailSearch extends JurnalTemplateDetail
         ->andFilterWhere(['like', 'KETERANGAN', $this->KETERANGAN])
         ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
         ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY]);
-        $query->groupBy('AKUN_NM');
-        $query->orderBy('RPT_SORTING');
+        //$query->groupBy('AKUN_NM');
+       
         
         return $dataProvider;
     }

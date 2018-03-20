@@ -93,11 +93,31 @@ class JurnalTemplateDetail extends \yii\db\ActiveRecord
     }
     public function getJurnaltransaksi()
     {
+        //return $this->hasOne(JurnalTransaksiBulan::className(),['AKUN_CODE'=>'AKUN_CODE','ACCESS_GROUP'=>'ACCESS_GROUP','BULAN'=>'MONTH_AT','TAHUN'=>'YEAR_AT']);
         return $this->hasOne(JurnalTransaksiBulan::className(),['AKUN_CODE'=>'AKUN_CODE','ACCESS_GROUP'=>'ACCESS_GROUP','BULAN'=>'MONTH_AT','TAHUN'=>'YEAR_AT']);
     }
     public function getJUMLAH(){
         $result=$this->jurnaltransaksi;
         $result = (empty($result->JUMLAH)) ? 0 : $result->JUMLAH;
+        return $result;
+    } 
+	public function getDEBET(){
+        $result=$this->jurnaltransaksi;
+        $result = (empty($result->DEBET)) ? 0 : $result->DEBET;
+        return $result;
+    } 
+	public function getKREDIT(){
+        $result=$this->jurnaltransaksi;
+        $result = (empty($result->KREDIT)) ? 0 : $result->KREDIT;
+        return $result;
+    }
+	public function getTAHUN(){
+        $result=$this->jurnaltransaksi;
+        $result = (empty($result->TAHUN)) ? 0 : $result->TAHUN;
+        return $result;
+    }public function getBULAN(){
+        $result=$this->jurnaltransaksi;
+        $result = (empty($result->BULAN)) ? 0 : $result->BULAN;
         return $result;
     }
 }

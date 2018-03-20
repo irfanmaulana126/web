@@ -5,6 +5,7 @@ namespace frontend\backend\laporan\controllers;
 use Yii;
 use frontend\backend\laporan\models\JurnalTemplateTitleSearch;
 use frontend\backend\laporan\models\JurnalTransaksiBulanSearch;
+use frontend\backend\laporan\models\LaporanArusKas;
 use common\models\Store;
 
 class LaporanController extends \yii\web\Controller
@@ -42,14 +43,28 @@ class LaporanController extends \yii\web\Controller
     {
         return $this->render('index');
     }
-    public function actionIndexArus()
+   
+	public function actionIndexArus()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-		$paramCari=Yii::$app->getRequest()->getQueryParam('id');
+		$paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
+		// if ($paramCari!=''){
+			// $cari=$paramCari;	
+		// }else{
+			// $cari=date('Y-n');
+		// };
 		if ($paramCari!=''){
-			$cari=$paramCari;	
+			$ambilTgl=date('Y-n-d',strtotime($paramCari.'-01'));
+			$cari=[
+				'TAHUN'=>date('Y',strtotime($ambilTgl)),
+				'BULAN'=>date('n',strtotime($ambilTgl))
+			];			
 		}else{
-			$cari=date('Y-n');
+			//$cari=date('Y-n');
+			$cari=[
+				'TAHUN'=>'2018',
+				'BULAN'=>'2'
+			];
 		};
 		$paramCari2=Yii::$app->getRequest()->getQueryParam('store');
 		if ($paramCari2!=''){	
@@ -62,9 +77,15 @@ class LaporanController extends \yii\web\Controller
 		* ARUS KAS MASUK & KELUAR
 		*===========================*/
 		// print_r($cari);die();
-        $searchModel = new JurnalTemplateTitleSearch(['RPT_GROUP_NM'=>'ARUS KAS']);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-		
+        // $searchModel = new JurnalTemplateTitleSearch(['RPT_GROUP_NM'=>'ARUS KAS']);
+        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$searchModel = new LaporanArusKas($cari);
+		// [
+			// 'TAHUN'=>'2018',
+			// 'BULAN'=>'2'
+		// ]);
+		$dataProvider = $searchModel->searchArusKeuangan(Yii::$app->request->queryParams);
+        
         return $this->render('/arus-uang/index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -72,6 +93,7 @@ class LaporanController extends \yii\web\Controller
 			'store'=>$stores
         ]);
     }
+	
     public function actionIndexPenjualan()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
