@@ -41,13 +41,13 @@ $this->title = 'Ringakasan Laporan';
             <?= Html::button('Lihat Laporan',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/laporan/laporan/index-jurnal']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
         </div>
         <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
-            <h3>Laporan Neraca</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, dolore magnam omnis ex rem mollitia dolorem molestias animi quo, ut doloribus aliquid numquam voluptates sapiente adipisci, assumenda quibusdam blanditiis rerum.</p>
+            <h3>Laporan Laba Rugi</h3>
+            <p>laporan keuangan yang termasuk dalam rangkaian siklus akuntansi yang dihasilkan dalam satu periode akuntansi yang didalamnya menyajikan seluruh unsur pendapatan dan beban perusahaan yang akan menghasilkan kondisi sebenarnya laba .</p>
             <?= Html::button('Lihat Laporan',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/laporan/laporan/index-neraca']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
         </div>
         <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
             <h3>Laporan Donasi</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, dolore magnam omnis ex rem mollitia dolorem molestias animi quo, ut doloribus aliquid numquam voluptates sapiente adipisci, assumenda quibusdam blanditiis rerum.</p>
+            <p>Laporan yang rekaman terhadap donasi yang di lakukan oleh end user sebagai sumbangsih sosial.</p>
             <?= Html::button('Lihat Laporan',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/laporan/laporan/index-donasi']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
         </div>
     </div>      
@@ -70,7 +70,7 @@ $this->title = 'Ringakasan Laporan';
 			</div>
 			<div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
 				<h3>Laporan Dompet</h3>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, dolore magnam omnis ex rem mollitia dolorem molestias animi quo, ut doloribus aliquid numquam voluptates sapiente adipisci, assumenda quibusdam blanditiis rerum.</p>
+				<p>Laporan dompet Kontrol Gampang, merupakan laporan topup saldo dompet,transfer ke rekening tujuan, dan laporan potongan terhadap penggunaan fasilitas PPOB dan pembayaran Langanan Kontrol Gampang.</p>
 				<?= Html::button('Lihat Laporan',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/laporan/laporan/index-dompet']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Tambah']);?>
 			</div>
 		</div>
