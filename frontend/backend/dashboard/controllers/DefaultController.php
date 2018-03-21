@@ -70,5 +70,11 @@ class DefaultController extends Controller
     }
 	
 	
+	public function actionChat()
+    {
+		// Yii::$app->session->setFlash('ee');
+        return $this->renderAjax('whappChating');
+    }
+	
 	
 }

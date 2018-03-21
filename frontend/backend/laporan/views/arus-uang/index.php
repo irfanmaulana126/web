@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\grid\GridView;
-use frontend\backend\laporan\models\JurnalTemplateDetailSearch;
+//use frontend\backend\laporan\models\JurnalTemplateDetailSearch;
 use kartik\date\DatePicker;
 use yii\web\View;
 use kartik\widgets\Select2;
@@ -13,20 +13,22 @@ use yii\helpers\Url;
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $this->registerJs("
-// var x = document.getElementById('tahun').value;
-// console.log(x);
-$('#tahun, #store').change(function() { 
-    var x = document.getElementById('tahun').value;
-    var y = document.getElementById('store').value;
-    $.pjax.reload({
-        url:'/laporan/arus-uang/index?store='+y+'&id='+x, 
-        container: '#arus-masuk-monthofyear',
-        timeout: 1000,
-    })
-    
-    console.log('Changed!'+x+y); 
-});
+	//var x = document.getElementById('tahun').value;
+	//console.log(x);
+	$('#tahun, #store').change(function() { 
+		var x = document.getElementById('tahun').value;
+		var y = document.getElementById('store').value;
+		$.pjax.reload({
+			url:'/laporan/laporan/index-arus?tgl='+x+'&store='+y, 
+			container: '#arus-masuk-monthofyear',
+			//timeout: 1000,
+		})
+		
+		//console.log('Changed!'+x+y); 
+	});	
+
 ",View::POS_READY);
+
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
@@ -44,13 +46,13 @@ $btn_srchChart1=DatePicker::widget([
 $btn_srchChart2= Select2::widget([
     'name' => 'state_10',
     'data' =>  ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'STORE_ID','STORE_NM'),
-	'options' => ['placeholder' => 'Select a store ...','id'=>'store'],
+	'options' => ['placeholder' => 'Pilih Toko ...','id'=>'store'],
     'pluginOptions' => [
         'allowClear' => true
     ],
 ]);
-$btn_srchChart="<div style='padding-bottom:3px;float:right'> Periode Tahun".$btn_srchChart1."</div>";
-$btn_srchChart2="<div style='padding-bottom:3px;float:right'> Store".$btn_srchChart2."</div>";
+$btn_srchChart="<div style='padding-bottom:3px;float:right'>".$btn_srchChart1."</div>";
+$btn_srchChart2="<div style='padding-bottom:3px;float:right'>".$btn_srchChart2."</div>";
 $retVal = (empty($store->STORE_NM)) ? '' : $store->STORE_NM ;
 $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 ?>
@@ -58,56 +60,72 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">
-		<div style="margin-top: -10px">
-		<?php
-		$title= Yii::t('app','');
-		$url = Url::toRoute(['/laporan/laporan']);
-		$options1 = [
-					'id'=>'back-trafik',
-					'class'=>"btn btn-xs",
-					'title'=>'Kembali Menu Laporan'
-		];
-		$icon1 = '<span class="fa-stack fa-md text-left">
-				  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
-				  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
-				  </span>
-				  ';
-				  $label1 = $icon1.' '.$title ;
-				  echo $content = Html::a($label1,$url,$options1);
-				  ?>	
-		</div>
+		<div class="col-xs-12 col-sm-12 col-lg-12">
+			<div style="margin-top: -10px">
+				<?php
+				$title= Yii::t('app','');
+				$url = Url::toRoute(['/laporan/laporan']);
+				$options1 = [
+							'id'=>'back-trafik',
+							'class'=>"btn btn-xs",
+							'title'=>'Kembali Menu Laporan'
+				];
+				$icon1 = '<span class="fa-stack fa-md text-left">
+						  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
+						  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
+						  </span>
+						  ';
+						  $label1 = $icon1.' '.$title ;
+						  echo $content = Html::a($label1,$url,$options1);
+						  ?>	
+			</div>	
+			
+				<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
+					<?=$btn_srchChart?>
+				
+					<?=$btn_srchChart2?>
+					</div>
+			</div>
 			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
                     <?php		                    
-                        $tanggal=explode('-',$cari);				
-						echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$retVal.' '.date("F Y",strtotime($cari)).'</b>';				
+                        //$tanggal=explode('-',$cari);				
+						//echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$retVal.' '.date("F Y",strtotime($cari)).'</b>';
+						echo '<b>RINGKASAN ARUS KEUANGAN <br>'.date("F",strtotime($cari['BULAN'])).' '.date("Y",strtotime($cari['TAHUN'])).'</b>';		
 					?>		
 			</div>
-			<br>
-			<br>
-			<br>
-			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
-				<?=$btn_srchChart?>
-			</div>
-				<?=$btn_srchChart2?>
 		</div>
 	</div>
-	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:10px">
+	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:100px">
 		<div class="row">	
-			<?php         
+			<?php      
+			    $colorHeader='rgba(208, 218, 230, 1)';
+			    $colorHeaderGroup='#ecedfe';
+				//$searchModel =  new JurnalTemplateDetailSearch(['YEAR_AT'=>$tanggal[0],'MONTH_AT'=>$tanggal[1],'STORE_ID'=>$retValid]);
+				//$searchModel =  new JurnalTemplateDetailSearch(['TAHUN'=>'2018','BULAN'=>'2','STORE_ID'=>$retValid]);
+				//$searchModel =  new JurnalTemplateDetailSearch();
+				// print_r($searchModel);
+				// die();
+				
+				//$searchModel->RPT_TITLE_ID = 'RPT_TITLE_ID';
+				//$dataProvider = $searchModel->search(['TAHUN'=>'2018','BULAN'=>'2','STORE_ID'=>$retValid]);
+				// $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+				$modelView =$dataProvider->getModels();
+				
 				 echo GridView::widget([					 
 					'id'=>'arus-masuk-monthofyear',
 					'dataProvider' => $dataProvider,
 					'summary'=>false,
-					'showHeader'=>false,					
+					//'showHeader'=>false,
+					'showPageSummary' => true,					
 					'pjax'=>true,
 					'pjaxSettings'=>[
 						'options'=>[
 							'enablePushState'=>true,
 							'id'=>'arus-masuk-monthofyear',
 						],
-					],
+					],					
 					'columns' => [
-							[	
+							/* [	
 								'class' => 'kartik\grid\ExpandRowColumn',
 								'value'=>function($model,$key,$index,$column){
 									return GridView::ROW_EXPANDED;
@@ -132,25 +150,211 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'expandIcon'=>'<span class="fa fa-file-text"></span>',
 								'collapseIcon'=>'<span class="fa fa-file-text-o"></span>',
 								//'enableRowClick'=>false,
-							],        
+							],   */      
 							[
 								'attribute' => 'RPT_TITLE_NM',
-								'label' => false,
-								//'mergeHeader'=>true,
-								'value'=>function($model){
-									return $model->RPT_TITLE_NM.' [IDR]';
-								},
+								'label' => false,	
+								'group'=>true,
+								'groupedRow'=>true,
+								'groupOddCssClass'=>[
+									'style'=>[
+										'background-color'=>$colorHeaderGroup,
+									]
+								],		
+								'groupEvenCssClass'=>[
+									'style'=>[
+										'background-color'=>$colorHeaderGroup,
+									]
+								],		
 								'contentOptions'=>[
 									'style'=>[
 											'text-align'=>'left',
+											'font-family'=>'font-family: verdana, arial, sans-serif',
+											'font-weight'=>'bold',
+											'font-size'=>'9pt',
+											'background-color'=>$colorHeaderGroup,
+											
+									]
+								],																			
+								'groupFooter'=>function($model, $key, $index, $widget){ 
+									return [
+										//'mergeColumns'=>[[1,1]], 
+										'content'=>[             // content to show in each summary cell
+											1=>'Jumlah',
+											2=>GridView::F_SUM,
+											3=>GridView::F_SUM,
+										],
+										'contentFormats'=>[     
+											2=>['format'=>'number','decimals'=>2],
+											3=>['format'=>'number','decimals'=>2]
+										] 	,
+										'contentOptions'=>[      // content html attributes for each summary cell
+											1=>['style'=>'text-align:right;font-size:12px;'],
+											2=>['style'=>'text-align:right;font-size:10px;text-decoration:underline'],
+											3=>['style'=>'text-align:right;font-size:10px;text-decoration:underline'],
+										],
+										'options'=>[
+											'class'=>'warning',
+											'style'=>'font-weight:bold;font-size:10px;text-align:right;
+										']
+									];
+								},								
+							],
+							[
+								'attribute' => 'AKUN_NM',
+								'label' => false,
+								'format'=>'raw',
+								'value'=>function($model)use($store){
+									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
+									return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
+								},	
+								'headerOptions'=>[
+									'style'=>[
+											'text-align'=>'center',
 											//'width'=>'150px',
 											//'padding-left'=>'-100px',
 											'font-family'=>'tahoma',
-											'font-weight'=>'bold',
-											'font-size'=>'10pt',
-											'background-color'=>'#88b3ec',
+											//'font-weight'=>'bold',
+											'font-size'=>'8pt',
+											'background-color'=>$colorHeader,
 									]
+								],									
+								'contentOptions'=>[
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'150px',
+											//'padding-left'=>'-100px',
+											'font-family'=>'font-family: verdana, arial, sans-serif',
+											'font-weight'=>'bold',
+											'font-size'=>'8pxt',
+											//'background-color'=>'#88b3ec',
+									]
+								],
+								'pageSummaryOptions' => [
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'60%',
+											'font-family'=>'tahoma',
+											'font-size'=>'8pt',
+											'text-decoration'=>'underline',
+											//'font-weight'=>'bold',
+											//'border-left-color'=>'transparant',
+											'background-color'=>'rgba(123, 251, 116, 0.1)',
+											'border-left'=>'0px',
+									]									
 								],								
+							],
+							[
+								'attribute' => 'DEBET',
+								'label' =>'PEMASUKAN',
+								'format'=>['decimal', 2],									
+								/* 'value'=>function($model){
+									if ($model->CAL_FORMULA==0){ 		//MINUS
+										return '('.number_format($model->JUMLAH,2).')';
+									}elseif($model->CAL_FORMULA==1){ 	//PLUS
+										return number_format($model->JUMLAH,2);
+									}elseif($model->CAL_FORMULA==2){ 	//PERKALIAN
+										return number_format($model->JUMLAH,2);
+									}else{
+										return number_format(0,2);
+									}
+									
+								 },	 */
+								'pageSummary'=>true,
+								'pageSummaryFunc'=>GridView::F_SUM,									
+								'headerOptions'=>[
+									'style'=>[
+											'text-align'=>'center',
+											//'width'=>'150px',
+											//'padding-left'=>'-100px',
+											'font-family'=>'tahoma',
+											//'font-weight'=>'bold',
+											'font-size'=>'8pt',
+											'background-color'=>$colorHeader,
+									]
+								],	
+								'contentOptions'=>[
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'150px',
+											//'padding-left'=>'-100px',
+											'font-family'=>'tahoma',
+											//'font-weight'=>'bold',
+											'font-size'=>'8pt',
+											//'background-color'=>'#88b3ec',
+									]
+								],		
+								'pageSummaryOptions' => [
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'20%',
+											'font-family'=>'tahoma',
+											'font-size'=>'8pt',
+											'text-decoration'=>'underline',
+											//'font-weight'=>'bold',
+											//'border-left-color'=>'transparant',
+											'background-color'=>'rgba(123, 251, 116, 0.1)',
+											'border-left'=>'0px',
+									]
+									
+								],
+								
+							],
+							[
+								'attribute' => 'KREDIT',
+								'label' =>'PENGELUARAN',
+								'format'=>['decimal', 2],									
+								/* 'value'=>function($model){
+									if ($model->CAL_FORMULA==0){ 		//MINUS
+										return '('.number_format($model->JUMLAH,2).')';
+									}elseif($model->CAL_FORMULA==1){ 	//PLUS
+										return number_format($model->JUMLAH,2);
+									}elseif($model->CAL_FORMULA==2){ 	//PERKALIAN
+										return number_format($model->JUMLAH,2);
+									}else{
+										return number_format(0,2);
+									}
+									
+								 },	 */
+								'pageSummary'=>true,
+								'pageSummaryFunc'=>GridView::F_SUM,								
+								'headerOptions'=>[
+									'style'=>[
+											'text-align'=>'center',
+											//'width'=>'150px',
+											//'padding-left'=>'-100px',
+											'font-family'=>'tahoma',
+											//'font-weight'=>'bold',
+											'font-size'=>'8pt',
+											'background-color'=>$colorHeader,
+									]
+								],	
+								'contentOptions'=>[
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'150px',
+											//'padding-left'=>'-100px',
+											'font-family'=>'tahoma',
+											//'font-weight'=>'bold',
+											'font-size'=>'8pt',
+											//'background-color'=>'#88b3ec',
+									]
+								],										
+								'pageSummaryOptions' => [
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'20%',
+											'font-family'=>'tahoma',
+											'font-size'=>'8pt',
+											'text-decoration'=>'underline',
+											//'font-weight'=>'bold',
+											//'border-left-color'=>'transparant',
+											'background-color'=>'rgba(123, 251, 116, 0.1)',
+											'border-left'=>'0px',
+									]
+									
+								],
+								
 							],
 					],
 				]); 
