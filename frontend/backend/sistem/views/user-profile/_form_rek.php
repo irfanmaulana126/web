@@ -11,14 +11,14 @@ use kartik\widgets\FileInput;
 /* @var $this yii\web\View */
 /* @var $model frontend\backend\sistem\models\DompetRekening */
 /* @var $form yii\widgets\ActiveForm */
-
-$data=unserialize($modelImage->IMAGE);
-foreach ($data as $key) {
-    if (!empty($key)) {
-        $datas[]='<img src="'.$key.'" alt="Your Avatar" style="width:160px;align:center">';
-	} else {
-        $datas='<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" style="width:160px;align:center">';
-	}	
+// print_r(!empty($modelImage));die();
+if(!empty($modelImage->IMAGE)){
+    $data=unserialize($modelImage->IMAGE);
+    foreach ($data as $key) {
+            $datas[]='<img src="'.$key.'" alt="Your Avatar" style="width:160px;align:center">';
+        }
+}else{
+    $datas='';
 }
 
 ?>
@@ -45,22 +45,36 @@ foreach ($data as $key) {
         'mask' => '9',
         'clientOptions' => ['repeat' => 12, 'greedy' => false]]) ?>
 
+    <?= $form->field($model, 'ALAMAT')->textarea(['rows' => 4]) ?>
+
     <?= $form->field($modelImage, 'IMAGE[]')->widget(FileInput::classname(), [
-        'options' => [
-                'accept' => 'image/*',
-                'multiple' => true,
-                'maxFile'=>5],
-        'pluginOptions' => [
-            'initialPreview'=>$datas,
-        'overwriteInitial'=>false,
-        'maxFileSize'=>2800
-        ],        
+        'options'=>[
+                'width'=>'100px',
+                'accept'=>'image/*',
+                'multiple'=>true
+            ],				
+        'pluginOptions'=>[
+            'allowedFileExtensions'=>['jpg','gif','png'],					
+            'showCaption' => false,
+            'showRemove' => true,
+            'showUpload' => false,
+            'showClose' =>false,
+            'showDrag' =>false,
+            'browseLabel' => 'Select Photo',
+            'removeLabel' => '',
+            'removeIcon'=> '<i class="glyphicon glyphicon-remove"></i>',
+            'removeTitle'=> 'Clear Selected File',
+            'defaultPreviewContent' => $datas,
+            'maxFileSize'=>800 //10KB
+            
+        ],
+        'pluginEvents' => [
+            'fileclear' => 'function() { log("fileclear"); }',
+            'filereset' => 'function() { log("filereset"); }',
+        ]        
     ]); ?>
 
-    <?= $form->field($model, 'ALAMAT')->textarea(['rows' => 6]) ?>
-    
-
-    <div class="form-group">
+    <div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 

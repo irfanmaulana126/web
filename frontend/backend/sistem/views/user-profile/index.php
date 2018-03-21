@@ -500,10 +500,24 @@ echo $this->render('modal_store'); //echo difinition
 	<div class="col-md-2 col-md-2">
 	<div class="">
 		<div style="margin-bottom: 10px;margin-top: 10px;">
-			<?php echo tombolCountBankProfile($dataProvider);?>
-		</div>	
-			<?php echo tombolHistoriDompet($dataProvider);?>
+			<?php if(empty($dataProviderekening)){
+				echo tombolCountBankProfile($dataProvider);
+			}else{
+				echo Html::beginTag('div', ['class'=>'btn-group']);
+				echo Html::button('<span class="fa fa-credit-card fa-lg"></span> Account Bank <span class="caret"></span></button>', 
+				['type'=>'button', 'class'=>'btn btn-success dropdown-toggle btn-md', 'data-toggle'=>'dropdown']);
+				echo Html::beginTag('ul', ['class'=>'dropdown-menu','role'=>'menu']);
+					echo tombolCountBankProfileDropdownDetail($dataProvider);
+					echo tombolCountBankProfileDropdownUpdate($dataProvider);
+				echo Html::endTag('ul');
+				echo Html::endTag('div');
+			}?>
 		</div>
+		
+		<?php echo tombolHistoriDompet($dataProvider);?>
+		</div>
+		
+</div>
 	</div>
 	</div>
 
