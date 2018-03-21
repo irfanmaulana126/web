@@ -73,4 +73,12 @@ class DompetRekening extends \yii\db\ActiveRecord
             'MONTH_AT' => 'Month  At',
         ];
     }
+    public function getImages()
+    {
+        return $this->hasOne(DompetRekeningImage::className(),['ACCESS_GROUP'=>'ACCESS_GROUP']);
+    }
+    public function getGambar(){
+        $result=$this->images;
+        return $result!=''?$result->IMAGE:'';
+    }
 }

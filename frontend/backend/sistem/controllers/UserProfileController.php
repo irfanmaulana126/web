@@ -81,6 +81,7 @@ class UserProfileController extends Controller
         $dataProvider = UserProfileSearch::find()->where(['ACCESS_ID'=>$user])->one();
         $dataProviderimage = UserImage::find()->where(['ACCESS_ID'=>$user])->one();
         $dataProvidersaldo = DompetSaldo::find()->where(['ACCESS_GROUP'=>$user])->one();
+        $dataProviderekening = DompetRekening::findOne(['ACCESS_GROUP'=>$user]);
 
         if (empty($dataProviderimage)) {
             $dataProviderimage = new UserImage;
@@ -113,7 +114,8 @@ class UserProfileController extends Controller
             'searchModelKasir' => $searchModelKasir,
             'dataProviderKasir' => $dataProviderKasir,
             'dataProviderimage'=>$dataProviderimage,
-            'dataProvidersaldo'=>$dataProvidersaldo
+            'dataProvidersaldo'=>$dataProvidersaldo,
+            'dataProviderekening'=>$dataProviderekening
         ]);
     }
 
@@ -184,6 +186,7 @@ class UserProfileController extends Controller
             $modelImage = new DompetRekeningImage();
         }
         if ($model->load(Yii::$app->request->post())) {
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->save(false);
             $modelImage->IMAGE = UploadedFile::getInstances($modelImage, 'IMAGE');
             
@@ -205,6 +208,47 @@ class UserProfileController extends Controller
         return $this->renderAjax('_form_rek', [
             'model' => $model,
             'modelImage' => $modelImage,
+        ]);
+    }
+    public function actionAccountRekUpdate($ACCESS_GROUP)
+    {   
+        $model = DompetRekening::findOne(['ACCESS_GROUP'=>$ACCESS_GROUP]);
+        $modelImage = DompetRekeningImage::findOne(['ACCESS_GROUP'=>$ACCESS_GROUP]);
+        // print_r($modelImage);die();
+        if (empty($model) && empty($modelImage)) {
+            $model = new DompetRekening();
+            $modelImage = new DompetRekeningImage();
+        }
+        if ($model->load(Yii::$app->request->post())) {
+            $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->save(false);
+            $modelImage->IMAGE = UploadedFile::getInstances($modelImage, 'IMAGE');
+            
+            if (!empty($modelImage->IMAGE)) {
+                foreach ($modelImage->IMAGE as $image) {
+                    $models= new DompetRekeningImage();
+                    $upload_file = $image;
+                    $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                    $images[]= 'data:image/*;charset=utf-8;base64,'.$data_base64;
+                }
+                // print_r($images);die();
+                $models->ACCESS_GROUP=$ACCESS_GROUP;
+                $models->IMAGE=serialize($images);
+                Yii::$app->db->createCommand("
+                    UPDATE dompet_rekening_image SET IMAGE='".$models->IMAGE."',STATUS='0' WHERE ACCESS_GROUP='". $models->ACCESS_GROUP=$ACCESS_GROUP."'")->execute();
+            }
+            Yii::$app->session->setFlash('success', "Data Berhasil dirubah");
+            return $this->redirect(['index']);  
+        }
+        return $this->renderAjax('_form_rek', [
+            'model' => $model,
+            'modelImage' => $modelImage,
+        ]);
+    }
+    public function actionAccountRekDetail($ACCESS_GROUP)
+    {   
+        return $this->renderAjax('detail_rek', [
+            'model' => DompetRekening::findOne(['ACCESS_GROUP'=>$ACCESS_GROUP]),
         ]);
     }
     public function actionHistoriDompet($ACCESS_GROUP,$TGL)
