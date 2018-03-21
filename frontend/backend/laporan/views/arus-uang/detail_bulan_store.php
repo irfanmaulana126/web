@@ -53,24 +53,10 @@ $this->registerCss("
 			'contentOptions'=>Yii::$app->gv->gvContainBody('center','30px',''),					
 ];
 	$aryField= [
-		['ID' =>0, 'ATTR' =>[
-			'attribute'=>'STORE_ID',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
-		]],
-		['ID' =>1, 'ATTR' =>		
+		['ID' =>0, 'ATTR' =>		
         [
             'attribute'=>'PRODUCT_NM',
-            //'label'=>'Cutomer',
+            'label'=>'NAMA PRODUK',
             'filterType'=>true,
             'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
             'hAlign'=>'right',
@@ -82,38 +68,9 @@ $this->registerCss("
             'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
             
         ]],		
-		['ID' =>2, 'ATTR' =>[
-			'attribute'=>'TAHUN',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-		]],		
-		['ID' =>3, 'ATTR' =>[
-			'attribute'=>'BULAN',
-			//'label'=>'Cutomer',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'format'=>'raw',
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-        ]],			
-		['ID' =>4, 'ATTR' =>[
+		['ID' =>1, 'ATTR' =>[
 			'attribute'=>'TGL',
-			//'label'=>'Cutomer',
+			'label'=>'TANGGAL',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -159,7 +116,7 @@ $this->registerCss("
 		$gvAttProdakItem[]=
 			[
 				'attribute'=>'PRODUK_SUBTTL_QTY',
-				//'label'=>'Cutomer',
+				'label'=>'PRODUK SUBTTL QTY',
 				'filterType'=>true,
 				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 				'hAlign'=>'right',
@@ -167,8 +124,8 @@ $this->registerCss("
 				'mergeHeader'=>false,
 				'noWrap'=>false,
 				'format'=>'raw',
-				'value'=>function($model)use($tanggal,$akun){
-					$icon=Html::a($model->PRODUK_SUBTTL_QTY,'/laporan/arus-uang/detail-produk?akunkode='.$akun->AKUN_CODE.'&tgl='.$model->TGL.'&produk='.$model->PRODUCT_ID,['id'=>'store-button-export-excel','data-pjax' => true,'class'=>"btn btn-primary btn-xs" ]);
+				'value'=>function($model)use($tanggal,$akun,$store){
+					$icon=Html::a($model->PRODUK_SUBTTL_QTY,'/laporan/arus-uang/detail-produk?akunkode='.$akun->AKUN_CODE.'&tgl='.$model->TGL.'&store='.$store->STORE_ID.'&produk='.$model->PRODUCT_ID,['id'=>'store-button-export-excel','data-pjax' => true,'class'=>"btn btn-primary btn-xs" ]);
 					return $icon;
 				},
 				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
@@ -178,7 +135,7 @@ $this->registerCss("
 			
 		$gvAttProdakItem[]=[
 				'attribute'=>'PRODUK_SUBTTL_HARGAJUAL',
-				//'label'=>'Cutomer',
+				'label'=>'PRODUK SUBTTL HARGA JUAL',
 				'filterType'=>true,
 				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 				'hAlign'=>'right',
@@ -195,7 +152,7 @@ $this->registerCss("
 			$gvAttProdakItem[]=
 			[
 				'attribute'=>'PRODUK_SUBTTL_QTY',
-				//'label'=>'Cutomer',
+				'label'=>'PRODUK SUBTTL QTY',
 				'filterType'=>true,
 				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 				'hAlign'=>'right',
@@ -203,8 +160,8 @@ $this->registerCss("
 				'mergeHeader'=>false,
 				'noWrap'=>false,
 				'format'=>'raw',
-				'value'=>function($model)use($tanggal,$akun){					
-					$icon=Html::a($model->PRODUK_SUBTTL_QTY,'/laporan/arus-uang/detail-produk?akunkode='.$akun->AKUN_CODE.'&tgl='.$model->TGL.'&produk='.$model->PRODUCT_ID,['id'=>'store-button-export-excel','data-pjax' => true,'class'=>"btn btn-primary btn-xs" ]);
+				'value'=>function($model)use($store,$tanggal,$akun){					
+					$icon=Html::a($model->PRODUK_SUBTTL_QTY,'/laporan/arus-uang/detail-produk?akunkode='.$akun->AKUN_CODE.'&tgl='.$model->TGL.'&store='.$store->STORE_ID.'&produk='.$model->PRODUCT_ID,['id'=>'store-button-export-excel','data-pjax' => true,'class'=>"btn btn-primary btn-xs" ]);
 					return $icon;
 				},
 				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
@@ -214,7 +171,7 @@ $this->registerCss("
 		
 		$gvAttProdakItem[]=[
 				'attribute'=>'PRODUK_JUALPPNDISCOUNT',
-				//'label'=>'Cutomer',
+				'label'=>'PRODUK JUAL PPN DISCOUNT',
 				'filterType'=>true,
 				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 				'hAlign'=>'right',
@@ -230,7 +187,7 @@ $this->registerCss("
 			$gvAttProdakItem[]=
 			[
 				'attribute'=>'PRODUK_SUBTTL_QTY',
-				//'label'=>'Cutomer',
+				'label'=>'PRODUK SUBTTL QTY',
 				'filterType'=>true,
 				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 				'hAlign'=>'right',
@@ -238,8 +195,8 @@ $this->registerCss("
 				'mergeHeader'=>false,
 				'noWrap'=>false,
 				'format'=>'raw',
-				'value'=>function($model)use($tanggal,$akun){					
-					$icon=Html::a($model->PRODUK_SUBTTL_QTY,'/laporan/arus-uang/detail-produk?akunkode='.$akun->AKUN_CODE.'&tgl='.$model->TGL.'&produk='.$model->PRODUCT_ID,['id'=>'store-button-export-excel','data-pjax' => true,'class'=>"btn btn-primary btn-xs" ]);
+				'value'=>function($model)use($store,$tanggal,$akun){					
+					$icon=Html::a($model->PRODUK_SUBTTL_QTY,'/laporan/arus-uang/detail-produk?akunkode='.$akun->AKUN_CODE.'&tgl='.$model->TGL.'&store='.$store->STORE_ID.'&produk='.$model->PRODUCT_ID,['id'=>'store-button-export-excel','data-pjax' => true,'class'=>"btn btn-primary btn-xs" ]);
 					return $icon;
 				},
 				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
@@ -249,7 +206,7 @@ $this->registerCss("
 		
 		$gvAttProdakItem[]=[
 				'attribute'=>'PRODUK_SUBTTL_PPN',
-				//'label'=>'Cutomer',
+				'label'=>'PRODUK SUBTTL PPN',
 				'filterType'=>true,
 				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 				'hAlign'=>'right',
@@ -276,8 +233,8 @@ $this->registerCss("
 				'mergeHeader'=>false,
 				'noWrap'=>false,
 				'format'=>'raw',
-				'value'=>function($model)use($tanggal,$akun){
-					$icon=Html::a($model->PRODUK_SUBTTL_QTY,'/laporan/arus-uang/detail-produk?akunkode='.$akun->AKUN_CODE.'&tgl='.$model->TGL.'&produk='.$model->PRODUCT_ID,['id'=>'store-button-export-excel','data-pjax' => true,'class'=>"btn btn-primary btn-xs" ]);
+				'value'=>function($model)use($store,$tanggal,$akun){
+					$icon=Html::a($model->PRODUK_SUBTTL_QTY,'/laporan/arus-uang/detail-produk?akunkode='.$akun->AKUN_CODE.'&tgl='.$model->TGL.'&store='.$store->STORE_ID.'&produk='.$model->PRODUCT_ID,['id'=>'store-button-export-excel','data-pjax' => true,'class'=>"btn btn-primary btn-xs" ]);
 					return $icon;
 				},
 				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
@@ -358,25 +315,25 @@ $this->registerCss("
 <div class="jurnal-template-title-index">
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
-	<?php 		$title= Yii::t('app','');
-				$url = Url::toRoute(['/laporan/arus-uang']);
-				$options1 = [
-							'id'=>'back-trafik',
-							'class'=>"btn btn-xs",
-							'title'=>'Kembali Menu Laporan'
-				];
-				$icon1 = '<span class="fa-stack fa-md text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
-						  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
-						  </span>
-						  ';
-						  $label1 = $icon1.' '.$title ;
-						  echo $content = Html::a($label1,$url,$options1);
-						  ?>
+	<?php	$title= Yii::t('app','');
+			$url = Url::toRoute(['/laporan/arus-uang/store-arus']);
+			$options1 = [
+						'id'=>'back-trafik',
+						'class'=>"btn btn-xs",
+						'title'=>'Kembali Menu Laporan'
+			];
+			$icon1 = '<span class="fa-stack fa-md text-left">
+					<b class="fa fa-circle fa-stack-2x" style="color:black"></b>
+					<b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
+					</span>
+					';
+					$label1 = $icon1.' '.$title ;
+					echo $content = Html::a($label1,$url,$options1);
+			  ?>
 		<div class="row">	
 			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
                     <?php		                    		
-						echo '<b>RINGKASAN DETAIL '.strtoupper($akun->AKUN_NM).'<br>PRODUK GLOBAL<br>'.date("F Y",strtotime($tanggal)).'</b>';				
+						echo '<b>RINGKASAN DETAIL '.strtoupper($akun->AKUN_NM).'<br>PRODUK '.strtoupper($store->STORE_NM).'<br>'.date("F Y",strtotime($tanggal)).'</b>';				
 					?>		
 			</div>
 			<br>

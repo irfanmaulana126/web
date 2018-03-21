@@ -60,7 +60,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 <div style="margin-top: -10px">
 		<?php
 		$title= Yii::t('app','');
-		$url = Url::toRoute(['/laporan/laporan']);
+		$url = Url::toRoute(['/laporan']);
 		$options1 = [
 					'id'=>'back-trafik',
 					'class'=>"btn btn-xs",

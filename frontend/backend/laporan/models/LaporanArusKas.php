@@ -16,8 +16,8 @@ use api\modules\laporan\models\Store;
 class LaporanArusKas extends Model
 {	
 
-	// public $ACCESS_GROUP;
-	// public $STORE_ID;
+	public $ACCESS_GROUP;
+	public $STORE_ID;
 	public $TAHUN;
 	public $BULAN;
 	//public $BLN;
@@ -27,10 +27,9 @@ class LaporanArusKas extends Model
     public function rules()
     {
         return [
-            [['KREDIT','KREDIT','TAHUN','BULAN'], 'safe'],
+            [['KREDIT','KREDIT','TAHUN','ACCESS_GROUP','STORE_ID','BULAN'], 'safe'],
         ];
     }
-
 	public function searchArusKeuangan($params){
 		$sql="				
 			#SET @bln='1';
@@ -51,9 +50,56 @@ class LaporanArusKas extends Model
 			FROM jurnal_template_detail jtd 
 			LEFT JOIN jurnal_transaksi_c jc
 				ON jc.AKUN_CODE=jtd.AKUN_CODE AND
-				jc.TAHUN='2018' AND 
+				jc.TAHUN='".$this->TAHUN."' AND 
 				jc.BULAN='".$this->BULAN."' AND
-				jc.ACCESS_GROUP='170726220936'
+				jc.ACCESS_GROUP='".$this->ACCESS_GROUP."'
+			WHERE jtd.RPT_GROUP_ID=1
+		";		
+		$qrySql= Yii::$app->production_api->createCommand($sql)->queryAll(); 		
+		$dataProvider= new ArrayDataProvider([	
+			'allModels'=>$qrySql,	
+			'pagination' => [
+				'pageSize' =>10000,
+			],			
+		]);
+			
+		$this->load($params);
+		
+		if (!($this->load($params) && $this->validate())) {
+ 			return $dataProvider;
+ 		}
+		
+		// $filter = new Filter();
+ 		// $this->addCondition($filter, 'TerminalID', true);
+ 		// $this->addCondition($filter, 'EMP_NM', true);	
+ 		//$dataProvider->allModels = $filter->filter($qrySql);
+		
+		return $dataProvider;
+	}	
+	public function searchArusKeuanganStore($params){
+		$sql="				
+			#SET @bln='1';
+			#SET @thn='2018';
+			SELECT  
+				jtd.RPT_DETAIL_ID,RPT_SORTING,jtd.RPT_GROUP_ID,jtd.RPT_GROUP_NM,
+				jtd.RPT_TITLE_ID,jtd.RPT_TITLE_NM,jtd.CAL_FORMULA,jtd.CAL_FORMULA_NM,
+				jtd.STATUS,jtd.STATUS_NM,
+				jtd.AKUN_CODE,jtd.AKUN_NM,jtd.KTG_CODE,jtd.KTG_NM,
+				'2' AS BULAN,'2018' AS TAHUN,
+				(CASE WHEN JUMLAH is not null THEN JUMLAH ELSE 0 END) AS JUMLAH,
+				(CASE WHEN CAL_FORMULA=1 OR CAL_FORMULA=3 THEN
+					 (CASE WHEN JUMLAH is not null THEN JUMLAH ELSE 0 END)
+				ELSE 0 END) AS DEBET,
+				(CASE WHEN CAL_FORMULA=0 OR CAL_FORMULA=3 THEN
+					 (CASE WHEN JUMLAH is not null THEN JUMLAH ELSE 0 END)
+				ELSE 0 END) AS KREDIT
+			FROM jurnal_template_detail jtd 
+			LEFT JOIN jurnal_transaksi_c jc
+				ON jc.AKUN_CODE=jtd.AKUN_CODE AND
+				jc.TAHUN='".$this->TAHUN."' AND 
+				jc.BULAN='".$this->BULAN."' AND
+				jc.ACCESS_GROUP='".$this->ACCESS_GROUP."' AND
+				jc.STORE_ID='".$this->STORE_ID."'
 			WHERE jtd.RPT_GROUP_ID=1
 		";		
 		$qrySql= Yii::$app->production_api->createCommand($sql)->queryAll(); 		
