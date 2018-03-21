@@ -71,7 +71,7 @@ class ProductHargaSearch extends ProductHarga
             'PPN' => $this->PPN,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'product_harga.STATUS' => 1,
+            'product_harga.STATUS' => $this->STATUS,
             'product_harga.YEAR_AT' => $this->YEAR_AT,
             'product_harga.MONTH_AT' => $this->MONTH_AT,
         ]);

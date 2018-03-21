@@ -19,13 +19,13 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'STORE_ID',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >STORE</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'content'=>'<span style="color: white;">STORE</span>',
+							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: #4c83ff;text-align:right']
 						]
 					]
 				])->widget(Select2::classname(),[
             'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>['1','0']])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
-            'options' => ['placeholder'=>'Select Category....'],
+            'options' => ['placeholder'=>'Select Category....','style'=>'border-radius: 0px 5px 5px 0px;'],
             'pluginOptions' => [
                 'allowClear' => true
             ], 
@@ -34,17 +34,17 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'NAME',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >NAMA</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'content'=>'<span style="color: white;">NAMA</span>',
+							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: #4c83ff;text-align:right']
 						]
 					]
-				])->textInput(['maxlength' => true])->label(false) ?>
+				])->textInput(['maxlength' => true,'style'=>'border-radius: 0px 5px 5px 0px;'])->label(false) ?>
 
     <?= $form->field($model, 'EMAIL',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >EMAIL</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'content'=>'<span style="color: white;">EMAIL</span>',
+							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: #4c83ff;text-align:right']
 						]
 					]
 				])->widget(MaskedInput::classname(),['clientOptions' => [
@@ -54,8 +54,8 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'PHONE',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >PHONE</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right']
+							'content'=>'<span style="color: white;">PHONE</span>',
+							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: #4c83ff;text-align:right']
 						]
 					]
 				])->widget(MaskedInput::classname(),

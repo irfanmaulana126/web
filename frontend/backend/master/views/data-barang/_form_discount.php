@@ -18,17 +18,17 @@ $this->registerCss("
 		height:200px;
     }
 .product-discount-form	#gv-all-data-prodak-harga-item .panel-heading {
-		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		background: linear-gradient( 135deg, #2AFADF 10%, rgba(21, 175, 213, 0.14) 100%);
 		color: #000;
 	}
 .product-discount-form #gv-all-data-prodak-harga-item .panel-footer {
-		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		background: linear-gradient( 135deg, #2AFADF 10%, rgba(21, 175, 213, 0.14) 100%);
 	}
 ");
 $bColor='rgb(76, 131, 255)';
 $pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>HISTORI DISCOUNT PRODUCT </b>
+				</b></span><b>HISTORI DISCOUNT PRODUCT </b>
 	';
 $gvAttProdakDiscountItem=[
     [
@@ -131,7 +131,8 @@ $gvAttProdakDiscountItem=[
 		'autoXlFormat'=>true,
 		'export' => false,
 		'panel'=>[''],
-		'toolbar' => false,
+        'toolbar' => false,
+        'summary'=>false,
 		'panel' => [
 			// 'heading'=>false,
 			'heading'=>'<div style="float:right"></div>'.$pageNm,
@@ -150,27 +151,27 @@ $gvAttProdakDiscountItem=[
 <?=$form->field($model,'storeNm',[					
 				'addon' => [
 					'prepend' => [
-						'content'=>'<span >Toko </span>',
-						'options'=>['style' =>' background-color: lightblue;text-align:right;width: 98px;']
+						'content'=>'<span><b>Toko </b></span>',
+						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 98px;']
 					]
 				]
 				])->textInput([
 					'value'=>$productdetail->STORE_NM,
                     'readOnly'=>true,
-                    'style'=>';width: 332px;'
+                    'style'=>';width: 332px;border-radius: 0px 5px 5px 0px;'
 				])->label(false);	
 		?>
         <?=$form->field($model,'produkNm',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >Produk</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 98px;']
+							'content'=>'<span><b>Produk</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 98px;']
 						]
 					]
 				])->textInput([
 					'value'=>$productdetail->PRODUCT_NM,
 					'readOnly'=>true,
-                    'style'=>';width: 332px;'
+                    'style'=>';width: 332px;border-radius: 0px 5px 5px 0px;'
 				])->label(false);	
 		?> 
         <?php
@@ -189,8 +190,8 @@ $gvAttProdakDiscountItem=[
         echo $form->field($model,'PERIODE_TGL1',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >Tanggal</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 88px;']
+							'content'=>'<span><b>Tanggal</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 88px;']
 						]
 					]
 				])->widget(DatePicker::classname(), [
@@ -205,17 +206,18 @@ $gvAttProdakDiscountItem=[
                             'autoclose' => true,
                             'format' => 'yyyy-mm-dd',
                             "startDate" => $date,
+                            'style'=>'border-radius: 0px 5px 5px 0px;'
                         ]
                     ])->label(false);	
 		?>  
         <?= $form->field($model,'DISCOUNT',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >Discount</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 88px;']
+							'content'=>'<span><b>Discount</b></span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 88px;']
 						]
 					]
-				])->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false,'style'=>';width: 332px;'])->label(false); ?> 
+				])->textInput(['type'=>'number','min'=>1,'max'=>100,'allowEmpty' => true,'integerOnly' => false,'style'=>';width: 332px;border-radius: 0px 5px 5px 0px;'])->label(false); ?> 
     <div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>

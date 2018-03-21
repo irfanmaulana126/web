@@ -2,7 +2,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use kartik\widgets\DepDrop;
 use kartik\select2\Select2;
 use common\models\LocateProvince;
@@ -88,25 +88,46 @@ $this->registerJS('
 
     <?php $form = ActiveForm::begin(); ?>
     <div class="col-md-12">
-            <?= $form->field($model, 'STORE_NM')->textInput() ?>
+            <?= $form->field($model, 'STORE_NM',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>STORE</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->textInput(['style'=>'width: 422px;'])->label(false) ?>
     </div>
 
     <div class="col-md-6">
     
-    <?= $form->field($model, 'INDUSTRY_GRP_ID')->widget(Select2::classname(), [
+    <?= $form->field($model, 'INDUSTRY_GRP_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>INDUSTRI GRP</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
+						]
+					]
+				])->widget(Select2::classname(), [
             'data' => ArrayHelper::map(IndustryGroup::find()->all(),'INDUSTRY_GRP_ID','INDUSTRY_GRP_NM'),
             'language' => 'de',
             'options' => ['placeholder' => 'Select a state ...','id'=>'industri-grp-id'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
-        ])->label('INDUSTRI GROUP'); ?>
+        ])->label(false); ?>
                 
     </div>
     
     <div class="col-md-6">
     
-        <?= $form->field($model, 'INDUSTRY_ID')->widget(DepDrop::classname(), [
+        <?= $form->field($model, 'INDUSTRY_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>INDUSTRI</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
+						]
+					]
+				])->widget(DepDrop::classname(), [
         'type'=>DepDrop::TYPE_SELECT2,
             'options'=>['id'=>'industri-id'],
             'pluginOptions'=>[
@@ -114,49 +135,98 @@ $this->registerJS('
                 'placeholder'=>'Select...',
                 'url'=>Url::to(['/master/store/industry'])
             ],
-        ])->label('INDUSTRI'); ?>
+        ])->label(false); ?>
                 
     </div>
     <div class="col-md-4">
-        <?= $form->field($model, 'PIC')->textInput() ?>
+        <?= $form->field($model, 'PIC',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>PIC</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 20px;']
+						]
+					]
+				])->textInput()->label(false) ?>
     </div>
     <div class="col-md-4">
-        <?= $form->field($model, 'TLP')->widget(MaskedInput::classname(),
-        ['mask' => '(999) 9999999'])->label('Phone') ?>
+        <?= $form->field($model, 'TLP',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span class="fa fa-phone"><b></b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 20px;']
+						]
+					]
+				])->widget(MaskedInput::classname(),
+        ['mask' => '(999) 9999999'])->label(false) ?>
     </div>
     <div class="col-md-4">
-        <?= $form->field($model, 'FAX')->widget(MaskedInput::classname(),
-        ['mask' => '(999) 9999999']) ?>    
+        <?= $form->field($model, 'FAX',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span class="fa fa-fax"><b></b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 20px;']
+						]
+					]
+				])->widget(MaskedInput::classname(),
+        ['mask' => '(999) 9999999'])->label(false) ?>    
     </div>
    
     <div class="col-md-12">
         <div id="myMap"></div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" style="margin-top: 10px;">
     
-    <?= $form->field($model, 'LATITUDE')->textInput(['readOnly'=>true,'id'=>'latitude']) ?>
+    <?= $form->field($model, 'LATITUDE',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>LATITUDE</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->textInput(['readOnly'=>true,'id'=>'latitude'])->label(false) ?>
                 
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" style="margin-top: 10px;">
 
-    <?= $form->field($model, 'LONGITUDE')->textInput(['readOnly'=>true,'id'=>'longitude']) ?>
+    <?= $form->field($model, 'LONGITUDE',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>LONGITUDE</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
+						]
+					]
+				])->textInput(['readOnly'=>true,'id'=>'longitude'])->label(false) ?>
                 
     </div>
     <div class="col-md-6">
     
-    <?= $form->field($model, 'PROVINCE_ID')->widget(Select2::classname(), [
+    <?= $form->field($model, 'PROVINCE_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>PROVINSI</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->widget(Select2::classname(), [
             'data' => ArrayHelper::map(LocateProvince::find()->all(),'PROVINCE_ID','PROVINCE'),
             'language' => 'de',
             'options' => ['placeholder' => 'Select a state ...','id'=>'province-id'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
-        ]); ?>
+        ])->label(false); ?>
                 
     </div>
     <div class="col-md-6">
 
-    <?= $form->field($model, 'CITY_ID')->widget(DepDrop::classname(), [
+    <?= $form->field($model, 'CITY_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>KOTA</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 99px;']
+						]
+					]
+				])->widget(DepDrop::classname(), [
         'type'=>DepDrop::TYPE_SELECT2,
             'options'=>['id'=>'subkota-id'],
             'pluginOptions'=>[
@@ -164,14 +234,28 @@ $this->registerJS('
                 'placeholder'=>'Select...',
                 'url'=>Url::to(['/master/store/kota'])
             ]
-        ]); ?>
+        ])->label(false); ?>
                 
     </div>
     <div class="col-md-12">
-        <?= $form->field($model, 'ALAMAT')->textInput(['id'=>'address']) ?>
+        <?= $form->field($model, 'ALAMAT',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>ALAMAT</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->textInput(['id'=>'address','style'=>'width: 425px;'])->label(false) ?>
     </div>
     <div class="col-md-12">
-        <?= $form->field($model, 'DCRP_DETIL')->textInput() ?>
+        <?= $form->field($model, 'DCRP_DETIL',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span><b>DESKRIPSI</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
+						]
+					]
+				])->textInput(['style'=>'width: 425px;'])->label(false) ?>
     </div>
 
 

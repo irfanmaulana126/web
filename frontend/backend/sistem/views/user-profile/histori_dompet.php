@@ -246,10 +246,10 @@ $this->registerJs("
   <tr>
     <th width="70" >BULAN :</th>
     <td> <?php
-                        $bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:0;
+                        $bulan=isset($model[0]['TGL'])==true?$model[0]['TGL']:date('Y-m');
                         echo DatePicker::widget([
                             'name' => 'check_issue_date', 
-                            'value' => date('F-Y', strtotime($bulan)),
+                            'value' => date('Y-m', strtotime($bulan)),
                             'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
                             'convertFormat' => true,
                             'pluginOptions' => [

@@ -216,9 +216,15 @@ $dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Pending. '.sttMsgDscp(1).'=Active
 				return  tombolViewPromo($url, $model);
 			},
 			'edit' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				return  tombolEditPromo($url, $model);
-				//}					
+				if($model['PERIODE_TGL2']<date('Y-m-d')){
+					return '';
+				}
+				else if($model['PERIODE_TGL1']<=date('Y-m-d') && $model['PERIODE_TGL2']>=date('Y-m-d') && $model['STATUS']==1) {
+					return  tombolEditPromo($url, $model);
+				}	
+				else{
+					return  tombolEditPromo($url, $model);
+				}				
 			},
 			'hapus' =>function($url, $model,$key){
 				return  tombolHapusPromo($url, $model);

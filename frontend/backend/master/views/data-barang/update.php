@@ -36,8 +36,8 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'PRODUCT_NM',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >NAMA PRODUK</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+							'content'=>'<span ><b>NAMA PRODUK</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
 						]
 					]
 				])->textInput(['style'=>'width: 413px;'])->label(false)  ?>
@@ -45,8 +45,8 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'PRODUCT_QR',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >PRODUCT QR</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+							'content'=>'<span ><b>PRODUCT QR</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
 						]
 					]
 				])->textInput(['style'=>'width: 413px;'])->label(false)  ?>
@@ -54,8 +54,8 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'GROUP_ID',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >GROUP PPRODUK</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+							'content'=>'<span ><b>GROUP PPRODUK</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
 						]
 					]
 				])->widget(Select2::classname(), [
@@ -70,8 +70,8 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'PRODUCT_WARNA',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >WARNA PRODUK</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+							'content'=>'<span ><b>WARNA PRODUK</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
 						]
 					]
 				])->widget(ColorInput::classname(), [
@@ -104,8 +104,8 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'PRODUCT_HEADLINE',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >PRODUK HEADLINE</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+							'content'=>'<span ><b>PRODUK HEADLINE</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
 						]
 					]
 				])->textInput(['style'=>'width: 413px;'])->label(false)  ?>
@@ -113,8 +113,8 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'STOCK_LEVEL',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >STOCK LEVEL</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+							'content'=>'<span ><b>STOCK LEVEL</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
 						]
 					]
 				])->textInput(['type'=>'number','min'=>1,'style'=>'width: 413px;','allowEmpty' => true,'integerOnly' => false])->label(false)  ?>
@@ -122,8 +122,8 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'CURRENT_PPN',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >PPN</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+							'content'=>'<span ><b>PPN</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
 						]
 					]
 				])->textInput(['type'=>'number','min'=>0,'max'=>10,'style'=>'width: 413px;','allowEmpty' => true,'integerOnly' => false])->label(false)  ?>
@@ -132,8 +132,8 @@ $data=$image->PRODUCT_IMAGE;
 				<?= $form->field($model, 'state_2',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >UNIT GROUP</span>',
-							'options'=>['style' =>' background-color: lightblue;width:157px;text-align:right']
+							'content'=>'<span ><b>UNIT GROUP</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);width:157px;text-align:right']
 						]
 					]
 				])->widget(Select2::classname(), [
@@ -151,8 +151,8 @@ $data=$image->PRODUCT_IMAGE;
 				<?= $form->field($model, 'UNIT_ID',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >UNIT PRODUK</span>',
-							'options'=>['style' =>' background-color: lightblue;width:100px;text-align:right']
+							'content'=>'<span ><b>UNIT PRODUK</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);width:100px;text-align:right']
 						]
 					]
 				])->widget(DepDrop::classname(), [
@@ -169,8 +169,8 @@ $data=$image->PRODUCT_IMAGE;
 			<?= $form->field($model, 'PRODUCT_SIZE',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >SIZE PRODUK</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width:157px;']
+							'content'=>'<span ><b>SIZE PRODUK</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
 						]
 					]
 				])->textInput(['type'=>'number','min'=>1,'style'=>'width: 413px;','allowEmpty' => true,'integerOnly' => false])->label(false)  ?>

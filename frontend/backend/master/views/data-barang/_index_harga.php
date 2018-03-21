@@ -186,13 +186,13 @@ function sttMsgDscp($stt){
 			'noWrap'=>false,
 			'format' => 'raw',	
 			'value'=>function($model, $key, $index, $grid){
-				if($model['PERIODE_TGL2']<date('Y-m-d')){
+				if($model['PERIODE_TGL2']<date('Y-m-d')&&$model['CURRENT_PRICE']!=$model['HARGA_JUAL']){
 					return Html::a('<span class="fa-stack fa-xl">
 							<i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
 							<i class="fa fa-close fa-stack-1x" style="color:#ee0b0b"></i>
 						</span>','',['title'=>'Delete']);
 				}
-				else if($model['PERIODE_TGL1']<=date('Y-m-d') && $model['PERIODE_TGL2']>=date('Y-m-d') && $model['STATUS']==1) {
+				else if($model['CURRENT_PRICE']==$model['HARGA_JUAL']) {
 					return Html::a('<span class="fa-stack fa-xl">
 					<i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
 					<i class="fa fa-check fa-stack-1x" style="color:#4caf50"></i>
@@ -231,9 +231,15 @@ function sttMsgDscp($stt){
 				return  tombolViewHarga($url, $model);
 			},
 			'edit' =>function($url, $model,$key){
-				//if($model->STATUS!=1){ //Jika sudah close tidak bisa di edit.
-				return  tombolEditHarga($url, $model);
-				//}					
+				if($model['PERIODE_TGL2']<date('Y-m-d')&&$model['CURRENT_PRICE']!=$model['HARGA_JUAL']){
+					return '';
+				}
+				else if($model['CURRENT_PRICE']==$model['HARGA_JUAL']) {
+					return  tombolEditHarga($url, $model);
+				}	
+				else{
+					return  tombolEditHarga($url, $model);
+				}				
 			},
 			'hapus' =>function($url, $model,$key){
 				return  tombolHapusHarga($url, $model);
@@ -264,10 +270,10 @@ function sttMsgDscp($stt){
 		'panel'=>[''],
 		'toolbar' => false,
 		'rowOptions' => function($model, $key, $index, $grid){
-            if($model['PERIODE_TGL2']<date('Y-m-d')){
+            if($model['PERIODE_TGL2']<date('Y-m-d')&&$model['CURRENT_PRICE']!=$model['HARGA_JUAL']){
 				return ['class' => 'danger'];
 			}
-			else if($model['PERIODE_TGL1']<=date('Y-m-d') && $model['PERIODE_TGL2']>=date('Y-m-d') && $model['STATUS']==1) {
+			else if($model['CURRENT_PRICE']==$model['HARGA_JUAL']) {
 				return ['class' => 'success'];
 			}	
 			else{
