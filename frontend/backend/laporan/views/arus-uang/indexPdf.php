@@ -9,119 +9,28 @@ use kartik\widgets\Select2;
 use common\models\Store;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-/* @var $this yii\web\View */
-/* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-$this->registerJs("
-	//var x = document.getElementById('tahun').value;
-	//console.log(x);
-	$('#tahun, #store').change(function() { 
-		var x = document.getElementById('tahun').value;
-		var y = document.getElementById('store').value;
-		$.pjax.reload({
-			url:'/laporan/laporan/index-arus?tgl='+x+'&store='+y, 
-			container: '#arus-masuk-monthofyear',
-			//timeout: 1000,
-		})
-		
-		//console.log('Changed!'+x+y); 
-	});	
-
-",View::POS_READY);
-
-$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-$btn_srchChart1=DatePicker::widget([
-    'name' => 'check_issue_date', 
-    'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
-    'convertFormat' => true,
-    'pluginOptions' => [
-        'autoclose'=>true,
-        'startView'=>'years',
-        'minViewMode'=>'months',
-        'format' => 'yyyy-n',
-        // 'todayHighlight' => true,
-         'todayHighlight' => true
-    ]
-]);
-$btn_srchChart2= Select2::widget([
-    'name' => 'state_10',
-    'data' =>  ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'STORE_ID','STORE_NM'),
-	'options' => ['placeholder' => 'Pilih Toko ...','id'=>'store'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
-$btn_srchChart="<div style='padding-bottom:3px;float:right'>".$btn_srchChart1."</div>";
-$btn_srchChart2="<div style='padding-bottom:3px;float:right'>".$btn_srchChart2."</div>";
 $retVal = (empty($store->STORE_NM)) ? '' : $store->STORE_NM ;
 $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 ?>
-<div class="jurnal-template-title-index">
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">
-		<div class="col-xs-12 col-sm-12 col-lg-12">
-			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
-				<?=$btn_srchChart?>
-			</div>
-				<?=$btn_srchChart2?>			
-			<div style="float:right">
-				<?php
-				$title= Yii::t('app','');
-				$url = Url::toRoute(['/laporan/laporan/arus-kas-cetakpdf']);
-				$options1 = [
-							'id'=>'pdf',
-							'class'=>"btn btn-xs",
-							'title'=>'Print PDF',
-							'target' => '_blank',	
-				];
-				$icon1 = '<span class="fa-stack fa-lg text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:red"></b>
-						  <b class="fa fa fa fa-file-pdf-o fa-stack-1x" style="color:white"></b>
-						  </span>
-						  ';
-						  $label1 = $icon1.' '.$title ;
-						  echo $content = Html::a($label1,$url,$options1);
-						  ?>	
-			</div>	
-			<div style="float:right">
-				<?php
-				$title= Yii::t('app','');
-				$url = Url::toRoute(['/laporan/laporan']);
-				$options1 = [
-							'id'=>'back-trafik',
-							'class'=>"btn btn-xs",
-							'title'=>'Kembali Menu Laporan'
-				];
-				$icon1 = '<span class="fa-stack fa-md text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
-						  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
-						  </span>
-						  ';
-						  $label1 = $icon1.' '.$title ;
-						  echo $content = Html::a($label1,$url,$options1);
-						  ?>	
-			</div>	
-				
-		</div>			
+			
 		</div>
 		<div style="text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:50px">	
-                    <?php		                    
-                        //$tanggal=explode('-',$cari);				
-						//echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$retVal.' '.date("F Y",strtotime($cari)).'</b>';
-						echo '<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5>'.date("F",strtotime($cari['BULAN'])).' '.date("Y",strtotime($cari['TAHUN']));		
-					?>		
-			</div>
+			<?php		                    
+				//$tanggal=explode('-',$cari);				
+				//echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$retVal.' '.date("F Y",strtotime($cari)).'</b>';
+				echo '<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5>'.date("F",strtotime($cari['BULAN'])).' '.date("Y",strtotime($cari['TAHUN']));		
+			?>		
+		</div>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:20px;margin-bottom:50px">
 		<div class="row">
 		
 			<?php      
-			    // $colorHeader='rgba(208, 218, 230, 1)';
-				$colorHeader='#8acef5';
-			    $colorHeaderGroup='#bde3f9';
-			    //$colorHeaderGroup='#d4fcd7';
-				$footerColor='#fdf7ec';//'#fce6c0';//'#eafa8f';//'#defdd8';
+			    $colorHeader='rgba(208, 218, 230, 1)';
+			    $colorHeaderGroup='#d4fcd7';
 				//$searchModel =  new JurnalTemplateDetailSearch(['YEAR_AT'=>$tanggal[0],'MONTH_AT'=>$tanggal[1],'STORE_ID'=>$retValid]);
 				//$searchModel =  new JurnalTemplateDetailSearch(['TAHUN'=>'2018','BULAN'=>'2','STORE_ID'=>$retValid]);
 				//$searchModel =  new JurnalTemplateDetailSearch();
@@ -134,7 +43,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 				$modelView =$dataProvider->getModels();
 				
 				 echo GridView::widget([					 
-					'id'=>'arus-masuk-monthofyear',
+					'id'=>'arus-masuk-monthofyear-pdf',
 					'dataProvider' => $dataProvider,
 					'summary'=>false,
 					//'showHeader'=>false,
@@ -143,32 +52,9 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					'pjaxSettings'=>[
 						'options'=>[
 							'enablePushState'=>true,
-							'id'=>'arus-masuk-monthofyear',
+							'id'=>'arus-masuk-monthofyear-pdf',
 						],
-					],			
-					'bordered'=>true,
-					'hover'=>true,
-					'bordered'=>true,
-					'hover'=>true,
-					'striped'=>false,	
-					//'responsiveWrap'=>true,
-					//'autoXlFormat'=>true,  
-					/*  'export'=>[
-						'fontAwesome' => true,
-						'showConfirmAlert' => false,
-						'target' => kartik\grid\GridView::TARGET_BLANK,
-					],
-					'exportConfig' => [
-						kartik\export\ExportMenu::EXCEL => true,
-						kartik\export\ExportMenu::PDF => true,
-					],  
-					'toolbar' => [
-						'{export}',
-					],  
-					'panel'=>[
-						'type'=>false,
-						'heading'=>false
-					],      */
+					],						
 					'columns' => [
 							/* [	
 								'class' => 'kartik\grid\ExpandRowColumn',
@@ -199,6 +85,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 							[
 								'attribute' => 'RPT_TITLE_NM',
 								'label' => false,	
+								'noWrap'=>true,
 								'group'=>true,
 								'groupedRow'=>true,
 								'groupOddCssClass'=>[
@@ -221,7 +108,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 											
 									]
 								],																			
-								'groupFooter'=>function($model, $key, $index, $widget)use($footerColor){ 
+								'groupFooter'=>function($model, $key, $index, $widget){ 
 									return [
 										//'mergeColumns'=>[[1,1]], 
 										'content'=>[             // content to show in each summary cell
@@ -239,8 +126,8 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 											3=>['style'=>'text-align:right;font-size:10px;text-decoration:underline'],
 										],
 										'options'=>[
-											//'class'=>'warning',
-											'style'=>'background-color:'.$footerColor.';font-weight:bold;font-size:10px;text-align:right;
+											'class'=>'warning',
+											'style'=>'font-weight:bold;font-size:10px;text-align:right;
 										']
 									];
 								},								
@@ -251,7 +138,8 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'format'=>'raw',
 								'value'=>function($model)use($store){
 									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
-									return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
+									return Html::a($model['AKUN_NM'],'#');
+									//return $model['AKUN_NM'];
 								},	
 								'headerOptions'=>[
 									'style'=>[

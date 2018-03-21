@@ -3,6 +3,8 @@
 namespace frontend\backend\laporan\controllers;
 
 use Yii;
+use kartik\mpdf\Pdf;
+
 use frontend\backend\laporan\models\JurnalTemplateTitleSearch;
 use frontend\backend\laporan\models\JurnalTransaksiBulanSearch;
 use frontend\backend\laporan\models\LaporanArusKas;
@@ -48,11 +50,6 @@ class LaporanController extends \yii\web\Controller
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 		$paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
-		// if ($paramCari!=''){
-			// $cari=$paramCari;	
-		// }else{
-			// $cari=date('Y-n');
-		// };
 		if ($paramCari!=''){
 			$ambilTgl=date('Y-n-d',strtotime($paramCari.'-01'));
 			$cari=[
@@ -73,17 +70,7 @@ class LaporanController extends \yii\web\Controller
 			$stores=store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->one();				
 		};
 		
-		/*==========================
-		* ARUS KAS MASUK & KELUAR
-		*===========================*/
-		// print_r($cari);die();
-        // $searchModel = new JurnalTemplateTitleSearch(['RPT_GROUP_NM'=>'ARUS KAS']);
-        // $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		$searchModel = new LaporanArusKas($cari);
-		// [
-			// 'TAHUN'=>'2018',
-			// 'BULAN'=>'2'
-		// ]);
 		$dataProvider = $searchModel->searchArusKeuangan(Yii::$app->request->queryParams);
         
         return $this->render('/arus-uang/index', [
@@ -93,6 +80,110 @@ class LaporanController extends \yii\web\Controller
 			'store'=>$stores
         ]);
     }
+	
+	/*
+	 * Print PDF
+	 * @author ptrnov <piter@lukison.com>
+	 * @since 1.2
+	*/
+    public function actionArusKasCetakpdf()
+    {
+		$paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
+		if ($paramCari!=''){
+			$ambilTgl=date('Y-n-d',strtotime($paramCari.'-01'));
+			$cari=[
+				'TAHUN'=>date('Y',strtotime($ambilTgl)),
+				'BULAN'=>date('n',strtotime($ambilTgl))
+			];			
+		}else{
+			$cari=[
+				'TAHUN'=>'2018',
+				'BULAN'=>'2'
+			];
+		};
+		$searchModel = new LaporanArusKas($cari);
+		$dataProvider = $searchModel->searchArusKeuangan(Yii::$app->request->queryParams);
+
+		$content= $this->renderPartial( '/arus-uang/indexPdf', [
+			'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+			'cari'=>$cari,
+			'store'=>''
+        ]);
+
+		/*PR TO WAWAN*/
+		/*
+		 * Render partial -> Add Css -> Sendmail
+		 * @author ptrnov [piter@lukison]
+		 * @since 1.2
+		*/
+		// $contentMailAttach= $this->renderPartial('sendmailcontent',[
+			// 'poHeader' => $poHeader,
+			// 'dataProvider' => $dataProvider,
+		// ]);
+
+		// $contentMailAttachBody= $this->renderPartial('postman_body',[
+			// 'poHeader' => $poHeader,
+			// 'dataProvider' => $dataProvider,
+		// ]);
+
+
+		$pdf = new Pdf([
+			// set to use core fonts only
+			'mode' => Pdf::MODE_CORE,
+			// A4 paper format
+			'format' => Pdf::FORMAT_A4,
+			// portrait orientation
+			'orientation' => Pdf::ORIENT_PORTRAIT,
+			// stream to browser inline
+			'destination' => Pdf::DEST_BROWSER,
+			//'destination' => Pdf::DEST_FILE ,
+			// your html content input
+			'content' => $content,
+			// format content from your own css file if needed or use the
+			// enhanced bootstrap css built by Krajee for mPDF formatting
+			//D:\xampp\htdocs\advanced\lukisongroup\web\widget\pdf-asset
+			//'cssFile' => '@frontend/web/template/pdf-asset/kv-mpdf-bootstrap.min.css',
+			'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+			// any css to be embedded if required
+			'cssInline' => '.kv-heading-1{font-size:12px}',
+			 // set mPDF properties on the fly
+			'options' => ['title' => 'Form Request Order','subject'=>'ro'],
+			 // call mPDF methods on the fly
+			'methods' => [
+				'SetHeader'=>['Copyright@KG '.date("r")],
+				'SetFooter'=>['{PAGENO}'],
+			]
+		]);
+		/* KIRIM ATTACH emaiL */
+		//$to=['piter@lukison.com'];
+		//\Yii::$app->kirim_email->pdf($contentMailAttach,'PO',$to,'Purchase-Order',$contentMailAttachBody);
+
+		return $pdf->render();
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
     public function actionIndexPenjualan()
     {
