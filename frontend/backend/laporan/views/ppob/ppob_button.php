@@ -18,7 +18,7 @@ use yii\base\DynamicModel;
 	function tombolKembali()
 	{		
 		$title= Yii::t('app','');
-		$url = Url::toRoute(['/laporan/laporan']);
+		$url = Url::toRoute(['/laporan']);
 		$options1 = [
 			'id'=>'back-trafik',
 			'class'=>"btn btn-xs",
