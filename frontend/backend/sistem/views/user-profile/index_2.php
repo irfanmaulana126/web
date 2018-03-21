@@ -25,11 +25,6 @@ $genderx = (empty($dataProvider->gender)) ? '' : $dataProvider->gender;
     
 //print_r($userProvinsi);
 $this->registerCss("
-	.grdiasicolor {    
-		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
-	}
-	
 	h1 {
 		color:green;
 	}
@@ -367,7 +362,7 @@ echo $this->render('modal_store'); //echo difinition
 		}?>
 		
 <div class="row">
-	<div class="w3-card-2 w3-round grdiasicolor w3-left col-sm-2 col-sm-2">
+	<div class="w3-card-2 w3-round w3-white w3-left col-sm-2 col-sm-2">
 			<div class="penampung" style="padding-top: 10px;">
 				<?php if(empty($dataProviderimage->ACCESS_IMAGE)){?>
 					<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" class="image img-circle" style="width:150px;height:150px;margin-left:-3px">
