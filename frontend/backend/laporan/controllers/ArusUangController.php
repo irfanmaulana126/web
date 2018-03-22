@@ -356,6 +356,7 @@ class ArusUangController extends Controller
 		$pdf = new Pdf([
 			// set to use core fonts only
 			'mode' => Pdf::MODE_CORE,
+			//'mime' => 'application/pdf',
 			// A4 paper format
 			'format' => Pdf::FORMAT_A4,
 			// portrait orientation
@@ -373,7 +374,11 @@ class ArusUangController extends Controller
 			// any css to be embedded if required
 			'cssInline' => '.kv-heading-1{font-size:12px}',
 			 // set mPDF properties on the fly
-			'options' => ['title' => 'Form Request Order','subject'=>'ro'],
+			'options' => [
+				'title' => 'Form Request Order',
+				'subject'=>'ro',
+				'autoScriptToLang' => true,
+			],
 			 // call mPDF methods on the fly
 			'methods' => [
 				'SetHeader'=>['Copyright@KG '.date("r")],
@@ -384,6 +389,8 @@ class ArusUangController extends Controller
 		//$to=['piter@lukison.com'];
 		//\Yii::$app->kirim_email->pdf($contentMailAttach,'PO',$to,'Purchase-Order',$contentMailAttachBody);
 	
+		$pdf = Yii::$app->pdf;
+		$pdf->content = $htmlContent;
 		return $pdf->render();
     }
 	public function actionDetailMinggu($akunkode,$minggu,$store)

@@ -7,8 +7,7 @@ use common\widgets\Alert;
 use frontend\assets\AppAsset;
 AppAsset::register($this);
 dmstr\web\AdminLteAsset::register($this);
-
-$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
+	
 ?>
 <?php $this->beginPage() ?>
 	<!DOCTYPE html>
@@ -26,8 +25,9 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
 			Default collapse ~ptr.nov~ 
 			skin-blue sidebar-mini sidebar-collapse
 		!-->
-		<!--<body class="skin-blue sidebar-collapse" style="min-height:680px"> 	!-->	
-		 <body class="hold-transition skin-blue sidebar-mini">
+		<!--<body class="skin-blue sidebar-collapse" style="min-height:680px"> 
+		<body class="hold-transition skin-blue " style="min-height:80px"> 	!-->	
+		<body class="hold-transition skin-blue sidebar-mini">		
 			<! - NOT LOGIN- Author : -ptr.nov- >
 			<?php if (Yii::$app->user->isGuest) { ?>
 				<?php $this->beginBody(['id'=>'page-top','class'=>'index']) ?>
@@ -46,28 +46,16 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
 			<?php }; ?>
 			<! -LOGIN- Author : -ptr.nov- >
 			<?php if (!Yii::$app->user->isGuest) { ?>
-				<?php $this->beginBody() ?>
-					<div class="wrapper">
-					<?= $this->render('adminlte/header.php',[
-						'directoryAsset' => $directoryAsset
-						]) 
-					?>
-					<?= $this->render('adminlte/left.php',[
-						'directoryAsset' => $directoryAsset
-						])
-					?>
-					<?= $this->render('adminlte/content.php',[
-							'content' => $content, 'directoryAsset' => $directoryAsset
-						]) 
-					?>
+				<?php $this->beginBody(['id'=>'page-top','class'=>'index']) ?>
+					<div class="wrap">
 						<!-- TOP NAV BAR !-->
-						<?php //=$this->render('main-navbar')?>
-						<!-- LEFT MENU 
-						<aside class="main-sidebar " style="min-height:680px">	!-->					
-						<?php //=$this->render('mainLeft'); ?>
-						<!-- </aside>
+						<?=$this->render('main-navbar')?>
+						<!-- LEFT MENU !-->
+						<aside class="main-sidebar " style="min-height:680px">						
+						<?=$this->render('mainLeft'); ?>
+						</aside>
 						<!-- BODY CONTAINER !-->	
-						<?php//=$this->render('mainContent',['content'=>$content]); ?>	
+						<?=$this->render('mainContent',['content'=>$content]); ?>	
 						<!-- FOOTER !-->
 						<?php //=$this->render('main-footer')?>						
 					</div>
