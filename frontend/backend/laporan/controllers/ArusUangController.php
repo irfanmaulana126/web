@@ -73,12 +73,12 @@ class ArusUangController extends Controller
 				'ACCESS_GROUP'=>$user//'2'
 			];
 		};
-		$paramCari2=Yii::$app->getRequest()->getQueryParam('store');
-		if ($paramCari2!=''){	
-			$stores=store::find()->where(['ACCESS_GROUP'=>$user,'STORE_ID'=>$paramCari2])->orderBy(['STATUS'=>SORT_ASC])->one();					
-		}else{
-			$stores=store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->one();				
-		};
+		// $paramCari2=Yii::$app->getRequest()->getQueryParam('store');
+		// if ($paramCari2!=''){	
+		// 	$stores=store::find()->where(['ACCESS_GROUP'=>$user,'STORE_ID'=>$paramCari2])->orderBy(['STATUS'=>SORT_ASC])->one();					
+		// }else{
+		// 	$stores=store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->one();				
+		// };
 		
 		
 		
@@ -118,6 +118,7 @@ class ArusUangController extends Controller
 			];			
 		}else{
 			//$cari=date('Y-n');
+			
 			$cari=[
 				'TAHUN'=>date('Y'),//'2018',
 				'BULAN'=>date('n'),//'2'
@@ -136,6 +137,7 @@ class ArusUangController extends Controller
 		$searchModel = new LaporanArusKas($cari);
         $dataProvider = $searchModel->searchArusKeuanganStore(Yii::$app->request->queryParams);
 		
+		// print_r($cari);die();
         return $this->render('index_store', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -145,10 +147,76 @@ class ArusUangController extends Controller
     }	
 	public function actionDetailBulan($akunkode,$bulan)
 	{
-		$date = explode('-',$bulan);
-		$searchModel = new PtrKasirTd1aSearch(['BULAN'=>$date[1]]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);					
-		$akun=JurnalAkun::find()->where(['AKUN_CODE'=>$akunkode])->one();					
+		$date = date('Y-m-d',strtotime($bulan.'-01'));
+		// print_r($date);die();
+		$akun=JurnalAkun::find()->where(['AKUN_CODE'=>$akunkode])->one();
+		// print_r($akunkode);die();
+		switch ($akunkode) {
+			case '1-1001':				
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail11001(Yii::$app->request->queryParams);	
+				break;
+			case '1-1002':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail11001(Yii::$app->request->queryParams);	
+				break;
+			case '1-1003':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail11003(Yii::$app->request->queryParams);	
+				break;
+			case '2-1001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail21001(Yii::$app->request->queryParams);	
+				break;
+			case '3-1001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail31001(Yii::$app->request->queryParams);	
+				break;			
+			case '3-1002':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail31002(Yii::$app->request->queryParams);	
+				break;	
+			case '3-1003':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail31003(Yii::$app->request->queryParams);	
+				break;
+			case '3-2001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail32001(Yii::$app->request->queryParams);	
+				break;
+			case '4-1001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail41001(Yii::$app->request->queryParams);	
+				break;
+			case '5-1001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail51001(Yii::$app->request->queryParams);	
+				break;
+			case '5-1002':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail51002(Yii::$app->request->queryParams);	
+				break;
+			case '5-1003':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail51003(Yii::$app->request->queryParams);	
+				break;
+			case '5-1004':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail51004(Yii::$app->request->queryParams);	
+				break;
+			case '5-1005':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail51005(Yii::$app->request->queryParams);	
+				break;
+			case '5-1006':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date]);
+				$dataProvider = $searchModel->searchArusDetail51006(Yii::$app->request->queryParams);	
+				break;			
+			default:
+				return $this->render(['/laporan/arus-uang']);	
+				break;
+		}					
+		// print_r(isset($dataProvider->allModels));die();			
 		
         return $this->render('detail_bulan', [
             'searchModel' => $searchModel,
@@ -160,11 +228,74 @@ class ArusUangController extends Controller
 	}
 	public function actionDetailBulanStore($akunkode,$bulan,$store)
 	{
-		$date = explode('-',$bulan);
-		$searchModel = new PtrKasirTd1aSearch(['BULAN'=>$date[1],'STORE_ID'=>$store]);
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$date = date('Y-m-d',strtotime($bulan.'-01'));
+		$akun=JurnalAkun::find()->where(['AKUN_CODE'=>$akunkode])->one();
+		switch ($akunkode) {
+			case '1-1001':				
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail11001(Yii::$app->request->queryParams);	
+				break;
+			case '1-1002':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail11001(Yii::$app->request->queryParams);	
+				break;
+			case '1-1003':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail11003(Yii::$app->request->queryParams);	
+				break;
+			case '2-1001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail21001(Yii::$app->request->queryParams);	
+				break;
+			case '3-1001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail31001(Yii::$app->request->queryParams);	
+				break;			
+			case '3-1002':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail31002(Yii::$app->request->queryParams);	
+				break;	
+			case '3-1003':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail31003(Yii::$app->request->queryParams);	
+				break;
+			case '3-2001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail32001(Yii::$app->request->queryParams);	
+				break;
+			case '4-1001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail41001(Yii::$app->request->queryParams);	
+				break;
+			case '5-1001':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail51001(Yii::$app->request->queryParams);	
+				break;
+			case '5-1002':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail51002(Yii::$app->request->queryParams);	
+				break;
+			case '5-1003':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail51003(Yii::$app->request->queryParams);	
+				break;
+			case '5-1004':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail51004(Yii::$app->request->queryParams);	
+				break;
+			case '5-1005':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail51005(Yii::$app->request->queryParams);	
+				break;
+			case '5-1006':
+				$searchModel = new LaporanArusKas(['BULAN'=>$date,'STORE_ID'=>$store]);
+				$dataProvider = $searchModel->searchArusDetail51006(Yii::$app->request->queryParams);	
+				break;			
+			default:
+				return $this->render(['/laporan/arus-uang']);	
+				break;
+		}					
 		$stores=store::find()->where(['STORE_ID'=>$store])->one();					
-		$akun=JurnalAkun::find()->where(['AKUN_CODE'=>$akunkode])->one();					
 		
         return $this->render('detail_bulan_store', [
             'searchModel' => $searchModel,

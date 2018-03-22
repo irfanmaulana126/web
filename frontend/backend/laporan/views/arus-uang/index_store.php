@@ -31,8 +31,6 @@ $this->registerJs("
 ",View::POS_READY);
 $paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
 $tanggal = (empty($paramCari)) ? date('Y-n') : $paramCari ;
-$paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
-$tanggal = (empty($paramCari)) ? date('Y-n') : $paramCari ;
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
@@ -256,9 +254,9 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'label' => false,
 								'format'=>'raw',
 								'value'=>
-								function($model)use($store){
+								function($model)use($store,$cari){
 									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
-									return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan-store?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN'].'&store='.$store->STORE_ID.'');
+									return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan-store?akunkode='.$model['AKUN_CODE'].'&bulan='.$cari['TAHUN'].'-'.$cari['BULAN'].'&store='.$store->STORE_ID.'');
 								},	
 								'headerOptions'=>[
 									'style'=>[
