@@ -9,9 +9,9 @@ $img = Url::to('https://image.kontrolgampang.com/user/').Yii::$app->getUserOpt->
 <header class="main-header">
 
     <?php //= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
-	<?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Html::img(Yii::$app->request->baseUrl.'/logo-dashboard3.png', ['width'=>'150px','height'=>'50px'])	 . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+	<?= Html::a('<span class="logo-mini">KG</span><span class="logo-lg">' . Html::img(Yii::$app->request->baseUrl.'/logo-dashboard3.png', ['width'=>'150px','height'=>'50px'])	 . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
    
-    <nav class="navbar navbar-static-top" role="navigation">
+    <nav class="navbar navbar-fixed-top" role="navigation">
 
         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
             <span class="sr-only">Toggle navigation</span>

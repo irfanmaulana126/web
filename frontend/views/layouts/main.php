@@ -7,7 +7,18 @@ use common\widgets\Alert;
 use frontend\assets\AppAsset;
 AppAsset::register($this);
 dmstr\web\AdminLteAsset::register($this);
+$this->registerCss("
+	#.main-sidebar .sidebar {
+	#	position: fixed;
+	#	width: 100%;
+	#}	
+		
+	header.main-header {
+		position: fixed;
+		width: 100%;
+	}	
 
+");
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
 ?>
 <?php $this->beginPage() ?>
@@ -30,16 +41,14 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
 		 <body class="hold-transition skin-blue sidebar-mini">
 			<! - NOT LOGIN- Author : -ptr.nov- >
 			<?php if (Yii::$app->user->isGuest) { ?>
-				<?php $this->beginBody(['id'=>'page-top','class'=>'index']) ?>
-					<div class="wrap"  style="background-color:powderblue;">
+				<?php $this->beginBody() ?>
+					<div class="wrap"  style="background-color:powderblue;min-height:650px">
 						<!-- NAV BAR !-->
 						<?php //=$this->render('main-navbarNologin')?>
 						<!-- BODY CONTAINER !-->
-						<div style="padding-top:20px;">
 							<?= $content ?>
-						</div>
 						<!-- FOOTER !-->
-						<?=$this->render('main-footer_noLogin')?>
+						<?php //=$this->render('main-footer_noLogin')?>
 					</div>
 					
 				<?php $this->endBody() ?>
@@ -48,18 +57,18 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
 			<?php if (!Yii::$app->user->isGuest) { ?>
 				<?php $this->beginBody() ?>
 					<div class="wrapper">
-					<?= $this->render('adminlte/header.php',[
-						'directoryAsset' => $directoryAsset
-						]) 
-					?>
-					<?= $this->render('adminlte/left.php',[
-						'directoryAsset' => $directoryAsset
-						])
-					?>
-					<?= $this->render('adminlte/content.php',[
-							'content' => $content, 'directoryAsset' => $directoryAsset
-						]) 
-					?>
+						<?= $this->render('adminlte/header.php',[
+							'directoryAsset' => $directoryAsset
+							]) 
+						?>
+						<?= $this->render('adminlte/left.php',[
+							'directoryAsset' => $directoryAsset
+							])
+						?>
+						<?= $this->render('adminlte/content.php',[
+								'content' => $content, 'directoryAsset' => $directoryAsset
+							]) 
+						?>
 						<!-- TOP NAV BAR !-->
 						<?php //=$this->render('main-navbar')?>
 						<!-- LEFT MENU 
@@ -67,7 +76,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed201
 						<?php //=$this->render('mainLeft'); ?>
 						<!-- </aside>
 						<!-- BODY CONTAINER !-->	
-						<?php//=$this->render('mainContent',['content'=>$content]); ?>	
+						<?php //=$this->render('mainContent',['content'=>$content]); ?>	
 						<!-- FOOTER !-->
 						<?php //=$this->render('main-footer')?>						
 					</div>
