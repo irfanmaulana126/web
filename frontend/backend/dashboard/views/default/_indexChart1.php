@@ -309,32 +309,9 @@ $this->registerJs("
 ?>
 <div>  		
 	<!-- KIRI !-->
-	<div class="col-lg-3 col-md-3" style="margin-bottom:10px">
+	<div class="col-lg-3 col-md-3">
 		<div class="row">					
-			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
-				<div class="panel-heading">
-					<div class="row" >
-						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
-								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:#0ec1db"></i>
-								  <i class="fa fa-dashboard fa-stack-1x" style="color:#FFFFFF"></i>
-								</span>
-							</a>
-						</div>						
-						<div class="col-lg-9 text-left .small" style="padding-left:1px">
-							<dl>
-								<dt class="frekuensi-transaksi-harian" style="font-size:14px;color:#7e7e7e">
-									<h1 id="frekuensi-transaksi-harian-id"></h1>
-								</dt>
-								<dd style="font-size:10px;color:#7e7e7e">KUNJUNGAN HARIAN</dd>
-							</dl>							
-						</div>
-					</div>
-				</div>	
-			</div>	
-			<br>
-			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="height:60px">
 				<div class="panel-heading">
 					<div class="row" >
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
@@ -350,21 +327,64 @@ $this->registerJs("
 								<dt class="penjualan-harian" style="font-size:12px;color:#7e7e7e">
 									<h6 id="penjualan-harian-id"></h6>
 								</dt>
-								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN HARIAN (IDR)</dd>								
+								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN PRODUK HARIAN (IDR)</dd>								
 							</dl>							
 						</div>
 					</div>
 				</div>	
-			</div>	
-			<br>
-			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
+			</div>
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(53, 157, 228, 0.4)"></i>
+								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
+						</div>						
+						<div class="col-lg-9 text-left .small" style="padding-left:1px">
+							<dl>								
+								<dt class="penjualan-harian" style="font-size:12px;color:#7e7e7e">
+									<h6 id="penjualan-harian-id"></h6>
+								</dt>
+								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN PPOB HARIAN (IDR)</dd>								
+							</dl>							
+						</div>
+					</div>
+				</div>	
+			</div>		
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
+								  <i class="fa fa-sign-in fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
+						</div>						
+						<div class="col-lg-9 text-left .small" style="padding-left:1px">
+							<dl>
+								<dt class="penjualan-bulanan" style="font-size:12px;color:#7e7e7e">
+									<h1 id="penjualan-bulanan-id"></h1>
+								</dt>
+								<dd style="font-size:10px;color:#7e7e7e">STORAN HARIAN (IDR)</dd>
+							</dl>							
+						</div>
+					</div>
+				</div>	
+			</div>					
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="#">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(149, 61, 250, 1)"></i>
-								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								  <i class="fa fa-binoculars fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
 						</div>						
@@ -378,16 +398,15 @@ $this->registerJs("
 						</div>
 					</div>
 				</div>	
-			</div>		
-			<br>
-			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-top:2px;height:65px">
+			</div>					
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="#">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(251, 130, 86, 1)"></i>
-								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								  <i class="fa fa-binoculars fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
 						</div>						
@@ -401,18 +420,18 @@ $this->registerJs("
 						</div>
 					</div>
 				</div>	
-			</div>						
+			</div>							
 		</div>
 	</div>
 	<!-- TENGAH !-->
-	<div class="col-lg-7 col-md-7" style="margin-bottom:15px" >
+	<div class="col-lg-7 col-md-7" >
 		<div class="row">		
 			<div class="col-sm-12 col-md-12 col-lg-12" >			
 				<div class="row">	
 					<div class="w3-card-2 w3-round w3-white w3-center" style="margin-left:5px;margin-right:5px">				
 						<div class="panel-heading">
 							<div class="row">								
-								<div style="min-height:250px"><div style="height:260px"><?=$hourly3DaysTafik?></div></div><div class="clearfix"></div>
+								<div style="min-height:250px"><div style="height:275px"><?=$hourly3DaysTafik?></div></div><div class="clearfix"></div>
 								<div class="text-right" style="padding-right:10px;font-size:12px;color:#7e7e7e">
 									<?php echo tombolViewModalDetailPerStore().tombolDetailPerStore()?>
 								</div>
@@ -426,8 +445,30 @@ $this->registerJs("
 	</div>	
 	<!-- KANAN !-->
 	<div class="col-lg-2 col-md-2">
-		<div class="row">				
-			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:2px;height:65px">
+		<div class="row">
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="height:60px">
+				<div class="panel-heading">
+					<div class="row" >
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="#">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:#0ec1db"></i>
+								  <i class="fa fa-dashboard fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
+						</div>						
+						<div class="col-lg-9 text-left .small" style="padding-left:15px">
+							<dl>
+								<dt class="frekuensi-transaksi-harian" style="font-size:14px;color:#7e7e7e">
+									<h1 id="frekuensi-transaksi-harian-id"></h1>
+								</dt>
+								<dd style="font-size:10px;color:#7e7e7e">KUNJUNGAN</dd>
+							</dl>							
+						</div>
+					</div>
+				</div>	
+			</div>		
+			<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:5px;height:60px">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
@@ -453,8 +494,7 @@ $this->registerJs("
 					</div>
 				</div>	
 			</div>	
-			<br>	
-			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:0px;height:65px">
+			<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:5px;height:60px">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
@@ -475,8 +515,7 @@ $this->registerJs("
 					</div>
 				</div>	
 			</div>
-			<br>			
-			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:0px;height:68px">
+			<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:5px;height:60px">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
@@ -502,8 +541,7 @@ $this->registerJs("
 					</div>
 				</div>	
 			</div>	
-			<br>	
-			<div class="w3-card-2 w3-round w3-white w3-center" style="padding-top:0px;height:65px">
+			<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:5px;height:60px">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
@@ -526,7 +564,6 @@ $this->registerJs("
 				</div>	
 			</div>	
 		</div>
-		<br>
 	</div>
 	<div class="col-lg-12 col-md-12">
 		<div class="row">

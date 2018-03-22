@@ -317,13 +317,71 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 							],
 							[
 								'attribute' => 'AKUN_NM',
-								'label' => false,
+								'label'=>false,
 								'format'=>'raw',
+								//'hiddenFromExport' => true,
+								'hiddenFromExport' => [
+									GridView::PDF,
+								],
+								'pageSummary'=>false,
+								'mergeHeader'=>true,
 								'value'=>
 								function($model){
 									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
 									return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
 								},	
+								
+								'headerOptions'=>[
+									'style'=>[
+											'text-align'=>'center',
+											//'width'=>'150px',
+											//'padding-left'=>'-100px',
+											'font-family'=>'tahoma',
+											//'font-weight'=>'bold',
+											'font-size'=>'8pt',
+											'background-color'=>$colorHeader,
+									]
+								],									
+								'contentOptions'=>[
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'150px',
+											//'padding-left'=>'-100px',
+											'font-family'=>'font-family: verdana, arial, sans-serif',
+											'font-weight'=>'bold',
+											'font-size'=>'8pxt',
+											//'background-color'=>'#88b3ec',
+									]
+								],
+								'pageSummaryOptions' => [
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'60%',
+											'font-family'=>'tahoma',
+											'font-size'=>'8pt',
+											'text-decoration'=>'underline',
+											//'font-weight'=>'bold',
+											//'border-left-color'=>'transparant',
+											'background-color'=>$colorHeader,
+											'border-left'=>'0px',
+									]									
+								],								
+							],
+							[
+								'attribute' => 'AKUN_NM1',
+								'label'=>false,
+								'format'=>'raw',
+								//'hiddenFromExport' => true,
+								'hiddenFromExport' => [
+									GridView::PDF,
+								],
+								'pageSummary'=>false,
+								'mergeHeader'=>true,
+								'value'=>
+								function($model){
+									return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
+								},	
+								'hidden'=>true,
 								'headerOptions'=>[
 									'style'=>[
 											'text-align'=>'center',
@@ -363,6 +421,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 							[
 								'attribute' => 'DEBET',
 								'label' =>'PEMASUKAN',
+								'mergeHeader'=>true,
 								'format'=>['decimal', 2],									
 								/* 'value'=>function($model){
 									if ($model->CAL_FORMULA==0){ 		//MINUS
