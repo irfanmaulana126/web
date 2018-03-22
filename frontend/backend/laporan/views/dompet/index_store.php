@@ -9,48 +9,35 @@ use kartik\widgets\Select2;
 use common\models\Store;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $this->registerJs("
 	//var x = document.getElementById('tahun').value;
 	//console.log(x);
-	$('#tahun').change(function() { 
+	$('#tahun, #store').change(function() { 
 		var x = document.getElementById('tahun').value;
+		var y = document.getElementById('store').value;
 		$.pjax.reload({
-			url:'/laporan/dompet?tgl='+x, 
+			url:'/laporan/dompet/store-dompet?tgl='+x+'&store='+y, 
 			container: '#arus-masuk-monthofyear',
 			//timeout: 1000,
-		}).done(function() {
-			$.pjax.reload({container:'#tanggal'})
-		});
+		})
 		
 		//console.log('Changed!'+x+y); 
 	});	
-	// $('#tahun, #store').change(function() { 
-	// 	var x = document.getElementById('tahun').value;
-	// 	var y = document.getElementById('store').value;
-	// 	$.pjax.reload({
-	// 		url:'/laporan/arus-uang?tgl='+x+'&store='+y, 
-	// 		container: '#arus-masuk-monthofyear',
-	// 		//timeout: 1000,
-	// 	}).done(function() {
-	// 		$.pjax.reload({container:'#tanggal'})
-	// 	});
-		
-	// 	//console.log('Changed!'+x+y); 
-	// });	
 
 ",View::POS_READY);
-
-echo $this->render('/dompet/dompet_button');
-$this->title = 'Ringkasan Keuangan Dompet';
+$paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
+$tanggal = (empty($paramCari)) ? date('Y-n') : $paramCari ;
 $paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
 $tanggal = (empty($paramCari)) ? date('Y-n') : $paramCari ;
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
-    'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
+	'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
+	'value'=>$tanggal,
     'convertFormat' => true,
     'pluginOptions' => [
         'autoclose'=>true,
@@ -82,6 +69,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
 				<?=$btn_srchChart?>
 			</div>		
+				<?=$btn_srchChart2?>
 			<div style="float:right">
 				<?php
 				$title= Yii::t('app','');
@@ -102,7 +90,22 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 						  ?>	
 			</div>	
 			<div style="float:right">
-            <?=tombolKembali()?>
+				<?php
+				$title= Yii::t('app','');
+				$url = Url::toRoute(['/laporan/dompet']);
+				$options1 = [
+							'id'=>'back-trafik',
+							'class'=>"btn btn-xs",
+							'title'=>'Kembali Menu Laporan'
+				];
+				$icon1 = '<span class="fa-stack fa-md text-left">
+						  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
+						  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
+						  </span>
+						  ';
+						  $label1 = $icon1.' '.$title ;
+						  echo $content = Html::a($label1,$url,$options1);
+						  ?>	
 			</div>	
 				
 		</div>			
@@ -110,7 +113,8 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 		<div style="text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:30px">	
                     <?php		                    
                         //$tanggal=explode('-',$cari);				
-						echo '<b><h5><b>RINGKASAN KEUANGAN DOMPET</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>';		
+						//echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$retVal.' '.date("F Y",strtotime($cari)).'</b>';
+						echo '<b><h5><b>RINGKASAN KEUANGAN DOMPET <br>Nama Toko: '.strtoupper($store->STORE_NM).'</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>';		
 					?>		
 			</div>
 	</div>
@@ -118,26 +122,11 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 		
 		<div class="row">
 		<div class="text-right" style="margin-bottom:10px">
-			<?php
-					$title1 = Yii::t('app', 'Arus per-Store');
-					$url = Url::toRoute(['/laporan/dompet/store-dompet?tgl='.$tanggal.'']);
-					$options1 = [
-						'id'=>'store-button-export-excel',
-						'data-pjax' => true,
-								'class'=>"btn btn-primary btn-xs"  
-					];
-					$icon1 = '<span class="fa-stack fa-sm text-left">
-					<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
-					<b class="fa fa-file-excel-o fa-stack-1x" style="color:#000000"></b>
-							</span>';
-							$label1 =$icon1.' '.$title1;
-							echo Html::a($label1,$url,$options1);
-							?>
 			</div>
 			<?php      
 			    // $colorHeader='rgba(208, 218, 230, 1)';
-				$colorHeader='#8acef5';
-			    $colorHeaderGroup='#bde3f9';
+				$colorHeader='#ffc107';
+			    $colorHeaderGroup='#ffeb3b';
 			    //$colorHeaderGroup='#d4fcd7';
 				$footerColor='#fdf7ec';//'#fce6c0';//'#eafa8f';//'#defdd8';
 				//$searchModel =  new JurnalTemplateDetailSearch(['YEAR_AT'=>$tanggal[0],'MONTH_AT'=>$tanggal[1],'STORE_ID'=>$retValid]);
@@ -150,8 +139,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 				//$dataProvider = $searchModel->search(['TAHUN'=>'2018','BULAN'=>'2','STORE_ID'=>$retValid]);
 				// $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 				$modelView =$dataProvider->getModels();
-				
-				 echo GridView::widget([					 
+				echo GridView::widget([					 
 					'id'=>'arus-masuk-monthofyear',
 					'dataProvider' => $dataProvider,
 					'summary'=>false,
@@ -309,3 +297,4 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 		</div>
 	</div>
 </div>
+
