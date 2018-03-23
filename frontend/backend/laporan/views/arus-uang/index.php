@@ -75,78 +75,82 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">
-		<div class="col-xs-12 col-sm-12 col-lg-12">
-			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
-				<?=$btn_srchChart?>
-			</div>		
-			<div style="float:right">
-				<?php
-				$title= Yii::t('app','');
-				$url = Url::toRoute(['/laporan/arus-uang/arus-kas-cetakpdf']);
-				$options1 = [
-							'id'=>'pdf',
-							'class'=>"btn btn-xs",
-							'title'=>'Print PDF',
-							'target' => '_blank',	
-				];
-				$icon1 = '<span class="fa-stack fa-lg text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:red"></b>
-						  <b class="fa fa fa fa-file-pdf-o fa-stack-1x" style="color:white"></b>
-						  </span>
-						  ';
-						  $label1 = $icon1.' '.$title ;
-						  echo $content = Html::a($label1,$url,$options1);
-						  ?>	
-			</div>	
-			<div style="float:right">
-				<?php
-				$title= Yii::t('app','');
-				$url = Url::toRoute(['/laporan']);
-				$options1 = [
-							'id'=>'back-trafik',
-							'class'=>"btn btn-xs",
-							'title'=>'Kembali Menu Laporan'
-				];
-				$icon1 = '<span class="fa-stack fa-md text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
-						  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
-						  </span>
-						  ';
-						  $label1 = $icon1.' '.$title ;
-						  echo $content = Html::a($label1,$url,$options1);
-						  ?>	
-			</div>	
+			<div class="col-xs-12 col-sm-12 col-lg-12" >
+				<div style="float:left">
+					<?php
+					$title= Yii::t('app','');
+					$url = Url::toRoute(['/laporan']);
+					$options1 = [
+								'id'=>'back-trafik',
+								'class'=>"btn btn-xs",
+								'title'=>'Kembali Menu Laporan'
+					];
+					$icon1 = '<span class="fa-stack fa-md text-left">
+							  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
+							  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
+							  </span>
+							  ';
+							  $label1 = $icon1.' '.$title ;
+							  echo $content = Html::a($label1,$url,$options1);
+							  ?>	
+				</div>	
+				<div class="col-xs-3 col-sm-3 col-lg-3">
+					<?=$btn_srchChart?>
+				</div>		
+				<div style="float:right">
+					<?php
+						// $title= Yii::t('app','');
+						// $url = Url::toRoute(['/laporan/arus-uang/arus-kas-cetakpdf']);
+						// $options1 = [
+									// 'id'=>'pdf',
+									// 'class'=>"btn btn-xs",
+									// 'title'=>'Print PDF',
+									// 'target' => '_blank',	
+						// ];
+						// $icon1 = '<span class="fa-stack fa-lg text-left">
+								  // <b class="fa fa-circle fa-stack-2x" style="color:red"></b>
+								  // <b class="fa fa fa fa-file-pdf-o fa-stack-1x" style="color:white"></b>
+								  // </span>
+								  // ';
+								  // $label1 = $icon1.' '.$title ;
+								  // echo $content = Html::a($label1,$url,$options1);
+					?>	
+				</div>	
 				
-		</div>			
+				<div class="col-xs-1 col-sm-1 col-lg-1 pull-right" style="margin-right:50px;float:right">
+					<?php
+						$title1 = Yii::t('app', 'Lihat per-Toko');
+						$url = Url::toRoute(['/laporan/arus-uang/store-arus?tgl='.$tanggal.'']);
+						$options1 = [
+							'id'=>'store-button-export-excel',
+							'data-pjax' => true,
+									'class'=>"btn btn-info btn-xs"  
+						];
+						$icon1 = '<span class="fa-stack fa-sm text-left">
+						<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+						<b class="fa fa-search-plus fa-stack-1x" style="color:#000000"></b>
+								</span>';
+								$label1 =$icon1.' '.$title1;
+								echo Html::a($label1,$url,$options1);
+								?>
+				
+				</div>	
+			</div>			
 		</div>
 		<div style="text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:30px">	
                     <?php		                    
                         //$tanggal=explode('-',$cari);				
 						//echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$retVal.' '.date("F Y",strtotime($cari)).'</b>';
-						echo '<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>';		
+						echo '<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5>
+							  <div >'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).
+							  '<div>';		
 					?>		
 			</div>
 	</div>
-	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:20px;margin-bottom:50px">
+	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:0px;margin-bottom:50px">
 		
 		<div class="row">
-		<div class="text-right" style="margin-bottom:10px">
-			<?php
-					$title1 = Yii::t('app', 'Arus per-Store');
-					$url = Url::toRoute(['/laporan/arus-uang/store-arus?tgl='.$tanggal.'']);
-					$options1 = [
-						'id'=>'store-button-export-excel',
-						'data-pjax' => true,
-								'class'=>"btn btn-primary btn-xs"  
-					];
-					$icon1 = '<span class="fa-stack fa-sm text-left">
-					<b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
-					<b class="fa fa-file-excel-o fa-stack-1x" style="color:#000000"></b>
-							</span>';
-							$label1 =$icon1.' '.$title1;
-							echo Html::a($label1,$url,$options1);
-							?>
-			</div>
+		<div class="text-right" style="margin-bottom:5px">
 			<?php      
 			    // $colorHeader='rgba(208, 218, 230, 1)';
 				$colorHeader='#8acef5';
@@ -184,22 +188,57 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					'striped'=>false,	
 					//'responsiveWrap'=>true,
 					//'autoXlFormat'=>true,  
-					/*  'export'=>[
+					'export'=>[
 						'fontAwesome' => true,
 						'showConfirmAlert' => false,
-						'target' => kartik\grid\GridView::TARGET_BLANK,
+						'target' => GridView::TARGET_BLANK,
+						// 'target' => GridView::TARGET_POPUP,
+						// 'target' => GridView::TARGET_SELF,
 					],
 					'exportConfig' => [
 						kartik\export\ExportMenu::EXCEL => true,
-						kartik\export\ExportMenu::PDF => true,
+						GridView::PDF => [
+							'showHeader' => true,
+							'mime' => 'application/pdf',
+							'filename' => 'ExportArusUang',
+							'config' => [
+								'mode' => 'c',
+								'format' => 'A4-L',
+								'destination' =>true,
+								'marginTop' => 10,
+								'marginBottom' => 20,									
+								'options' => [
+									'title' =>'KontrolGampang-Export',
+								],
+								 'methods' => [
+									'SetHeader' => [
+										['odd' => 'aaa', 'even' => 'bbb'],
+									],
+									'SetFooter' => [
+										['odd' =>'cccc', 'even' =>'dddd'],
+									],
+								],
+								'contentBefore'=>'
+									<div style="text-align:center;font-family: tahoma ;font-size: 10pt;">	
+										<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>
+									</div>	
+									<br>									
+								',
+								'contentAfter'=>''
+							],
+							'showFooter' => false,
+							'showCaption' => false,
+						
+						],
 					],  
 					'toolbar' => [
-						'{export}',
+						'{export}','{toggleData}'
 					],  
 					'panel'=>[
 						'type'=>false,
-						'heading'=>false
-					],      */
+						'heading'=>false,
+						'footer'=>false
+					],      
 					'columns' => [
 							/* [	
 								'class' => 'kartik\grid\ExpandRowColumn',
@@ -278,13 +317,71 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 							],
 							[
 								'attribute' => 'AKUN_NM',
-								'label' => false,
+								'label'=>false,
 								'format'=>'raw',
+								//'hiddenFromExport' => true,
+								'hiddenFromExport' => [
+									GridView::PDF,
+								],
+								'pageSummary'=>false,
+								'mergeHeader'=>true,
 								'value'=>
 								function($model){
 									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
 									return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
 								},	
+								
+								'headerOptions'=>[
+									'style'=>[
+											'text-align'=>'center',
+											//'width'=>'150px',
+											//'padding-left'=>'-100px',
+											'font-family'=>'tahoma',
+											//'font-weight'=>'bold',
+											'font-size'=>'8pt',
+											'background-color'=>$colorHeader,
+									]
+								],									
+								'contentOptions'=>[
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'150px',
+											//'padding-left'=>'-100px',
+											'font-family'=>'font-family: verdana, arial, sans-serif',
+											'font-weight'=>'bold',
+											'font-size'=>'8pxt',
+											//'background-color'=>'#88b3ec',
+									]
+								],
+								'pageSummaryOptions' => [
+									'style'=>[
+											'text-align'=>'right',
+											//'width'=>'60%',
+											'font-family'=>'tahoma',
+											'font-size'=>'8pt',
+											'text-decoration'=>'underline',
+											//'font-weight'=>'bold',
+											//'border-left-color'=>'transparant',
+											'background-color'=>$colorHeader,
+											'border-left'=>'0px',
+									]									
+								],								
+							],
+							[
+								'attribute' => 'AKUN_NM1',
+								'label'=>false,
+								'format'=>'raw',
+								//'hiddenFromExport' => true,
+								'hiddenFromExport' => [
+									GridView::PDF,
+								],
+								'pageSummary'=>false,
+								'mergeHeader'=>true,
+								'value'=>
+								function($model){
+									return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
+								},	
+								'hidden'=>true,
 								'headerOptions'=>[
 									'style'=>[
 											'text-align'=>'center',
@@ -324,6 +421,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 							[
 								'attribute' => 'DEBET',
 								'label' =>'PEMASUKAN',
+								'mergeHeader'=>true,
 								'format'=>['decimal', 2],									
 								/* 'value'=>function($model){
 									if ($model->CAL_FORMULA==0){ 		//MINUS

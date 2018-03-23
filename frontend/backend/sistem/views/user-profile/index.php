@@ -15,6 +15,9 @@ use yii\web\View;
 use kartik\widgets\Alert;
 use frontend\backend\sistem\models\Store;
 
+use frontend\assets\AppAssetBackendBorder;
+AppAssetBackendBorder::register($this);
+
 $this->title = 'User Profiles';
 $headerColor='rgba(128, 179, 178, 1)';
 $user = (empty(Yii::$app->user->identity->ACCESS_ID)) ? '' : Yii::$app->user->identity->ACCESS_ID;
@@ -22,6 +25,11 @@ $genderx = (empty($dataProvider->gender)) ? '' : $dataProvider->gender;
     
 //print_r($userProvinsi);
 $this->registerCss("
+	.grdiasicolor {    
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+	}
+	
 	h1 {
 		color:green;
 	}
@@ -359,7 +367,7 @@ echo $this->render('modal_store'); //echo difinition
 		}?>
 		
 <div class="row">
-		<div class="w3-example col-sm-2 col-sm-2">
+	<div class="w3-card-2 w3-round grdiasicolor w3-left col-sm-2 col-sm-2">
 			<div class="penampung" style="padding-top: 10px;">
 				<?php if(empty($dataProviderimage->ACCESS_IMAGE)){?>
 					<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" class="image img-circle" style="width:150px;height:150px;margin-left:-3px">
@@ -377,101 +385,103 @@ echo $this->render('modal_store'); //echo difinition
 					<?= $form->field($dataProviderimage, 'ACCESS_IMAGE')->fileInput(['onchange'=>'this.form.submit()', 'class'=>'custom-file-input', 'accept'=>'image/x-png,image/gif,image/jpeg'])->label(false); ?>
 				<?php ActiveForm::end(); ?>
 			</div>
-		</div>
+	</div>
 
-    <div class="col-sm-10 col-sm-9">
-	<?php if(!empty($user)){ ?>
-        <?php echo DetailView::widget([
-			'id'=>'dv-info',
-            'model'=>$dataProvider,
-            'condensed'=>true,
-			'hAlign'=>'left',
-            'hover'=>true,
-            'panel'=>[
-                'heading'=>'<b>Detail Profile</b>',
-                'type'=>DetailView::TYPE_INFO,
-            ],
-            'mode'=>DetailView::MODE_VIEW,
-            'buttons1'=>'',
-            'buttons2'=>'{view}{save}',		
-            'attributes' =>[
-                [
-                    'columns' => [
-                        [
-							'attribute'=>'nama',
-							'label'=>'Nama Lengkap',
-                            'enableEditMode'=>false,
-                            'displayOnly'=>true,
-							'valueColOptions'=>['style'=>'width:30%']
-                        ],
-                        [
-							'attribute'=>'gender',
-							'value'=> (($genderx)==1)?"Laki-Laki":
-							(($genderx==2)?"Perempuan":"Harap perbaiki data"),
-							'label'=>'Jenis Kelamin',
-                            'enableEditMode'=>false,
-                            'displayOnly'=>true,
-							'valueColOptions'=>['style'=>'width:30%']
-                        ],
-                    ],
-                ],
-                [
-                    'columns' => [
-                        [
-							'attribute'=>'ktp',
-							'label'=>'KTP',
-                            'enableEditMode'=>false,
-                            'displayOnly'=>true,
-							'valueColOptions'=>['style'=>'width:30%']
-                        ],
-                        [
-							'attribute'=>'hp',
-							'label'=>'Telepon',
-                            'enableEditMode'=>false,
-                            'displayOnly'=>true,
-							'valueColOptions'=>['style'=>'width:30%']
-                        ],
-                    ],
-                ],
-                [
-                    'columns' => [
-                        [
-                            'attribute'=>'ttl',
-							'label'=>'Tempat/Tanggal Lahir',
-                            'enableEditMode'=>false,
-                            'displayOnly'=>true,
-							'valueColOptions'=>['style'=>'width:30%']
-                        ],
-                        [
-                            'attribute'=>'email',
-							'label'=>'Email',
-                            'enableEditMode'=>false,
-                            'displayOnly'=>true,
-							'valueColOptions'=>['style'=>'width:30%']
-                        ],
-                    ],
-                ],
-                [
-                    'columns' => [
-                        [
-							'attribute'=>'alamat',
-							'label'=>'Alamat',
-                            'enableEditMode'=>false,
-                            'displayOnly'=>true,
-							'valueColOptions'=>['style'=>'width:80%']
-                        ],
-                    ],
-                ],
-            ]
-        ]);?>
-		<?php } ?>
-		<div class="col-md-8">
-		<p>Besar file: Maksimal 51200 bytes/500KB
-			Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG</p>
-		</div>
-		<div class="pull-right">		
-			<?php echo tombolEditProfile($dataProvider);?>
-			<?php echo tombolChange($dataProvider);?>
+    <div class="w3-card-2 w3-round w3-white w3-left col-sm-10 col-sm-10">
+		<div class="row">
+			<?php if(!empty($user)){ ?>
+				<?php echo DetailView::widget([
+					'id'=>'dv-info',
+					'model'=>$dataProvider,
+					'condensed'=>true,
+					'hAlign'=>'left',
+					'hover'=>true,
+					'panel'=>[
+						'heading'=>'<b>Detail Profile</b>',
+						'type'=>DetailView::TYPE_INFO,
+					],
+					'mode'=>DetailView::MODE_VIEW,
+					'buttons1'=>'',
+					'buttons2'=>'{view}{save}',		
+					'attributes' =>[
+						[
+							'columns' => [
+								[
+									'attribute'=>'nama',
+									'label'=>'Nama Lengkap',
+									'enableEditMode'=>false,
+									'displayOnly'=>true,
+									'valueColOptions'=>['style'=>'width:30%']
+								],
+								[
+									'attribute'=>'gender',
+									'value'=> (($genderx)==1)?"Laki-Laki":
+									(($genderx==2)?"Perempuan":"Harap perbaiki data"),
+									'label'=>'Jenis Kelamin',
+									'enableEditMode'=>false,
+									'displayOnly'=>true,
+									'valueColOptions'=>['style'=>'width:30%']
+								],
+							],
+						],
+						[
+							'columns' => [
+								[
+									'attribute'=>'ktp',
+									'label'=>'KTP',
+									'enableEditMode'=>false,
+									'displayOnly'=>true,
+									'valueColOptions'=>['style'=>'width:30%']
+								],
+								[
+									'attribute'=>'hp',
+									'label'=>'Telepon',
+									'enableEditMode'=>false,
+									'displayOnly'=>true,
+									'valueColOptions'=>['style'=>'width:30%']
+								],
+							],
+						],
+						[
+							'columns' => [
+								[
+									'attribute'=>'ttl',
+									'label'=>'Tempat/Tanggal Lahir',
+									'enableEditMode'=>false,
+									'displayOnly'=>true,
+									'valueColOptions'=>['style'=>'width:30%']
+								],
+								[
+									'attribute'=>'email',
+									'label'=>'Email',
+									'enableEditMode'=>false,
+									'displayOnly'=>true,
+									'valueColOptions'=>['style'=>'width:30%']
+								],
+							],
+						],
+						[
+							'columns' => [
+								[
+									'attribute'=>'alamat',
+									'label'=>'Alamat',
+									'enableEditMode'=>false,
+									'displayOnly'=>true,
+									'valueColOptions'=>['style'=>'width:80%']
+								],
+							],
+						],
+					]
+				]);?>
+				<?php } ?>
+			<div class="col-md-8">
+			<p>Besar file: Maksimal 51200 bytes/500KB
+				Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG</p>
+			</div>
+			<div class="pull-right">		
+				<?php echo tombolEditProfile($dataProvider);?>
+				<?php echo tombolChange($dataProvider);?>
+			</div>
 		</div>
     </div>
 </div>
