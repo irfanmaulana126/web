@@ -126,7 +126,7 @@ class PtrKasirTh1aDonasiSearch extends PtrKasirTh1aDonasi
         // print_r($qrySqlField);die();
         $qrySql= Yii::$app->production_api->createCommand("
             SELECT 
-                rslt1.ACCESS_GROUP,rslt1.STORE_ID,st.STORE_NM,rslt1.TGL,rslt1.JUMLAH_DONASI,rslt1.JUMLAH_DONASI,".$rsltField." 
+               st.STORE_NM,".$rsltField." 
             FROM
             (
                 SELECT 

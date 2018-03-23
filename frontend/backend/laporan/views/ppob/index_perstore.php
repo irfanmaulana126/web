@@ -1,4 +1,3 @@
-
 <?php
 use yii\helpers\Html;
 use kartik\grid\GridView;
@@ -28,14 +27,14 @@ $this->registerCss("
 	a:active {
 		color: blue;
 	}
-	#gv-all-data-store-item .kv-grid-container{
+	#gv-all-data-ppob-item .kv-grid-container{
 		height:400px
 	}
-	#gv-all-data-store-item .panel-heading {
+	#gv-all-data-ppob-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 		color: #000;
 	}
-	#gv-all-data-store-item .panel-footer {
+	#gv-all-data-ppob-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 ");	
@@ -46,8 +45,8 @@ $this->registerJs("
 	$('#tahun').change(function() { 
 		var x = document.getElementById('tahun').value;
 		$.pjax.reload({
-			url:'/laporan/donasi/index?tgl='+x, 
-			container: '#gv-all-data-store-item',
+			url:'/laporan/ppob/index?tgl='+x, 
+			container: '#gv-all-data-ppob-item',
 			//timeout: 1000,
 		})
 		
@@ -55,13 +54,13 @@ $this->registerJs("
 	});	
 
 ",View::POS_READY);
-$this->title='LAPORAN DONASI';
-	$this->registerJs($this->render('donasi_script.js'),View::POS_READY);
-	echo $this->render('/donasi/donasi_modal');
-    echo $this->render('/donasi/donasi_button');
+$this->title='LAPORAN PPOB';
+	$this->registerJs($this->render('ppob_script.js'),View::POS_READY);
+	echo $this->render('/ppob/ppob_modal');
+    echo $this->render('/ppob/ppob_button');
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
-	$pageNm='<b>LAPORAN DONASI</b>
+	$pageNm='<b>LAPORAN PPOB</b>
 	';
 	
 	$colorHeader='rgba(230, 230, 230, 1)';
@@ -113,8 +112,12 @@ $btn_srchChart1=DatePicker::widget([
 	
 	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','WIDTH'=>'100px','SIZE' => '10px','label'=>'TOKO','align'=>'left','group'=>true,'pageSummary'=>false]];
 	// $aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
-	$headerContent1[]=['content'=>'DATA TOKO','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];
-	$inc=1;
+	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','WIDTH'=>'100px','SIZE' => '7px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false]];
+	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];
+	
+	// $aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
+	// $headerContent1[]=['content'=>'DATA TOKO','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];
+	$inc=2;
 	/* ==================
 	 * QTY STOCK COLUMN
 	 * ================== */
@@ -123,13 +126,26 @@ $btn_srchChart1=DatePicker::widget([
 			//unset($splt);
 			//$ambilField[]=$rows; 		
 			$splt=explode('_',$rows);	
-			if($splt[0]=='IN'){
+			if($splt[0]=='QTY'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'JUMLAH DONASI','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'QTY PPOB','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
 				$inc=$inc+1;
-				$headerContent1[]=['content'=>$splt[1],'options'=>['class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];			
+				$headerContent1[]=['content'=>date('Y-m-d', strtotime($splt[1])),'options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white','mergeHeader'=>true]];		
+						
 			}	
+			if($splt[0]=='HPP'){
+				$nmField1[]=$rows;		//FULL FIELD NAME
+				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'HPP PPOB','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
+				$inc=$inc+1;
+			}	
+			if($splt[0]=='JUAL'){
+				$nmField1[]=$rows;		//FULL FIELD NAME
+				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'JUMLAH','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
+				$inc=$inc+1;
+            }	
 		};
 	 }else{
 		 for ($i=1;$i<=31;$i++){
@@ -242,7 +258,7 @@ $btn_srchChart1=DatePicker::widget([
 		}
 	};
 	$gvAllStoreItem=GridView::widget([
-		'id'=>'gv-all-data-store-item',
+		'id'=>'gv-all-data-ppob-item',
 		'dataProvider' => $dataProvider,
         'beforeHeader'=>[
 			'0'=>[					
@@ -254,7 +270,7 @@ $btn_srchChart1=DatePicker::widget([
 		'pjaxSettings'=>[
 			'options'=>[
 				'enablePushState'=>false,
-				'id'=>'gv-all-data-store-item',
+				'id'=>'gv-all-data-ppob-item',
 		    ],						  
 		],
 		'hover'=>true, //cursor select
@@ -273,7 +289,7 @@ $btn_srchChart1=DatePicker::widget([
 			'before'=>false,
 			'showFooter'=>false,
 			'after'=>false,
-			// 'before'=> tombolReqStore(),
+			// 'before'=> tombolReqppob(),
 		],
 		// 'floatOverflowContainer'=>true,
 		// 'floatHeader'=>true,
@@ -286,11 +302,11 @@ $btn_srchChart1=DatePicker::widget([
 	<?=tombolKembali()?>
 	<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
                     <?php		                    		
-						echo '<b>LAPORAN DONASI<br>'.date("F Y",strtotime($tanggal)).'</b>';				
+						echo '<b>LAPORAN PPOB<br>'.date("F Y",strtotime($tanggal)).'</b>';				
 					?>		
 			</div>
 		<div class="pull-right">
-				<?=tombolExportExcel()?>	
+				<?=tombolExportExcel()?>		
 		</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:10px">
 		<div class="row">	
@@ -298,4 +314,3 @@ $btn_srchChart1=DatePicker::widget([
 		</div>
 	</div>
 </div>
-

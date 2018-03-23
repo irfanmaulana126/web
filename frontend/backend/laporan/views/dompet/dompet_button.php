@@ -32,5 +32,26 @@ use yii\base\DynamicModel;
 		$label1 = $icon1.' '.$title ;
 		echo $content = Html::a($label1,$url,$options1);
 	}
-    
+    /*
+	 * LINK EXPORT EXCEL.
+	*/
+	function tombolExportExcel(){
+		$title1 = Yii::t('app', ' Export Excel');
+		$url = Url::toRoute(['/laporan/ppob/export']);
+		$options1 = [
+					'value'=>$url,
+					'id'=>'dompet-export-excel',
+					'data-pjax' => 0,
+					'class'=>"btn btn-success btn-xs",
+					'title'=>'Export Excel'
+		];
+		$icon1 = '<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-file-excel-o fa-stack-1x" style="color:#000000"></b>
+				</span>
+		';
+		$label1 = $icon1 . ' ' . $title1;
+		$content = Html::button($label1,$options1);
+		return $content;
+	}	
 ?>

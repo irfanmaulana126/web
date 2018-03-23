@@ -55,6 +55,8 @@ $this->registerJs("
 
 ",View::POS_READY);
 $this->title='LAPORAN PPOB';
+	$this->registerJs($this->render('ppob_script.js'),View::POS_READY);
+	echo $this->render('/ppob/ppob_modal');
     echo $this->render('/ppob/ppob_button');
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
@@ -123,7 +125,7 @@ $btn_srchChart1=DatePicker::widget([
 			if($splt[0]=='QTY'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'JUMLAH DONASI','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'QTY PPOB','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
 				$inc=$inc+1;
 				$headerContent1[]=['content'=>date('Y-m-d', strtotime($splt[1])),'options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white','mergeHeader'=>true]];		
 						
@@ -131,13 +133,13 @@ $btn_srchChart1=DatePicker::widget([
 			if($splt[0]=='HPP'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'JUMLAH DONASI','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'HPP PPOB','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
 				$inc=$inc+1;
 			}	
 			if($splt[0]=='JUAL'){
 				$nmField1[]=$rows;		//FULL FIELD NAME
 				$nmLabel[]=$splt[0];	//SPLIT LABEL NAME
-				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'JUMLAH DONASI','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
+				$aryFieldColomn[]=['ID' =>$inc, 'ATTR' =>['FIELD'=>$rows,'WIDTH'=>'50px','SIZE'=>'7px','label'=>'JUMLAH','align'=>'right','group'=>false,'pageSummary'=>true,'BCOLOR'=>$colorHeader]];
 				$inc=$inc+1;
             }	
 		};
@@ -289,24 +291,20 @@ $btn_srchChart1=DatePicker::widget([
 		// 'floatHeader'=>true,
 	]); 	
 ?>
-<div class="jurnal-template-title-index">
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
-    <div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
+	<div class="col-xs-4 col-sm-4 col-lg-4 pull-right" style="margin-right:-15px">
 				<?=$btn_srchChart1?>
 			</div>	
 	<?=tombolKembali()?>
-		<div class="row">	
-			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
+	<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
                     <?php		                    		
 						echo '<b>LAPORAN PPOB<br>'.date("F Y",strtotime($tanggal)).'</b>';				
 					?>		
 			</div>
-			<br>
-			<br>
-			<br>
+		<div class="pull-right">
+				<?=tombolExportExcel()?>	
+				<?=tombolPerStore($tanggal)?>	
 		</div>
-	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:10px">
 		<div class="row">	
 			<?=$gvAllStoreItem?>
