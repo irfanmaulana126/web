@@ -16,6 +16,9 @@ use kartik\widgets\ActiveForm;
 use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 
+$incTmp=0;
+$splt=0;
+
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
