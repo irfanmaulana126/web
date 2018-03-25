@@ -9,116 +9,28 @@ use kartik\widgets\Select2;
 use common\models\Store;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-/* @var $this yii\web\View */
-/* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-$this->registerJs("
-	//var x = document.getElementById('tahun').value;
-	//console.log(x);
-	$('#tahun').change(function() { 
-		var x = document.getElementById('tahun').value;
-		$.pjax.reload({
-			url:'/laporan/dompet?tgl='+x, 
-			container: '#arus-masuk-monthofyear',
-			//timeout: 1000,
-		}).done(function() {
-			$.pjax.reload({container:'#tanggal'})
-		});
-		
-		//console.log('Changed!'+x+y); 
-	});	
-	// $('#tahun, #store').change(function() { 
-	// 	var x = document.getElementById('tahun').value;
-	// 	var y = document.getElementById('store').value;
-	// 	$.pjax.reload({
-	// 		url:'/laporan/arus-uang?tgl='+x+'&store='+y, 
-	// 		container: '#arus-masuk-monthofyear',
-	// 		//timeout: 1000,
-	// 	}).done(function() {
-	// 		$.pjax.reload({container:'#tanggal'})
-	// 	});
-		
-	// 	//console.log('Changed!'+x+y); 
-	// });	
-
-",View::POS_READY);
-
-$this->registerJs($this->render('dompet_script.js'),View::POS_READY);
-echo $this->render('/dompet/dompet_modal');
-echo $this->render('/dompet/dompet_button');
-$this->title = 'Ringkasan Keuangan Dompet';
-$paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
-$tanggal = (empty($paramCari)) ? date('Y-n') : $paramCari ;
-$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-$btn_srchChart1=DatePicker::widget([
-    'name' => 'check_issue_date', 
-    'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
-    'convertFormat' => true,
-    'pluginOptions' => [
-        'autoclose'=>true,
-        'startView'=>'years',
-        'minViewMode'=>'months',
-        'format' => 'yyyy-n',
-        // 'todayHighlight' => true,
-         'todayHighlight' => true
-    ]
-]);
-$btn_srchChart2= Select2::widget([
-    'name' => 'state_10',
-    'data' =>  ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'STORE_ID','STORE_NM'),
-	'options' => ['placeholder' => 'Pilih Toko ...','id'=>'store'],
-    'pluginOptions' => [
-        'allowClear' => true
-    ],
-]);
-$btn_srchChart="<div style='padding-bottom:3px;float:right'>".$btn_srchChart1."</div>";
-$btn_srchChart2="<div style='padding-bottom:3px;float:right'>".$btn_srchChart2."</div>";
 $retVal = (empty($store->STORE_NM)) ? '' : $store->STORE_NM ;
 $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-	<div class="col-xs-4 col-sm-4 col-lg-4 pull-right" style="margin-right:-15px">
-				<?=$btn_srchChart?>
-			</div>	
-			<div style="float:right">
-				<?php
-				$title= Yii::t('app','');
-				$url = Url::toRoute(['/laporan/arus-uang/arus-kas-cetakpdf']);
-				$options1 = [
-							'id'=>'pdf',
-							'class'=>"btn btn-xs",
-							'title'=>'Print PDF',
-							'target' => '_blank',	
-				];
-				$icon1 = '<span class="fa-stack fa-lg text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:red"></b>
-						  <b class="fa fa fa fa-file-pdf-o fa-stack-1x" style="color:white"></b>
-						  </span>
-						  ';
-						  $label1 = $icon1.' '.$title ;
-						  echo $content = Html::a($label1,$url,$options1);
-						  ?>	
-			</div>	
-			<div style="float:right">
-            <?=tombolKembali()?>
-			</div>	
-	<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;padding-top:50px">	
-					<?php		                    
-                        //$tanggal=explode('-',$cari);				
-						echo '<b><h5><b>RINGKASAN KEUANGAN DOMPET</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>';		
-					?>		
-			</div>
-		<div class="pull-right">
-				<?php//tombolExportExcel()?>	
+	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
+		<div class="row">
+			
 		</div>
-	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:10px">
-		<div class="row">	
-		<?php      
-			    // $colorHeader='rgba(208, 218, 230, 1)';
-				$colorHeader='#8acef5';
-			    $colorHeaderGroup='#bde3f9';
-			    //$colorHeaderGroup='#d4fcd7';
-				$footerColor='#fdf7ec';//'#fce6c0';//'#eafa8f';//'#defdd8';
+		<div style="text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:50px">	
+			<?php		                    
+				//$tanggal=explode('-',$cari);				
+				//echo '<b>RINGKASAN ARUS KEUANGAN <br>'.$retVal.' '.date("F Y",strtotime($cari)).'</b>';
+				echo '<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5>'.date("F",strtotime($cari['BULAN'])).' '.date("Y",strtotime($cari['TAHUN']));		
+			?>		
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:20px;margin-bottom:50px">
+		<div class="row">
+		
+			<?php      
+			    $colorHeader='rgba(208, 218, 230, 1)';
+			    $colorHeaderGroup='#d4fcd7';
 				//$searchModel =  new JurnalTemplateDetailSearch(['YEAR_AT'=>$tanggal[0],'MONTH_AT'=>$tanggal[1],'STORE_ID'=>$retValid]);
 				//$searchModel =  new JurnalTemplateDetailSearch(['TAHUN'=>'2018','BULAN'=>'2','STORE_ID'=>$retValid]);
 				//$searchModel =  new JurnalTemplateDetailSearch();
@@ -131,7 +43,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 				$modelView =$dataProvider->getModels();
 				
 				 echo GridView::widget([					 
-					'id'=>'arus-masuk-monthofyear',
+					'id'=>'arus-masuk-monthofyear-pdf',
 					'dataProvider' => $dataProvider,
 					'summary'=>false,
 					//'showHeader'=>false,
@@ -140,23 +52,94 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					'pjaxSettings'=>[
 						'options'=>[
 							'enablePushState'=>true,
-							'id'=>'arus-masuk-monthofyear',
+							'id'=>'arus-masuk-monthofyear-pdf',
 						],
-					],			
-					'bordered'=>true,
-					'hover'=>true,
-					'bordered'=>true,
-					'hover'=>true,
-					'striped'=>false,	
+					],						
 					'columns' => [
+							/* [	
+								'class' => 'kartik\grid\ExpandRowColumn',
+								'value'=>function($model,$key,$index,$column){
+									return GridView::ROW_EXPANDED;
+								},								
+								'detail'=> function($model,$key,$index,$column)use($tanggal,$retVal,$retValid)
+								{     								   
+									$searchModel =  new JurnalTemplateDetailSearch(['YEAR_AT'=>$tanggal[0],'MONTH_AT'=>$tanggal[1],'STORE_ID'=>$retValid]);
+									$searchModel->RPT_TITLE_ID = $model->RPT_TITLE_ID;
+									$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+									return Yii::$app->controller->renderPartial('/arus-uang/index_detail',[
+										'searchModel'=>$searchModel,
+										'dataProvider'=>$dataProvider,
+										'modelView'=>$dataProvider->getModels(),
+										'store'=>$retValid
+									]);
+								},
+								'defaultHeaderState'=>false,
+								//'detailRowCssClass'=>'default',
+								'detailRowCssClass'=>'info',
+								'expandOneOnly'=>false,
+								'expandIcon'=>'<span class="fa fa-file-text"></span>',
+								'collapseIcon'=>'<span class="fa fa-file-text-o"></span>',
+								//'enableRowClick'=>false,
+							],   */      
 							[
-								'attribute' => 'TRANSCODE_NM',
+								'attribute' => 'RPT_TITLE_NM',
+								'label' => false,	
+								'noWrap'=>true,
+								'group'=>true,
+								'groupedRow'=>true,
+								'groupOddCssClass'=>[
+									'style'=>[
+										'background-color'=>$colorHeaderGroup,
+									]
+								],		
+								'groupEvenCssClass'=>[
+									'style'=>[
+										'background-color'=>$colorHeaderGroup,
+									]
+								],		
+								'contentOptions'=>[
+									'style'=>[
+											'text-align'=>'left',
+											'font-family'=>'font-family: verdana, arial, sans-serif',
+											'font-weight'=>'bold',
+											'font-size'=>'9pt',
+											'background-color'=>$colorHeaderGroup,
+											
+									]
+								],																			
+								'groupFooter'=>function($model, $key, $index, $widget){ 
+									return [
+										//'mergeColumns'=>[[1,1]], 
+										'content'=>[             // content to show in each summary cell
+											1=>'Jumlah',
+											2=>GridView::F_SUM,
+											3=>GridView::F_SUM,
+										],
+										'contentFormats'=>[     
+											2=>['format'=>'number','decimals'=>2],
+											3=>['format'=>'number','decimals'=>2]
+										] 	,
+										'contentOptions'=>[      // content html attributes for each summary cell
+											1=>['style'=>'text-align:right;font-size:12px;'],
+											2=>['style'=>'text-align:right;font-size:10px;text-decoration:underline'],
+											3=>['style'=>'text-align:right;font-size:10px;text-decoration:underline'],
+										],
+										'options'=>[
+											'class'=>'warning',
+											'style'=>'font-weight:bold;font-size:10px;text-align:right;
+										']
+									];
+								},								
+							],
+							[
+								'attribute' => 'AKUN_NM',
 								'label' => false,
 								'format'=>'raw',
-								'value'=>
-								function($model){
+								'value'=>function($model)use($store){
 									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
-									return Html::a($model['TRANSCODE_NM']);//,'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
+									return Html::a($model['AKUN_NM'],'#');
+									//return $model['AKUN_NM'];
 								},	
 								'headerOptions'=>[
 									'style'=>[
@@ -195,9 +178,21 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								],								
 							],
 							[
-								'attribute' => 'MASUK',
+								'attribute' => 'DEBET',
 								'label' =>'PEMASUKAN',
-								'format'=>['decimal', 2],
+								'format'=>['decimal', 2],									
+								/* 'value'=>function($model){
+									if ($model->CAL_FORMULA==0){ 		//MINUS
+										return '('.number_format($model->JUMLAH,2).')';
+									}elseif($model->CAL_FORMULA==1){ 	//PLUS
+										return number_format($model->JUMLAH,2);
+									}elseif($model->CAL_FORMULA==2){ 	//PERKALIAN
+										return number_format($model->JUMLAH,2);
+									}else{
+										return number_format(0,2);
+									}
+									
+								 },	 */
 								'pageSummary'=>true,
 								'pageSummaryFunc'=>GridView::F_SUM,									
 								'headerOptions'=>[
@@ -239,9 +234,21 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								
 							],
 							[
-								'attribute' => 'KELUAR',
+								'attribute' => 'KREDIT',
 								'label' =>'PENGELUARAN',
-								'format'=>['decimal', 2],	
+								'format'=>['decimal', 2],									
+								/* 'value'=>function($model){
+									if ($model->CAL_FORMULA==0){ 		//MINUS
+										return '('.number_format($model->JUMLAH,2).')';
+									}elseif($model->CAL_FORMULA==1){ 	//PLUS
+										return number_format($model->JUMLAH,2);
+									}elseif($model->CAL_FORMULA==2){ 	//PERKALIAN
+										return number_format($model->JUMLAH,2);
+									}else{
+										return number_format(0,2);
+									}
+									
+								 },	 */
 								'pageSummary'=>true,
 								'pageSummaryFunc'=>GridView::F_SUM,								
 								'headerOptions'=>[
@@ -288,3 +295,4 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 		</div>
 	</div>
 </div>
+

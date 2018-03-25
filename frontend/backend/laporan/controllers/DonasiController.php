@@ -9,7 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
-
+use ptrnov\postman4excel\Postman4ExcelBehavior;
 use common\models\Store;
 
 class DonasiController extends Controller
@@ -20,6 +20,12 @@ class DonasiController extends Controller
     public function behaviors()
     {
         return [
+			'export4excel' => [
+				'class' => Postman4ExcelBehavior::className(),
+				//'downloadPath'=>Yii::getAlias('@lukisongroup').'/cronjob/',
+				//'downloadPath'=>'/var/www/backup/ExternalData/',
+				'widgetType'=>'download',
+			], 
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -88,7 +94,106 @@ class DonasiController extends Controller
             'dataProvider' => $dataProvider,
             'cari'=>$cari,
         ]);
-    }
+	}
+	/**====================================
+	* EXPORT DATA
+	* @return mixed
+	* @author piter [ptr.nov@gmail.com]
+	* @since 1.2
+	* ====================================
+	*/
+	public function actionExport(){
+		$modelPeriode = new \yii\base\DynamicModel([
+			'TAHUN'
+		]);		
+		$modelPeriode->addRule(['TAHUN'], 'required')
+         ->addRule(['TAHUN'], 'safe');
+		 
+		if ($modelPeriode->load(Yii::$app->request->post())) {
+			$paramCari=$modelPeriode->TAHUN;
+			$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+			$ambilTgl=date('Y-n-d',strtotime($paramCari.'-01'));
+			$cari=[
+				'TAHUN'=>date('Y',strtotime($ambilTgl)),
+				'BULAN'=>date('n',strtotime($ambilTgl)),
+				'ACCESS_GROUP'=>$user
+			];	
+		// print_r($cari);die();
+		//DINAMIK MODEL PARAMS
+		$searchModel = new PtrKasirTh1aDonasiSearch($cari);
+        $dataProvider = $searchModel->SearchDonasi(Yii::$app->request->queryParams);
+		$dinamikField=$dataProvider->allModels;
+		// print_r($dinamikField);die();
+		if (!empty($dinamikField)){
+				$headerMerge[]=['DATA_TOKO'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'15']];
+					
+				$aryFieldColomn[]="NAMA_TOKO";
+				$aryFieldColomnHeader[]="DATA_TOKO";
+				if($dinamikField){
+					foreach($dinamikField[0] as $rows => $val){
+						//unset($splt);
+						//$ambilField[]=$rows; 		
+						$splt=explode('_',$rows);
+						if($splt[0]=='IN'){
+							//sheet_title-row1
+							$aryFieldColomnHeader[]=$splt[1];
+							//headerStyle-row1
+							$headerMerge[]=[$splt[1]=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'2,0','width'=>'7']];				
+							//sheet_title-row2
+							$aryFieldColomn[]='JUMLAH MASUK';
+							$columnMerge[]=['Closing'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'7']];
+					
+						};
+					};
+				
+					$aryFieldColomn[]="JUMLAH MASUK";
+				 } 			
+				
+				$setHeaderMerge=[];
+				foreach($headerMerge as $key=>$val){
+					$setHeaderMerge=array_merge($setHeaderMerge,$headerMerge[$key]);			
+				}	
+				// print_r($setHeaderMerge);
+				// die();
+				
+				$excel_dataProdukStok = Postman4ExcelBehavior::excelDataFormat($dinamikField);
+				$excel_titleProdukStok = $excel_dataProdukStok['excel_title'];
+				$excel_ceilsProdukStok = $excel_dataProdukStok['excel_ceils'];
+
+				
+				// print_r($excel_ceilsProdukStok);
+				// die();
+				//DATA IMPORT
+				$excel_content = [
+					[
+						'sheet_name' => 'Donasi-laporan',
+						'sheet_title' => [
+							$aryFieldColomnHeader,
+							$aryFieldColomn
+						],
+						'ceils' => $excel_ceilsProdukStok,
+						'freezePane' => 'A3',
+						'columnGroup'=>false,
+						'autoSize'=>false,
+						'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
+					   'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+					   'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
+					],
+				];
+				// print_r($excel_content);
+				// die();
+				$excel_file = "Donasi Laporan";
+				$this->export4excel($excel_content, $excel_file,0);
+			}else{
+				Yii::$app->session->setFlash('error', "Data Tidak ada");
+				$this->redirect(array('/laporan/donasi'));
+			}
+		}else{
+			return $this->renderAjax('form_cari_export',[
+				'modelPeriode' => $modelPeriode
+			]);
+		}		
+	}
     public function actionArusKasCetakpdf()
     {
 		$paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
@@ -107,7 +212,7 @@ class DonasiController extends Controller
 		$searchModel = new LaporanArusKas($cari);
 		$dataProvider = $searchModel->searchArusKeuangan(Yii::$app->request->queryParams);
 
-		$content= $this->renderPartial( '/arus-uang/indexPdf', [
+		$content= $this->renderPartial( '/donasi/indexPdf', [
 			'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
 			'cari'=>$cari,

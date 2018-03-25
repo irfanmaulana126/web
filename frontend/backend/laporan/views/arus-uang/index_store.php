@@ -142,7 +142,11 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					'dataProvider' => $dataProvider,
 					'summary'=>false,
 					//'showHeader'=>false,
-					'showPageSummary' => true,					
+					'showPageSummary' => true,
+					'rowOptions'   => function ($model, $key, $index, $grid) {
+						$btnclick= ['ondblclick' =>'location.href="'.Url::to(['/laporan/arus-uang/detail-bulan-store?akunkode='.$model['AKUN_CODE'].'&bulan='.$cari['TAHUN'].'-'.$cari['BULAN'].'&store='.$store->STORE_ID.'']).'"'];
+						return $btnclick;
+					},					
 					'pjax'=>true,
 					'pjaxSettings'=>[
 						'options'=>[
@@ -256,7 +260,8 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'value'=>
 								function($model)use($store,$cari){
 									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
-									return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan-store?akunkode='.$model['AKUN_CODE'].'&bulan='.$cari['TAHUN'].'-'.$cari['BULAN'].'&store='.$store->STORE_ID.'');
+									return Html::tag('div', $model['AKUN_NM'], ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+									// return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan-store?akunkode='.$model['AKUN_CODE'].'&bulan='.$cari['TAHUN'].'-'.$cari['BULAN'].'&store='.$store->STORE_ID.'');
 								},	
 								'headerOptions'=>[
 									'style'=>[

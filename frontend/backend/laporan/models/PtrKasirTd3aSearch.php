@@ -161,7 +161,7 @@ class PtrKasirTd3aSearch extends PtrKasirTd3a
         // print_r($qrySqlField);die();
         $qrySql= Yii::$app->production_api->createCommand("
             SELECT 
-                rslt1.ACCESS_GROUP,rslt1.STORE_ID,st.STORE_NM,rslt1.TRANS_DATE,rslt1.PPOB_TTL_QTY,rslt1.PPOB_TTL_HPP,rslt1.PPOB_TTL_JUAL,".$rsltField." 
+                st.STORE_NM,rslt1.PPOB_TTL_QTY,rslt1.PPOB_TTL_HPP,rslt1.PPOB_TTL_JUAL,".$rsltField." 
             FROM
             (
                 SELECT 
