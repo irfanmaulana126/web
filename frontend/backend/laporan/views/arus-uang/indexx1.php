@@ -14,6 +14,7 @@ AppAssetBackendBorder::register($this);
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$this->title="Ringkasan Arus Keuangan";
 $this->registerJs("
 	//var x = document.getElementById('tahun').value;
 	//console.log(x);
@@ -25,7 +26,7 @@ $this->registerJs("
 			//timeout: 1000,
 		}).done(function() {
 			$.pjax.reload({container:'#tahun'})
-		});
+
 		
 		//console.log('Changed!'+x+y); 
 	});	
