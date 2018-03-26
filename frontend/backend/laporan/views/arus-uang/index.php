@@ -26,10 +26,11 @@ $this->registerJs("
 			//timeout: 1000,
 		}).done(function() {
 			$.pjax.reload({container:'#tahun'})
-
 		
+		})
+	})
 		//console.log('Changed!'+x+y); 
-	});	
+	//});	
 	// $('#tahun, #store').change(function() { 
 	// 	var x = document.getElementById('tahun').value;
 	// 	var y = document.getElementById('store').value;
