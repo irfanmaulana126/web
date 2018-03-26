@@ -108,7 +108,28 @@ class PpobController extends Controller
 		]);		
 		$modelPeriode->addRule(['TAHUN','STORE_ID'], 'required')
          ->addRule(['TAHUN','STORE_ID'], 'safe');
-		 
+		 if (Yii::$app->getRequest()->getQueryParam('tgl') && Yii::$app->getRequest()->getQueryParam('store')) {
+			$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+			$paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
+			$ambilTgl=date('Y-n-d',strtotime($paramCari.'-01'));
+			if ($paramCari!=''){
+				$ambilTgl=date('Y-n-d',strtotime($paramCari.'-01'));
+				$cari=[
+					'TAHUN'=>date('Y',strtotime($ambilTgl)),
+					'BULAN'=>date('n',strtotime($ambilTgl)),
+					'ACCESS_GROUP'=>$user,
+					'STORE_ID'=>Yii::$app->getRequest()->getQueryParam('store')
+				];			
+			};
+			$searchModel = new PtrKasirTd1aSearch($cari);
+			$dataProvider = $searchModel->SearchPpobToko(Yii::$app->request->queryParams);
+
+			return $this->render('index_perstore', [
+				'searchModel' => $searchModel,
+				'dataProvider' => $dataProvider,
+				'cari'=>$cari,
+			]);
+		 }
 		if ($modelPeriode->load(Yii::$app->request->post())) {
 			$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 			$paramCari=$modelPeriode->TAHUN;
