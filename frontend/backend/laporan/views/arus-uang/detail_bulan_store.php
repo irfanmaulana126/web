@@ -40,6 +40,7 @@ $this->registerCss("
 	}
 ");	
 
+	$this->title="Detail Ringkasan Arus Keuangan Per-Toko";
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<b>PRODUCT</b>

@@ -44,8 +44,9 @@ $this->registerJs("
 	//console.log(x);
 	$('#tahun').change(function() { 
 		var x = document.getElementById('tahun').value;
+		var y = ".$cari['STORE_ID'].";
 		$.pjax.reload({
-			url:'/laporan/ppob/index?tgl='+x, 
+			url:'/laporan/ppob/perstore?tgl='+x+'&store='+y, 
 			container: '#gv-all-data-ppob-item',
 			//timeout: 1000,
 		})
@@ -113,7 +114,7 @@ $btn_srchChart1=DatePicker::widget([
 	$aryFieldColomn[]=['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','WIDTH'=>'100px','SIZE' => '10px','label'=>'TOKO','align'=>'left','group'=>true,'pageSummary'=>false]];
 	// $aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
 	$aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'PRODUCT_NM','WIDTH'=>'100px','SIZE' => '7px','label'=>'PRODUK','align'=>'left','group'=>false,'pageSummary'=>false]];
-	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];
+	$headerContent1[]=['content'=>'DATA PRODUK','options'=>['colspan'=>3,'class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];
 	
 	// $aryFieldColomn[]=['ID' =>1, 'ATTR' =>['FIELD'=>'STORE_NM','SIZE' => '12px','label'=>'TOKO','align'=>'left','group'=>false,'pageSummary'=>false]];
 	// $headerContent1[]=['content'=>'DATA TOKO','options'=>['colspan'=>2,'class'=>'text-center','style'=>'background-color:#4988fd;font-family: tahoma ;font-size: 6pt; color:white']];
@@ -299,7 +300,7 @@ $btn_srchChart1=DatePicker::widget([
 	<div class="col-xs-4 col-sm-4 col-lg-4 pull-right" style="margin-right:-15px">
 				<?=$btn_srchChart1?>
 			</div>	
-	<?=tombolKembali()?>
+	<?=tombolKembaliStore()?>
 	<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
                     <?php		                    		
 						echo '<b>LAPORAN PPOB<br>'.date("F Y",strtotime($tanggal)).'</b>';				

@@ -28,6 +28,7 @@ $this->registerCss("
 	.grdiasicolor {    
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+		height: 236px;
 	}
 	
 	h1 {

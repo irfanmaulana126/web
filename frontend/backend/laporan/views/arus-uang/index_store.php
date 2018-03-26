@@ -13,6 +13,8 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title="Ringkasan Arus Keuangan Per-Toko";
 $this->registerJs("
 	//var x = document.getElementById('tahun').value;
 	//console.log(x);
@@ -23,7 +25,7 @@ $this->registerJs("
 			url:'/laporan/arus-uang/store-arus?tgl='+x+'&store='+y, 
 			container: '#arus-masuk-monthofyear',
 			//timeout: 1000,
-		})
+		});
 		
 		//console.log('Changed!'+x+y); 
 	});	
@@ -143,7 +145,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					'summary'=>false,
 					//'showHeader'=>false,
 					'showPageSummary' => true,
-					'rowOptions'   => function ($model, $key, $index, $grid) {
+					'rowOptions'   => function ($model, $key, $index, $grid)use($cari,$store) {
 						$btnclick= ['ondblclick' =>'location.href="'.Url::to(['/laporan/arus-uang/detail-bulan-store?akunkode='.$model['AKUN_CODE'].'&bulan='.$cari['TAHUN'].'-'.$cari['BULAN'].'&store='.$store->STORE_ID.'']).'"'];
 						return $btnclick;
 					},					

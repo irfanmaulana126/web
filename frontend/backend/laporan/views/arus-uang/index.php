@@ -12,6 +12,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$this->title="Ringkasan Arus Keuangan";
 $this->registerJs("
 	//var x = document.getElementById('tahun').value;
 	//console.log(x);
@@ -21,8 +22,6 @@ $this->registerJs("
 			url:'/laporan/arus-uang?tgl='+x, 
 			container: '#arus-masuk-monthofyear',
 			//timeout: 1000,
-		}).done(function() {
-			$.pjax.reload({container:'#tanggal'})
 		});
 		
 		//console.log('Changed!'+x+y); 
