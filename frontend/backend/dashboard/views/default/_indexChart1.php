@@ -377,7 +377,7 @@ $this->registerJs("
 					</div>
 				</div>	
 			</div>					
-			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-right:10px;margin-top:5px;height:60px">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
@@ -399,7 +399,7 @@ $this->registerJs("
 					</div>
 				</div>	
 			</div>					
-			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="padding-right:10px;margin-top:5px;margin-bottom:5px;height:60px">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
@@ -426,18 +426,19 @@ $this->registerJs("
 	<!-- TENGAH !-->
 	<div class="col-lg-7 col-md-7" >
 		<div class="row">		
-			<div class="col-sm-12 col-md-12 col-lg-12" >			
+			<div class="col-sm-12 col-md-12 col-lg-12" style="margin-bottom:5px;padding-left:18px;padding-right:18px;">			
 				<div class="row">	
-					<div class="w3-card-2 w3-round w3-white w3-center" style="margin-left:5px;margin-right:5px">				
+					<div class="w3-card-2 w3-round w3-white w3-center" >				
 						<div class="panel-heading">
-							<div class="row">								
-								<div style="min-height:250px"><div style="height:275px"><?=$hourly3DaysTafik?></div></div><div class="clearfix"></div>
+								<div style="min-height:250px;">
+									<div style="height:275px">
+										<?=$hourly3DaysTafik?>
+									</div>
+								</div>
 								<div class="text-right" style="padding-right:10px;font-size:12px;color:#7e7e7e">
 									<?php echo tombolViewModalDetailPerStore().tombolDetailPerStore()?>
-								</div>
-							</div>
-						</div>	
-						
+								</div>							
+						</div>							
 					</div>							
 				</div>				
 			</div>				

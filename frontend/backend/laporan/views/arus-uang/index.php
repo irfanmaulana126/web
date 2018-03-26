@@ -9,6 +9,8 @@ use kartik\widgets\Select2;
 use common\models\Store;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use frontend\assets\AppAssetBackendBorder;
+AppAssetBackendBorder::register($this);
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -22,7 +24,7 @@ $this->registerJs("
 			container: '#arus-masuk-monthofyear',
 			//timeout: 1000,
 		}).done(function() {
-			$.pjax.reload({container:'#tanggal'})
+			$.pjax.reload({container:'#tahun'})
 		});
 		
 		//console.log('Changed!'+x+y); 
@@ -148,9 +150,12 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 			</div>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:0px;margin-bottom:50px">
+	
 		
-		<div class="row">
+		
+		
 		<div class="text-right" style="margin-bottom:5px">
+		<div class="w3-card-2 w3-round w3-white">
 			<?php      
 			    // $colorHeader='rgba(208, 218, 230, 1)';
 				$colorHeader='#8acef5';
@@ -540,6 +545,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					],
 				]); 
 			?>
+		</div>
 		</div>
 	</div>
 </div>
