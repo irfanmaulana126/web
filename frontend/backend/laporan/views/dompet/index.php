@@ -9,6 +9,8 @@ use kartik\widgets\Select2;
 use common\models\Store;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use frontend\assets\AppAssetBackendBorder;
+AppAssetBackendBorder::register($this);
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -82,22 +84,22 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 			</div>	
 			<div style="float:right">
 				<?php
-				$title= Yii::t('app','');
-				$url = Url::toRoute(['/laporan/arus-uang/arus-kas-cetakpdf']);
-				$options1 = [
-							'id'=>'pdf',
-							'class'=>"btn btn-xs",
-							'title'=>'Print PDF',
-							'target' => '_blank',	
-				];
-				$icon1 = '<span class="fa-stack fa-lg text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:red"></b>
-						  <b class="fa fa fa fa-file-pdf-o fa-stack-1x" style="color:white"></b>
-						  </span>
-						  ';
-						  $label1 = $icon1.' '.$title ;
-						  echo $content = Html::a($label1,$url,$options1);
-						  ?>	
+				// $title= Yii::t('app','');
+				// $url = Url::toRoute(['/laporan/arus-uang/arus-kas-cetakpdf']);
+				// $options1 = [
+				// 			'id'=>'pdf',
+				// 			'class'=>"btn btn-xs",
+				// 			'title'=>'Print PDF',
+				// 			'target' => '_blank',	
+				// ];
+				// $icon1 = '<span class="fa-stack fa-lg text-left">
+				// 		  <b class="fa fa-circle fa-stack-2x" style="color:red"></b>
+				// 		  <b class="fa fa fa fa-file-pdf-o fa-stack-1x" style="color:white"></b>
+				// 		  </span>
+				// 		  ';
+				// 		  $label1 = $icon1.' '.$title ;
+				// 		  echo $content = Html::a($label1,$url,$options1);
+				// 		  ?>	
 			</div>	
 			<div style="float:right">
             <?=tombolKembali()?>
@@ -113,6 +115,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 		</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:10px">
 		<div class="row">	
+		<div class="w3-card-2 w3-round w3-white">
 		<?php      
 			    // $colorHeader='rgba(208, 218, 230, 1)';
 				$colorHeader='#8acef5';
@@ -148,6 +151,58 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					'bordered'=>true,
 					'hover'=>true,
 					'striped'=>false,	
+					'export'=>[
+						'fontAwesome' => true,
+						'showConfirmAlert' => false,
+						'target' => GridView::TARGET_BLANK,
+						'filename' => 'ExportArusDompet',
+						// 'target' => GridView::TARGET_POPUP,
+						// 'target' => GridView::TARGET_SELF,
+					],
+					'exportConfig' => [
+						kartik\export\ExportMenu::EXCEL => true,
+						GridView::PDF => [
+							'showHeader' => true,
+							'mime' => 'application/pdf',
+							'filename' => 'ExportArusDompet',
+							'config' => [
+								'mode' => 'c',
+								'format' => 'A4-L',
+								'destination' =>true,
+								'marginTop' => 10,
+								'marginBottom' => 20,									
+								'options' => [
+									'title' =>'KontrolGampang-Export',
+								],
+								 'methods' => [
+									'SetHeader' => [
+										['odd' => 'aaa', 'even' => 'bbb'],
+									],
+									'SetFooter' => [
+										['odd' =>'cccc', 'even' =>'dddd'],
+									],
+								],
+								'contentBefore'=>'
+									<div style="text-align:center;font-family: tahoma ;font-size: 10pt;">	
+										<b><h5><b>RINGKASAN KEUANGAN DOMPET</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>
+									</div>	
+									<br>									
+								',
+								'contentAfter'=>''
+							],
+							'showFooter' => false,
+							'showCaption' => false,
+						
+						],
+					],  
+					'toolbar' => [
+						'{export}','{toggleData}'
+					],   
+					'panel'=>[
+						'type'=>false,
+						'heading'=>false,
+						'footer'=>false
+					], 
 					'columns' => [
 							[
 								'attribute' => 'TRANSCODE_NM',
@@ -285,6 +340,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					],
 				]); 
 			?>
+			</div>
 		</div>
 	</div>
 </div>

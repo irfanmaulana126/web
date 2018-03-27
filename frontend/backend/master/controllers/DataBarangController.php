@@ -395,6 +395,7 @@ class DataBarangController extends Controller
             $model->PRODUCT_ID=$PRODUCT_ID;
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
+            date_default_timezone_set('Asia/Jakarta');
             $model->START_TIME=date('H:i:s');
            if ($model->save(false)) {
             Yii::$app->session->setFlash('success', "Penyimpanan Promo Berhasil");
@@ -427,6 +428,7 @@ class DataBarangController extends Controller
             $model->PRODUCT_ID=$PRODUCT_ID;
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
+            date_default_timezone_set('Asia/Jakarta');
             $model->START_TIME=date('H:i:s');
             // print_r($model);die();
            if ($model->save(false)) {
@@ -459,6 +461,7 @@ class DataBarangController extends Controller
             $model->PRODUCT_ID=$PRODUCT_ID;
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
+            date_default_timezone_set('Asia/Jakarta');
             $model->INPUT_TIME=date('H:i:s');
             $model->INPUT_DATE=date('Y-m-d');
            if ($model->save(false)) {
@@ -529,6 +532,7 @@ class DataBarangController extends Controller
                     $model->INDUSTRY_NM=(empty($data->INDUSTRY_NM))?'':$data->INDUSTRY_NM;
                     $model->INDUSTRY_GRP_NM=(empty($data->INDUSTRY_GRP_NM))?'':$data->INDUSTRY_GRP_NM;
                     $model->PRODUCT_SIZE_UNIT=(empty($dataunit->UNIT_NM))?'':$dataunit->UNIT_NM;
+                    date_default_timezone_set('Asia/Jakarta');
                     $model->CREATE_AT=date('Y-m-d H:i:s');
                     // $model->save(false);
                     if($model->save(false)) {    
@@ -694,10 +698,12 @@ class DataBarangController extends Controller
                                     $product->PRODUCT_NM = $rowData[0][1];
                                     $product->PRODUCT_QR = $rowData[0][2];
                                     $product->PRODUCT_WARNA = $rowData[0][3];
-                                    $product->PRODUCT_SIZE = $rowData[0][4];
-                                    $product->PRODUCT_HEADLINE = $rowData[0][5];
-                                    $product->DCRP_DETIL = $rowData[0][6];
+                                    $product->PRODUCT_HEADLINE = $rowData[0][4];
+                                    $product->DCRP_DETIL = $rowData[0][5];
                                     $product->save(false);
+                                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                    Yii::$app->session->setFlash('success', "Data telah disimpan");
+                                    return $this->redirect('index-produk');
                                 } else if(empty($rowData[0][0]) && !empty($rowData[0][1])){
                                     unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
                                     Yii::$app->session->setFlash('warning', "Terdapat Kode prodak yang kosong dan Data telah diperbarui");
@@ -731,16 +737,21 @@ class DataBarangController extends Controller
                         if ($row==1) {
                             continue;
                         }
-    
+                        $data=store::find()->where(['STORE_ID'=>$storeId])->one();
+                        
+                        
                         $product = new Product;
                         $product->ACCESS_GROUP = $user;
                         $product->STORE_ID = $storeId;
                         $product->PRODUCT_NM = $rowData[0][0];
                         $product->PRODUCT_QR = $rowData[0][1];
                         $product->PRODUCT_WARNA = $rowData[0][2];
-                        $product->PRODUCT_SIZE = $rowData[0][3];
-                        $product->PRODUCT_HEADLINE = $rowData[0][4];
-                        $product->DCRP_DETIL = $rowData[0][5];
+                        $product->PRODUCT_HEADLINE = $rowData[0][3];
+                        $product->DCRP_DETIL = $rowData[0][4];
+                        $product->INDUSTRY_ID=(empty($data->INDUSTRY_ID)) ? '' : $data->INDUSTRY_ID ;
+                        $product->INDUSTRY_GRP_ID=(empty($data->INDUSTRY_GRP_ID))?'':$data->INDUSTRY_GRP_ID;
+                        $product->INDUSTRY_NM=(empty($data->INDUSTRY_NM))?'':$data->INDUSTRY_NM;
+                        $product->INDUSTRY_GRP_NM=(empty($data->INDUSTRY_GRP_NM))?'':$data->INDUSTRY_GRP_NM;
                         $product->CREATE_AT=date('Y-m-d H:i:s');
                         $product->save(false);
     
@@ -778,7 +789,7 @@ class DataBarangController extends Controller
 			[
 				'sheet_name' => 'data-Produk',
                 'sheet_title' => [
-					['PRODUCT_ID','PRODUCT_NM','PRODUCT_QR','PRODUCT_WARNA','PRODUCT_SIZE','PRODUCT_SIZE_UNIT','PRODUCT_HEADLINE','INDUSTRY_NM','INDUSTRY_GRP_NM','DCRP_DETIL']
+					['PRODUK ID','NAMA PRODUK','QR PRODUK','WARNA PRODUK','PRODUK HEADLINE','DCRP DETIL']
 				],
 			    'ceils' => $excel_ceilsDataProduk,
 				'freezePane' => 'A2',
@@ -791,12 +802,8 @@ class DataBarangController extends Controller
 						'PRODUCT_ID' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
 						'PRODUCT_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
 						'PRODUCT_QR' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_WARNA' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_SIZE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_SIZE_UNIT' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_HEADLINE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'INDUSTRY_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'INDUSTRY_GRP_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_WARNA' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],					
+						'PRODUCT_HEADLINE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],			
 						'DCRP_DETIL' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
 				],
 			],
@@ -805,12 +812,8 @@ class DataBarangController extends Controller
 						'PRODUCT_ID' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
 						'PRODUCT_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],
 						'PRODUCT_QR' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_WARNA' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_SIZE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_SIZE_UNIT' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'PRODUCT_HEADLINE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'INDUSTRY_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
-						'INDUSTRY_GRP_NM' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],				
+						'PRODUCT_WARNA' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],						
+						'PRODUCT_HEADLINE' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],					
 						'DCRP_DETIL' =>['font-size'=>'9','width'=>'15','valign'=>'center','align'=>'center'],	
 					]
 				],
@@ -890,12 +893,12 @@ class DataBarangController extends Controller
     public function actionDownloadTemplate()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $cel = array('0' => array('1' => '','2' => '','3' => '','4' => '','5' => '','6' => '','7' => ''));
+        $cel = array('0' => array('1' => '','2' => '','3' => '','4' => '','5' => ''));
        $excel_content[] = 
 			[
 				'sheet_name' => 'data-Produk',
                 'sheet_title' => [
-					['PRODUCT_NM','PRODUCT_QR','PRODUCT_WARNA','PRODUCT_SIZE','PRODUCT_SIZE_UNIT','PRODUCT_HEADLINE','DCRP_DETIL']
+					['PRODUK ID','NAMA PRODUK','QR PRODUK','WARNA PRODUK','PRODUK HEADLINE','DCRP DETIL']
                 ],
                 
 			    'ceils' =>$cel,
