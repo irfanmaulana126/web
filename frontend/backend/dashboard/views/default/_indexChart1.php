@@ -310,56 +310,12 @@ $this->registerJs("
 <div>  		
 	<!-- KIRI !-->
 	<div class="col-lg-3 col-md-3">
-		<div class="row">					
+		<div class="row">						
 			<div class="w3-card-2 w3-round w3-white w3-center"  style="height:60px">
 				<div class="panel-heading">
-					<div class="row" >
-						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
-								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
-								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
-								</span>
-							</a>
-						</div>						
-						<div class="col-lg-9 text-left .small" style="padding-left:1px">
-							<dl>								
-								<dt class="penjualan-harian" style="font-size:12px;color:#7e7e7e">
-									<h6 id="penjualan-harian-id"></h6>
-								</dt>
-								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN PRODUK HARIAN (IDR)</dd>								
-							</dl>							
-						</div>
-					</div>
-				</div>	
-			</div>
-			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
-				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
-								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(53, 157, 228, 0.4)"></i>
-								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
-								</span>
-							</a>
-						</div>						
-						<div class="col-lg-9 text-left .small" style="padding-left:1px">
-							<dl>								
-								<dt class="penjualan-harian" style="font-size:12px;color:#7e7e7e">
-									<h6 id="penjualan-harian-id"></h6>
-								</dt>
-								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN PPOB HARIAN (IDR)</dd>								
-							</dl>							
-						</div>
-					</div>
-				</div>	
-			</div>		
-			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
-				<div class="panel-heading">
-					<div class="row">
-						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
+							<a href="/dashboard/penjualan-harian-storan">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
 								  <i class="fa fa-sign-in fa-stack-1x" style="color:#FFFFFF"></i>
@@ -381,7 +337,7 @@ $this->registerJs("
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
+							<a href="/dashboard/penjualan-mingguan">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(149, 61, 250, 1)"></i>
 								  <i class="fa fa-binoculars fa-stack-1x" style="color:#FFFFFF"></i>
@@ -403,7 +359,7 @@ $this->registerJs("
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
+							<a href="/dashboard/penjualan-bulanan">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(251, 130, 86, 1)"></i>
 								  <i class="fa fa-binoculars fa-stack-1x" style="color:#FFFFFF"></i>
@@ -420,7 +376,51 @@ $this->registerJs("
 						</div>
 					</div>
 				</div>	
-			</div>							
+			</div>				
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="/dashboard/penjualan-ppob">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(53, 157, 228, 0.4)"></i>
+								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
+						</div>						
+						<div class="col-lg-9 text-left .small" style="padding-left:1px">
+							<dl>								
+								<dt class="penjualan-harian" style="font-size:12px;color:#7e7e7e">
+									<h6 id="penjualan-harian-id"></h6>
+								</dt>
+								<dd style="font-size:10px;color:#7e7e7e">PENJUALAN PPOB (IDR)</dd>								
+							</dl>							
+						</div>
+					</div>
+				</div>	
+			</div>	
+			<div class="w3-card-2 w3-round w3-white w3-center"  style="margin-top:5px;height:60px">
+				<div class="panel-heading">
+					<div class="row" >
+						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
+							<a href="/dashboard/perubahan-produk">
+								<span class="fa-stack fa-2x">
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
+								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								</span>
+							</a>
+						</div>						
+						<div class="col-lg-9 text-left .small" style="padding-left:1px">
+							<dl>								
+								<dt class="penjualan-harian" style="font-size:12px;color:#7e7e7e">
+									<h6 id="penjualan-harian-id"></h6>
+								</dt>
+								<dd style="font-size:10px;color:#7e7e7e">HARGA/PROMO/DISCOUNT/PPN</dd>								
+							</dl>							
+						</div>
+					</div>
+				</div>	
+			</div>			
 		</div>
 	</div>
 	<!-- TENGAH !-->
@@ -451,7 +451,7 @@ $this->registerJs("
 				<div class="panel-heading">
 					<div class="row" >
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
+							<a href="/dashboard/kunjungan">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:#0ec1db"></i>
 								  <i class="fa fa-dashboard fa-stack-1x" style="color:#FFFFFF"></i>
@@ -473,7 +473,7 @@ $this->registerJs("
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
+							<a href="/dashboard/toko">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:red"></i>
 								  <i class="fa fa-laptop fa-stack-1x" style="color:#FFFFFF"></i>
@@ -499,7 +499,7 @@ $this->registerJs("
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
+							<a href="/dashboard/produk">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:yellow"></i>
 								  <i class="fa fa-cubes fa-stack-1x" style="color:black"></i>
@@ -520,7 +520,7 @@ $this->registerJs("
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
+							<a href="/dashboard/karyawan">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:#64F298"></i>
 								  <i class="fa fa-users fa-stack-1x" style="color:#FFFFFF"></i>
@@ -546,7 +546,7 @@ $this->registerJs("
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
-							<a href="#">
+							<a href="/dashboard/member">
 								<span class="fa-stack fa-2x">
 								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(71, 80, 250, 1)"></i>
 								  <i class="fa fa-address-card-o fa-stack-1x" style="color:#FFFFFF"></i>
