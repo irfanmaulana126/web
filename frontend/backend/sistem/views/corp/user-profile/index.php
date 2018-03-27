@@ -33,7 +33,6 @@ $this->registerCss("
 	
 	h1 {
 		color:green;
-		margin-left: 10px;
 	}
 	.custom-file-input::-webkit-file-upload-button {
 		visibility: hidden;
@@ -74,7 +73,6 @@ $this->registerCss("
 		border-radius: 5px;
 		text-align: center;
 		padding-top: 5px;
-		margin-left: 10px;
 		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
 	}
 	input[type='file']{
@@ -494,9 +492,8 @@ echo $this->render('modal_store'); //echo difinition
 	</div>
 </div>
 <hr>
-<div class="w3-card-2 w3-round w3-white">
 <div class="row">
-	<div class="col-md-5 col-md-12" style="margin-bottom: 10px;margin-top: 10px;">
+	<div class="col-md-5 col-md-12">
 		<div class="w3-example-box"><b> Isi Dompet Kamu per Tanggal <?php echo date('d-m-Y');?> adalah </b> </div> 
 		<?php if(empty($dataProvidersaldo->SALDO_DOMPET)){?>
 			<h1>Rp 0,-</h1>
@@ -507,7 +504,7 @@ echo $this->render('modal_store'); //echo difinition
 	
 	<div class="row">
 	<div class="col-md-6">
-		<div class="col-md-8 col-md-8" style="margin-bottom: 10px;margin-top: 10px;">
+		<div class="col-md-8 col-md-8">
 		ID Virtual Acount Anda : <?php echo (empty($dataProvidersaldo->VA_ID)) ? '<kbd>-</kbd>' : '<span class="label label-warning">'.$dataProvidersaldo->VA_ID.'</span>'; ?>
 		<br>
 		<br>
@@ -539,7 +536,6 @@ echo $this->render('modal_store'); //echo difinition
 	</div>
 	</div>
 	</div>
-</div>
 </div>
 <hr>
 	<div class="row">

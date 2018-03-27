@@ -208,11 +208,11 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'attribute' => 'TRANSCODE_NM',
 								'label' => false,
 								'format'=>'raw',
-								'value'=>
-								function($model){
-									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
-									return Html::a($model['TRANSCODE_NM']);//,'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
-								},	
+								// 'value'=>
+								// function($model){
+								// 	//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
+								// 	return Html::a($model['TRANSCODE_NM']);//,'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
+								// },	
 								'headerOptions'=>[
 									'style'=>[
 											'text-align'=>'center',

@@ -1,13 +1,16 @@
 <?php
 
-namespace app\backend\sistem\controllers;
+namespace frontend\backend\sistem\controllers;
 
 use Yii;
-use app\backend\sistem\models\Corp;
-use app\backend\sistem\models\CorpSearch;
+use frontend\backend\sistem\models\Corp;
+use frontend\backend\sistem\models\CorpSearch;
+use frontend\backend\sistem\models\CorpImage;
+use frontend\backend\sistem\models\CorpImageSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CorpController implements the CRUD actions for Corp model.
@@ -79,8 +82,15 @@ class CorpController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        $model = $this->findModel($id);
+        $image = CorpImage::find()->where(['ACCESS_ID'=>$model['ACCESS_ID']])->one();
+        // print_r($image);die();
+        if(empty($image)){
+            $image = new CorpImage();
+        }
+        return $this->renderAjax('view', [
+            'model' => $model,
+            'image' => $image,
         ]);
     }
 
@@ -111,12 +121,28 @@ class CorpController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $image = CorpImage::find()->where(['ACCESS_ID'=>$model['ACCESS_ID']])->one();
+        // print_r($image);die();
+        if(empty($image)){
+            $image = new CorpImage();
+        }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID]);
+            if (!empty(UploadedFile::getInstance($image, 'CORP_64'))) {
+                $transaction = Yii::$app->db->beginTransaction();
+                $image->ACCESS_ID=$model['ACCESS_ID'];
+                $upload_file = $image->uploadImage();
+                $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                $image->CORP_64 = 'data:image/*;charset=utf-8;base64,'.$data_base64;
+                Yii::$app->db->createCommand("
+                UPDATE corp_64 SET CORP_64='".$image->CORP_64."' WHERE ACCESS_ID='".$image->ACCESS_ID."'")->execute();
+                $transaction->commit();
+            }
+        Yii::$app->session->setFlash('success', "Perubahan Data Berhasil");
+            return $this->redirect(['/sistem/user-profile']);
         } else {
-            return $this->render('update', [
+            return $this->renderAjax('update', [
                 'model' => $model,
+                'image' => $image,
             ]);
         }
     }
@@ -133,7 +159,13 @@ class CorpController extends Controller
 
         return $this->redirect(['index']);
     }
-
+    public function saveimage($base64)
+    {
+    $base64 = str_replace('data:image/jpg;base64,', '', $base64);
+    $base64 = base64_encode($base64);
+    $base64 = str_replace('data:image/jpg;base64,', '+', $base64);
+    return $base64;
+    }
     /**
      * Finds the Corp model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

@@ -1,14 +1,14 @@
 <?php
 
-namespace app\backend\sistem\models;
+namespace frontend\backend\sistem\models;
 
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\backend\sistem\models\Corp;
+use frontend\backend\sistem\models\Corp;
 
 /**
- * CorpSearch represents the model behind the search form of `app\backend\sistem\models\Corp`.
+ * CorpSearch represents the model behind the search form of `frontend\backend\sistem\models\Corp`.
  */
 class CorpSearch extends Corp
 {
@@ -19,7 +19,7 @@ class CorpSearch extends Corp
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['ACCESS_UNIX', 'CORP_NM', 'ALAMAT', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT'], 'safe'],
+            [['ACCESS_ID', 'CORP_NM', 'ALAMAT', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT'], 'safe'],
             [['MAP_LAG', 'MAP_LAT'], 'number'],
         ];
     }
@@ -68,7 +68,7 @@ class CorpSearch extends Corp
             'UPDATE_AT' => $this->UPDATE_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_UNIX', $this->ACCESS_UNIX])
+        $query->andFilterWhere(['like', 'ACCESS_ID', $this->ACCESS_ID])
             ->andFilterWhere(['like', 'CORP_NM', $this->CORP_NM])
             ->andFilterWhere(['like', 'ALAMAT', $this->ALAMAT])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
