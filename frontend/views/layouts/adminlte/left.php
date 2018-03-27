@@ -1,6 +1,9 @@
-	<?php
+<?php
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
+$this->registerJs($this->render('admin_script.js'),View::POS_READY);
+echo $this->render('admin_modal'); //echo difinition
 $img = Url::to('https://image.kontrolgampang.com/user/').Yii::$app->getUserOpt->user()['ACCESS_ID'].'.jpeg'; 
 ?>
 <aside class="main-sidebar">
@@ -30,11 +33,13 @@ $img = Url::to('https://image.kontrolgampang.com/user/').Yii::$app->getUserOpt->
             </div>
         </form>
         <!-- /.search form -->
+        <a data-toggle="modal" id="admin" href="#tes" value="/sistem/corp/view?id=<?=Yii::$app->getUserOpt->user()['ID_CORP']?>">
 		<div class="user-panel" style="margin-top:20px;background-color:rgba(19, 105, 144, 1)">
 			 <p style="color:white;font-family:tahoma;font-size:11pt;text-align:center">
 				<?=Yii::$app->getUserOpt->user()['CORP_NM']?>
 			 </p>
 		</div>
+        </a>
         <?= dmstr\widgets\Menu::widget(
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],

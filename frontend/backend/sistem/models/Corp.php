@@ -1,6 +1,6 @@
 <?php
 
-namespace app\backend\sistem\models;
+namespace frontend\backend\sistem\models;
 
 use Yii;
 
@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "corp".
  *
  * @property string $ID
- * @property string $ACCESS_UNIX user.ACCESS_UNIX=many of group( corp.ACCESS_UNIX)
+ * @property string $ACCESS_ID user.ACCESS_ID=many of group( corp.ACCESS_ID)
  * @property string $CORP_NM
  * @property string $ALAMAT
  * @property double $MAP_LAG
@@ -35,8 +35,8 @@ class Corp extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ACCESS_UNIX'], 'required'],
-            [['ACCESS_UNIX', 'ALAMAT'], 'string'],
+            [['ACCESS_ID'], 'required'],
+            [['ACCESS_ID', 'ALAMAT'], 'string'],
             [['MAP_LAG', 'MAP_LAT'], 'number'],
             [['STATUS'], 'integer'],
             [['CREATE_AT', 'UPDATE_AT'], 'safe'],
@@ -52,7 +52,7 @@ class Corp extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
-            'ACCESS_UNIX' => 'Access  Unix',
+            'ACCESS_ID' => 'Access  ID',
             'CORP_NM' => 'Corp  Nm',
             'ALAMAT' => 'Alamat',
             'MAP_LAG' => 'Map  Lag',
