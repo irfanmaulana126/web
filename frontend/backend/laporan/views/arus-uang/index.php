@@ -330,10 +330,6 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'attribute' => 'AKUN_NM',
 								'label'=>false,
 								'format'=>'raw',
-								//'hiddenFromExport' => true,
-								'hiddenFromExport' => [
-									GridView::PDF,
-								],
 								'pageSummary'=>false,
 								'mergeHeader'=>true,
 								'value'=>
@@ -378,115 +374,6 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 											'border-left'=>'0px',
 									]									
 								],								
-							],
-							[
-								'attribute' => 'AKUN_NM1',
-								'label'=>false,
-								'format'=>'raw',
-								//'hiddenFromExport' => true,
-								'hiddenFromExport' => [
-									GridView::PDF,
-								],
-								'pageSummary'=>false,
-								'mergeHeader'=>true,
-								'value'=>
-								function($model){
-									return Html::tag('div', $model['AKUN_NM'], ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
-									// return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
-								},	
-								'hidden'=>true,
-								'headerOptions'=>[
-									'style'=>[
-											'text-align'=>'center',
-											//'width'=>'150px',
-											//'padding-left'=>'-100px',
-											'font-family'=>'tahoma',
-											//'font-weight'=>'bold',
-											'font-size'=>'8pt',
-											'background-color'=>$colorHeader,
-									]
-								],									
-								'contentOptions'=>[
-									'style'=>[
-											'text-align'=>'right',
-											//'width'=>'150px',
-											//'padding-left'=>'-100px',
-											'font-family'=>'font-family: verdana, arial, sans-serif',
-											'font-weight'=>'bold',
-											'font-size'=>'8pxt',
-											//'background-color'=>'#88b3ec',
-									]
-								],
-								'pageSummaryOptions' => [
-									'style'=>[
-											'text-align'=>'right',
-											//'width'=>'60%',
-											'font-family'=>'tahoma',
-											'font-size'=>'8pt',
-											'text-decoration'=>'underline',
-											//'font-weight'=>'bold',
-											//'border-left-color'=>'transparant',
-											'background-color'=>$colorHeader,
-											'border-left'=>'0px',
-									]									
-								],								
-							],
-							[
-								'attribute' => 'DEBET',
-								'label' =>'PEMASUKAN',
-								'mergeHeader'=>true,
-								'format'=>['decimal', 2],									
-								/* 'value'=>function($model){
-									if ($model->CAL_FORMULA==0){ 		//MINUS
-										return '('.number_format($model->JUMLAH,2).')';
-									}elseif($model->CAL_FORMULA==1){ 	//PLUS
-										return number_format($model->JUMLAH,2);
-									}elseif($model->CAL_FORMULA==2){ 	//PERKALIAN
-										return number_format($model->JUMLAH,2);
-									}else{
-										return number_format(0,2);
-									}
-									
-								 },	 */
-								'pageSummary'=>true,
-								'pageSummaryFunc'=>GridView::F_SUM,									
-								'headerOptions'=>[
-									'style'=>[
-											'text-align'=>'center',
-											//'width'=>'150px',
-											//'padding-left'=>'-100px',
-											'font-family'=>'tahoma',
-											//'font-weight'=>'bold',
-											'font-size'=>'8pt',
-											'background-color'=>$colorHeader,
-									]
-								],	
-								'contentOptions'=>[
-									'style'=>[
-											'text-align'=>'right',
-											//'width'=>'150px',
-											//'padding-left'=>'-100px',
-											'font-family'=>'tahoma',
-											//'font-weight'=>'bold',
-											'font-size'=>'8pt',
-											//'background-color'=>'#88b3ec',
-									]
-								],		
-								'pageSummaryOptions' => [
-									'style'=>[
-											'text-align'=>'right',
-											//'width'=>'20%',
-											'font-family'=>'tahoma',
-											'font-size'=>'8pt',
-											'text-decoration'=>'underline',
-											//'font-weight'=>'bold',
-											//'border-left-color'=>'transparant',
-											'background-color'=>$colorHeader,
-											'border-left'=>'0px',
-									]
-									
-								],
-								
 							],
 							[
 								'attribute' => 'KREDIT',
