@@ -25,15 +25,8 @@ $genderx = (empty($dataProvider->gender)) ? '' : $dataProvider->gender;
     
 //print_r($userProvinsi);
 $this->registerCss("
-	.grdiasicolor {    
-		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
-		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
-		height: 236px;
-	}
-	
 	h1 {
 		color:green;
-		margin-left: 10px;
 	}
 	.custom-file-input::-webkit-file-upload-button {
 		visibility: hidden;
@@ -74,7 +67,6 @@ $this->registerCss("
 		border-radius: 5px;
 		text-align: center;
 		padding-top: 5px;
-		margin-left: 10px;
 		box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
 	}
 	input[type='file']{
@@ -111,9 +103,6 @@ $this->registerCss("
 		height: 300px;
 	}
 	#gv-store .kv-grid-container{
-		height:200px
-	}
-	#gv-perangkat .kv-grid-container{
 		height:200px
 	}
 	#gv-store .panel-heading {
@@ -349,7 +338,7 @@ echo $this->render('modal_store'); //echo difinition
 ?>
 
 <div class="container-fluid">
-<div class="user-profile-index">	
+    <div class="user-profile-index">	
 	<?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php
 				echo Alert::widget([
@@ -372,28 +361,29 @@ echo $this->render('modal_store'); //echo difinition
 			]);
 		}?>
 		
-<div class="row" style="margin-left:1px">
-	<div class="w3-card-2 w3-round grdiasicolor w3-left col-md-2 col-md-2">
-		<div class="penampung" style="padding-top: 10px;">
+<div class="row">
+	<div class="w3-card-2 w3-round w3-white w3-left col-sm-2 col-sm-2">
+			<div class="penampung" style="padding-top: 10px;">
 				<?php if(empty($dataProviderimage->ACCESS_IMAGE)){?>
 					<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" class="image img-circle" style="width:150px;height:150px;margin-left:-3px">
 				<?php }else{?>
 					<img src="<?php echo $dataProviderimage->ACCESS_IMAGE;?>" alt="Your Avatar" class="image img-circle" style="width:150px;height:150px;margin-left:-3px">
 				<?php }?>
-		</div>
-		<div class="tombol">
-			<?php $form = ActiveForm::begin([
-				'method' => 'post',
-				'action' =>['/sistem/user-image/update?ACCESS_ID='.$user.''],
-				'options'=>['enctype'=>'multipart/form-data'],
-				]); ?>
-				<?= $form->field($dataProviderimage, 'ACCESS_IMAGE')->fileInput(['onchange'=>'this.form.submit()', 'class'=>'custom-file-input', 'accept'=>'image/x-png,image/gif,image/jpeg'])->label(false); ?>
-			<?php ActiveForm::end(); ?>
-		</div>
+				</div>
+				<div class="tombol">
+
+				<?php $form = ActiveForm::begin([
+					'method' => 'post',
+					'action' =>['/sistem/user-image/update?ACCESS_ID='.$user.''],
+					'options'=>['enctype'=>'multipart/form-data'],
+					]); ?>
+					<?= $form->field($dataProviderimage, 'ACCESS_IMAGE')->fileInput(['onchange'=>'this.form.submit()', 'class'=>'custom-file-input', 'accept'=>'image/x-png,image/gif,image/jpeg'])->label(false); ?>
+				<?php ActiveForm::end(); ?>
+			</div>
 	</div>
 
-    <div class="col-md-10 col-md-10">
-		<div class="w3-card-2 w3-round w3-white w3-left">
+    <div class="w3-card-2 w3-round w3-white w3-left col-sm-10 col-sm-10">
+		<div class="row">
 			<?php if(!empty($user)){ ?>
 				<?php echo DetailView::widget([
 					'id'=>'dv-info',
@@ -480,23 +470,19 @@ echo $this->render('modal_store'); //echo difinition
 				]);?>
 				<?php } ?>
 			<div class="col-md-8">
-				<p>Besar file: Maksimal 51200 bytes/500KB
-					Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG</p>
+			<p>Besar file: Maksimal 51200 bytes/500KB
+				Ekstensi file yang diperbolehkan: .JPG .JPEG .PNG</p>
 			</div>
-			<div class="col-md-4">
 			<div class="pull-right">		
 				<?php echo tombolEditProfile($dataProvider);?>
 				<?php echo tombolChange($dataProvider);?>
 			</div>
-			</div>
-			
 		</div>
-	</div>
+    </div>
 </div>
-<hr>
-<div class="w3-card-2 w3-round w3-white">
-<div class="row">
-	<div class="col-md-5 col-md-12" style="margin-bottom: 10px;margin-top: 10px;">
+	<hr>
+	<div class="row">
+	<div class="col-md-5 col-md-12">
 		<div class="w3-example-box"><b> Isi Dompet Kamu per Tanggal <?php echo date('d-m-Y');?> adalah </b> </div> 
 		<?php if(empty($dataProvidersaldo->SALDO_DOMPET)){?>
 			<h1>Rp 0,-</h1>
@@ -507,7 +493,7 @@ echo $this->render('modal_store'); //echo difinition
 	
 	<div class="row">
 	<div class="col-md-6">
-		<div class="col-md-8 col-md-8" style="margin-bottom: 10px;margin-top: 10px;">
+		<div class="col-md-8 col-md-8">
 		ID Virtual Acount Anda : <?php echo (empty($dataProvidersaldo->VA_ID)) ? '<kbd>-</kbd>' : '<span class="label label-warning">'.$dataProvidersaldo->VA_ID.'</span>'; ?>
 		<br>
 		<br>
@@ -536,91 +522,92 @@ echo $this->render('modal_store'); //echo difinition
 		<?php echo tombolHistoriDompet($dataProvider);?>
 		</div>
 		
-	</div>
-	</div>
-	</div>
 </div>
-</div>
-<hr>
+	</div>
+	</div>
+
+	</div>
+	</div>
+	<hr>
 	<div class="row">
-		<div class="col-md-6">
-			<?php if (!empty(Yii::$app->user->identity->ACCESS_LEVEL)=="OWNER") {?>
-					<?=$gvStore?>
-			<?php } ?>
-		</div>
 	<div class="col-md-6">
-		<?php if (!empty(Yii::$app->user->identity->ACCESS_LEVEL)=="OWNER") {?>
-			<?= GridView::widget([
-			'id'=>'gv-perangkat',
-			'dataProvider' => $dataProviderKasir,
-			'columns' => [
-				[
-					'attribute'=>'KASIR_NM',
-					'label'=>'NAMA PERANGKAT',
-					'filterType'=>true,
-					'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
-					'hAlign'=>'right',
-					'vAlign'=>'middle',
-					'mergeHeader'=>false,
-					'format'=>'html',
-					'noWrap'=>false,
-					'format'=>'raw',
-					'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
-					'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
-				],
-				[
-					'attribute'=>'PERANGKAT_UUID',
-					'label'=>'UUID',
-					'filterType'=>true,
-					'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
-					'hAlign'=>'right',
-					'vAlign'=>'middle',
-					'mergeHeader'=>false,
-					'format'=>'html',
-					'noWrap'=>false,
-					'format'=>'raw',
-					'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
-					'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
-				],
-			],'pjax'=>true,
-			'pjaxSettings'=>[
-				'options'=>[
-					'enablePushState'=>false,
-					'id'=>'gv-perangkat',
-				],						  
+	<?php if (!empty(Yii::$app->user->identity->ACCESS_LEVEL)=="OWNER") {?>
+            <?=$gvStore?>
+        <?php } ?>
+	</div>
+	<div class="col-md-6">
+	<?php if (!empty(Yii::$app->user->identity->ACCESS_LEVEL)=="OWNER") {?>
+		<?= GridView::widget([
+		'id'=>'gv-perangkat',
+        'dataProvider' => $dataProviderKasir,
+        'columns' => [
+			[
+				'attribute'=>'KASIR_NM',
+				'label'=>'NAMA PERANGKAT',
+				'filterType'=>true,
+				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
+				'hAlign'=>'right',
+				'vAlign'=>'middle',
+				'mergeHeader'=>false,
+				'format'=>'html',
+				'noWrap'=>false,
+				'format'=>'raw',
+				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
+				'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
 			],
-			'hover'=>true, //cursor select
-			'responsive'=>true,
-			'responsiveWrap'=>true,
-			'bordered'=>true,
-			'striped'=>true,
-			'autoXlFormat'=>true,
-			'export' => false,
-			'panel'=>[''],
-			'toolbar' => [
-				''
+			[
+				'attribute'=>'PERANGKAT_UUID',
+				'label'=>'UUID',
+				'filterType'=>true,
+				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
+				'hAlign'=>'right',
+				'vAlign'=>'middle',
+				'mergeHeader'=>false,
+				'format'=>'html',
+				'noWrap'=>false,
+				'format'=>'raw',
+				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
+				'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
 			],
-			'panel' => [
-				//'heading'=>false,
-				'heading'=>'
-					<span class="fa-stack fa-sm">
-					<i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
-					<i class="fa fa-mobile fa-stack-1x"></i>
-					</span> PERANGKAT'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;"> </div></div> ',  
-				'type'=>'info',
-				'before'=>false,
-				'after'=>false,
-				// 'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.tombolReqStore().' '.tombolRestore().'</div>',
-				// 'before'=> tombolReqStore(),
-				'showFooter'=>'aas',
-			], 
-			// 'floatOverflowContainer'=>true,
-			//'floatHeader'=>true,
-		]);  ?>
+        ],'pjax'=>true,
+		'pjaxSettings'=>[
+			'options'=>[
+				'enablePushState'=>false,
+				'id'=>'gv-perangkat',
+		    ],						  
+		],
+		'hover'=>true, //cursor select
+		'responsive'=>true,
+		'responsiveWrap'=>true,
+		'bordered'=>true,
+		'striped'=>true,
+		'autoXlFormat'=>true,
+		'export' => false,
+		'panel'=>[''],
+		'toolbar' => [
+			''
+		],
+		'panel' => [
+			//'heading'=>false,
+			'heading'=>'
+				<span class="fa-stack fa-sm">
+				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
+				  <i class="fa fa-mobile fa-stack-1x"></i>
+				</span> PERANGKAT'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;"> </div></div> ',  
+			'type'=>'info',
+			'before'=>false,
+			'after'=>false,
+			// 'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.tombolReqStore().' '.tombolRestore().'</div>',
+			// 'before'=> tombolReqStore(),
+			'showFooter'=>'aas',
+		], 
+		// 'floatOverflowContainer'=>true,
+		//'floatHeader'=>true,
+	]);  ?>
         <?php } ?>
 	</div>
 
 	</div>
         
     </div>
-	</div>
+</div>

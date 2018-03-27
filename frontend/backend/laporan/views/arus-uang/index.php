@@ -335,7 +335,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'value'=>
 								function($model){
 									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
-									return Html::tag('div', $model['AKUN_NM'], ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+									return Html::tag('div', $model['AKUN_NM'], ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;color:blue']);				
 									// return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan?akunkode='.$model['AKUN_CODE'].'&bulan='.$model['TAHUN'].'-'.$model['BULAN']);
 								},	
 								

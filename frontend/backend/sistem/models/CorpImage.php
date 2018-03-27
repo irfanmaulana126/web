@@ -1,9 +1,10 @@
 <?php
 
-namespace app\backend\sistem\models;
+namespace frontend\backend\sistem\models;
 
 use Yii;
 
+use yii\web\UploadedFile;
 /**
  * This is the model class for table "corp_64".
  *
@@ -31,8 +32,9 @@ class CorpImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CORP_64'], 'string'],
-            [['CREATE_AT', 'UPDATE_AT'], 'safe'],
+            [['CORP_64','ACCESS_ID'], 'string'],
+            [['CORP_64'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png'],
+            [['CREATE_AT', 'UPDATE_AT','ACCESS_ID'], 'safe'],
             [['CORP_NM'], 'string', 'max' => 255],
             [['CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
         ];
@@ -52,5 +54,23 @@ class CorpImage extends \yii\db\ActiveRecord
             'UPDATE_BY' => 'Update  By',
             'UPDATE_AT' => 'Update  At',
         ];
+    }
+    public function uploadImage() {
+        // get the uploaded file instance. for multiple file uploads
+        // the following data will return an array (you may need to use
+        // getInstances method)
+        $image = UploadedFile::getInstance($this, 'CORP_64');
+        // if no image was uploaded abort the upload
+        if (empty($image)) {
+            return false;
+        }
+        // store the source file name
+        //$this->filename = $image->name;
+        $tmp = explode('.', $image->name);
+        $ext = end($tmp);
+        // generate a unique file name
+        // $this->EMP_IMG = 'wan-'.date('ymdHis').".{$ext}"; //$image->name;//Yii::$app->security->generateRandomString().".{$ext}";
+        // the uploaded image instance
+        return $image;
     }
 }
