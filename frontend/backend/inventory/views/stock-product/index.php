@@ -17,6 +17,14 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 // print_r($dataProvider->getModels());
 // die();
 $this->title='Product Stok';
+$this->params['breadcrumbs'][] = $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+    'homeLink' => [
+        'label' => Html::encode(Yii::t('yii', 'Home')),
+        'url' => Yii::$app->homeUrl,
+    ],
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 	$this->registerCss("
 		#prodak-inv .kv-grid-container{
 			height:500px
@@ -434,6 +442,7 @@ $this->title='Product Stok';
 	]);
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<h5><?=$vewBreadcrumb ?></h5>
 <?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php
 				echo Alert::widget([

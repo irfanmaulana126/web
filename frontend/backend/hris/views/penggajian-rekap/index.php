@@ -17,6 +17,15 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 $this->title="Penggajian Rekap";
+$this->params['breadcrumbs'][] = ['label'=>'Ringakasan HRD', 'url'=>'/hris'];
+$this->params['breadcrumbs'][] = $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+    'homeLink' => [
+        'label' => Html::encode(Yii::t('yii', 'Home')),
+        'url' => Yii::$app->homeUrl,
+    ],
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 $this->registerCss("
 	:link {
 		color: #fdfdfd;
@@ -432,10 +441,12 @@ $gvAttributeItem[]=[
 	]); 
 ?>
 
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid">
+		<?=$vewBreadcrumb?>
 <div style="margin-top: -10px;margin-bottom: 10px;">
-		<?=tombolKembali()?>
+		<?php//tombolKembali()?>
 	</div>
+	<div style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 		<div class="row">
 			<div class="col-md-3">
 				<?=$gvStore?>
@@ -445,5 +456,6 @@ $gvAttributeItem[]=[
 			</div>
 			<?php //echo SideNav::widget(['items' => $items, 'headingOptions' => ['class'=>'head-style']]); ?>
 		</div>
+</div>
 </div>
 

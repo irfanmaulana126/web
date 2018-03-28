@@ -5,6 +5,7 @@ use kartik\grid\GridView;
 //use frontend\backend\laporan\models\JurnalTemplateDetailSearch;
 use kartik\date\DatePicker;
 use yii\web\View;
+use yii\widgets\Breadcrumbs;
 use kartik\widgets\Select2;
 use common\models\Store;
 use yii\helpers\ArrayHelper;
@@ -49,6 +50,15 @@ $this->registerJs($this->render('dompet_script.js'),View::POS_READY);
 echo $this->render('/dompet/dompet_modal');
 echo $this->render('/dompet/dompet_button');
 $this->title = 'Ringkasan Keuangan Dompet';
+$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+$this->params['breadcrumbs'][] = $this->title;
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
 $paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
 $tanggal = (empty($paramCari)) ? date('Y-n') : $paramCari ;
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
@@ -78,7 +88,8 @@ $btn_srchChart2="<div style='padding-bottom:3px;float:right'>".$btn_srchChart2."
 $retVal = (empty($store->STORE_NM)) ? '' : $store->STORE_NM ;
 $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 ?>
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid">
+<?=$vewBreadcrumb?>
 	<div class="col-xs-4 col-sm-4 col-lg-4 pull-right" style="margin-right:-15px">
 				<?=$btn_srchChart?>
 			</div>	
@@ -102,7 +113,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 				// 		  ?>	
 			</div>	
 			<div style="float:right">
-            <?=tombolKembali()?>
+            <?php//tombolKembali()?>
 			</div>	
 	<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;padding-top:50px">	
 					<?php		                    

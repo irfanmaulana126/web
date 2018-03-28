@@ -18,8 +18,19 @@ use yii\web\View;
 use yii\caching\XCache;
 use kartik\widgets\Alert;
 use yii\data\ArrayDataProvider;
+
+	$this->title = 'Toko';
+	$this->params['breadcrumbs'][] =$this->title;
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
+
+//$this->title = 'Ringakasan Laporan';
 $headerColor='rgba(128, 179, 178, 1)';
-$this->title = 'Store';
 	//print_r($dataModelImport);
 	//CSS
 	$this->registerCss("
@@ -139,7 +150,9 @@ $this->title = 'Store';
 	
 
 ?>
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid">
+<?=$vewBreadcrumb ?>
+<div style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 <?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php
 				echo Alert::widget([
@@ -174,5 +187,6 @@ $this->title = 'Store';
 			</div>		
 		</div>
 	</div>
+</div>
 </div>
 

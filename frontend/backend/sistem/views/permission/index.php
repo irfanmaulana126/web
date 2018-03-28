@@ -24,7 +24,15 @@ use common\models\UserLogin;
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 	
 $this->title = Yii::t('app', 'User Permission');      /* title pada header page */
-$this->params['breadcrumbs'][] = $this->title;  
+
+$this->params['breadcrumbs'][] = $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+    'homeLink' => [
+        'label' => Html::encode(Yii::t('yii', 'Home')),
+        'url' => Yii::$app->homeUrl,
+    ],
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 // $this->registerJs($this->render('modal_store.js'),View::POS_READY);
 // echo $this->render('modal_store'); //echo difinition
 
@@ -308,7 +316,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	// ]); 
 	
 ?>
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid" >
+<?=$vewBreadcrumb?>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">
 			<?php //$gvStore?>

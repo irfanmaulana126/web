@@ -13,12 +13,21 @@ use yii\widgets\Pjax;
 use kartik\widgets\ActiveForm;
 use yii\web\View;
 use kartik\widgets\Alert;
+use yii\widgets\Breadcrumbs;
 use frontend\backend\sistem\models\Store;
 
 use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
 
 $this->title = 'User Profiles';
+$this->params['breadcrumbs'][] = $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+    'homeLink' => [
+        'label' => Html::encode(Yii::t('yii', 'Home')),
+        'url' => Yii::$app->homeUrl,
+    ],
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 $headerColor='rgba(128, 179, 178, 1)';
 $user = (empty(Yii::$app->user->identity->ACCESS_ID)) ? '' : Yii::$app->user->identity->ACCESS_ID;
 $genderx = (empty($dataProvider->gender)) ? '' : $dataProvider->gender;
@@ -349,6 +358,7 @@ echo $this->render('modal_store'); //echo difinition
 ?>
 
 <div class="container-fluid">
+<?=$vewBreadcrumb?>
 <div class="user-profile-index">	
 	<?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php

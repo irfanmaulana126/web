@@ -4,8 +4,17 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\widgets\ActiveForm;
 use yii\web\View;
+use yii\widgets\Breadcrumbs;
 
 $this->title = 'Ringakasan HRD';
+$this->params['breadcrumbs'][] = $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+    'homeLink' => [
+        'label' => Html::encode(Yii::t('yii', 'Home')),
+        'url' => Yii::$app->homeUrl,
+    ],
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 $this->registerJs($this->render('presensi.js'),View::POS_READY);
 	$this->registerCss("
 	.process-step .btn:focus{outline:none}
@@ -19,6 +28,7 @@ $this->registerJs($this->render('presensi.js'),View::POS_READY);
 ");
 ?>
 
+<h5><?=$vewBreadcrumb ?></h5>
 <section class="content-header">
     <h1>
     HRD <small>Ringakasan</small>

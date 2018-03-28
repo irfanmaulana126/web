@@ -124,13 +124,13 @@ $this->registerCss("
                 'columns' => [
                     [
                         'attribute'=>'MAP_LAG', 
-                        'label'=>'LANGITUDE',
+                        'label'=>'LONGITUDE',
                         'displayOnly'=>true,
                         'valueColOptions'=>['style'=>'width:30%']
                     ],
                     [
                         'attribute'=>'MAP_LAT', 
-                        'label'=>'LANGITUDE',
+                        'label'=>'LATITUDE',
                         'format'=>'raw', 
                         'valueColOptions'=>['style'=>'width:30%'], 
                         'displayOnly'=>true

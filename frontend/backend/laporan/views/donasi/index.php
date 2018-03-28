@@ -59,6 +59,15 @@ $this->registerJs("
 
 ",View::POS_READY);
 $this->title='LAPORAN DONASI';
+$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+$this->params['breadcrumbs'][] = $this->title;
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
 	$this->registerJs($this->render('donasi_script.js'),View::POS_READY);
 	echo $this->render('/donasi/donasi_modal');
     echo $this->render('/donasi/donasi_button');
@@ -282,15 +291,16 @@ $btn_srchChart1=DatePicker::widget([
 		// 'floatHeader'=>true,
 	]); 	
 ?>
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
-	<div class="col-xs-4 col-sm-4 col-lg-4 pull-right" style="margin-right:-15px">
-				<?=$btn_srchChart1?>
-			</div>	
-	<?=tombolKembali()?>
+<div class="container-fluid">
+<?=$vewBreadcrumb?>	
+	<?php//tombolKembali()?>
 	<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
                     <?php		                    		
 						echo '<b>LAPORAN DONASI<br>'.date("F Y",strtotime($tanggal)).'</b>';				
 					?>		
+			</div>
+	<div class="col-xs-4 col-sm-4 col-lg-4" style="margin-left:-15px">
+				<?=$btn_srchChart1?>
 			</div>
 		<div class="pull-right">
 				<?=tombolExportExcel()?>	
