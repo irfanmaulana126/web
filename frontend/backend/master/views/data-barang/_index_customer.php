@@ -16,7 +16,16 @@ use kartik\date\DatePicker;
 use yii\web\View;
 use kartik\widgets\Alert;
 use frontend\backend\master\models\Product;
-$this->title="customer";
+$this->title="Customer";
+$this->params['breadcrumbs'][] = ['label'=>'Produk', 'url' => ['/master/data-barang']];
+$this->params['breadcrumbs'][] =  $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+	'homeLink' => [
+		'label' => Html::encode(Yii::t('yii', 'Home')),
+		'url' => Yii::$app->homeUrl,
+	],
+	'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 $this->registerJs($this->render('databarang_script.js'),View::POS_READY);
 
 echo $this->render('databarang_button'); //echo difinition
@@ -199,6 +208,7 @@ $this->registerCss("
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<h5><?=$vewBreadcrumb ?></h5>
 <?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php
 				echo Alert::widget([
@@ -221,7 +231,7 @@ $this->registerCss("
 			]);
 		}?>		
 		<div style="margin-top: -10px;margin-bottom: 10px;">
-		<?=tombolKembali()?>
+		<?php//tombolKembali()?>
 	</div>
 	<?=$gvAllStoreItem?>
 </div>

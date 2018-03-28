@@ -15,11 +15,12 @@ use kartik\dropdown\DropdownX;
 use frontend\backend\laporan\models\JurnalTransaksiBulan;
 use yii\widgets\Breadcrumbs;	
 	$this->title = 'jurnal';
-	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['/laporan/jurnal-transaksi-bulan']];
+	$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+	$this->params['breadcrumbs'][] =  $this->title;
 	$vewBreadcrumb=Breadcrumbs::widget([
 		'homeLink' => [
-			'label' => Html::encode(Yii::t('yii', 'Laporan')),
-			'url' => Yii::$app->homeUrl.'laporan/',
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
 		],
 		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 	]);

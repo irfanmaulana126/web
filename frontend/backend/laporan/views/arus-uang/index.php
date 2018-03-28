@@ -15,12 +15,13 @@ AppAssetBackendBorder::register($this);
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 use yii\widgets\Breadcrumbs;	
-	$this->title = 'arus uang';
-	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['/laporan/arus-uang']];
+	$this->title = 'Arus Uang';
+	$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+	$this->params['breadcrumbs'][] =  $this->title;
 	$vewBreadcrumb=Breadcrumbs::widget([
 		'homeLink' => [
-			'label' => Html::encode(Yii::t('yii', 'Laporan')),
-			'url' => Yii::$app->homeUrl.'laporan/',
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
 		],
 		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 	]);

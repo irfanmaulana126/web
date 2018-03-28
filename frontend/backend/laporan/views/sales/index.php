@@ -13,17 +13,16 @@ use yii\helpers\Url;
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 use yii\widgets\Breadcrumbs;	
-	$this->title = 'laporan penjualan';
-	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['/laporan/sales']];
+$this->title = 'Ringakasan Penjualan';
+	$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+	$this->params['breadcrumbs'][] =  $this->title;
 	$vewBreadcrumb=Breadcrumbs::widget([
 		'homeLink' => [
-			'label' => Html::encode(Yii::t('yii', 'Laporan')),
-			'url' => Yii::$app->homeUrl.'laporan/',
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
 		],
 		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 	]);
-	
-$this->title = 'Ringakasan Penjualan';
 $this->registerJs("
 // var x = document.getElementById('tahun').value;
 // console.log(x);

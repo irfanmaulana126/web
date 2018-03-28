@@ -13,6 +13,15 @@ use yii\data\ArrayDataProvider;
 use yii\web\View;
 use kartik\widgets\Alert;
 $this->title="Setelan Presensi";
+$this->params['breadcrumbs'][] = ['label'=>'Ringakasan HRD', 'url'=>'/hris'];
+$this->params['breadcrumbs'][] = $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+    'homeLink' => [
+        'label' => Html::encode(Yii::t('yii', 'Home')),
+        'url' => Yii::$app->homeUrl,
+    ],
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 $this->registerJs($this->render('modal_presensi.js'),View::POS_READY);
 echo $this->render('presensi_button'); //echo difinition
 echo $this->render('modal_presensi'); //echo difinition
@@ -107,9 +116,10 @@ echo $this->render('modal_presensi'); //echo difinition
 // print_r($test);die();
 ?>
 
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid">
+		<?=$vewBreadcrumb?>
 <div style="margin-top: -10px;margin-bottom: 10px;">
-		<?=tombolKembali()?>
+		<?php//tombolKembali()?>
 	</div>
 <?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php

@@ -2,11 +2,20 @@
 use yii\helpers\Html;
 use yii\web\View;
 use kartik\widgets\Growl;
+use yii\widgets\Breadcrumbs;
 
 use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
 
 $this->title="Prodak";
+	$this->params['breadcrumbs'][] =$this->title;
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
 ?>
 <?php if (Yii::$app->session->hasFlash('error')) {
 			echo Growl::widget([
@@ -37,11 +46,15 @@ $this->title="Prodak";
     margin: inherit;
 "><img src="/logo-dashboard2.png" width="800px" alt=""></div>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="col-md-12">
+<h5><?=$vewBreadcrumb ?></h5>
 <section class="content-header">
     <h1>
     Produk<small>Menu</small>
     </h1>
 </section>
+<br>
+</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;">
 	<div class="col-md-6">
         <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">

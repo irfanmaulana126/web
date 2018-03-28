@@ -13,6 +13,14 @@ use yii\web\View;
 use kartik\widgets\Alert;
 
 $this->title='Stok Opname';
+$this->params['breadcrumbs'][] = $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+    'homeLink' => [
+        'label' => Html::encode(Yii::t('yii', 'Home')),
+        'url' => Yii::$app->homeUrl,
+    ],
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 	$this->registerCss("
 		#prodak-stok-opname .kv-grid-container{
 			height:500px
@@ -308,6 +316,7 @@ $this->title='Stok Opname';
 	]);
 ?>
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<h5><?=$vewBreadcrumb ?></h5>
 	<?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php
 				echo Alert::widget([

@@ -7,8 +7,8 @@ use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
 
 use yii\widgets\Breadcrumbs;	
-	$this->title = 'laporan menu';
-	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['/laporan']];
+	$this->title = 'Laporan Menu';
+	$this->params['breadcrumbs'][] = $this->title;
 	$vewBreadcrumb=Breadcrumbs::widget([
 		'homeLink' => [
 			'label' => Html::encode(Yii::t('yii', 'Home')),
@@ -34,7 +34,7 @@ use yii\widgets\Breadcrumbs;
 			display: block;
 			margin: inherit;
 		">
-			<img src="/logo-dashboard2.png" width="800px" alt="">
+			<!-- <img src="/logo-dashboard2.png" width="800px" alt=""> -->
 		</div>
 		<section class="content-header">
 			<h1>

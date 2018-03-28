@@ -2,6 +2,7 @@
 
 namespace frontend\backend\hris\controllers;
 
+use yii;
 use yii\web\Controller;
 
 class DefaultController extends Controller
@@ -38,5 +39,9 @@ class DefaultController extends Controller
            Yii::$app->user->logout();
            return $this->goHome(); 
        }
+   }
+   public function FunctionName(Type $var = null)
+   {
+        $this->redirect(array('index'));
    }
 }

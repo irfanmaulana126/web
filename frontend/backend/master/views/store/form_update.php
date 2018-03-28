@@ -27,12 +27,17 @@ $this->registerCss("
 
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyB_BOmcuyR1X9XuFy314bhI1KX9IKfoGQA&callback=initMap',
 ['depends' => [\yii\web\JqueryAsset::className()]]);
+if(!empty($model['LATITUDE'])&&!empty($model['LONGITUDE'])){
+    $data='new google.maps.LatLng('.$model['LATITUDE'].','.$model['LONGITUDE'].')';
+}else{
+    $data='new google.maps.LatLng(-6.22936,106.66)';
+}
 $this->registerJS('
             var map;
             var marker;
             function initMap(){
                 
-                var myLatlng = new google.maps.LatLng(-6.22936,106.66);
+                var myLatlng = '.$data.';
                 var geocoder = new google.maps.Geocoder();
                 var infowindow = new google.maps.InfoWindow();
                 var directionsService = new google.maps.DirectionsService();
@@ -78,10 +83,26 @@ $this->registerJS('
                     }
                 });
             });
+            map.addListener("click", function(e) {
+                setTimeout(function() { marker.setPosition(e.latLng); }, 10);
 
+                    geocoder.geocode({"latLng": marker.getPosition()}, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                                if (results[0]) {
+                                    $("#address").val(results[0].formatted_address);
+                                    $("#latitude").val(marker.getPosition().lat());
+                                    $("#longitude").val(marker.getPosition().lng());
+                                    infowindow.setContent(results[0].formatted_address);
+                                    infowindow.open(map, marker);
+                                }
+                            }
+                        });
+            });
             google.maps.event.addDomListener(window, "load", initMap);    
             }      
-            
+            $("#databarang-button-row-edit-modal").on("shown.bs.modal", function(){
+                initializeMap();
+                });
 ');
 ?>
 <div class="ppob-header-form">
