@@ -12,16 +12,22 @@ use yii\web\View;
 use kartik\date\DatePicker;
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
-
 use frontend\assets\AppAssetBackendBorder;
-AppAssetBackendBorder::register($this);
-ChartAsset::register($this);
-
-use frontend\backend\dashboard\models\StoreKasirSearch;
 use common\models\Store;
+use yii\widgets\Breadcrumbs;
 
-$this->title = 'dashboard/member';
-$this->params['breadcrumbs'][] = $this->title;
+	AppAssetBackendBorder::register($this);
+	ChartAsset::register($this);
+	
+	$this->title = 'perubahan-produk';
+	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['//dashboard/perubahan-produk']];
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Dashboard')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
 
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 	$btn_srchChart1=DatePicker::widget([
@@ -75,9 +81,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 				<div class="pull-left" style="padding-left:10px;font-size:15px;color:#7e7e7e;float:left'">
 					<!--<a href="https://www.w3schools.com">Rincian Per-Toko</a>!-->
-					<?php echo tombolKembali()?>
 				</div>
-				
+				<h5><?=$vewBreadcrumb ?></h5>
 				<div class="col-sm-12 col-md-12 col-lg-12 pull-right"  style='float:left'>					
 						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left'><?=$btn_srchChart1?></div>
 						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left;padding-left:5px'><?=$btn_srchChart2?></div>									

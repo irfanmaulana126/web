@@ -12,6 +12,17 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+use yii\widgets\Breadcrumbs;	
+	$this->title = 'laporan penjualan';
+	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['/laporan/sales']];
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Laporan')),
+			'url' => Yii::$app->homeUrl.'laporan/',
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
+	
 $this->title = 'Ringakasan Penjualan';
 $this->registerJs("
 // var x = document.getElementById('tahun').value;
@@ -45,36 +56,29 @@ $btn_srchChart1=DatePicker::widget([
 $btn_srchChart2= Select2::widget([
     'name' => 'state_10',
     'data' =>  ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'STORE_ID','STORE_NM'),
-	'options' => ['placeholder' => 'Select a store ...','id'=>'store'],
+	'options' => ['placeholder' => 'Pilih Toko...','id'=>'store'],
     'pluginOptions' => [
         'allowClear' => true
     ],
 ]);
-$btn_srchChart="<div style='padding-bottom:3px;float:right'> Periode Tahun".$btn_srchChart1."</div>";
-$btn_srchChart2="<div style='padding-bottom:3px;float:right'> Store".$btn_srchChart2."</div>";
+$btn_srchChart="<div style='padding-bottom:3px;float:right'>".$btn_srchChart1."</div>";
+$btn_srchChart2="<div style='padding-bottom:3px;float:right'>".$btn_srchChart2."</div>";
 $retVal = (empty($store->STORE_NM)) ? '' : $store->STORE_NM ;
 $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 ?>
 <div class="jurnal-template-title-index">
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 <div style="margin-top: -10px">
-		<?php
-		$title= Yii::t('app','');
-		$url = Url::toRoute(['/laporan']);
-		$options1 = [
-					'id'=>'back-trafik',
-					'class'=>"btn btn-xs",
-					'title'=>'Kembali Menu Laporan'
-		];
-		$icon1 = '<span class="fa-stack fa-md text-left">
-				  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
-				  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
-				  </span>
-				  ';
-				  $label1 = $icon1.' '.$title ;
-				  echo $content = Html::a($label1,$url,$options1);
-				  ?>	
+		<h5><?=$vewBreadcrumb ?></h5>
+	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
+		<div class="row">	
+			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
+				<?=$btn_srchChart?>
+			</div>
+				<?=$btn_srchChart2?>			
 		</div>
+		<br>
+	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">	
 			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
@@ -84,12 +88,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					?>		
 			</div>
 			<br>
-			<br>
-			<br>
-			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
-				<?=$btn_srchChart?>
-			</div>
-				<?=$btn_srchChart2?>
+			<br>			
 		</div>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 9pt;padding-top:10px">
