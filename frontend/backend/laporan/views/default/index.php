@@ -3,32 +3,47 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use kartik\widgets\ActiveForm;
-
 use frontend\assets\AppAssetBackendBorder;
 AppAssetBackendBorder::register($this);
 
-$this->title = 'Ringakasan Laporan';
+use yii\widgets\Breadcrumbs;	
+	$this->title = 'laporan menu';
+	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['/laporan']];
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
+
+//$this->title = 'Ringakasan Laporan';
 ?>
 
-        <div style="
-    position: fixed;
-    opacity: 0.02;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    top: 25%;
-    left: 29%;
-    display: block;
-    margin: inherit;
-"><img src="/logo-dashboard2.png" width="800px" alt=""></div>
-<section class="content-header">
-    <h1>
-    Laporan
-    <small>Bisnis Anda</small>
-    </h1>
-</section>
-<br>
 <div class="container-fluid">
+	<div class="col-md-12">
+		<h5><?=$vewBreadcrumb ?></h5>
+		<div style="
+			position: fixed;
+			opacity: 0.02;
+			width: 100%;
+			max-width: 100%;
+			height: auto;
+			top: 25%;
+			left: 29%;
+			display: block;
+			margin: inherit;
+		">
+			<img src="/logo-dashboard2.png" width="800px" alt="">
+		</div>
+		<section class="content-header">
+			<h1>
+			Laporan
+			<small>Bisnis Anda</small>
+			</h1>
+		</section>
+		<br>
+	</div>
     <div class="col-md-6">
         <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
             <h3>Laporan Arus Uang</h3>

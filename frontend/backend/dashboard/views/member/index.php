@@ -12,19 +12,16 @@ use yii\web\View;
 use kartik\date\DatePicker;
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
+use frontend\assets\AppAssetBackendBorder;
+use common\models\Store;
 use yii\widgets\Breadcrumbs;
 
-
-use frontend\assets\AppAssetBackendBorder;
-AppAssetBackendBorder::register($this);
-ChartAsset::register($this);
-
-use frontend\backend\dashboard\models\StoreKasirSearch;
-use common\models\Store;
-
+	AppAssetBackendBorder::register($this);
+	ChartAsset::register($this);
+	
 	$this->title = 'member';
 	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['/dashboard/member']];
-	$this->params['breadcrumbs'][] = ['label'=>'asd', 'url' => ['/dashboard/member']];
+	//$this->params['breadcrumbs'][] = ['label'=>'asd', 'url' => ['/dashboard/member']];
 	$vewBreadcrumb=Breadcrumbs::widget([
 		'homeLink' => [
 			'label' => Html::encode(Yii::t('yii', 'Dashboard')),
@@ -67,10 +64,8 @@ use common\models\Store;
 				<div class="pull-left" style="padding-left:10px;font-size:15px;color:#7e7e7e;float:left'">
 					<!--<a href="https://www.w3schools.com">Rincian Per-Toko</a>!-->
 					
-				</div>
-			
-				 <h5><?=$vewBreadcrumb ?>
-				</h5>
+				</div>			
+				<h5><?=$vewBreadcrumb ?></h5>
 				<div class="col-sm-12 col-md-12 col-lg-12 pull-right"  style='float:left'>					
 						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left'><?=$btn_srchChart1?></div>
 						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left;padding-left:5px'><?=$btn_srchChart2?></div>									
