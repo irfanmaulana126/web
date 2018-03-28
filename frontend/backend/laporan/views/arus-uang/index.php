@@ -25,7 +25,6 @@ use yii\widgets\Breadcrumbs;
 		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 	]);
 	
-$this->title="Ringkasan Arus Keuangan";
 $this->registerJs("
 	//var x = document.getElementById('tahun').value;
 	//console.log(x);

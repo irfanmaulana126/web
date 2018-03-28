@@ -1,7 +1,6 @@
 <?php 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\widgets\Breadcrumbs;
 use yii\bootstrap\Modal;
 use kartik\grid\GridView;
 use kartik\widgets\ActiveForm;
@@ -14,11 +13,20 @@ use kartik\widgets\Alert;
 use kartik\dropdown\DropdownX;
 
 use frontend\backend\laporan\models\JurnalTransaksiBulan;
-
+use yii\widgets\Breadcrumbs;	
+	$this->title = 'jurnal';
+	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['/laporan/jurnal-transaksi-bulan']];
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Laporan')),
+			'url' => Yii::$app->homeUrl.'laporan/',
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
+	
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
 // print_r($dataProvider->getModels());
 // die();
-$this->title = 'Jurnal Transaksi Bulans';
     $this->registerCss("
     :link {
 		color: #fdfdfd;
@@ -215,7 +223,7 @@ $this->title = 'Jurnal Transaksi Bulans';
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-list-alt fa-stack-2x" style="color:#000000"></b>
 			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>PENCATATAN JURNAL (IDR)</b></div> 
-			 ';	
+			 <div class="pull-right" style="">'.tombolViewAkun().' '.tombolViewGroup().'</div>';	
 	// $leftButton=$this->render('button_list');
 	$gvInvOut= GridView::widget([
 		'id'=>'jurnal-transaksi',
@@ -286,9 +294,9 @@ $this->title = 'Jurnal Transaksi Bulans';
 	<div class="row">
 		<div class="col-md-12">
 		<div style="margin-top: -10px">
-		<?=tombolKembali()?>
+		<h5><?=$vewBreadcrumb ?></h5>
 		<div class="pull-right">
-				<?= tombolViewAkun().' '.tombolViewGroup();?>
+				<?php //= tombolViewAkun().' '.tombolViewGroup();?>
 			</div>
 	</div>
 			
