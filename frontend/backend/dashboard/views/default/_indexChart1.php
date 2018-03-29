@@ -317,7 +317,7 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/penjualan-harian-storan">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(255, 198, 66, 1)"></i>
 								  <i class="fa fa-sign-in fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
@@ -339,7 +339,7 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/penjualan-mingguan">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(149, 61, 250, 1)"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(60, 150, 246, 1)"></i>
 								  <i class="fa fa-binoculars fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
@@ -361,8 +361,8 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/penjualan-bulanan">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(251, 130, 86, 1)"></i>
-								  <i class="fa fa-binoculars fa-stack-1x" style="color:#FFFFFF"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(60, 150, 246, 1)"></i>
+								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
 						</div>						
@@ -383,8 +383,8 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/penjualan-ppob">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(53, 157, 228, 0.4)"></i>
-								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(60, 150, 246, 1)"></i>
+								  <i class="fa fa-binoculars fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
 						</div>						
@@ -405,8 +405,8 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/perubahan-produk">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(94, 251, 86, 1)"></i>
-								  <i class="fa fa-money fa-stack-1x" style="color:#FFFFFF"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(230, 40, 44, 1)"></i>
+								  <i class="fa fa-edit fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
 						</div>						
@@ -453,7 +453,7 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/kunjungan">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:#0ec1db"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(60, 150, 246, 1)"></i>
 								  <i class="fa fa-dashboard fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
@@ -475,8 +475,8 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/toko">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:red"></i>
-								  <i class="fa fa-laptop fa-stack-1x" style="color:#FFFFFF"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(71, 250, 77, 1)"></i>
+								  <i class="fa fa-flag-checkered fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
 						</div>						
@@ -501,8 +501,8 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/produk">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:yellow"></i>
-								  <i class="fa fa-cubes fa-stack-1x" style="color:black"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(255, 198, 66, 1)"></i>
+								  <i class="fa fa-pie-chart fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
 						</div>						
@@ -522,8 +522,8 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/karyawan">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:#64F298"></i>
-								  <i class="fa fa-users fa-stack-1x" style="color:#FFFFFF"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(230, 40, 44, 1)"></i>
+								  <i class="fa fa-child fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
 						</div>						
@@ -548,8 +548,8 @@ $this->registerJs("
 						<div class="col-lg-3 text-left" style="float:left;padding-left:10px">
 							<a href="/dashboard/member">
 								<span class="fa-stack fa-2x">
-								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(71, 80, 250, 1)"></i>
-								  <i class="fa fa-address-card-o fa-stack-1x" style="color:#FFFFFF"></i>
+								  <i class="fa fa-circle fa-stack-2x" style="color:rgba(60, 150, 246, 1)"></i>
+								  <i class="fa fa-drivers-license-o fa-stack-1x" style="color:#FFFFFF"></i>
 								</span>
 							</a>
 						</div>						

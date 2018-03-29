@@ -12,16 +12,22 @@ use yii\web\View;
 use kartik\date\DatePicker;
 use kartik\widgets\Select2;
 use yii\helpers\ArrayHelper;
-
 use frontend\assets\AppAssetBackendBorder;
-AppAssetBackendBorder::register($this);
-ChartAsset::register($this);
-
-use frontend\backend\dashboard\models\StoreKasirSearch;
 use common\models\Store;
+use yii\widgets\Breadcrumbs;
 
-$this->title = 'dashboard/member';
-$this->params['breadcrumbs'][] = $this->title;
+	AppAssetBackendBorder::register($this);
+	ChartAsset::register($this);
+	
+	$this->title = 'penjualan mingguan';
+	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['/dashboard/penjualan-mingguan']];
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Dashboard')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
 
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 	$btn_srchChart1=DatePicker::widget([
@@ -45,24 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			'allowClear' => true
 		],
 	]);
-	
-	function tombolKembali(){
-		$title= Yii::t('app','');
-		$url = Url::toRoute(['/dashboard']);
-		$options1 = [
-					'id'=>'back-trafik',
-					'class'=>"btn btn-xs",
-					'title'=>'Kembali Chart Awal'
-		];
-		$icon1 = '<span class="fa-stack fa-md text-left">
-				  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
-				  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
-				</span>
-		';
-		$label1 = $icon1.' '.$title ;
-		$content = Html::a($label1,$url,$options1);
-		return $content;	
-	}
+
 	$icon2 = '<span class="fa fa-md fa fa-chevron-right text-left"></span>';
 ?>
 
@@ -75,9 +64,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				
 				<div class="pull-left" style="padding-left:10px;font-size:15px;color:#7e7e7e;float:left'">
 					<!--<a href="https://www.w3schools.com">Rincian Per-Toko</a>!-->
-					<?php echo tombolKembali()?>
 				</div>
-				
+				<h5><?=$vewBreadcrumb ?></h5>
 				<div class="col-sm-12 col-md-12 col-lg-12 pull-right"  style='float:left'>					
 						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left'><?=$btn_srchChart1?></div>
 						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left;padding-left:5px'><?=$btn_srchChart2?></div>									
