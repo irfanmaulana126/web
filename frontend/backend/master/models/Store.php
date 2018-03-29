@@ -69,7 +69,7 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['STORE_ID', 'YEAR_AT', 'MONTH_AT'], 'required'],
+            [['STORE_ID', 'YEAR_AT', 'MONTH_AT','STORE_NM', 'PIC', 'TLP', 'FAX', 'INDUSTRY_ID', 'INDUSTRY_GRP_ID'], 'required'],
             [['ACCESS_ID', 'UUID', 'PLAYER_ID', 'ALAMAT', 'DCRP_DETIL'], 'string'],
             [['DATE_START', 'DATE_END', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['PROVINCE_ID', 'CITY_ID', 'INDUSTRY_ID', 'INDUSTRY_GRP_ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],

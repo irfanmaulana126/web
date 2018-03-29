@@ -141,6 +141,7 @@ class StoreController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->ACCESS_GROUP=Yii::$app->user->identity->ACCESS_GROUP;
+            $model->STORE_NM=strtoupper($model->STORE_NM);
             $model->DATE_START=date('Y-m-d H:i:s');
             $model->CREATE_AT=date('Y-m-d H:i:s');
             if ($model->save(false)) {
@@ -177,6 +178,7 @@ class StoreController extends Controller
     	$model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+            $model->STORE_NM=strtoupper($model->STORE_NM);
             if ($model->save(false)) {
                 
             Yii::$app->session->setFlash('success', "Perubahan Berhasil");
