@@ -19,8 +19,8 @@ use yii\widgets\Breadcrumbs;
 	AppAssetBackendBorder::register($this);
 	ChartAsset::register($this);
 	
-	$this->title = 'perubahan-produk';
-	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['//dashboard/perubahan-produk']];
+	$this->title = 'penjualan-harian';
+	$this->params['breadcrumbs'][] = ['label'=>$this->title, 'url' => ['//dashboard/penjualan-harian']];
 	$vewBreadcrumb=Breadcrumbs::widget([
 		'homeLink' => [
 			'label' => Html::encode(Yii::t('yii', 'Dashboard')),
