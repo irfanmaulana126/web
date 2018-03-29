@@ -53,25 +53,30 @@ use yii\widgets\Breadcrumbs;
 	]);
 	
 	$icon2 = '<span class="fa fa-md fa fa-chevron-right text-left"></span>';
+	
+	$map=$this->render('_indexReviewMap');
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt;">	
 		<div class="col-sm-12 col-md-12 col-lg-12">		
 			<div class="row">
-				<div style="float:left">
-					<?php //echo 'dashboard '.'<span class="fa fa-md fa fa-chevron-right text-left"></span>'.' '.Yii::$app->controller->id;?>
-				</div>
-				
-				<div class="pull-left" style="padding-left:10px;font-size:15px;color:#7e7e7e;float:left'">
-					<!--<a href="https://www.w3schools.com">Rincian Per-Toko</a>!-->
-				</div>
 				<h5><?=$vewBreadcrumb ?></h5>
+			</div>		
+			<div class="row">
+				<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+					<div>
+							<?=$map?>
+					</div>
+								
+				</div>		
+			</div>	
+			</br>
+			<div class="row">
 				<div class="col-sm-12 col-md-12 col-lg-12 pull-right"  style='float:left'>					
 						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left'><?=$btn_srchChart1?></div>
 						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left;padding-left:5px'><?=$btn_srchChart2?></div>									
-				</div>	
-			
-			</div>	
+				</div>				
+			</div>					
 			<div class="row">
 				<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
 					<?php //echo = Html::encode($this->title) ?>								
@@ -79,8 +84,7 @@ use yii\widgets\Breadcrumbs;
 						<div style="height:300px;">
 							<?php "data1"; ?>
 						</div>
-					</div>
-								
+					</div>								
 				</div>		
 			</div>			
 		</div>
