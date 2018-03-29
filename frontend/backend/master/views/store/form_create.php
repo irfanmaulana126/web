@@ -22,19 +22,67 @@ $this->registerCss("
     height:300px;
     background:yellow
  }
-	
+ html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .controls {
+    margin-top: 10px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  #pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 300px;
+  }
+
+  #pac-input:focus {
+    border-color: #4d90fe;
+  }
+
+  .pac-container {
+    font-family: Roboto;
+    z-index: 100000 !important;
+  }
+
+  #type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+  }
+
+  #type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+  }	
 ");
 
-$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyB_BOmcuyR1X9XuFy314bhI1KX9IKfoGQA&callback=initMap',
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyB_BOmcuyR1X9XuFy314bhI1KX9IKfoGQA&callback=initAutocomplete&libraries=places',
 ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJS('
             var map;
             var marker;
-            function initMap(){
+            function initAutocomplete(){
                 
                 var myLatlng = new google.maps.LatLng(-6.22936,106.66);
                 var geocoder = new google.maps.Geocoder();
                 var infowindow = new google.maps.InfoWindow();
+                var input = document.getElementById("pac-input");
+                var searchBox = new google.maps.places.SearchBox(input);
                 var directionsService = new google.maps.DirectionsService();
                 var directionsDisplay = new google.maps.DirectionsRenderer();
             var mapOptions = {
@@ -44,6 +92,45 @@ $this->registerJS('
             };
 
             map = new google.maps.Map(document.getElementById("myMap"), mapOptions);
+
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            map.addListener("bounds_changed", function() {
+                      searchBox.setBounds(map.getBounds());
+                    });
+                
+                    var markers = [];
+                    // Listen for the event fired when the user selects a prediction and retrieve
+                    // more details for that place.
+                    searchBox.addListener("places_changed", function() {
+                      var places = searchBox.getPlaces();
+                
+                      if (places.length == 0) {
+                        return;
+                      }
+                
+                      // Clear out the old markers.
+                      markers.forEach(function(marker) {
+                        marker.setMap(null);
+                      });
+                      markers = [];
+                
+                      // For each place, get the icon, name and location.
+                      var bounds = new google.maps.LatLngBounds();
+                      places.forEach(function(place) {
+                        if (!place.geometry) {
+                          console.log("Returned place contains no geometry");
+                          return;
+                        }
+                               
+                        if (place.geometry.viewport) {
+                          // Only geocodes have viewport.
+                          bounds.union(place.geometry.viewport);
+                        } else {
+                          bounds.extend(place.geometry.location);
+                        }
+                      });
+                      map.fitBounds(bounds);
+                    });
 
             marker = new google.maps.Marker({
                 map: map,
@@ -69,6 +156,7 @@ $this->registerJS('
             geocoder.geocode({"latLng": marker.getPosition()}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                         if (results[0]) {
+                            $("#latitude,#longitude").show();
                             $("#address").val(results[0].formatted_address);
                             $("#latitude").val(marker.getPosition().lat());
                             $("#longitude").val(marker.getPosition().lng());
@@ -78,26 +166,48 @@ $this->registerJS('
                     }
                 });
             });
+            map.addListener("click", function(e) {
+                setTimeout(function() { marker.setPosition(e.latLng); }, 10);
 
-            google.maps.event.addDomListener(window, "load", initMap);    
+                    geocoder.geocode({"latLng": marker.getPosition()}, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                                if (results[0]) {
+                                    $("#latitude,#longitude").show();
+                                    $("#address").val(results[0].formatted_address);
+                                    $("#latitude").val(marker.getPosition().lat());
+                                    $("#longitude").val(marker.getPosition().lng());
+                                    infowindow.setContent(results[0].formatted_address);
+                                    infowindow.open(map, marker);
+                                }
+                            }
+                        });
+            });
+            google.maps.event.addDomListener(window, "load", initAutocomplete);    
             }      
+            $("#databarang-button-row-edit-modal").on("shown.bs.modal", function(){
+                initializeMap();
+                });      
             
 ');
 ?>
 <div class="ppob-header-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    
+    <div class="row">
     <div class="col-md-12">
             <?= $form->field($model, 'STORE_NM',[					
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span><b>STORE</b></span>',
 							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
-						]
-					]
-				])->textInput(['style'=>'width: 422px;'])->label(false) ?>
+                            ]
+                            ]
+                            ])->textInput(['style'=>'width: 452px;text-transform:uppercase'])->label(false) ?>
+    </div>
     </div>
 
+    <div class="row">
     <div class="col-md-6">
     
     <?= $form->field($model, 'INDUSTRY_GRP_ID',[					
@@ -109,8 +219,8 @@ $this->registerJS('
 					]
 				])->widget(Select2::classname(), [
             'data' => ArrayHelper::map(IndustryGroup::find()->all(),'INDUSTRY_GRP_ID','INDUSTRY_GRP_NM'),
-            'language' => 'de',
-            'options' => ['placeholder' => 'Select a state ...','id'=>'industri-grp-id'],
+            'language' => 'en',
+            'options' => ['placeholder' => 'Select a state ...','id'=>'industri-grp-id','style'=>'width: 172px;'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
@@ -138,6 +248,8 @@ $this->registerJS('
         ])->label(false); ?>
                 
     </div>
+    </div>
+    <div class="row">
     <div class="col-md-4">
         <?= $form->field($model, 'PIC',[					
 					'addon' => [
@@ -170,10 +282,16 @@ $this->registerJS('
 				])->widget(MaskedInput::classname(),
         ['mask' => '(999) 9999999'])->label(false) ?>    
     </div>
-   
+    </div>
+    
+    <div class="row">
     <div class="col-md-12">
+    <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
         <div id="myMap"></div>
     </div>
+    </div>
+    
+    <div class="row">
     <div class="col-md-6" style="margin-top: 10px;">
     
     <?= $form->field($model, 'LATITUDE',[					
@@ -237,6 +355,9 @@ $this->registerJS('
         ])->label(false); ?>
                 
     </div>
+    </div>
+    
+    <div class="row">
     <div class="col-md-12">
         <?= $form->field($model, 'ALAMAT',[					
 					'addon' => [
@@ -245,7 +366,7 @@ $this->registerJS('
 							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
 						]
 					]
-				])->textInput(['id'=>'address','style'=>'width: 425px;'])->label(false) ?>
+				])->textInput(['id'=>'address','style'=>'width: 455px;'])->label(false) ?>
     </div>
     <div class="col-md-12">
         <?= $form->field($model, 'DCRP_DETIL',[					
@@ -255,7 +376,8 @@ $this->registerJS('
 							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 117px;']
 						]
 					]
-				])->textInput(['style'=>'width: 425px;'])->label(false) ?>
+				])->textInput(['style'=>'width: 455px;'])->label(false) ?>
+    </div>
     </div>
 
 
