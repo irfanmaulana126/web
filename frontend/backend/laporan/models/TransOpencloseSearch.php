@@ -26,7 +26,7 @@ class TransOpencloseSearch extends TransOpenclose
     {
         return [
             [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['storeNm','ACCESS_GROUP', 'STORE_ID', 'ACCESS_ID', 'OPENCLOSE_ID', 'TGL_OPEN', 'TGL_CLOSE', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
+            [['storeNm','TOTALDONASI','TOTALREFUND','ACCESS_GROUP', 'STORE_ID', 'ACCESS_ID', 'OPENCLOSE_ID', 'TGL_OPEN', 'TGL_CLOSE', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'DCRP_DETIL'], 'safe'],
             [['CASHINDRAWER', 'ADDCASH', 'SELLCASH', 'TOTALCASH', 'TOTALCASH_ACTUAL'], 'number'],
         ];
     }
@@ -75,6 +75,8 @@ class TransOpencloseSearch extends TransOpenclose
             'SELLCASH' => $this->SELLCASH,
             'TOTALCASH' => $this->TOTALCASH,
             'TOTALCASH_ACTUAL' => $this->TOTALCASH_ACTUAL,
+            'TOTALREFUND' => $this->TOTALREFUND,
+            'TOTALDONASI' => $this->TOTALDONASI,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
             'STATUS' => $this->STATUS,
@@ -91,6 +93,7 @@ class TransOpencloseSearch extends TransOpenclose
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
+        $query->orderBy(['TGL_OPEN'=>SORT_DESC]);
         return $dataProvider;
     }
 }

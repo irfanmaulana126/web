@@ -110,6 +110,22 @@ use kartik\widgets\ActiveForm;
 			'format'=>'raw', 
 			'value'=>($modelToko->TOTALCASH=='') ?  '' : $modelToko->TOTALCASH,
 		],
+		[
+			'attribute' =>'TOTALDONASI',
+			'type'=>DetailView::INPUT_TEXTAREA,
+			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
+			//'displayOnly'=>true,	
+			'format'=>'raw', 
+			'value'=>($modelToko->TOTALDONASI=='') ?  '' : $modelToko->TOTALDONASI,
+		],
+		[
+			'attribute' =>'TOTALREFUND',
+			'type'=>DetailView::INPUT_TEXTAREA,
+			'labelColOptions' => ['style' => 'text-align:right;width: 30%'],
+			//'displayOnly'=>true,	
+			'format'=>'raw', 
+			'value'=>($modelToko->TOTALREFUND=='') ?  '' : $modelToko->TOTALREFUND,
+		],
 		/* [
 			'attribute' =>'ALAMAT',
 			'type'=>DetailView::INPUT_TEXTAREA,

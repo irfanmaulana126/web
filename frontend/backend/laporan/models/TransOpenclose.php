@@ -55,7 +55,7 @@ class TransOpenclose extends \yii\db\ActiveRecord
         return [
             [['STORE_ID', 'ACCESS_ID', 'OPENCLOSE_ID', 'TGL_OPEN', 'YEAR_AT', 'MONTH_AT'], 'required'],
             [['TGL_OPEN', 'TGL_CLOSE', 'CREATE_AT', 'UPDATE_AT','storeNm'], 'safe'],
-            [['CASHINDRAWER', 'ADDCASH', 'SELLCASH', 'TOTALCASH', 'TOTALCASH_ACTUAL'], 'number'],
+            [['CASHINDRAWER', 'ADDCASH','TOTALDONASI','TOTALREFUND', 'SELLCASH', 'TOTALCASH', 'TOTALCASH_ACTUAL'], 'number'],
             [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['DCRP_DETIL'], 'string'],
             [['ACCESS_GROUP', 'ACCESS_ID'], 'string', 'max' => 15],
@@ -82,6 +82,8 @@ class TransOpenclose extends \yii\db\ActiveRecord
             'SELLCASH' => 'SELL CASH',
             'TOTALCASH' => 'TOTAL CASH',
             'TOTALCASH_ACTUAL' => 'Totalcash  Actual',
+            'TOTALDONASI'=>'TOTAL DONASI',
+            'TOTALREFUND'=>'TOTAL REFUND',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',
@@ -101,7 +103,7 @@ class TransOpenclose extends \yii\db\ActiveRecord
 		if ($rslt){
 			return $rslt;
 		}else{
-			return "none";
+			return "";
 		}; 
 	}
 }

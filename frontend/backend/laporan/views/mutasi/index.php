@@ -36,6 +36,9 @@ $this->registerCss("
 			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 			color: #000;
 		}
+		#modal-view .modal-header {
+			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+		}
 		#dv-mutasi-data .panel-footer {
 			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 		}
@@ -62,14 +65,21 @@ $this->registerCss("
 			height: 300px;
 		}
 		.kv-grid-container{
-			height:570px
+			height:490px
 		}
 		.tmp-button-delete a:hover {
 			color:red;
 		}
 	");
-$this->title = 'Trans Opencloses';
+$this->title = 'Mutasi';
 $this->params['breadcrumbs'][] = $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+    'homeLink' => [
+        'label' => Html::encode(Yii::t('yii', 'Home')),
+        'url' => Yii::$app->homeUrl,
+    ],
+    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     
 	$aryStt= [
@@ -80,9 +90,9 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	
 	$aryFieldTmp= [		  
-		['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','SIZE' => '180px','label'=>'Toko','align'=>'left','mergeHeader'=>false,'FILTER'=>true,'filterColspn'=>0,'FILTER'=>ArrayHelper::map(TransOpenclose::find()->where(['ACCESS_GROUP'=>$user])->groupBy(['STORE_ID'])->orderBy(['STORE_ID'=>SORT_DESC])->all(),'STORE_ID','storeNm'),]],		  
-		['ID' =>1, 'ATTR' =>['FIELD'=>'TGL_OPEN','SIZE' => '6px','label'=>'Waktu Buka','align'=>'center','mergeHeader'=>false,'FILTER'=>true,'filterColspn'=>2]],	
-		['ID' =>2, 'ATTR' =>['FIELD'=>'TGL_CLOSE','SIZE' => '6px','label'=>'Waktu Tutup','align'=>'center','mergeHeader'=>true,'FILTER'=>false,'filterColspn'=>0]],
+		['ID' =>0, 'ATTR' =>['FIELD'=>'STORE_ID','SIZE' => '180px','label'=>'TOKO','align'=>'left','mergeHeader'=>false,'FILTER'=>true,'filterColspn'=>0,'FILTER'=>ArrayHelper::map(TransOpenclose::find()->where(['ACCESS_GROUP'=>$user])->groupBy(['STORE_ID'])->orderBy(['STORE_ID'=>SORT_DESC])->all(),'STORE_ID','storeNm'),]],		  
+		['ID' =>1, 'ATTR' =>['FIELD'=>'TGL_OPEN','SIZE' => '6px','label'=>'WAKTU BUKA','align'=>'center','mergeHeader'=>false,'FILTER'=>true,'filterColspn'=>2]],	
+		['ID' =>2, 'ATTR' =>['FIELD'=>'TGL_CLOSE','SIZE' => '6px','label'=>'WAKTU TUTUP','align'=>'center','mergeHeader'=>true,'FILTER'=>false,'filterColspn'=>0]],
 		//['ID' =>3, 'ATTR' =>['FIELD'=>'STATUS','SIZE' => '6px','label'=>'Status','align'=>'center','mergeHeader'=>true,'FILTER'=>true]]			
 		// ['ID' =>3, 'ATTR' =>['FIELD'=>'CASHINDRAWER','SIZE' => '6px','label'=>'Kas Laci','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
 		// ['ID' =>4, 'ATTR' =>['FIELD'=>'ADDCASH','SIZE' => '6px','label'=>'Kas Tambahan','align'=>'center','mergeHeader'=>true,'FILTER'=>true]],	
@@ -92,7 +102,7 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 		
 	];	
 	$valFieldsTmp = ArrayHelper::map($aryFieldTmp, 'ID', 'ATTR'); 
-	$bColor='rgba(87,114,111, 1)';
+	$bColor='rgb(76, 131, 255)';
 	$attLapOpenClosing[] =[			
 		'class'=>'kartik\grid\SerialColumn',
 		'contentOptions'=>['class'=>'kartik-sheet-style'],
@@ -177,7 +187,7 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 				$x=$value[$key]['FIELD'];
 				if($x=='TGL_CLOSE'){
 					if($data->TGL_CLOSE==''){
-						return 'Belum Close';
+						return "BELUM TUTUP";
 					}else{
 						return $data->$x;
 					}
@@ -283,7 +293,7 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 	'panel'=>[
 		//'heading'=>$pageNm.'  '.tombolCreate().' '.tombolExportFormat($paramUrl).' '.tombolUpload().' '.tombolSync(),					
 		//'heading'=>tombolRefresh().' '.tombolClear().' '.tombolCreateTmp().' '.tombolCreatePeriode().' '.tombolExportFormat($paramUrl).' -> '.tombolUpload().' -> '.tombolSync().' '.$perode,					
-		'heading'=>'Laporan Mutasi dan Setoran',
+		'heading'=>'<b>Laporan Mutasi dan Setoran</b>',
 		'type'=>'info',
 		'after'=>false,
 		'before'=>false,
@@ -317,7 +327,8 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 	if($model){
 		$modelStoran= TransStoran::find()->where(['OPENCLOSE_ID'=>$model->OPENCLOSE_ID])->one();
 	}else{
-		$model=$dataProvider->getModels()[0];
+		// $model=$dataProvider->getModels()[0];
+		$model=new TransOpenclose;
 		
 	};
 	
@@ -337,7 +348,8 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 	//print_r($model);
 
 ?>
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid" >
+<?=$vewBreadcrumb?>
 	<div class="col-xs-8 col-sm-8 col-lg-8" style="font-family: tahoma ;font-size: 9pt;">
 		<div class="row">		
 		<?=$bookCloseOpen?>

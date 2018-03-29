@@ -17,7 +17,7 @@ class MutasiController extends Controller
 		$paramCari=Yii::$app->getRequest()->getQueryParam('id');
         $searchModel = new TransOpencloseSearch(['ACCESS_GROUP'=>$user]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        // print_r($dataProvider);die();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
