@@ -184,7 +184,7 @@ $this->registerJS('
             });
             google.maps.event.addDomListener(window, "load", initAutocomplete);    
             }      
-            $("#databarang-button-row-edit-modal").on("shown.bs.modal", function(){
+            $("#store-button-create-modal").on("shown.bs.modal", function(){
                 initializeMap();
                 });      
             

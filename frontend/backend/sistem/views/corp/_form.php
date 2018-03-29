@@ -189,7 +189,7 @@ $this->registerJS('
             });
             google.maps.event.addDomListener(window, "load", initAutocomplete);    
             }      
-            $("#databarang-button-row-edit-modal").on("shown.bs.modal", function(){
+            $("#edit-modal").on("shown.bs.modal", function(){
                 initializeMap();
                 });     
             
