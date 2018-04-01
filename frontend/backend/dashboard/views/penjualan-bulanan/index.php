@@ -53,6 +53,51 @@ use yii\widgets\Breadcrumbs;
 		],
 	]);
 	$icon2 = '<span class="fa fa-md fa fa-chevron-right text-left"></span>';
+	
+	//==== COMBINASI colum2d Mscombidy2d
+	$viewColumn2d= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/mscombidy2d',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'THN'=>date("Y"),
+		],
+		'type'=>'mscombidy2d',						
+		'renderid'=>'mscombidy2d-bulanan_id1',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'250px',
+	]);	
+	//==== PIE CHART ==
+	$viewPie3d= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/pie3d',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'THN'=>date("Y"),
+		],
+		'type'=>'pie3d',						
+		'renderid'=>'pie3d-bulanan_id1',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'250px',
+	]);	
+	
+	//==== DONAT CHART ==
+	$viewDoughnut3d= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/doughnut3d',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'THN'=>date("Y"),
+		],
+		'type'=>'doughnut3d',						
+		'renderid'=>'viewDoughnut3d-bulanan_id1',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'250px',
+	]);	
+	
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt;">	
@@ -77,11 +122,39 @@ use yii\widgets\Breadcrumbs;
 					<?php //echo = Html::encode($this->title) ?>								
 					<div style="min-height:265px">
 						<div style="height:300px;">
-							<?php "data1"; ?>
+							<?=$viewColumn2d ?>
 						</div>
 					</div>
 								
 				</div>		
+			</div>	
+			<div class="row">
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<div class="row">
+						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+							<div style="min-height:265px">
+								<div style="height:300px;">
+									<div style="padding-top:50px">
+										<?=$viewPie3d ?>
+									</div>
+								</div>
+							</div>
+						</div>								
+					</div>								
+				</div>				
+				<div class="col-sm-8 col-md-8 col-lg-8">	
+					<div class="row">
+						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+							<div style="min-height:265px">
+								<div style="height:300px;">
+									<div style="padding-top:10px">
+										<?=$viewDoughnut3d?>
+									</div>
+								</div>
+							</div>
+						</div>	
+					</div>	
+				</div>
 			</div>			
 		</div>
 		<div class="col-sm-12 col-md-12 col-lg-12" style="padding-bottom:10px;">

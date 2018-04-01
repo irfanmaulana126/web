@@ -43,15 +43,114 @@ use yii\widgets\Breadcrumbs;
 			 'todayHighlight' => true
 		]
 	]);
+	$dataStore=Store::find()->select('STORE_ID,STORE_NM')->where(['ACCESS_GROUP'=>$user])->orderBy(['STORE_ID'=>SORT_ASC])->all();
+	$aryStore[]=['STORE_ID'=>$user,'STORE_NM'=>'ALL'];
+	foreach ($dataStore as $row){
+		$aryStore[]=['STORE_ID'=>$row->STORE_ID,'STORE_NM'=>$row->STORE_NM];
+	}
+		
 	$btn_srchChart2= Select2::widget([
 		'name' => 'state_10',
-		'data' =>  ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'STORE_ID','STORE_NM'),
+		'data' =>  ArrayHelper::map($aryStore,'STORE_ID','STORE_NM'),
 		'options' => ['placeholder' => 'Pilih Toko ...','id'=>'store'],
 		'pluginOptions' => [
 			'allowClear' => true
 		],
 	]);
 	$icon2 = '<span class="fa fa-md fa fa-chevron-right text-left"></span>';
+	
+	//==== BAR AND STAKE CHART ==
+	// $viewStackedbar2d= Chart::Widget([
+		// 'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/stackedbar2d',
+		// 'metode'=>'POST',
+		// 'param'=>[
+			// 'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			// 'THN'=>date("Y"),
+		// ],
+		// 'type'=>'stackedbar2d',						
+		// 'renderid'=>'stackedbar2d-bulanan_id1',				
+		// 'autoRender'=>true,
+		// 'width'=>'100%',
+		// 'height'=>'250px',
+	// ]);	
+	
+	/* ===========================
+	 * === BAR AND STAKE CHART ===
+	 * === Top 10 Produk  QTY  ===
+	 *============================
+	*/
+	$viewTop10Qty= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/produk-charts/top-produk',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'TGL'=>date("Y-m-d"),//'2018-03-01',
+			'PILIH'=>'QTY',
+		],
+		'type'=>'stackedbar2d',						
+		'renderid'=>'top10-qty-produk-id1',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'350px',
+	]);	
+	
+	/* ========================================
+	 * === 		BAR AND STAKE CHART 		===
+	 * === Top 10 Produk  HPP & HARGA JUAL  ===
+	 *=========================================
+	*/
+	$viewTop10HppJual= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/produk-charts/top-produk',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'TGL'=>date("Y-m-d"),//'2018-03-01',
+			'PILIH'=>'HPPJUAL',
+		],
+		'type'=>'stackedbar2d',						
+		'renderid'=>'top10-hppjual-produk_id1',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'350px',
+	]);	
+	
+	/* ===========================
+	 * === BAR AND STAKE CHART ===
+	 * === Down 10 Produk      ===
+	 *============================
+	*/
+	// $viewDown10= Chart::Widget([
+		// 'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/stackedbar2d',
+		// 'metode'=>'POST',
+		// 'param'=>[
+			// 'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			// 'THN'=>date("Y"),
+		// ],
+		// 'type'=>'stackedbar2d',						
+		// 'renderid'=>'down10-produk_id1',				
+		// 'autoRender'=>true,
+		// 'width'=>'100%',
+		// 'height'=>'250px',
+	// ]);	
+	
+	/* ===========================
+	 * === BAR AND STAKE CHART ===
+	 * === Buffer Stok Produk  ===
+	 *============================
+	*/
+	// $viewBufferStock= Chart::Widget([
+		// 'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/stackedbar2d',
+		// 'metode'=>'POST',
+		// 'param'=>[
+			// 'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			// 'THN'=>date("Y"),
+		// ],
+		// 'type'=>'stackedbar2d',						
+		// 'renderid'=>'bufferstock-produk_id1',				
+		// 'autoRender'=>true,
+		// 'width'=>'100%',
+		// 'height'=>'400px',
+	// ]);	
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt;">	
@@ -76,11 +175,54 @@ use yii\widgets\Breadcrumbs;
 					<?php //echo = Html::encode($this->title) ?>								
 					<div style="min-height:265px">
 						<div style="height:300px;">
-							<?php "data1"; ?>
+							<?php //=$viewStackedbar2d; ?>
 						</div>
 					</div>
 								
 				</div>		
+			</div>
+			<div class="row">
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div class="row">
+						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+							<div style="min-height:265px">
+								<div style="height:350px;">
+									<div style="padding-top:0px">
+										<?=$viewTop10Qty?>
+									</div>
+								</div>
+							</div>
+						</div>								
+					</div>								
+				</div>				
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div class="row">
+						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+							<div style="min-height:265px">
+								<div style="height:350px;">
+									<div style="padding-top:0px">
+										<?=$viewTop10HppJual?>
+									</div>
+								</div>
+							</div>
+						</div>								
+					</div>								
+				</div>					
+			</div>	
+			<div class="row">
+				<div class="col-sm-6 col-md-6 col-lg-6">
+					<div class="row">
+						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+							<div style="min-height:265px">
+								<div style="height:300px;">
+									<div style="padding-top:0px">
+										<?php //=$viewBufferStock?>
+									</div>
+								</div>
+							</div>
+						</div>								
+					</div>								
+				</div>						
 			</div>			
 		</div>
 		<div class="col-sm-12 col-md-12 col-lg-12" style="padding-bottom:10px;">
@@ -108,3 +250,101 @@ use yii\widgets\Breadcrumbs;
 			</div>
 		</div>
 </div>
+<div id="loaderPtr"></div>
+<?php
+
+	$this->registerJs("
+		$('#tanggal, #store').change(function() { 
+			// ==FILTER DATA ==
+			var tgl,storeId,accessGroup='';
+			var tgl = document.getElementById('tanggal').value;
+			var storeId = document.getElementById('store').value;
+			var store = storeId.split('.');
+			var accessGroup = store[0];
+			//console.log('ACCESS_GROUP='+accessGroup+';STORE_ID='+storeId+';TGL='+tgl);
+			
+			if ((tgl!=='') && (storeId!=='')) {
+				
+				//=== INIT FUSIONCHAT TOP 100 QTY ===
+				var ptrProdukQtyTop = document.getElementById('top10-qty-produk-id1');
+				var spnIdProdukQtyTop= ptrProdukQtyTop.getElementsByTagName('span');
+				var chartIdProdukQtyTop= spnIdProdukQtyTop[0].id; 
+				//console.log(ptrProdukQtyTop);
+				var updateChartProdukQtyTop = document.getElementById(chartIdProdukQtyTop);
+				//==AJAX POST DATA [PRODUK TRANSAKSI]===
+				$.ajax({
+					  url: 'https://production.kontrolgampang.com/laporan/produk-charts/top-produk',
+					  type: 'POST',
+					  data: {'ACCESS_GROUP':accessGroup,'STORE_ID':storeId,'TGL':tgl,'PILIH':'QTY'},
+					  dataType:'json',
+					  success: function(data) {
+							//alert(data['dataset'][0]['data']);
+							//console.log(data['dataset'][0]['data']);
+							//=== RESIZE ===
+							//var dataget =data['dataset'][0]['data'];				
+							//alert(dataget.length);
+							//var cnt=dataget.length<5?5:dataget.length;
+							//alert(cnt);
+							//updateChartProdukQtyTop.style.height=(cnt*30)+'px';
+							
+							//===UPDATE CHART ====
+							if (data['dataset'][0]['data']!==''){							
+								updateChartProdukQtyTop.setChartData({
+									chart: data['chart'],
+									categories: data['categories'],
+									dataset: data['dataset']
+								});	
+							}else{
+								updateChartProdukQtyTop.style.height='150px';
+								updateChartProdukQtyTop.setChartData({
+									chart: data['chart'],
+									categories: data['categories'],
+									data:[{}]
+								});						
+							}					
+					  }			   
+				}); 
+				
+				//=== INIT FUSIONCHAT TOP 100 HPP & HARGA JUAL ===
+				var ptrProdukQtyTopHppJual = document.getElementById('top10-hppjual-produk_id1');
+				var spnIdProdukQtyTopHppJual= ptrProdukQtyTopHppJual.getElementsByTagName('span');
+				var chartIdProdukQtyTopHppJual= spnIdProdukQtyTopHppJual[0].id; 
+				//console.log(ptrProdukQtyTopHppJual);
+				var updateChartProdukQtyTopHppJual = document.getElementById(chartIdProdukQtyTopHppJual);
+				//==AJAX POST DATA [PRODUK TRANSAKSI]===
+				$.ajax({
+					  url: 'https://production.kontrolgampang.com/laporan/produk-charts/top-produk',
+					  type: 'POST',
+					  data: {'ACCESS_GROUP':accessGroup,'STORE_ID':storeId,'TGL':tgl,'PILIH':'HPPJUAL'},
+					  dataType:'json',
+					  success: function(data) {
+							//alert(data['dataset'][0]['data']);
+							//console.log(data['dataset'][0]['data']);
+							//=== RESIZE ===
+							//var dataget =data['dataset'][0]['data'];				
+							//alert(dataget.length);
+							//var cnt=dataget.length<5?5:dataget.length;
+							//alert(cnt);
+							//updateChartProdukQtyTopHppJual.style.height=(cnt*30)+'px';
+							
+							//===UPDATE CHART ====
+							if (data['dataset'][0]['data']!==''){							
+								updateChartProdukQtyTopHppJual.setChartData({
+									chart: data['chart'],
+									categories: data['categories'],
+									dataset: data['dataset']
+								});	
+							}else{
+								updateChartProdukQtyTopHppJual.style.height='150px';
+								updateChartProdukQtyTopHppJual.setChartData({
+									chart: data['chart'],
+									categories: data['categories'],
+									data:[{}]
+								});						
+							}					
+					  }			   
+				}); 
+			};     
+		});
+	",View::POS_READY);
+?>

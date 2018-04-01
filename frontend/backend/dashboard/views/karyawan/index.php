@@ -52,6 +52,36 @@ use yii\widgets\Breadcrumbs;
 		],
 	]);
 	$icon2 = '<span class="fa fa-md fa fa-chevron-right text-left"></span>';
+	
+	//=LINE IMAGE
+	$viewLineImage= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/line-img',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'THN'=>date("Y"),
+		],
+		'type'=>'line',						
+		'renderid'=>'line-karyawan-id1',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'250px',
+	]);	
+	
+	//=LINE IMAGE
+	$viewColumn2dImage= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/column2d-image',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'THN'=>date("Y"),
+		],
+		'type'=>'column2d',						
+		'renderid'=>'column2d-karyawan-id1',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'250px',
+	]);	
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt;">	
@@ -76,7 +106,18 @@ use yii\widgets\Breadcrumbs;
 					<?php //echo = Html::encode($this->title) ?>								
 					<div style="min-height:265px">
 						<div style="height:300px;">
-							<?php "data1"; ?>
+							<?=$viewLineImage ?>
+						</div>
+					</div>
+								
+				</div>		
+			</div>		
+			<div class="row">
+				<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+					<?php //echo = Html::encode($this->title) ?>								
+					<div style="min-height:265px">
+						<div style="height:300px;">
+							<?=$viewColumn2dImage ?>
 						</div>
 					</div>
 								
