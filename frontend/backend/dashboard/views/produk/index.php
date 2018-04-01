@@ -207,8 +207,9 @@ use yii\widgets\Breadcrumbs;
 		'type'=>'stackedbar2d',						
 		'renderid'=>'level-buffer-produk-qty',				
 		'autoRender'=>true,
-		'width'=>'100%',
-		'height'=>'350px',
+		'autoResize'=>true,
+		// 'width'=>'100%',
+		// 'height'=>'350px',		
 	]);	
 	/* ===== LEVEL BUFFER PRODUK HPP&HARGAJUAL =====
 	 * === 		   BAR AND STAKE CHART 	  		 ===
@@ -226,8 +227,9 @@ use yii\widgets\Breadcrumbs;
 		'type'=>'stackedbar2d',						
 		'renderid'=>'level-buffer-produk-hppjual',				
 		'autoRender'=>true,
-		'width'=>'100%',
-		'height'=>'350px',
+		'autoResize'=>true,
+		// 'width'=>'100%',
+		// 'height'=>'350px',
 	]);	
 	
 	
@@ -249,7 +251,7 @@ use yii\widgets\Breadcrumbs;
 						<div class="pull-right" style='padding-bottom:3px;width:200px;float:left;padding-left:5px'><?=$btn_srchChart2?></div>									
 				</div>	
 			
-			</div>	
+			</div>				
 			<!-- TOP PRODUK - MONTHLY !-->
 			<div class="row">
 				<div class="col-sm-6 col-md-6 col-lg-6">
@@ -336,14 +338,14 @@ use yii\widgets\Breadcrumbs;
 						</div>								
 					</div>								
 				</div>					
-			</div>		
+			</div>
 			<!-- LEVEL BUFFER PRODUK!-->
 			<div class="row">
 				<div class="col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
 							<div style="min-height:265px">
-								<div style="height:350px;">
+								<div style="height:100%;">
 									<div style="padding-top:0px">
 										<?=$viewLeverBufferProdukQty?>
 									</div>
@@ -356,7 +358,7 @@ use yii\widgets\Breadcrumbs;
 					<div class="row">
 						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
 							<div style="min-height:265px">
-								<div style="height:350px;">
+								<div style="height:100%;">
 									<div style="padding-top:0px">
 										<?=$viewLeverBufferProdukHppJual?>
 									</div>
@@ -365,7 +367,7 @@ use yii\widgets\Breadcrumbs;
 						</div>								
 					</div>								
 				</div>					
-			</div>
+			</div>			
 		</div>
 </div>
 <div id="loaderPtr"></div>
@@ -639,11 +641,11 @@ use yii\widgets\Breadcrumbs;
 							//alert(data['dataset'][0]['data']);
 							//console.log(data['dataset'][0]['data']);
 							//=== RESIZE ===
-							//var dataget =data['dataset'][0]['data'];				
+							var dataget =data['dataset'][0]['data'];				
 							//alert(dataget.length);
-							//var cnt=dataget.length<5?5:dataget.length;
+							var cnt=dataget.length<5?5:dataget.length;
 							//alert(cnt);
-							//updateLBufferChartProdukQty.style.height=(cnt*30)+'px';
+							updateLBufferChartProdukQty.style.height=(cnt*30)+'px';
 							
 							//===UPDATE CHART ====
 							if (data['dataset'][0]['data']!==''){							
@@ -679,11 +681,11 @@ use yii\widgets\Breadcrumbs;
 							//alert(data['dataset'][0]['data']);
 							//console.log(data['dataset'][0]['data']);
 							//=== RESIZE ===
-							//var dataget =data['dataset'][0]['data'];				
+							var dataget =data['dataset'][0]['data'];				
 							//alert(dataget.length);
-							//var cnt=dataget.length<5?5:dataget.length;
+							var cnt=dataget.length<5?5:dataget.length;
 							//alert(cnt);
-							//updateLBufferChartProdukQtyHppJual.style.height=(cnt*30)+'px';
+							updateLBufferChartProdukQtyHppJual.style.height=(cnt*30)+'px';
 							
 							//===UPDATE CHART ====
 							if (data['dataset'][0]['data']!==''){							
