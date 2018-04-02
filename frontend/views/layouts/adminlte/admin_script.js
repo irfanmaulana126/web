@@ -30,3 +30,7 @@ $(document).on('click','#edit', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+$('#edit-modal').on('hidden.bs.modal', function (e) {
+	// reload page when modal closed
+	location.reload(true);
+  });

@@ -229,6 +229,8 @@ class StockMasukController extends Controller
 			$searchModel = new StockMasukSearch($cari);
 			$dataProvider = $searchModel->searchExport(Yii::$app->request->queryParams);
 			//LOAD DEFAULT INDEX
+			$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+		
 			$dinamikField=$dataProvider->allModels;
 		
 		$headerMerge[]=['DATA_PRODUK'=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'15']];
@@ -290,7 +292,7 @@ class StockMasukController extends Controller
                'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
 			],
 		];
-		$excel_file = "ProdukStockMasuk";
+		$excel_file = "ProdukStockMasuk".$user."";
 		$this->export4excel($excel_content, $excel_file,0);
 		}else {
 			return $this->renderAjax('form_cari_export',[
