@@ -18,12 +18,15 @@ $this->registerJs("
 
 $(document).ready(function() {
 	$('#hitung').change(function(){
-	var hpp=parseInt($('#productharga-hpp').val())
-	var ppn=parseInt($('#productharga-ppn').val());
+    var hpp=parseInt($('#productharga-hpp').val());
+    var ppn=parseInt($('#productharga-ppn').val());
     var margin=parseInt($('#margin').val());
-	var hppbersih=hpp+margin;
-	$('#productharga-harga_jual-disp').val(hppbersih);
-	$('#productharga-harga_jual').val(hppbersih);
+    var hppbersih=hpp+margin;
+    if (!isNaN(hppbersih)) {
+        $('#productharga-harga_jual-disp').val(hppbersih);
+        $('#productharga-harga_jual').val(hppbersih);
+     }
+	
 	});
 });
 ");
@@ -225,10 +228,10 @@ $gvAttProdakHargaItem=[
 						]
 					]
 				])->widget(DatePicker::classname(), [
-                    'value'=>$date1,
+                    
                     'attribute2' => 'PERIODE_TGL2',
-                        'value2'=>$date2,
-                        'options' => ['placeholder' => 'Tanggal Awal'],
+                        
+                        'options' => ['placeholder' => 'Tanggal Awal','value'=>$date],
                         'options2' => ['placeholder' => 'Tanggal Akhir'],
                         'type' => DatePicker::TYPE_RANGE,
                         'form' => $form,
@@ -249,7 +252,7 @@ $gvAttProdakHargaItem=[
 						]
 					]
 				])->widget(MaskMoney::classname(), [
-                            'options' => ['placeholder' => 'HPP ...','style'=>';width: 315px;border-radius: 0px 5px 5px 0px;'],
+                            'options' => ['placeholder' => 'HPP ...','style'=>';width: 315px;border-radius: 0px 5px 5px 0px;','onkeyup'=>'sum();'],
                             'pluginOptions'=>[
                                 'prefix'=>'Rp ',
                                 'precision' => 0
@@ -264,7 +267,7 @@ $gvAttProdakHargaItem=[
 					]
 				])->widget(MaskMoney::classname(), [
 		'options' => [
-					'placeholder' => 'Margin Harga ...','style'=>';width: 315px;border-radius: 0px 5px 5px 0px;',
+					'placeholder' => 'Margin Harga ...','style'=>';width: 315px;border-radius: 0px 5px 5px 0px;','onkeyup'=>'sum();',
 					'class' => 'form-control',
 					'id'=>'margin',
 				],'pluginOptions' => [
