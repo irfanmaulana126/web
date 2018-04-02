@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 use ptrnov\fusionchart\Chart;
 
 
-class PerubahanProdukController extends Controller
+class PenjualanHarianController extends Controller
 {
 	
 	public function beforeAction($action){

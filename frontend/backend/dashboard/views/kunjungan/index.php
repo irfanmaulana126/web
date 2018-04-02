@@ -53,6 +53,37 @@ use yii\widgets\Breadcrumbs;
 	]);
 
 	$icon2 = '<span class="fa fa-md fa fa-chevron-right text-left"></span>';
+	
+	//=ANGULARGAUGE
+	$viewAngulargauge= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/angulargauge',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'THN'=>date("Y"),
+		],
+		'type'=>'angulargauge',						
+		'renderid'=>'angulargauge-id',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'200px',
+	]);	
+	//=LINE CHART
+	$viewLine= Chart::Widget([
+		//'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/line',
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/frek-trans-day-store',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'THN'=>date("Y"),
+		],
+		'type'=>'msline',						
+		'renderid'=>'msline-id2',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'200px',
+	]);	
+	
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt;">	
@@ -73,16 +104,33 @@ use yii\widgets\Breadcrumbs;
 			
 			</div>	
 			<div class="row">
-				<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
-					<?php //echo = Html::encode($this->title) ?>								
-					<div style="min-height:265px">
-						<div style="height:300px;">
-							<?php "data1"; ?>
-						</div>
-					</div>
-								
-				</div>		
-			</div>			
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<div class="row">
+						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+							<div style="min-height:265px">
+								<div style="height:300px;">
+									<div style="padding-top:50px">
+										<?=$viewAngulargauge?>
+									</div>
+								</div>
+							</div>
+						</div>								
+					</div>								
+				</div>				
+				<div class="col-sm-8 col-md-8 col-lg-8">	
+					<div class="row">
+						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+							<div style="min-height:265px">
+								<div style="height:300px;">
+									<div style="padding-top:10px">
+										<?=$viewLine?>
+									</div>
+								</div>
+							</div>
+						</div>	
+					</div>	
+				</div>
+			</div>
 		</div>
 		<div class="col-sm-12 col-md-12 col-lg-12" style="padding-bottom:10px;">
 			<div class="row">
