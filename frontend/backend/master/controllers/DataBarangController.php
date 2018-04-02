@@ -148,7 +148,7 @@ class DataBarangController extends Controller
                 $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID,'STATUS'=>1]);
             }
             $dataProviderPromo = $searchModelPromo->search(Yii::$app->request->queryParams);
-            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user,'STATUS'=>1]);
             // print_r($product);die();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('_index_promo', [
@@ -177,7 +177,7 @@ class DataBarangController extends Controller
                 $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID,'STATUS'=>1]);
             }
             $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
-            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user,'STATUS'=>1]);
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('_index_harga', [
                 'searchModel'=>$searchModel,
@@ -205,7 +205,7 @@ class DataBarangController extends Controller
                 $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID,'STATUS'=>1]);
             }
             $dataProviderStock = $searchModelStock->search(Yii::$app->request->queryParams);
-            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user,'STATUS'=>1]);
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('_index_stock', [
                 'searchModel'=>$searchModel,
