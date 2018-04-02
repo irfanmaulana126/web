@@ -280,8 +280,8 @@ $gvAttProdakHargaItem=[
 						]
 					]
 				])->widget(MaskMoney::classname(), [
-                'options' => ['placeholder' => 'Harga Barang ...','style'=>';width: 315px;border-radius: 0px 5px 5px 0px;'],
-                'disabled' => true,
+                'options' => ['placeholder' => 'Harga Barang ...','style'=>';width: 315px;border-radius: 0px 5px 5px 0px;','readonly'=>TRUE],
+                // 'disabled' => true,
                 'pluginOptions'=>[
                     'prefix'=>'Rp ',
                     'precision' => 0

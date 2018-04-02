@@ -99,6 +99,7 @@ class SupplierController extends Controller
 
             $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
             $model->ACCESS_GROUP=$user;
+            $model->STATUS=1;
             $model->save(false);
             return $this->redirect(array('/master/data-barang/index-supplier'));
         }

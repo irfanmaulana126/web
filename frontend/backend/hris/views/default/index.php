@@ -79,7 +79,7 @@ $this->registerJs($this->render('presensi.js'),View::POS_READY);
             <div class="col-md-12 w3-card-2 w3-round w3-white">
                 <h3>Setelan Persensi</h3>
                 <p>Pengaturan anda terhadap penggajian pegawai anda.</p>
-                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/absen-rekap']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+                <?=Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/hris/setelan-presensi']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
             </div>
         </div>      
         <div class="col-md-6">

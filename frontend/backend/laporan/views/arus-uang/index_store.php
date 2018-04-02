@@ -10,11 +10,21 @@ use common\models\Store;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
+use yii\widgets\Breadcrumbs;
 /* @var $this yii\web\View */
 /* @var $searchModel frontend\backend\laporan\models\JurnalTemplateTitleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title="Ringkasan Arus Keuangan Per-Toko";
+$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+	$this->params['breadcrumbs'][] =  $this->title;
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
 $this->registerJs("
 	//var x = document.getElementById('tahun').value;
 	//console.log(x);
@@ -62,7 +72,8 @@ $retVal = (empty($store->STORE_NM)) ? '' : $store->STORE_NM ;
 $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 ?>
 <div class="jurnal-template-title-index">
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid">
+<?=$vewBreadcrumb ?>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">
 		<div class="col-xs-12 col-sm-12 col-lg-12">
@@ -91,20 +102,20 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 			</div>	
 			<div style="float:right">
 				<?php
-				$title= Yii::t('app','');
-				$url = Url::toRoute(['/laporan/arus-uang']);
-				$options1 = [
-							'id'=>'back-trafik',
-							'class'=>"btn btn-xs",
-							'title'=>'Kembali Menu Laporan'
-				];
-				$icon1 = '<span class="fa-stack fa-md text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
-						  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
-						  </span>
-						  ';
-						  $label1 = $icon1.' '.$title ;
-						  echo $content = Html::a($label1,$url,$options1);
+				// $title= Yii::t('app','');
+				// $url = Url::toRoute(['/laporan/arus-uang']);
+				// $options1 = [
+				// 			'id'=>'back-trafik',
+				// 			'class'=>"btn btn-xs",
+				// 			'title'=>'Kembali Menu Laporan'
+				// ];
+				// $icon1 = '<span class="fa-stack fa-md text-left">
+				// 		  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
+				// 		  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
+				// 		  </span>
+				// 		  ';
+				// 		  $label1 = $icon1.' '.$title ;
+				// 		  echo $content = Html::a($label1,$url,$options1);
 						  ?>	
 			</div>	
 				

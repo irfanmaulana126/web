@@ -430,6 +430,7 @@ class DataBarangController extends Controller
             $model->STORE_ID=$STORE_ID;
             date_default_timezone_set('Asia/Jakarta');
             $model->START_TIME=date('H:i:s');
+            
             // print_r($model);die();
            if ($model->save(false)) {
             Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");

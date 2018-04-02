@@ -39,8 +39,19 @@ $this->registerCss("
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
 ");	
-
-	$this->title="Detail Ringkasan Arus Keuangan Per-Toko";
+	$incTmp=0;
+	$splt=0;
+	$this->title="Detail Ringkasan Arus Keuangan Toko ".strtoupper($store->STORE_NM)."";
+	$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+	$this->params['breadcrumbs'][] = ['label'=>'Ringkasan Arus Keuangan Per-Toko', 'url' => ['/laporan/arus-uang/store-arus?tgl='.date('Y-m').'']];
+	$this->params['breadcrumbs'][] =  $this->title;
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<b>PRODUCT</b>
@@ -635,7 +646,8 @@ $this->registerCss("
 	]); 	
 ?>
 <div class="jurnal-template-title-index">
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid">
+<?=$vewBreadcrumb?>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 	<?php	$title= Yii::t('app','');
 			$url = Url::toRoute(['/laporan/arus-uang/store-arus']);

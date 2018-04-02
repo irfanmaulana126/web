@@ -81,7 +81,7 @@ if(!empty($model['LATITUDE'])&&!empty($model['LONGITUDE'])){
 $this->registerJS('
             var map;
             var marker;
-            function initMap(){
+            function initAutocomplete(){
                 
                 var myLatlng = '.$data.'; 
                 var geocoder = new google.maps.Geocoder();
