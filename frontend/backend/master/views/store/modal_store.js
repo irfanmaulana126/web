@@ -9,6 +9,7 @@
 /*
  * BUTTON CREATE
 */
+
 $("#store-button-restore-modal").on("shown", function () {
     google.maps.event.trigger(map, "resize");
 });
@@ -21,6 +22,10 @@ $(document).on('click','#store-button-create', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+$('#store-button-create-modal').on('hidden.bs.modal', function (e) {
+	// reload page when modal closed
+	location.reload(true);
+  });
 /*
  * BUTTON update
 */
@@ -32,6 +37,7 @@ $(document).on('click','#store-button-edit', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+
 /*
  * deepdrop
 */
@@ -121,7 +127,10 @@ $(document).on('click','#databarang-button-row-edit', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
-
+$('#databarang-button-row-edit-modal').on('hidden.bs.modal', function (e) {
+	// reload page when modal closed
+	location.reload(true);
+  });
 /*
  * BUTTON Discount KARYAWAN
 */

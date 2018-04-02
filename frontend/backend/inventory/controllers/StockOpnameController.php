@@ -178,6 +178,8 @@ class StockOpnameController extends Controller
 		
 		// print_r(!empty($excel_titleProdukStokdownload));
 		// die();
+		$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+		
 		if (!empty($excel_titleProdukStokdownload)) {
 			
 		//DATA IMPORT
@@ -215,7 +217,7 @@ class StockOpnameController extends Controller
 		];
 		// print_r($excel_content);
 		// die();
-		$excel_filedownload = "Stock Opname After Closing";
+		$excel_filedownload = "Stock Opname After Closing ".$user."";
 		$this->export4excel($excel_contentdownload, $excel_filedownload,0);
 		} else {
 			Yii::$app->session->setFlash('error', "Tidak ada data pada tanggal ini");
@@ -304,7 +306,8 @@ class StockOpnameController extends Controller
 		$searchModel = new ProductStockClosingSearch(['TAHUN'=>$date['0'],'BULAN'=>$date['1']]);
         $dataProvider = $searchModel->searchExport(Yii::$app->request->queryParams);
 		$dinamikField=$dataProvider->allModels;
-
+		$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+		
 		$excel_dataProdukStok = Postman4ExcelBehavior::excelDataFormat($dinamikField);
         $excel_titleProdukStok = $excel_dataProdukStok['excel_title'];
         $excel_ceilsProdukStok = $excel_dataProdukStok['excel_ceils'];
@@ -354,7 +357,7 @@ class StockOpnameController extends Controller
 		];
 		// print_r($excel_content);
 		// die();
-		$excel_file = "Stock Opname Closing fix";
+		$excel_file = "Stock Opname Closing fix".$user."";
 		$this->export4excel($excel_content, $excel_file,0);
 		}else{
 			return $this->renderAjax('form_cari_export',[

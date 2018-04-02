@@ -81,7 +81,7 @@ if(!empty($model['LATITUDE'])&&!empty($model['LONGITUDE'])){
 $this->registerJS('
             var map;
             var marker;
-            function initMap(){
+            function initAutocomplete(){
                 
                 var myLatlng = '.$data.'; 
                 var geocoder = new google.maps.Geocoder();
@@ -223,7 +223,7 @@ $this->registerJS('
 				])->widget(Select2::classname(), [
             'data' => ArrayHelper::map(IndustryGroup::find()->all(),'INDUSTRY_GRP_ID','INDUSTRY_GRP_NM'),
             'language' => 'en',
-            'options' => ['placeholder' => 'Select a state ...','id'=>'industri-grp-id','style'=>'width: 172px;'],
+            'options' => ['placeholder' => 'Select','id'=>'industri-grp-id','style'=>'width: 172px;'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
