@@ -56,17 +56,17 @@ use yii\widgets\Breadcrumbs;
 	
 	//==== COMBINASI colum2d Mscombidy2d
 	$viewColumn2d= Chart::Widget([
-		'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/mscombidy2d',
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/detail-sales-bulanan',
 		'metode'=>'POST',
 		'param'=>[
 			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
-			'THN'=>date("Y"),
+			'TGL'=>date("Y-m-d"),
 		],
 		'type'=>'mscombidy2d',						
 		'renderid'=>'mscombidy2d-bulanan_id1',				
 		'autoRender'=>true,
 		'width'=>'100%',
-		'height'=>'250px',
+		'height'=>'300px',
 	]);	
 	//==== PIE CHART ==
 	$viewPie3d= Chart::Widget([
@@ -182,3 +182,4 @@ use yii\widgets\Breadcrumbs;
 			</div>
 		</div>
 </div>
+<div id="loaderPtr"></div>
