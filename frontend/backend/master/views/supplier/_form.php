@@ -16,8 +16,8 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'SUPPLIER_NM',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span >NAMA</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+							'content'=>'<span >SUPPLIER</span>',
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
 						]
 					]
 				])->textInput(['maxlength' => true])->label(false) ?>
@@ -26,7 +26,7 @@ use yii\widgets\MaskedInput;
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >PIC</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
 						]
 					]
 				])->textInput(['maxlength' => true])->label(false) ?>
@@ -35,7 +35,7 @@ use yii\widgets\MaskedInput;
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >EMAIL</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
 						]
 					]
 				])->widget(MaskedInput::classname(),['clientOptions' => [
@@ -46,7 +46,7 @@ use yii\widgets\MaskedInput;
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >NO_TLP</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
 						]
 					]
 				])->widget(MaskedInput::classname(),
@@ -56,7 +56,7 @@ use yii\widgets\MaskedInput;
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >PHONE</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
 						]
 					]
 				])->widget(MaskedInput::classname(),
@@ -66,7 +66,7 @@ use yii\widgets\MaskedInput;
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span >ALAMAT</span>',
-							'options'=>['style' =>' background-color: lightblue;text-align:right;width: 80px;']
+							'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width: 80px;']
 						]
 					]
 				])->textInput(['maxlength' => true])->label(false) ?>

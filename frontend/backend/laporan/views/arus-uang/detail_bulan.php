@@ -41,6 +41,16 @@ $this->registerCss("
 ");	
 
 	$this->title="Detail Ringkasan Arus Keuangan";
+	$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+	$this->params['breadcrumbs'][] = ['label'=>'Arus Uang', 'url' => ['/laporan/arus-uang']];
+	$this->params['breadcrumbs'][] =  $this->title;
+	$vewBreadcrumb=Breadcrumbs::widget([
+		'homeLink' => [
+			'label' => Html::encode(Yii::t('yii', 'Home')),
+			'url' => Yii::$app->homeUrl,
+		],
+		'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+	]);
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<b>PRODUCT</b>
@@ -52,7 +62,8 @@ $this->registerCss("
 	$dinamikField=$dataProvider->getModels();
 	//$tanggal=$dinamikField[0]['TAHUN'].'-'.$dinamikField[0]['BULAN'].'-01';
 	
-	
+	$incTmp=0;
+	$splt=0;
 	$attDinamikField[] =[			
 			'class'=>'kartik\grid\SerialColumn',
 			'contentOptions'=>['class'=>'kartik-sheet-style'],
@@ -636,22 +647,24 @@ $this->registerCss("
 	]); 	
 ?>
 <div class="jurnal-template-title-index">
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid">
+	<?=$vewBreadcrumb?>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
-	<?php 		$title= Yii::t('app','');
-				$url = Url::toRoute(['/laporan/arus-uang']);
-				$options1 = [
-							'id'=>'back-trafik',
-							'class'=>"btn btn-xs",
-							'title'=>'Kembali Menu Laporan'
-				];
-				$icon1 = '<span class="fa-stack fa-md text-left">
-						  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
-						  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
-						  </span>
-						  ';
-						  $label1 = $icon1.' '.$title ;
-						  echo $content = Html::a($label1,$url,$options1);
+	<?php 		
+	// $title= Yii::t('app','');
+	// 			$url = Url::toRoute(['/laporan/arus-uang']);
+	// 			$options1 = [
+	// 						'id'=>'back-trafik',
+	// 						'class'=>"btn btn-xs",
+	// 						'title'=>'Kembali Menu Laporan'
+	// 			];
+	// 			$icon1 = '<span class="fa-stack fa-md text-left">
+	// 					  <b class="fa fa-circle fa-stack-2x" style="color:black"></b>
+	// 					  <b class="fa fa fa fa-mail-reply fa-stack-1x" style="color:white"></b>
+	// 					  </span>
+	// 					  ';
+	// 					  $label1 = $icon1.' '.$title ;
+	// 					  echo $content = Html::a($label1,$url,$options1);
 						  ?>
 		<div class="row">	
 			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	

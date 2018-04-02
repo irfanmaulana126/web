@@ -150,6 +150,8 @@ class StockProductController extends Controller
 		$searchModel = new CurrentStockSearch(['thn'=>$id."-01"]);
         $dataProvider = $searchModel->searchDayOfMonthStockExport(Yii::$app->request->queryParams);
 		$dinamikField=$dataProvider->allModels;
+		$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+		
 		// print_r($dinamikField);die();
 		if (!empty($dinamikField)){
 				$headerMerge[]=['DATA_PRODUK'=>['font-size'=>'9','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'15']];
@@ -289,7 +291,7 @@ class StockProductController extends Controller
 				];
 				// print_r($excel_content);
 				// die();
-				$excel_file = "ProdukStock";
+				$excel_file = "ProdukStock ".$user."";
 				$this->export4excel($excel_content, $excel_file,0);
 			}else{
 				Yii::$app->session->setFlash('error', "Data Tidak ada");

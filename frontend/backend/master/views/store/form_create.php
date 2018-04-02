@@ -71,7 +71,7 @@ $this->registerCss("
   }	
 ");
 
-$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyB_BOmcuyR1X9XuFy314bhI1KX9IKfoGQA&callback=initAutocomplete&libraries=places',
+$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyCKKW4hf7ggX9ZfhwP0St7Ib4NShYraeSo&callback=initAutocomplete&libraries=places',
 ['depends' => [\yii\web\JqueryAsset::className()]]);
 $this->registerJS('
             var map;
@@ -186,6 +186,7 @@ $this->registerJS('
             }      
             $("#store-button-create-modal").on("shown.bs.modal", function(){
                 initializeMap();
+                location.reload(true);
                 });      
             
 ');
@@ -220,7 +221,7 @@ $this->registerJS('
 				])->widget(Select2::classname(), [
             'data' => ArrayHelper::map(IndustryGroup::find()->all(),'INDUSTRY_GRP_ID','INDUSTRY_GRP_NM'),
             'language' => 'en',
-            'options' => ['placeholder' => 'Select a state ...','id'=>'industri-grp-id','style'=>'width: 172px;'],
+            'options' => ['placeholder' => 'Select...','id'=>'industri-grp-id','style'=>'width: 172px;'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
