@@ -196,7 +196,7 @@ class StoreController extends Controller
         // $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
         $model = $this->findModel($id);
         $model->STATUS ="3";
-        $model->update();
+        $model->save(false);
         // Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
 
         Yii::$app->session->setFlash('success', "Penghapusan Berhasil");
@@ -244,12 +244,13 @@ class StoreController extends Controller
         $items = ArrayHelper::map($datas, 'STORE_ID', 'STORE_NM');
         // print_r($items);die();
 		if ($modelPeriode->load(Yii::$app->request->post())) {
-                $modelPeriode;
-                // print_r($data);die();
+                // $modelPeriode;
+                // print_r($modelPeriode);die();
             foreach ($modelPeriode['STATUS'] as $value) {
                 $datas = Store::findOne(['STORE_ID' => $value]);
-                $datas->STATUS="2";
-                $datas->update();
+                $datas->STATUS=2;
+                // print_r($datas);die();
+                $datas->save(false);
             }
             
 	// $id=Yii::$app->request->cookies;
