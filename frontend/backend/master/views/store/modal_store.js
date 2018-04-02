@@ -33,6 +33,11 @@ $(document).on('click','#store-button-edit', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+
+$('#store-button-edit-modal').on('hidden.bs.modal', function (e) {
+	// reload page when modal closed
+	location.reload(true);
+  });
 /*
  * deepdrop
 */

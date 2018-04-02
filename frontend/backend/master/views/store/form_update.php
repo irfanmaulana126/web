@@ -189,7 +189,7 @@ $this->registerJS('
             });
             google.maps.event.addDomListener(window, "load", initAutocomplete);    
             }      
-            $("#databarang-button-row-edit-modal").on("shown.bs.modal", function(){
+            $("#store-button-edit-modal").on("shown.bs.modal", function(){
                 initializeMap();
                 });     
 ');
@@ -223,7 +223,7 @@ $this->registerJS('
 				])->widget(Select2::classname(), [
             'data' => ArrayHelper::map(IndustryGroup::find()->all(),'INDUSTRY_GRP_ID','INDUSTRY_GRP_NM'),
             'language' => 'en',
-            'options' => ['placeholder' => 'Select a state ...','id'=>'industri-grp-id','style'=>'width: 172px;'],
+            'options' => ['placeholder' => 'Select','id'=>'industri-grp-id','style'=>'width: 172px;'],
             'pluginOptions' => [
                 'allowClear' => true
             ],

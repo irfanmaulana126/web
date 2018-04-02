@@ -109,17 +109,17 @@ class DataBarangController extends Controller
         
 		$paramCari=Yii::$app->getRequest()->getQueryParam('productid');
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->one();
+        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>1])->one();
         if (!empty($product)) {
             if(!empty($paramCari)){
-                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
+                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari,'STATUS'=>1])->one();
                 $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
             }else{
-                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>1])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
                 $searchModelDiscount = new ProductDiscountSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
             }
             $dataProviderDiscount = $searchModelDiscount->search(Yii::$app->request->queryParams);
-            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+            $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user,'STATUS'=>1]);
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('_index_discount', [
                 'searchModel'=>$searchModel,
@@ -137,17 +137,19 @@ class DataBarangController extends Controller
     {
         $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->one();
+        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>1])->one();
+        // print_r($product);die();
         if (!empty($product)) {       
             if(!empty($paramCari)){
-                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
-                $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari,'STATUS'=>1])->one();
+                $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari,'STATUS'=>1]);
             }else{
-                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
-                $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>1])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+                $searchModelPromo = new ProductPromoSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID,'STATUS'=>1]);
             }
             $dataProviderPromo = $searchModelPromo->search(Yii::$app->request->queryParams);
             $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
+            // print_r($product);die();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
             return $this->render('_index_promo', [
                 'searchModel'=>$searchModel,
@@ -165,14 +167,14 @@ class DataBarangController extends Controller
     {
         $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->one();
+        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>1])->one();
         if (!empty($product)) { 
             if(!empty($paramCari)){
-                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
-                $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari,'STATUS'=>1])->one();
+                $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari,'STATUS'=>1]);
             }else{
-                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
-                $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>1])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+                $searchModelHarga = new ProductHargaSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID,'STATUS'=>1]);
             }
             $dataProviderHarga = $searchModelHarga->search(Yii::$app->request->queryParams);
             $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
@@ -193,14 +195,14 @@ class DataBarangController extends Controller
     {
         $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->one();
+        $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>1])->one();
         if (!empty($product)) { 
             if(!empty($paramCari)){
-                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari])->one();
-                $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari]);
+                $product = ProductSearch::find()->where(['PRODUCT_ID'=>$paramCari,'STATUS'=>1])->one();
+                $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$paramCari,'STATUS'=>1]);
             }else{
-                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
-                $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID]);
+                $product = ProductSearch::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>1])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->one();
+                $searchModelStock = new ProductStockSearch(['ACCESS_GROUP'=>$user,'PRODUCT_ID'=>$product->PRODUCT_ID,'STATUS'=>1]);
             }
             $dataProviderStock = $searchModelStock->search(Yii::$app->request->queryParams);
             $searchModel = new ProductSearch(['ACCESS_GROUP'=>$user]);
@@ -220,7 +222,7 @@ class DataBarangController extends Controller
     public function actionIndexSupplier()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $searchModel = new SupplierSearch(['ACCESS_GROUP'=>$user]);
+        $searchModel = new SupplierSearch(['ACCESS_GROUP'=>$user,'STATUS'=>1]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		return $this->render('_index_supplier', [
 			'searchModel'=>$searchModel,
@@ -231,7 +233,7 @@ class DataBarangController extends Controller
     public function actionIndexCustomer()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $searchModel = new CustomerSearch(['ACCESS_GROUP'=>$user]);
+        $searchModel = new CustomerSearch(['ACCESS_GROUP'=>$user,'STATUS'=>1]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		return $this->render('_index_customer', [
 			'searchModel'=>$searchModel,
@@ -241,7 +243,7 @@ class DataBarangController extends Controller
     public function actionIndexGroup()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-        $searchModelGroup = new ProductGroupSearch(['ACCESS_GROUP'=>$user]);
+        $searchModelGroup = new ProductGroupSearch(['ACCESS_GROUP'=>$user,'STATUS'=>1]);
         $dataProviderGroup = $searchModelGroup->search(Yii::$app->request->queryParams);
 		return $this->render('_index_product_group', [
 			'searchModelGroup'=>$searchModelGroup,

@@ -186,6 +186,7 @@ $this->registerJS('
             }      
             $("#store-button-create-modal").on("shown.bs.modal", function(){
                 initializeMap();
+                location.reload(true);
                 });      
             
 ');
@@ -220,7 +221,7 @@ $this->registerJS('
 				])->widget(Select2::classname(), [
             'data' => ArrayHelper::map(IndustryGroup::find()->all(),'INDUSTRY_GRP_ID','INDUSTRY_GRP_NM'),
             'language' => 'en',
-            'options' => ['placeholder' => 'Select a state ...','id'=>'industri-grp-id','style'=>'width: 172px;'],
+            'options' => ['placeholder' => 'Select...','id'=>'industri-grp-id','style'=>'width: 172px;'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
