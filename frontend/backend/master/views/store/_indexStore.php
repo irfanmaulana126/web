@@ -494,7 +494,7 @@ echo $this->render('modal_store'); //echo difinition
 			'type'=>'info',
 			'before'=>false,
 			'after'=>false,
-			'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.$createStore.' '.tombolRestore().'</div>',
+			'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.$createStore.' '.tombolRestore().'</div>',// '.tombolExportExcel().'
 			// 'before'=> tombolReqStore(),
 			'showFooter'=>'aas',
 		], 
