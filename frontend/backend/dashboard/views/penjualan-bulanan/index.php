@@ -37,16 +37,22 @@ use yii\widgets\Breadcrumbs;
 		'convertFormat' => true,
 		'pluginOptions' => [
 			'autoclose'=>true,
-			//'startView'=>'month',
-			//'minViewMode'=>'months',
+			'startView'=>'month',
+			'minViewMode'=>'months',
 			'format' => 'yyyy-M-d',
 			// 'todayHighlight' => true,
-			 'todayHighlight' => true
+			 //'todayHighlight' => true
 		]
 	]);
+	$dataStore=Store::find()->select('STORE_ID,STORE_NM')->where(['ACCESS_GROUP'=>$user])->orderBy(['STORE_ID'=>SORT_ASC])->all();
+	$aryStore[]=['STORE_ID'=>$user,'STORE_NM'=>'ALL'];
+	foreach ($dataStore as $row){
+		$aryStore[]=['STORE_ID'=>$row->STORE_ID,'STORE_NM'=>$row->STORE_NM];
+	}
+		
 	$btn_srchChart2= Select2::widget([
 		'name' => 'state_10',
-		'data' =>  ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'STORE_ID','STORE_NM'),
+		'data' =>  ArrayHelper::map($aryStore,'STORE_ID','STORE_NM'),
 		'options' => ['placeholder' => 'Pilih Toko ...','id'=>'store'],
 		'pluginOptions' => [
 			'allowClear' => true
@@ -63,7 +69,7 @@ use yii\widgets\Breadcrumbs;
 			'TGL'=>date("Y-m-d"),
 		],
 		'type'=>'mscombidy2d',						
-		'renderid'=>'mscombidy2d-bulanan_id1',				
+		'renderid'=>'detail-sales-bulanan',				
 		'autoRender'=>true,
 		'width'=>'100%',
 		'height'=>'300px',
@@ -184,3 +190,59 @@ use yii\widgets\Breadcrumbs;
 		</div>
 </div>
 <div id="loaderPtr"></div>
+<?php
+$this->registerJs("
+		$('#tanggal, #store').change(function() { 
+			// ==FILTER DATA ==
+			var tgl,storeId,accessGroup='';
+			var tgl = document.getElementById('tanggal').value;
+			var storeId = document.getElementById('store').value;
+			var store = storeId.split('.');
+			var accessGroup = store[0];
+			//console.log('ACCESS_GROUP='+accessGroup+';STORE_ID='+storeId+';TGL='+tgl);
+			
+			if ((tgl!=='') && (storeId!=='')) {
+				
+				//=== SALES DETAI HARIAN ===
+				var ptrProdukQtyTop = document.getElementById('detail-sales-bulanan');
+				var spnIdProdukQtyTop= ptrProdukQtyTop.getElementsByTagName('span');
+				var chartIdProdukQtyTop= spnIdProdukQtyTop[0].id; 
+				//console.log(ptrProdukQtyTop);
+				var updateChartProdukQtyTop = document.getElementById(chartIdProdukQtyTop);
+				//==AJAX POST DATA [PRODUK TRANSAKSI]===
+				$.ajax({
+					  url: 'https://production.kontrolgampang.com/laporan/sales-charts/detail-sales-bulanan',
+					  type: 'POST',
+					  data: {'ACCESS_GROUP':accessGroup,'STORE_ID':storeId,'TGL':tgl},
+					  dataType:'json',
+					  success: function(data) {
+							//alert(data['dataset'][0]['data']);
+							//console.log(data['dataset'][0]['data']);
+							//=== RESIZE ===
+							//var dataget =data['dataset'][0]['data'];				
+							//alert(dataget.length);
+							//var cnt=dataget.length<5?5:dataget.length;
+							//alert(cnt);
+							//updateChartProdukQtyTop.style.height=(cnt*30)+'px';
+							
+							//===UPDATE CHART ====
+							if (data['dataset'][0]['data']!==''){							
+								updateChartProdukQtyTop.setChartData({
+									chart: data['chart'],
+									categories: data['categories'],
+									dataset: data['dataset']
+								});	
+							}else{
+								updateChartProdukQtyTop.style.height='150px';
+								updateChartProdukQtyTop.setChartData({
+									chart: data['chart'],
+									categories: data['categories'],
+									data:[{}]
+								});						
+							}					
+					  }			   
+				}); 
+			};     
+		});
+	",View::POS_READY);
+?>
