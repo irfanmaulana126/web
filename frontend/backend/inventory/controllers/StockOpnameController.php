@@ -267,15 +267,31 @@ class StockOpnameController extends Controller
 						Yii::$app->session->setFlash('error', "UNIX_BULAN_ID Kosong");
                         return $this->redirect(['index']);
 					} else {
+						if(is_numeric($rowData[0][3])){
 						$model = ProductStockClosingSearch::find()->where(['UNIX_BULAN_ID'=>$rowData[0][0]])->one();
 						$model->STOCK_INPUT_ACTUAL = $rowData[0][3];
 						$model->update();
+						}else{
+							$dataserror[]=['UNIX_BULAN_ID'=>$rowData[0][0],'STORE_NM'=> $rowData[0][1],'PRODUCT_NM'=> $rowData[0][2],'STOCK_INPUT_ACTUAL'=> $rowData[0][3]];
+						}
 					}
-					// print_r($branch->getErrors());
-					// print_r($rowData);
+					// print_r($model->getErrors());
+					// print_r($dataserror);
 				}
+				// print_r($dataserror);die();
+				$dataProvider = new ArrayDataProvider([
+					'allModels'=>$dataserror
+				]);
+				// print_r($dataProvider);die();
+				if(!empty($dataProvider)){
+					return $this->render('modal_error',[
+						'dataProvider' => $dataProvider
+					]);
+				// print_r($dataserror);die();
+				}else{
 				unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
 				return $this->redirect(['index']);
+				}
             }
 		}else{
 			return $this->renderAjax('form_upload',[

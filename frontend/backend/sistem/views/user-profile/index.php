@@ -504,6 +504,7 @@ echo $this->render('modal_store'); //echo difinition
 	</div>
 </div>
 <hr>
+<?php if(Yii::$app->user->identity->ACCESS_LEVEL=='OWNER'){ ?>
 <div class="w3-card-2 w3-round w3-white">
 <div class="row">
 	<div class="col-md-5 col-md-12" style="margin-bottom: 10px;margin-top: 10px;">
@@ -630,6 +631,7 @@ echo $this->render('modal_store'); //echo difinition
         <?php } ?>
 	</div>
 
+		<?php } ?>
 	</div>
         
     </div>

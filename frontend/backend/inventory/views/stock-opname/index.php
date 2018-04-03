@@ -33,6 +33,9 @@ $vewBreadcrumb=Breadcrumbs::widget([
 		#prodak-stok-opname .panel-footer {
 			background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 		}
+		#w2 {
+			z-index: 100000 !important;
+		  }
 	");
 	$this->registerJs($this->render('stockopname_script.js'),View::POS_READY);
 	echo $this->render('stockopname_button'); //echo difinition
@@ -285,7 +288,7 @@ $vewBreadcrumb=Breadcrumbs::widget([
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' <i class="fa fa-toggle-right"></i> '.tombolDownloadFormat($paramCari).' <i class="fa fa-toggle-right"></i> '.tombolUploadFormat().' <i class="fa fa-toggle-right"></i> '.tombolExportExcel($paramCari).'</div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' <i class="fa fa-toggle-right"></i> '.tombolDownloadFormat($paramCari).' <i class="fa fa-toggle-right"></i> '.tombolUploadFormat().' <i class="fa fa-toggle-right"></i> {export}</div> ',/*.tombolExportExcel($paramCari).*/
 			'before'=>false,
 			'after'=>false			
 		],
@@ -302,11 +305,54 @@ $vewBreadcrumb=Breadcrumbs::widget([
 		'bordered'=>true,
 		'striped'=>'4px',
 		'autoXlFormat'=>true,
-		'export' => false,
-		'export'=>[//export like view grid --ptr.nov-
-			'fontAwesome'=>true,
-			'showConfirmAlert'=>false,
-			'target'=>GridView::TARGET_BLANK
+		// 'export' => false,
+		// 'export'=>[//export like view grid --ptr.nov-
+		// 	'fontAwesome'=>true,
+		// 	'showConfirmAlert'=>false,
+		// 	'target'=>GridView::TARGET_BLANK
+		// ],
+		'export'=>[
+			'fontAwesome' => true,
+			'showConfirmAlert' => false,
+			'target' => GridView::TARGET_BLANK,
+			// 'target' => GridView::TARGET_POPUP,
+			// 'target' => GridView::TARGET_SELF,
+		],
+		'exportConfig' => [
+			kartik\export\ExportMenu::EXCEL => ['showHeader' => true,
+			'mime' => 'application/excel',
+			'filename' => 'STOK OPNAME',
+			'config' => [
+				'mode' => 'c',
+				'format' => 'A4-L',
+				'destination' =>true,
+				'marginTop' => 10,
+				'marginBottom' => 20,									
+				'options' => [
+					'title' =>'KontrolGampang-Export',
+				],
+				 'methods' => [
+					'SetHeader' => [
+						['odd' => 'aaa', 'even' => 'bbb'],
+					],
+					'SetFooter' => [
+						['odd' =>'cccc', 'even' =>'dddd'],
+					],
+				],
+				'contentBefore'=>'
+					<div style="text-align:center;font-family: Times New Roman ;font-size: 10pt;">	
+						<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5><div id="tanggal"><div>
+					</div>	
+					<br>									
+				',
+				'contentAfter'=>''
+			],
+			'showFooter' => false,
+			'showCaption' => false,
+		],
+		],  
+		'toolbar' => [
+			'{export}'
 		],
 		'summary'=>false,
 		//'floatHeader'=>false,

@@ -16,7 +16,7 @@ $storeid = (empty($store)) ? '' : $store ;
 			//'enableAjaxValidation'=>true,
 			//'method' => 'post',
 			//'validationUrl'=>Url::toRoute('/absensi/absen-import/valid')
-			'action' =>['/hris/rekap/index-penggajian?storeid='.$storeid.'']
+			'action' =>['/hris/penggajian-rekap/index?storeid='.$storeid.'']
    ]); ?>
 		<div style="height:100%;font-family: verdana, arial, sans-serif ;font-size: 6pt;">
 		<div class="row" >

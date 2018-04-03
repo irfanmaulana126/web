@@ -37,6 +37,9 @@ $vewBreadcrumb=Breadcrumbs::widget([
 	#prodak-inv .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	#w2 {
+		z-index: 100000 !important;
+	  }
 	");
 	$this->registerJs($this->render('stockproduct_script.js'),View::POS_READY);
 	echo $this->render('stockproduct_button'); //echo difinition
@@ -401,13 +404,53 @@ $vewBreadcrumb=Breadcrumbs::widget([
 			//print_r($btnclick2);
 			//die();
 			return $btnclick;
-		},		
+		},
+		'export'=>[
+			'fontAwesome' => true,
+			'showConfirmAlert' => false,
+			'target' => GridView::TARGET_BLANK,
+			// 'target' => GridView::TARGET_POPUP,
+			// 'target' => GridView::TARGET_SELF,
+		],
+		'exportConfig' => [
+			kartik\export\ExportMenu::EXCEL => ['showHeader' => true,
+			'mime' => 'application/excel',
+			'filename' => 'PRODUK STOK BERJALAN',
+			'config' => [
+				'mode' => 'c',
+				'format' => 'A4-L',
+				'destination' =>true,
+				'marginTop' => 10,
+				'marginBottom' => 20,									
+				'options' => [
+					'title' =>'KontrolGampang-Export',
+				],
+				 'methods' => [
+					'SetHeader' => [
+						['odd' => 'aaa', 'even' => 'bbb'],
+					],
+					'SetFooter' => [
+						['odd' =>'cccc', 'even' =>'dddd'],
+					],
+				],
+				'contentBefore'=>'
+					<div style="text-align:center;font-family: Times New Roman ;font-size: 10pt;">	
+						<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5><div id="tanggal"><div>
+					</div>	
+					<br>									
+				',
+				'contentAfter'=>''
+			],
+			'showFooter' => false,
+			'showCaption' => false,
+		],
+		],  
 		'toolbar' => [
-			'{export}',
+			'{export}'
 		],	
 		'panel'=>[
 			'type'=>'info',
-			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().' '.tombolExportExcel($paramCari).'</div> ',
+			'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolSearchPeriode().'  {export}</div> ',//'.tombolExportExcel($paramCari).'
 			'before'=>false,
 			'after'=>false			
 		],
@@ -428,12 +471,12 @@ $vewBreadcrumb=Breadcrumbs::widget([
 		'bordered'=>true,
 		'striped'=>'4px',
 		'autoXlFormat'=>true,
-		'export' => false,
-		'export'=>[//export like view grid --ptr.nov-
-			'fontAwesome'=>true,
-			'showConfirmAlert'=>false,
-			'target'=>GridView::TARGET_BLANK
-		],
+		// 'export' => false,
+		// 'export'=>[//export like view grid --ptr.nov-
+		// 	'fontAwesome'=>true,
+		// 	'showConfirmAlert'=>false,
+		// 	'target'=>GridView::TARGET_BLANK
+		// ],
 		'summary'=>false,
 		//'floatHeader'=>false,
 		// 'floatHeaderOptions'=>['scrollingTop'=>'200'] 
@@ -441,7 +484,7 @@ $vewBreadcrumb=Breadcrumbs::widget([
 		'floatHeader'=>true,
 	]);
 ?>
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid" style="font-family: Times New Roman,verdana, arial, sans-serif ;font-size: 10pt">
 <h5><?=$vewBreadcrumb ?></h5>
 <?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php

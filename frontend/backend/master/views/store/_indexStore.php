@@ -66,6 +66,7 @@ echo $this->render('modal_store'); //echo difinition
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+	$createStore = (empty(Yii::$app->user->identity->ACCESS_LEVEL=='OWNER')) ? '' : tombolReqStore();
     
 	function sttMsgDscp($stt){
 		if($stt==0){ //TRIAL
@@ -493,7 +494,7 @@ echo $this->render('modal_store'); //echo difinition
 			'type'=>'info',
 			'before'=>false,
 			'after'=>false,
-			'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.tombolReqStore().' '.tombolRestore().'</div>',
+			'before'=>$dscLabel.'<div class="pull-right">'. tombolRefresh().' '.tombolExportExcel().' '.$createStore.' '.tombolRestore().'</div>',
 			// 'before'=> tombolReqStore(),
 			'showFooter'=>'aas',
 		], 

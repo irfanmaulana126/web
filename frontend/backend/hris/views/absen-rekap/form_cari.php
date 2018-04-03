@@ -16,7 +16,7 @@ use kartik\widgets\DateTimePicker;;
 			//'enableAjaxValidation'=>true,
 			//'method' => 'post',
 			//'validationUrl'=>Url::toRoute('/absensi/absen-import/valid')
-			'action' =>['/hris/rekap/index-absen']
+			'action' =>['/hris/absen-rekap/index']
    ]); ?>
 		<div style="height:100%;font-family: verdana, arial, sans-serif ;font-size: 6pt;">
 		<div class="row" >
