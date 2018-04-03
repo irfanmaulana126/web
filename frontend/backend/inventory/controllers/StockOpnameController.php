@@ -11,6 +11,7 @@ use yii\base\DynamicModel;
 use yii\web\Response;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
+use yii\base\Model;
 use frontend\backend\inventory\models\StockOutSearch;
 use frontend\backend\inventory\models\ProductStockClosing;
 use frontend\backend\inventory\models\ProductStockClosingSearch;
@@ -279,11 +280,15 @@ class StockOpnameController extends Controller
 					// print_r($dataserror);
 				}
 				// print_r($dataserror);die();
+				// foreach ($dataserror as $key => $value) {
+				// 	# code...
+				// }
 				$dataProvider = new ArrayDataProvider([
 					'allModels'=>$dataserror
 				]);
 				// print_r($dataProvider);die();
 				if(!empty($dataProvider)){
+					unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
 					return $this->render('modal_error',[
 						'dataProvider' => $dataProvider
 					]);
@@ -299,7 +304,37 @@ class StockOpnameController extends Controller
 			]);
 		}
 	}
-	
+	public function actionBatchUpdate()
+{
+    // $sourceModel = ProductStockClosingSearch::find()->indexBy('UNIX_BULAN_ID')->all();
+	// $sourceModel = (Yii::$app->request->isPost);
+    // $model  = new ProductStockClosingSearch;
+	// $model->load(Yii::$app->request->post());
+	$sourceModel = new ProductStockClosingSearch();
+	if ($sourceModel->load(Yii::$app->request->post())) {
+		$hsl = Yii::$app->request->post();	
+		$paramCari=$hsl['kvTabForm']['0']['UNIX_BULAN_ID'];
+	};
+    // print_r(Yii::$app->request->post(['kvTabForm']['0']));die();
+    if (!$sourceModel->load(Yii::$app->request->post(['kvTabForm']['0']))) {
+        // $count = 0;
+        foreach (Yii::$app->request->post(['kvTabForm']['0']) as $index => $datas) {
+			// foreach($model as $mod){
+				print_r($datas['UNIX_BULAN_ID']);
+				Yii::$app->db->createCommand("
+				UPDATE product_stock_closing SET STOCK_INPUT_ACTUAL='".$datas['STOCK_INPUT_ACTUAL']."' WHERE UNIX_BULAN_ID='".$datas['UNIX_BULAN_ID']."'")->execute();
+				// $sourceModel->UNIX_BULAN_ID=$datas['UNIX_BULAN_ID'];
+				// $sourceModel->STOCK_INPUT_ACTUAL=$datas['STOCK_INPUT_ACTUAL'];
+				// $model = ProductStockClosingSearch::find()->where(['UNIX_BULAN_ID'=>$datas['']])->one();
+				// $sourceModel->update();
+			// }
+		}
+		// die();
+        Yii::$app->session->setFlash('success', "Processed records successfully.");
+		return $this->redirect(['index']); // redirect to your next desired page
+
+    } 
+}
 	/**====================================
 	* EXPORT DATA
 	* @return mixed

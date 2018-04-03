@@ -14,27 +14,28 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 <div class="item-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+<div class="row">
+<div class="col-md-6">
     <?= $form->field($model, 'STORE_ID',[					
-				'addon' => [
-					'prepend' => [
-						'content'=>'<span >STORE </span>',
-						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
-					]
+        'addon' => [
+        'prepend' => [
+                'content'=>'<span >STORE </span>',
+                'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
+                ]
 				]])->widget(Select2::classname(),[
        'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
-        'options' => ['placeholder'=>'Select Category....'],
+       'options' => ['placeholder'=>'Select Category....'],
         'pluginOptions' => [
             'allowClear' => true
         ], 
-    ])->label(false) ?>
+        ])->label(false) ?>
     
     <?= $form->field($model, 'KTP',[					
 				'addon' => [
-					'prepend' => [
+                    'prepend' => [
 						'content'=>'<span >KTP </span>',
 						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
-					]
+                        ]
 				]])->textInput()->label(false); ?>
             <?= $form->field($model, 'NAMA_DPN',[					
 				'addon' => [
@@ -52,46 +53,40 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 				]])->textInput()->label(false) ?>
             <?= $form->field($model, 'NAMA_BLK',[					
 				'addon' => [
-					'prepend' => [
+                    'prepend' => [
 						'content'=>'<span >BELAKANG </span>',
 						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;']
 					]
-				]])->textInput(['maxlength' => true])->label(false) ?>
+                    ]])->textInput(['maxlength' => true])->label(false) ?>
             
-    <?= $form->field($model, 'ALAMAT',[					
-				'addon' => [
-					'prepend' => [
-						'content'=>'<span >ALAMAT </span>',
-						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
-					]
-				]])->textInput()->label(false) ?>
-
     <?= $form->field($model, 'TMP_LAHIR',[					
 				'addon' => [
-					'prepend' => [
+                    'prepend' => [
 						'content'=>'<span >TMP LAHIR </span>',
 						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
-					]
+                        ]
 				]])->textInput()->label(false) ?>
 
+    </div>
+    <div class="col-md-6">
+
     <?= $form->field($model, 'TGL_LAHIR',[					
-				'addon' => [
+        'addon' => [
 					'prepend' => [
 						'content'=>'<span >TGL LAHIR </span>',
 						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
 					]
-				]])->widget(DatePicker::classname(), [
+                    ]])->widget(DatePicker::classname(), [
 							'options' => ['placeholder' => 'Enter date ...'],
 							'convertFormat' => true,
 							'pluginOptions' => [
 								'autoclose'=>true,
 								// 'todayHighlight' => true,
-								 'format' => 'yyyy-MM-dd'
+                                'format' => 'yyyy-MM-dd'
 							],
 						])->label(false);	 ?>
-    
     <?= $form->field($model, 'GENDER',[					
-				'addon' => [
+        'addon' => [
 					'prepend' => [
 						'content'=>'<span >GENDER </span>',
 						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
@@ -107,13 +102,13 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 				]])->dropDownList(['Belum Menikah' => 'Belum Menikah', 'Menikah' => 'Menikah'],['prompt'=>'Select Option','style'=>'width: 170px;'])->label(false) ?>
 
     <?= $form->field($model, 'TLP',[					
-				'addon' => [
+        'addon' => [
 					'prepend' => [
 						'content'=>'<span >TLP </span>',
 						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
 					]
 				]])->widget(MaskedInput::classname(),[
-                            'mask' => '9',
+                    'mask' => '9',
                             'clientOptions' => ['repeat' => 12, 'greedy' => false]])->label(false) ?>
 
     <?= $form->field($model, 'HP',[					
@@ -121,24 +116,25 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 					'prepend' => [
 						'content'=>'<span >HP </span>',
 						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
-					]
+                        ]
 				]])->widget(MaskedInput::classname(),[
     'mask' => '(999) 999-9999'])->label(false) ?>
     
     <?= $form->field($model, 'EMAIL',[					
 				'addon' => [
 					'prepend' => [
-						'content'=>'<span >EMAIL </span>',
+                        'content'=>'<span >EMAIL </span>',
 						'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
 					]
 				]])->widget(MaskedInput::classname(),['clientOptions' => [
         'alias' =>  'email'
-    ]])->label(false) ?>
-   
-    <div class="form-group text-right">
+        ]])->label(false) ?>
+        </div>
+</div>
+           <?= $form->field($model, 'ALAMAT')->textarea(['rows' => 6]) ?>
+<div class="form-group text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>

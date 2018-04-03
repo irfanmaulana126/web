@@ -24,7 +24,7 @@ class ProductStockClosingSearch extends ProductStockClosing
     public function rules()
     {
         return [
-            [['UNIX_BULAN_ID', 'ACCESS_GROUP', 'STORE_ID', 'PRODUCT_ID', 'TAHUN', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'CREATE_UUID', 'UPDATE_UUID', 'DCRP_DETIL','storeNm','produkNm'], 'safe'],
+            [['UNIX_BULAN_ID','STORE_NM', 'ACCESS_GROUP', 'STORE_ID', 'PRODUCT_ID','PRODUCT_NM', 'TAHUN', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'CREATE_UUID', 'UPDATE_UUID','STOCK_INPUT_ACTUAL', 'DCRP_DETIL','storeNm','produkNm'], 'safe'],
             [['BULAN', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
             [['STOK_CLOSING','STOCK_BALANCE_BULAN','STOCK_AWAL', 'STOCK_BARU', 'STOCK_TERJUAL', 'STOCK_REFUND', 'STOCK_AKHIR', 'STOCK_BALANCE_CLOSING', 'STOCK_INPUT_ACTUAL', 'STOCK_AKHIR_ACTUAL', 'STOCK_AWAL_ACTUAL'], 'number'],
         ];
