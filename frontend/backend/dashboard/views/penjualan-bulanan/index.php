@@ -55,7 +55,7 @@ use yii\widgets\Breadcrumbs;
 	$icon2 = '<span class="fa fa-md fa fa-chevron-right text-left"></span>';
 	
 	//==== COMBINASI colum2d Mscombidy2d
-	$viewColumn2d= Chart::Widget([
+	$viewDetailSalesBulanan= Chart::Widget([
 		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/detail-sales-bulanan',
 		'metode'=>'POST',
 		'param'=>[
@@ -85,11 +85,12 @@ use yii\widgets\Breadcrumbs;
 	
 	//==== DONAT CHART ==
 	$viewDoughnut3d= Chart::Widget([
-		'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/doughnut3d',
+		//'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/doughnut3d',
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/detail-sales-bulanan-tunai',
 		'metode'=>'POST',
 		'param'=>[
 			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
-			'THN'=>date("Y"),
+			'TGL'=>date("Y-m-d"),
 		],
 		'type'=>'doughnut3d',						
 		'renderid'=>'viewDoughnut3d-bulanan_id1',				
@@ -122,7 +123,7 @@ use yii\widgets\Breadcrumbs;
 					<?php //echo = Html::encode($this->title) ?>								
 					<div style="min-height:265px">
 						<div style="height:300px;">
-							<?=$viewColumn2d ?>
+							<?=$viewDetailSalesBulanan ?>
 						</div>
 					</div>
 								
@@ -135,7 +136,7 @@ use yii\widgets\Breadcrumbs;
 							<div style="min-height:265px">
 								<div style="height:300px;">
 									<div style="padding-top:50px">
-										<?=$viewPie3d ?>
+										<?=$viewDoughnut3d?>
 									</div>
 								</div>
 							</div>
@@ -148,7 +149,7 @@ use yii\widgets\Breadcrumbs;
 							<div style="min-height:265px">
 								<div style="height:300px;">
 									<div style="padding-top:10px">
-										<?=$viewDoughnut3d?>
+										<?=$viewPie3d ?>
 									</div>
 								</div>
 							</div>

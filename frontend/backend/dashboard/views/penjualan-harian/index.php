@@ -43,9 +43,15 @@ use yii\widgets\Breadcrumbs;
 			 'todayHighlight' => true
 		]
 	]);
+	$dataStore=Store::find()->select('STORE_ID,STORE_NM')->where(['ACCESS_GROUP'=>$user])->orderBy(['STORE_ID'=>SORT_ASC])->all();
+	$aryStore[]=['STORE_ID'=>$user,'STORE_NM'=>'ALL'];
+	foreach ($dataStore as $row){
+		$aryStore[]=['STORE_ID'=>$row->STORE_ID,'STORE_NM'=>$row->STORE_NM];
+	}
+		
 	$btn_srchChart2= Select2::widget([
 		'name' => 'state_10',
-		'data' =>  ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'STORE_ID','STORE_NM'),
+		'data' =>  ArrayHelper::map($aryStore,'STORE_ID','STORE_NM'),
 		'options' => ['placeholder' => 'Pilih Toko ...','id'=>'store'],
 		'pluginOptions' => [
 			'allowClear' => true
@@ -70,6 +76,53 @@ use yii\widgets\Breadcrumbs;
 		return $content;	
 	}
 	$icon2 = '<span class="fa fa-md fa fa-chevron-right text-left"></span>';
+	
+	//==== COMBINASI colum2d Mscombidy2d
+	$viewDetailSalesHarian= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/detail-sales-harian',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'TGL'=>date("Y-m-d"),
+		],
+		'type'=>'mscombidy2d',						
+		'renderid'=>'detailsales-harian',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'300px',
+	]);	
+	
+	//==== DONAT CHART - PEMBAYARAN TUNAN/NON-TUNAI HARIAN==
+	$viewTunaiNonTunai= Chart::Widget([
+		//'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/doughnut3d',
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/sales-charts/detail-sales-harian-tunai',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'TGL'=>date("Y-m-d"),
+		],
+		'type'=>'doughnut3d',						
+		'renderid'=>'viewtunan-nontunai-harian',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'250px',
+	]);	
+	
+	//==== PIE CHART - TRANSAKSI BANK HARIAN==
+	$viewTransaksiBank= Chart::Widget([
+		'urlSource'=> 'https://production.kontrolgampang.com/laporan/contoh-charts/pie3d',
+		'metode'=>'POST',
+		'param'=>[
+			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
+			'THN'=>date("Y-m-d"),
+		],
+		'type'=>'pie3d',						
+		'renderid'=>'transaksi-bank-harian',				
+		'autoRender'=>true,
+		'width'=>'100%',
+		'height'=>'250px',
+	]);	
+	
 ?>
 
 <div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt;">	
@@ -94,35 +147,96 @@ use yii\widgets\Breadcrumbs;
 					<?php //echo = Html::encode($this->title) ?>								
 					<div style="min-height:265px">
 						<div style="height:300px;">
-							<?php "data1"; ?>
+							<?=$viewDetailSalesHarian ?>
 						</div>
 					</div>
 								
 				</div>		
-			</div>			
-		</div>
-		<div class="col-sm-12 col-md-12 col-lg-12" style="padding-bottom:10px;">
+			</div>					
 			<div class="row">
-				
-						<div class="col-sm-6 col-md-6 col-lg-6">
-							<div style="min-height:300px">
-								<div class="row" style="padding-top:10px;padding-right:10px">
-									<div class="w3-card-2 w3-round w3-white w3-center">	
-										<?php "data2"; ?>
+				<div class="col-sm-4 col-md-4 col-lg-4">
+					<div class="row">
+						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+							<div style="min-height:265px">
+								<div style="height:300px;">
+									<div style="padding-top:50px">
+										<?=$viewTunaiNonTunai?>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-sm-6 col-md-6 col-lg-6">
-							<div style="min-height:100px">
-								<div class="row" style="padding-top:10px">
-									<div class="w3-card-2 w3-round w3-white w3-center">	
-										<?php "data3"; ?>
+						</div>								
+					</div>								
+				</div>				
+				<div class="col-sm-8 col-md-8 col-lg-8">	
+					<div class="row">
+						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+							<div style="min-height:265px">
+								<div style="height:300px;">
+									<div style="padding-top:10px">
+										<?=$viewTransaksiBank ?>
 									</div>
-								</div>						
-							</div>						
-						</div>
-				
-			</div>
+								</div>
+							</div>
+						</div>	
+					</div>	
+				</div>
+			</div>			
 		</div>
 </div>
+<div id="loaderPtr"></div>
+<?php
+$this->registerJs("
+		$('#tanggal, #store').change(function() { 
+			// ==FILTER DATA ==
+			var tgl,storeId,accessGroup='';
+			var tgl = document.getElementById('tanggal').value;
+			var storeId = document.getElementById('store').value;
+			var store = storeId.split('.');
+			var accessGroup = store[0];
+			//console.log('ACCESS_GROUP='+accessGroup+';STORE_ID='+storeId+';TGL='+tgl);
+			
+			if ((tgl!=='') && (storeId!=='')) {
+				
+				//=== SALES DETAI HARIAN ===
+				var ptrProdukQtyTop = document.getElementById('detailsales-harian');
+				var spnIdProdukQtyTop= ptrProdukQtyTop.getElementsByTagName('span');
+				var chartIdProdukQtyTop= spnIdProdukQtyTop[0].id; 
+				//console.log(ptrProdukQtyTop);
+				var updateChartProdukQtyTop = document.getElementById(chartIdProdukQtyTop);
+				//==AJAX POST DATA [PRODUK TRANSAKSI]===
+				$.ajax({
+					  url: 'https://production.kontrolgampang.com/laporan/sales-charts/detail-sales-harian',
+					  type: 'POST',
+					  data: {'ACCESS_GROUP':accessGroup,'STORE_ID':storeId,'TGL':tgl},
+					  dataType:'json',
+					  success: function(data) {
+							//alert(data['dataset'][0]['data']);
+							//console.log(data['dataset'][0]['data']);
+							//=== RESIZE ===
+							//var dataget =data['dataset'][0]['data'];				
+							//alert(dataget.length);
+							//var cnt=dataget.length<5?5:dataget.length;
+							//alert(cnt);
+							//updateChartProdukQtyTop.style.height=(cnt*30)+'px';
+							
+							//===UPDATE CHART ====
+							if (data['dataset'][0]['data']!==''){							
+								updateChartProdukQtyTop.setChartData({
+									chart: data['chart'],
+									categories: data['categories'],
+									dataset: data['dataset']
+								});	
+							}else{
+								updateChartProdukQtyTop.style.height='150px';
+								updateChartProdukQtyTop.setChartData({
+									chart: data['chart'],
+									categories: data['categories'],
+									data:[{}]
+								});						
+							}					
+					  }			   
+				}); 
+			};     
+		});
+	",View::POS_READY);
+?>
