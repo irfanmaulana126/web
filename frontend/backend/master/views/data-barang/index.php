@@ -77,6 +77,11 @@ $this->title="Prodak";
             <p>Merupakan data pelanggan disetiap toko yang anda miliki dan dapat melakukan pendataan seperti penambahan, pengubahan serta penghapusan data pelanggan</p>
             <?= Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-customer']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
         </div>
+        <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
+            <h3>Produk PPOB</h3>
+            <p>Merupakan seluruh data produk ppob yang terdaftar pada aplikasi Kontor Gampang</p>
+            <?= Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-ppob']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+        </div>
     </div>      
     <div class="col-md-6">
 		<div class="row">

@@ -5,6 +5,7 @@ namespace frontend\backend\master\controllers;
 use Yii;
 use frontend\backend\master\models\Supplier;
 use frontend\backend\master\models\SupplierSearch;
+use frontend\backend\master\models\Store;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -96,11 +97,12 @@ class SupplierController extends Controller
         $model = new Supplier();
 
         if ($model->load(Yii::$app->request->post())) {
-
             $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
             $model->ACCESS_GROUP=$user;
+            $model->SUPPLIER_NM=strtoupper($model->SUPPLIER_NM);
             $model->STATUS=1;
             $model->save(false);
+            Yii::$app->session->setFlash('success', "Penyimpanan Supplier Berhasil");
             return $this->redirect(array('/master/data-barang/index-supplier'));
         }
 
@@ -122,7 +124,9 @@ class SupplierController extends Controller
 
        
         if ($model->load(Yii::$app->request->post())) {
+            $model->SUPPLIER_NM=strtoupper($model->SUPPLIER_NM);
             $model->save(false);
+            Yii::$app->session->setFlash('success', "Perubahan Supplier Berhasil");
             return $this->redirect(array('/master/data-barang/index-supplier'));
         }
 
@@ -143,6 +147,7 @@ class SupplierController extends Controller
             $model = $this->findModel($id);
             $model->STATUS = 3;
             $model->save(false);
+            Yii::$app->session->setFlash('error', "Penghapusan Supplier Berhasil");
             return $this->redirect(array('/master/data-barang/index-supplier'));
     }
 

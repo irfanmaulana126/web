@@ -119,9 +119,10 @@ class ProductPromoController extends Controller
     public function actionUpdate($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)
     {
         $model = $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT);
+        $models = Product::find()->where(['PRODUCT_ID'=>$PRODUCT_ID])->one();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Update Discount Berhasil");
+            Yii::$app->session->setFlash('success', "Update Promo Produk <b>".$models->PRODUCT_NM."</b> Berhasil");
             return $this->redirect('/master/data-barang/index#w5-tab2');      
         }
 
@@ -144,9 +145,10 @@ class ProductPromoController extends Controller
     {
         // $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
         $model = $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT);
+        $models = Product::find()->where(['PRODUCT_ID'=>$PRODUCT_ID])->one();
         $model->STATUS ="3";
         $model->update();
-        Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
+        Yii::$app->session->setFlash('error', "Data Promo Produk <b>".$models->PRODUCT_NM."</b> Berhasil dihapus");
 
         return $this->redirect('/master/data-barang/index#w5-tab2');     
     }

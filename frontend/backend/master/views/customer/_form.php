@@ -19,8 +19,8 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'STORE_ID',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span style="color: white;">STORE</span>',
-							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: #4c83ff;text-align:right']
+							'content'=>'STORE',
+							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right']
 						]
 					]
 				])->widget(Select2::classname(),[
@@ -34,8 +34,8 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'NAME',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span style="color: white;">NAMA</span>',
-							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: #4c83ff;text-align:right']
+							'content'=>'NAMA',
+							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right']
 						]
 					]
 				])->textInput(['maxlength' => true,'style'=>'border-radius: 0px 5px 5px 0px;'])->label(false) ?>
@@ -43,8 +43,8 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'EMAIL',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span style="color: white;">EMAIL</span>',
-							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: #4c83ff;text-align:right']
+							'content'=>'EMAIL',
+							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right']
 						]
 					]
 				])->widget(MaskedInput::classname(),['clientOptions' => [
@@ -54,8 +54,8 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'PHONE',[					
 					'addon' => [
 						'prepend' => [
-							'content'=>'<span style="color: white;">PHONE</span>',
-							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: #4c83ff;text-align:right']
+							'content'=>'PHONE',
+							'options'=>['style' =>'width: 74px;border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right']
 						]
 					]
 				])->widget(MaskedInput::classname(),

@@ -146,7 +146,7 @@ class StoreController extends Controller
             $model->CREATE_AT=date('Y-m-d H:i:s');
             if ($model->save(false)) {
                 
-                Yii::$app->session->setFlash('success', "Penyimpanan Store Berhasil");
+                Yii::$app->session->setFlash('success', "Penyimpanan Store <b>".$model->STORE_NM."</b> Berhasil");
                 return $this->redirect(['index']);   
             }
         } else {
@@ -164,7 +164,7 @@ class StoreController extends Controller
             // print_r($model);die();
             if ($model->save(false)) {
                 
-                Yii::$app->session->setFlash('success', "Perangkat derhasil dibuat");
+                Yii::$app->session->setFlash('success', "Perangkat <b>".$model->KASIR_NM."</b> derhasil dibuat");
                 return $this->redirect(['index#w20-tab5']);   
             }
         } else {
@@ -181,7 +181,7 @@ class StoreController extends Controller
             $model->STORE_NM=strtoupper($model->STORE_NM);
             if ($model->save(false)) {
                 
-            Yii::$app->session->setFlash('success', "Perubahan Berhasil");
+            Yii::$app->session->setFlash('success', "Perubahan Toko <b>".$model->STORE_NM."</b> Berhasil");
                 return $this->redirect(['index']);   
             }
         } else {
@@ -199,7 +199,7 @@ class StoreController extends Controller
         $model->save(false);
         // Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
 
-        Yii::$app->session->setFlash('success', "Penghapusan Berhasil");
+        Yii::$app->session->setFlash('success', "Penghapusan Toko <b>".$model->STORE_NM."</b> Berhasil");
         return $this->redirect(['index']);
     }
 	/**

@@ -5,6 +5,7 @@ namespace frontend\backend\master\controllers;
 use Yii;
 use frontend\backend\master\models\ProductGroup;
 use frontend\backend\master\models\ProductGroupSearch;
+use frontend\backend\master\models\Store;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -97,9 +98,12 @@ class ProductGroupController extends Controller
     public function actionCreate()
     {
         $model = new ProductGroup();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(array('/master/data-barang#w6-tab5'));
+        if ($model->load(Yii::$app->request->post())) {
+            $model->GROUP_NM=strtoupper($model->GROUP_NM);   
+            $model->save(false);
+            $models = Store::find()->where(['STORE_ID'=>$model->STORE_ID])->one();
+            Yii::$app->session->setFlash('success', "Produk Group untuk Store <b>".$models->STORE_NM."</b> Berhasil Buat");
+            return $this->redirect(array('/master/data-barang/index-group'));
         }
 
         return $this->renderAjax('create', [
@@ -121,9 +125,13 @@ class ProductGroupController extends Controller
     public function actionUpdate($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT)
     {
         $model = $this->findModel($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT);
+        $models = Store::find()->where(['STORE_ID'=>$STORE_ID])->one();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(array('/master/data-barang#w6-tab5'));
+        if ($model->load(Yii::$app->request->post())) {
+            $model->GROUP_NM=strtoupper($model->GROUP_NM);      
+            $model->save(false);      
+            Yii::$app->session->setFlash('success', "Produk Group untuk Store <b>".$models->STORE_NM."</b> Berhasil ubah");
+            return $this->redirect(array('/master/data-barang/index-group'));
         }
 
         return $this->renderAjax('update', [
@@ -145,10 +153,12 @@ class ProductGroupController extends Controller
     public function actionDelete($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT)
     {
         $model = $this->findModel($ID, $STORE_ID, $GROUP_ID, $YEAR_AT, $MONTH_AT);
+        $models = Store::find()->where(['STORE_ID'=>$STORE_ID])->one();
         $model->STATUS ="3";
         $model->update();
 
-        return $this->redirect(array('/master/data-barang#w6-tab5'));
+        Yii::$app->session->setFlash('error', "Produk Group untuk Store <b>".$models->STORE_NM."</b> Berhasil dihapus");
+        return $this->redirect(array('/master/data-barang/index-group'));
     }
     /**
      * Finds the ProductGroup model based on its primary key value.
