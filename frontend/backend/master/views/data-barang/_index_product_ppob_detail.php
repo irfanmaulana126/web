@@ -15,7 +15,7 @@ use kartik\tabs\TabsX;
 use kartik\date\DatePicker;
 use yii\web\View;
 use kartik\widgets\Alert;
-use frontend\backend\master\models\Product;
+use frontend\backend\master\models\PpobMasterData;
 $this->title="Prodak - PPOB";
 $this->params['breadcrumbs'][] = ['label'=>'Produk', 'url' => ['/master/data-barang']];
 $this->params['breadcrumbs'][] =  $this->title;
@@ -75,6 +75,8 @@ $this->registerCss("
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'group'=>true,
+			'groupedRow'=>true,
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),
@@ -90,6 +92,11 @@ $this->registerCss("
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
+			'filter'=>ArrayHelper::map(PpobMasterData::find()->where(['KTG_ID'=>$ktg['KTG_ID']])->all(),'KELOMPOK','KELOMPOK'),
+			'filterType'=>GridView::FILTER_SELECT2,
+			'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
+			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+			'filterOptions'=>[],
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),

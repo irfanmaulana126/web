@@ -10,7 +10,12 @@ use yii\data\ArrayDataProvider;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use common\models\Store;
- $form = ActiveForm::begin(['action' =>['/master/data-barang/batch-update']]);
+$this->title="ERROR DATA";
+ $form = ActiveForm::begin([
+    'options' => [
+        'validateOnSubmit' => true,
+        'class' => 'form'
+    ],'action' =>['/master/data-barang/batch-update']]);
 echo TabularForm::widget([
     // your data provider
     'dataProvider'=>$dataProvider,
@@ -31,13 +36,13 @@ echo TabularForm::widget([
         'widgetClass'=>\kartik\select2\Select2::classname(),
         'options' => [
             'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>['1','0']])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
-            'options' =>['placeholder'=>'Pilih Toko....',],
+            'options' =>['placeholder'=>'Pilih Toko....','required'=>true, 'message' =>'Some error message...'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
         ],
          ],
-        'PRODUCT_NM'=>['columnOptions'=>['width'=>'250px'],],
+        'PRODUCT_NM'=>['columnOptions'=>['width'=>'250px'],'required'=>true],
         'PRODUCT_QR'=>['label'=>'PRODUCT_QR'],
         'PRODUCT_HEADLINE'=>['label'=>'PRODUCT_HEADLINE'],
         'DCRP_DETIL'=>['label'=>'DCRP_DETIL'],
@@ -69,7 +74,7 @@ echo TabularForm::widget([
             'type'=>GridView::TYPE_DANGER,
             'before'=>false,
             'footer'=>false,
-			'after'=>'<div class="text-right">'.Html::a('<i class="	fa fa-share"></i> Kembali', ['/inventory/stock-opname'], ['class'=>'btn btn-success kv-batch-delete']).' '.Html::submitButton('<i class="glyphicon glyphicon-floppy-disk"></i> Simpan', ['type'=>'button', 'class'=>'btn btn-primary kv-batch-save']).'<div>'
+			'after'=>'<div class="text-right">'.Html::a('<i class="	fa fa-share"></i> Kembali', ['/master/data-barang/index-produk'], ['class'=>'btn btn-success kv-batch-delete']).' '.Html::submitButton('<i class="glyphicon glyphicon-floppy-disk"></i> Simpan', ['type'=>'button', 'class'=>'btn btn-primary kv-batch-save']).'<div>'
         ]
     ]
 ]);

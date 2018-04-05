@@ -151,7 +151,7 @@ $this->registerCss("
     ]) ?>
 </div>
 </div>
-<div class="form-group text-right">
-    <?=Html::Button('Edit',['class' => 'btn btn-primary','value'=>Url::toRoute(['/sistem/corp/update?id='.$model['ID'].'']),'id'=>'edit']); ?>
-    </div>
+<!-- <div class="form-group text-right">
+    <?PHP//Html::Button('Edit',['class' => 'btn btn-primary','value'=>Url::toRoute(['/sistem/corp/update?id='.$model['ID'].'']),'id'=>'edit']); ?>
+    </div> -->
 </div>

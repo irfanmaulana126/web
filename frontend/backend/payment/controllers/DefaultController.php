@@ -2,13 +2,53 @@
 
 namespace frontend\backend\payment\controllers;
 
+use Yii;
 use yii\web\Controller;
+use frontend\backend\sistem\models\Corp;
+use frontend\backend\sistem\models\CorpSearch;
+use frontend\backend\sistem\models\CorpImage;
+use frontend\backend\sistem\models\CorpImageSearch;
+use frontend\backend\sistem\models\DompetRekening;
+use frontend\backend\sistem\models\DompetRekeningSearch;
+use frontend\backend\sistem\models\DompetRekeningImage;
+use frontend\backend\sistem\models\DompetRekeningImageSearch;
+use frontend\backend\payment\models\StoreKasir;
+use frontend\backend\payment\models\StoreKasirSearch;
 
 class DefaultController extends Controller
 {
     public function actionIndex()
     {
-        return $this->render('index');
+       
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        $userID = (empty(Yii::$app->user->identity->ACCESS_ID)) ? '' : Yii::$app->user->identity->ACCESS_ID;
+
+        $modelcorp = Corp::find()->where(['ACCESS_ID'=>$userID])->one();
+        $modelcorpImg = CorpImage::find()->where(['ACCESS_ID'=>$modelcorp['ACCESS_ID']])->one();
+
+        $modelRek = DompetRekening::findOne(['ACCESS_GROUP'=>$user]);
+        $modelRekImg = DompetRekeningImage::findOne(['ACCESS_GROUP'=>$user]);
+        if (empty($modelRek) && empty($modelRekImg)) {
+            $modelRek = new DompetRekening();
+            $modelRekImg = new DompetRekeningImage();
+        }
+        // print_r($modelcorpImg);die();
+        if(empty($modelcorpImg)){
+            $modelcorpImg = new CorpImage();
+        }
+
+        $searchModelperangkat = new StoreKasirSearch(['ACCESS_GROUP'=>$user]);
+        $dataProviderperangkat = $searchModelperangkat->search(Yii::$app->request->queryParams);
+        
+        return $this->render('index', [
+            'modelcorp' => $modelcorp,
+            'modelcorpImg' => $modelcorpImg,
+            'modelRek' => $modelRek,
+            'modelRekImg' => $modelRekImg,
+            'modelRekImg' => $modelRekImg,
+            'searchModelperangkat' => $searchModelperangkat,
+            'dataProviderperangkat' => $dataProviderperangkat,
+        ]);
     }
     public function beforeAction($action){
         $modulIndentify=4; //OUTLET

@@ -910,7 +910,9 @@ class DataBarangController extends Controller
 				// $sourceModel->update();
 			// }
 		}
-		// die();
+        // die();
+        $datas=Yii::$app->request->post(['kvTabForm']['0']);
+        unset($datas);
         Yii::$app->session->setFlash('success', "Processed records successfully.");
 		return $this->redirect(['/master/data-barang/index-produk']); // redirect to your next desired page
 
