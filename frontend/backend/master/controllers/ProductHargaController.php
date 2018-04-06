@@ -5,6 +5,7 @@ namespace frontend\backend\master\controllers;
 use Yii;
 use frontend\backend\master\models\ProductHarga;
 use frontend\backend\master\models\ProductHargaSearch;
+use frontend\backend\master\models\Product;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -119,6 +120,7 @@ class ProductHargaController extends Controller
     public function actionUpdate($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)
     {
         $model = $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT);
+        $models = Product::find()->where(['PRODUCT_ID'=>$PRODUCT_ID])->one();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'ID' => $model->ID, 'PRODUCT_ID' => $model->PRODUCT_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
@@ -143,9 +145,10 @@ class ProductHargaController extends Controller
     {
         // $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT)->delete();
         $model = $this->findModel($ID, $PRODUCT_ID, $YEAR_AT, $MONTH_AT);
+        $models = Product::find()->where(['PRODUCT_ID'=>$PRODUCT_ID])->one();
         $model->STATUS ="3";
         $model->update();
-        Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
+        Yii::$app->session->setFlash('error', "Data Harga Produk <b>".$models->PRODUCT_NM."</b> Berhasil dihapus");
 
         return $this->redirect(['index']);
     }

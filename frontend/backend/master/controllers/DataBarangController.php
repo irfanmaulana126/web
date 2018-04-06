@@ -33,6 +33,8 @@ use frontend\backend\master\models\Customer;
 use frontend\backend\master\models\CustomerSearch;
 use frontend\backend\master\models\Supplier;
 use frontend\backend\master\models\SupplierSearch;
+use frontend\backend\master\models\PpobMasterDataSearch;
+use frontend\backend\master\models\PpobMasterKtgSearch;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -250,6 +252,29 @@ class DataBarangController extends Controller
             'dataProviderGroup' => $dataProviderGroup,
         ]);
     }
+    public function actionIndexPpob()
+    {
+        $paramCari=Yii::$app->getRequest()->getQueryParam('productid');
+        if(!empty($paramCari)){
+            $ktg = PpobMasterKtgSearch::find()->where(['STATUS'=>1,'KTG_ID'=>$paramCari])->one();
+            $searchModelData = new PpobMasterDataSearch(['KTG_ID'=>$ktg->KTG_ID,'STATUS'=>1]);
+        }else{
+            $ktg = PpobMasterKtgSearch::find()->where(['STATUS'=>1])->one();
+            $searchModelData = new PpobMasterDataSearch(['KTG_ID'=>$ktg->KTG_ID,'STATUS'=>1]);
+        }        
+        $searchModelKtg = new PpobMasterKtgSearch();
+        $dataProviderKtg = $searchModelKtg->search(Yii::$app->request->queryParams);
+        // $searchModelData = new PpobMasterDataSearch();
+        $dataProviderData = $searchModelData->search(Yii::$app->request->queryParams);
+		return $this->render('_index_product_ppob_detail', [
+			'searchModelKtg'=>$searchModelKtg,
+            'dataProviderKtg' => $dataProviderKtg,
+			'searchModelData'=>$searchModelData,
+            'dataProviderData' => $dataProviderData,
+            'ktg'=>$ktg
+        ]);
+    }
+    
     /**
      * Lists all Item models.
      * @return mixed
@@ -323,7 +348,7 @@ class DataBarangController extends Controller
             if($model->save(false)) {                
                 $C=$model->getPrimaryKey();
                 $modelCari=Product::find()->where(['ID'=>$C['ID']])->one();
-                Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
+                Yii::$app->session->setFlash('success', "Penyimpanan PRODUK <b>".$model->PRODUCT_NM."</b> Berhasil");
                 return $this->redirect(['index-produk']);
             }
             else {
@@ -358,6 +383,7 @@ class DataBarangController extends Controller
         $model = new ProductDiscount();
         
         if ($model->load(Yii::$app->request->post())) {
+            $models = Product::find()->where(['PRODUCT_ID'=>$PRODUCT_ID])->one();
             $model->PRODUCT_ID=$PRODUCT_ID;
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
@@ -365,7 +391,7 @@ class DataBarangController extends Controller
             // print_r($model);die();
             // $model->save();
            if ($model->save(false)) {
-            Yii::$app->session->setFlash('success', "Penyimpanan Discount Berhasil");
+            Yii::$app->session->setFlash('success', "Penyimpanan Discount Produk <b>".$models->PRODUCT_NM."</b> Berhasil");
             return $this->redirect(['index-discount','productid'=>$PRODUCT_ID]);
            }
         } else{
@@ -394,13 +420,14 @@ class DataBarangController extends Controller
         $model = new ProductPromo();
 
         if ($model->load(Yii::$app->request->post())) {
+            $models = Product::find()->where(['PRODUCT_ID'=>$PRODUCT_ID])->one();
             $model->PRODUCT_ID=$PRODUCT_ID;
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
             date_default_timezone_set('Asia/Jakarta');
             $model->START_TIME=date('H:i:s');
            if ($model->save(false)) {
-            Yii::$app->session->setFlash('success', "Penyimpanan Promo Berhasil");
+            Yii::$app->session->setFlash('success', "Penyimpanan Promo Produk <b>".$models->PRODUCT_NM."</b> Berhasil");
             return $this->redirect(['index-promo','productid'=>$PRODUCT_ID]);
            }
         }
@@ -427,6 +454,7 @@ class DataBarangController extends Controller
         $model = new ProductHarga();
     
         if ($model->load(Yii::$app->request->post())) {
+            $models = Product::find()->where(['PRODUCT_ID'=>$PRODUCT_ID])->one();
             $model->PRODUCT_ID=$PRODUCT_ID;
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
@@ -435,7 +463,7 @@ class DataBarangController extends Controller
             
             // print_r($model);die();
            if ($model->save(false)) {
-            Yii::$app->session->setFlash('success', "Penyimpanan Harga Berhasil");
+            Yii::$app->session->setFlash('success', "Penyimpanan Harga Produk <b>".$models->PRODUCT_NM."</b> Berhasil");
             return $this->redirect(['index-harga','productid'=>$PRODUCT_ID]);
            }
         }
@@ -461,6 +489,7 @@ class DataBarangController extends Controller
     {
         $model = new ProductStock();
         if ($model->load(Yii::$app->request->post())) {
+            $models = Product::find()->where(['PRODUCT_ID'=>$PRODUCT_ID])->one();
             $model->PRODUCT_ID=$PRODUCT_ID;
             $model->ACCESS_GROUP=$ACCESS_GROUP;
             $model->STORE_ID=$STORE_ID;
@@ -468,7 +497,7 @@ class DataBarangController extends Controller
             $model->INPUT_TIME=date('H:i:s');
             $model->INPUT_DATE=date('Y-m-d');
            if ($model->save(false)) {
-            Yii::$app->session->setFlash('success', "Penyimpanan Stock Berhasil");
+            Yii::$app->session->setFlash('success', "Penyimpanan Stock Produk <b>".$models->PRODUCT_NM."</b> Berhasil");
             return $this->redirect(['index-stock','productid'=>$PRODUCT_ID]);
            }
         }
@@ -490,7 +519,7 @@ class DataBarangController extends Controller
         $model->STATUS ="3";
         $model->save(false);
         // print_r($model);die();                    
-        Yii::$app->session->setFlash('error', "Data Berhasil dihapus");
+        Yii::$app->session->setFlash('error', "Data Produk <b>".$model->PRODUCT_NM."</b> Berhasil dihapus");
         return $this->redirect(['index-produk']);
         
     }
@@ -530,6 +559,7 @@ class DataBarangController extends Controller
             // print(UploadedFile::getInstance($image, 'PRODUCT_IMAGE'));die();  
                     $data=store::find()->where(['STORE_ID'=>$model['STORE_ID']])->one();
                     $dataunit=ProductUnit::find()->where(['UNIT_ID'=>$model['UNIT_ID']])->one();
+                    $model->PRODUCT_NM=strtoupper($model->PRODUCT_NM);
                     $model->INDUSTRY_ID=(empty($data->INDUSTRY_ID)) ? '' : $data->INDUSTRY_ID ;
                     $model->INDUSTRY_GRP_ID=(empty($data->INDUSTRY_GRP_ID))?'':$data->INDUSTRY_GRP_ID;
                     $model->INDUSTRY_NM=(empty($data->INDUSTRY_NM))?'':$data->INDUSTRY_NM;
@@ -583,7 +613,7 @@ class DataBarangController extends Controller
             //         $transaction->rollBack();
             //     }
             
-            Yii::$app->session->setFlash('success', "Perubahan Data Berhasil");
+            Yii::$app->session->setFlash('success', "Perubahan Data PRODUK <b>".$model->PRODUCT_NM."</b> Berhasil di rubah");
             return $this->redirect(['index-produk']);
             }                               
             
@@ -704,24 +734,39 @@ class DataBarangController extends Controller
                                     $product->PRODUCT_HEADLINE = $rowData[0][4];
                                     $product->DCRP_DETIL = $rowData[0][5];
                                     $product->save(false);
-                                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                                    Yii::$app->session->setFlash('success', "Data telah disimpan");
-                                    return $this->redirect('index-produk');
+                                    // unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                    // Yii::$app->session->setFlash('success', "Data telah disimpan");
+                                    // return $this->redirect('index-produk');
                                 } else if(empty($rowData[0][0]) && !empty($rowData[0][1])){
-                                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                                    Yii::$app->session->setFlash('warning', "Terdapat Kode prodak yang kosong dan Data telah diperbarui");
-                                    return $this->redirect('index-produk');
-                                }else{
-                                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                                    Yii::$app->session->setFlash('success', "Data telah diperbarui");
-                                    return $this->redirect('index-produk');
+                                    $dataserror[]=['STORE_ID'=>'','PRODUCT_NM'=>$rowData[0][1],'PRODUCT_QR'=> $rowData[0][2],'PRODUCT_WARNA'=> $rowData[0][3],'PRODUCT_HEADLINE'=> $rowData[0][4],'DCRP_DETIL'=>$rowData[0][5]];
+                                    // unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                    // Yii::$app->session->setFlash('warning', "Terdapat Kode prodak yang kosong dan Data telah diperbarui");
+                                    // return $this->redirect('index-produk');
                                 }
+                                // else{
+                                //     unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                //     Yii::$app->session->setFlash('success', "Data telah diperbarui");
+                                //     return $this->redirect('index-produk');
+                                // }
                                 // print_r($branch->getErrors());
                                 // print_r($rowData);
                             }
-                            unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                            return $this->redirect('index-produk');
+                            $dataProvider = new ArrayDataProvider([
+                                'allModels'=>$dataserror
+                            ]);
+                            // print_r($dataProvider);die();
+                            if(!empty($dataProvider)){
+                                unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                return $this->render('modal_error',[
+                                    'dataProvider' => $dataProvider
+                                ]);
+                            // print_r($dataserror);die();
+                            }else{
+                                Yii::$app->session->setFlash('success', "Data telah diperbarui");
+                                unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                return $this->redirect('index-produk');
                             }
+                        }
 
                 } else {
                     $sheet = $objPHPExcel->getSheet(0);
@@ -729,11 +774,11 @@ class DataBarangController extends Controller
                     $highestColumn=$sheet->getHighestColumn();                    
                     $rowData = $sheet->rangeToArray('A1:'.$highestColumn.'1',NULL,TRUE,FALSE);
                     $data=$rowData[0][0];
-                    if ($data=="PRODUCT_ID") {                            
+                    if ($data<>"PRODUCT_ID") {                            
                         unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                        Yii::$app->session->setFlash('error', "Template Tidak sesui dikaranakan produk sudah memiliki kode produk");
+                        Yii::$app->session->setFlash('error', "Template Tidak sesuia dikarenakan produk tidak memiliki kode produk");
                         return $this->redirect('index-produk');
-                    }else{
+                    }else if($data=="PRODUCT_NM"){
                     for($row = 1; $row <= $highestRow; $row++){
                         $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
     
@@ -763,8 +808,53 @@ class DataBarangController extends Controller
                     }
                     unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
                     return $this->redirect('index-produk');
+                    }else if($data=="PRODUCT_ID"){
+                        for($row = 1; $row <= $highestRow; $row++){
+                            $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+        
+                            if ($row==1) {
+                                continue;
+                            }
+                            $data=store::find()->where(['STORE_ID'=>$storeId])->one();
+                            
+                            
+                            $product = new Product;
+                            if(!empty($rowData[0][0])){
+                                $product->PRODUCT_ID = $rowData[0][0];
+                                $product->PRODUCT_NM = $rowData[0][1];
+                                $product->PRODUCT_QR = $rowData[0][2];
+                                $product->PRODUCT_WARNA = $rowData[0][3];
+                                $product->PRODUCT_HEADLINE = $rowData[0][4];
+                                $product->DCRP_DETIL = $rowData[0][5];
+                                $product->update(); 
+                            }else if(empty($rowData[0][0])&&!empty($rowData[0][1])){
+                               
+                                $product->ACCESS_GROUP = $user;
+                                $product->STORE_ID = $storeId;
+                                $product->PRODUCT_NM = $rowData[0][1];
+                                $product->PRODUCT_QR = $rowData[0][2];
+                                $product->PRODUCT_WARNA = $rowData[0][3];
+                                $product->PRODUCT_HEADLINE = $rowData[0][4];
+                                $product->DCRP_DETIL = $rowData[0][5];
+                                $product->INDUSTRY_ID=(empty($data->INDUSTRY_ID)) ? '' : $data->INDUSTRY_ID ;
+                                $product->INDUSTRY_GRP_ID=(empty($data->INDUSTRY_GRP_ID))?'':$data->INDUSTRY_GRP_ID;
+                                $product->INDUSTRY_NM=(empty($data->INDUSTRY_NM))?'':$data->INDUSTRY_NM;
+                                $product->INDUSTRY_GRP_NM=(empty($data->INDUSTRY_GRP_NM))?'':$data->INDUSTRY_GRP_NM;
+                                $product->CREATE_AT=date('Y-m-d H:i:s');
+                                $product->save(false);
+                            }
+                            
+                            
+                            // print_r($branch->getErrors());
+                            // print_r($rowData);
+                        }
+                        // print_r($product);
+                        // die();
+                        
+                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                    return $this->redirect('index-produk');
+                    }
                 }
-            }
             }else{
                 Yii::$app->session->setFlash('error', "Gagal Upload");
                 return $this->redirect(['index-produk']);
@@ -774,7 +864,60 @@ class DataBarangController extends Controller
 				'modelPeriode' => $modelPeriode
 			]);
 		}
-	}
+    }
+    public function actionBatchUpdate()
+{
+    // $sourceModel = ProductStockClosingSearch::find()->indexBy('UNIX_BULAN_ID')->all();
+	// $sourceModel = (Yii::$app->request->isPost);
+    // $model  = new ProductStockClosingSearch;
+	// $model->load(Yii::$app->request->post());
+	$sourceModelProduk = new Product();
+    $sourceModelStore = new store();
+    $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+	if ($sourceModelProduk->load(Yii::$app->request->post())) {
+		$hsl = Yii::$app->request->post();	
+		$paramCari=$hsl['kvTabForm']['0']['STORE_ID'];
+	};
+    // print_r(Yii::$app->request->post(['kvTabForm']['0']));die();
+    if (!$sourceModelProduk->load(Yii::$app->request->post(['kvTabForm']['0']))) {
+        // $count = 0;
+        foreach (Yii::$app->request->post(['kvTabForm']['0']) as $index => $datas) {
+            $data=store::find()->where(['STORE_ID'=>$datas['STORE_ID']])->one();
+                $ACCESS_GROUP = $user;
+                $STORE_ID = $datas['STORE_ID'];
+                $PRODUCT_NM =$datas['PRODUCT_NM'] ;
+                $PRODUCT_QR = $datas['PRODUCT_QR'];
+                $PRODUCT_WARNA = $datas['PRODUCT_WARNA'];
+                $PRODUCT_HEADLINE = $datas['PRODUCT_HEADLINE'];
+                $DCRP_DETIL =$datas['DCRP_DETIL'];
+                $INDUSTRY_ID=(empty($data->INDUSTRY_ID)) ? '' : $data->INDUSTRY_ID ;
+                $INDUSTRY_GRP_ID=(empty($data->INDUSTRY_GRP_ID))?'':$data->INDUSTRY_GRP_ID;
+                $INDUSTRY_NM=(empty($data->INDUSTRY_NM))?'':$data->INDUSTRY_NM;
+                $INDUSTRY_GRP_NM=(empty($data->INDUSTRY_GRP_NM))?'':$data->INDUSTRY_GRP_NM;
+                $CREATE_AT=date('Y-m-d H:i:s');
+                Yii::$app->db->createCommand("
+            INSERT INTO product (ACCESS_GROUP,STORE_ID,PRODUCT_NM,PRODUCT_QR,PRODUCT_WARNA,PRODUCT_HEADLINE,DCRP_DETIL,INDUSTRY_ID,INDUSTRY_GRP_ID,INDUSTRY_NM,INDUSTRY_GRP_NM,CREATE_AT)
+            VALUES ('".$ACCESS_GROUP."','".$STORE_ID."','".$PRODUCT_NM."','".$PRODUCT_QR."','".$PRODUCT_WARNA."','".$PRODUCT_HEADLINE."','".$DCRP_DETIL."','".$INDUSTRY_ID."','".$INDUSTRY_GRP_ID."','".$INDUSTRY_NM."','".$INDUSTRY_GRP_NM."','".$CREATE_AT."')")->execute();
+        
+                // $sourceModelProduk->save(false);
+			// foreach($model as $mod){
+				// print_r($datas['UNIX_BULAN_ID']);
+				// Yii::$app->db->createCommand("
+				// UPDATE product SET STOCK_INPUT_ACTUAL='".$datas['STOCK_INPUT_ACTUAL']."', WHERE UNIX_BULAN_ID='".$datas['UNIX_BULAN_ID']."'")->execute();
+				// $sourceModel->UNIX_BULAN_ID=$datas['UNIX_BULAN_ID'];
+				// $sourceModel->STOCK_INPUT_ACTUAL=$datas['STOCK_INPUT_ACTUAL'];
+				// $model = ProductStockClosingSearch::find()->where(['UNIX_BULAN_ID'=>$datas['']])->one();
+				// $sourceModel->update();
+			// }
+		}
+        // die();
+        $datas=Yii::$app->request->post(['kvTabForm']['0']);
+        unset($datas);
+        Yii::$app->session->setFlash('success', "Processed records successfully.");
+		return $this->redirect(['/master/data-barang/index-produk']); // redirect to your next desired page
+
+    } 
+}
     public function actionExport()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
@@ -792,13 +935,13 @@ class DataBarangController extends Controller
 			[
 				'sheet_name' => 'data-Produk',
                 'sheet_title' => [
-					['PRODUK ID','NAMA PRODUK','QR PRODUK','WARNA PRODUK','PRODUK HEADLINE','DCRP DETIL']
+					['PRODUCT_ID' ,'PRODUCT_NM','PRODUCT_QR','PRODUCT_WARNA','PRODUCT_HEADLINE','DCRP_DETIL']
 				],
 			    'ceils' => $excel_ceilsDataProduk,
 				'freezePane' => 'A2',
 				'columnGroup'=>false,
                 'autoSize'=>false,
-                'unlockCell'=>'B,J,'.(count($excel_ceilsDataProduk)+1000).'',
+                'unlockCell'=>'B,J,'.(count($excel_ceilsDataProduk)+50).'',
                 'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
                 'headerStyle'=>[	
 					[
@@ -901,7 +1044,7 @@ class DataBarangController extends Controller
 			[
 				'sheet_name' => 'data-Produk',
                 'sheet_title' => [
-					['PRODUK ID','NAMA PRODUK','QR PRODUK','WARNA PRODUK','PRODUK HEADLINE','DCRP DETIL']
+					['NAMA PRODUK','QR PRODUK','WARNA PRODUK','PRODUK HEADLINE','DCRP DETIL']
                 ],
                 
 			    'ceils' =>$cel,

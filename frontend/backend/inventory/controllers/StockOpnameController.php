@@ -320,7 +320,7 @@ class StockOpnameController extends Controller
         // $count = 0;
         foreach (Yii::$app->request->post(['kvTabForm']['0']) as $index => $datas) {
 			// foreach($model as $mod){
-				print_r($datas['UNIX_BULAN_ID']);
+				// print_r($datas['UNIX_BULAN_ID']);
 				Yii::$app->db->createCommand("
 				UPDATE product_stock_closing SET STOCK_INPUT_ACTUAL='".$datas['STOCK_INPUT_ACTUAL']."' WHERE UNIX_BULAN_ID='".$datas['UNIX_BULAN_ID']."'")->execute();
 				// $sourceModel->UNIX_BULAN_ID=$datas['UNIX_BULAN_ID'];

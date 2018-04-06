@@ -62,10 +62,10 @@ $button = ButtonDropdown::widget([
 				</div>
 					
 			<div class="col-md-12">
-					<?=Html::submitButton('Upload',['class' => 'btn btn-success']); ?>
-				<div class="pull-right">
 						<?=Html::Button('cara Upload',['class' => 'btn btn-warning','value'=>Url::toRoute(['/master/data-barang/cara-upload']),'id'=>'cara']); ?>
 						<?=$button?>
+				<div class="pull-right">
+					<?=Html::submitButton('Upload',['class' => 'btn btn-success']); ?>
 				</div>
 			</div>
 		</div>

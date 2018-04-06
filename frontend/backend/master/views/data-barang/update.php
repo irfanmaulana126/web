@@ -40,7 +40,7 @@ $data=$image->PRODUCT_IMAGE;
 							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
 						]
 					]
-				])->textInput(['style'=>'width: 413px;'])->label(false)  ?>
+				])->textInput(['style'=>'width: 413px;text-transform:uppercase'])->label(false)  ?>
 
 			<?= $form->field($model, 'PRODUCT_QR',[					
 					'addon' => [
@@ -204,8 +204,8 @@ $data=$image->PRODUCT_IMAGE;
 				]
 			]) ; 
 			?>
-		<div class="form-group">
-			<?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+		<div class="form-group text-right">
+			<?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',]) ?>
 		</div>
 <?php ActiveForm::end(); ?>
 

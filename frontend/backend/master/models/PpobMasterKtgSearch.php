@@ -5,26 +5,26 @@ namespace frontend\backend\master\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\backend\master\models\ProductGroup;
+use frontend\backend\master\models\PpobMasterKtg;
 
 /**
- * ProductGroupSearch represents the model behind the search form of `frontend\backend\master\models\ProductGroup`.
+ * PpobMasterKtgSearch represents the model behind the search form of `frontend\backend\master\models\PpobMasterKtg`.
  */
-class ProductGroupSearch extends ProductGroup
+class PpobMasterKtgSearch extends PpobMasterKtg
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['ID', 'STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
-            [['ACCESS_GROUP', 'STORE_ID', 'GROUP_ID', 'GROUP_NM', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT', 'NOTE'], 'safe'],
+            [['ID', 'STATUS'], 'integer'],
+            [['KTG_ID', 'KTG_NM', 'KELOMPOK', 'KETERANGAN', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT'], 'safe'],
         ];
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function scenarios()
     {
@@ -41,7 +41,7 @@ class ProductGroupSearch extends ProductGroup
      */
     public function search($params)
     {
-        $query = ProductGroup::find();
+        $query = PpobMasterKtg::find();
 
         // add conditions that should always apply here
 
@@ -60,21 +60,17 @@ class ProductGroupSearch extends ProductGroup
         // grid filtering conditions
         $query->andFilterWhere([
             'ID' => $this->ID,
+            'STATUS' => $this->STATUS,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'STATUS' => $this->STATUS,
-            'YEAR_AT' => $this->YEAR_AT,
-            'MONTH_AT' => $this->MONTH_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
-            ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
-            ->andFilterWhere(['like', 'GROUP_ID', $this->GROUP_ID])
-            ->andFilterWhere(['like', 'GROUP_NM', $this->GROUP_NM])
+        $query->andFilterWhere(['like', 'KTG_ID', $this->KTG_ID])
+            ->andFilterWhere(['like', 'KTG_NM', $this->KTG_NM])
+            ->andFilterWhere(['like', 'KELOMPOK', $this->KELOMPOK])
+            ->andFilterWhere(['like', 'KETERANGAN', $this->KETERANGAN])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
-            ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
-            ->andFilterWhere(['like', 'NOTE', $this->NOTE]);
-        $query->orderBy(['STORE_ID'=>SORT_DESC,'ID'=>SORT_DESC]);
+            ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY]);
 
         return $dataProvider;
     }

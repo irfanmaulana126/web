@@ -37,7 +37,7 @@ use yii\helpers\ArrayHelper;
 							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right']
 						]
 					]
-				])->textInput(['maxlength' => true])->label(false) ?>
+				])->textInput(['maxlength' => true,'style'=>'text-transform:uppercase'])->label(false) ?>
 
     <?= $form->field($model, 'NOTE')->textarea(['rows' => 6]) ?>
 
