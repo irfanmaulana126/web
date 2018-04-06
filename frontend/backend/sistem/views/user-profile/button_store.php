@@ -556,25 +556,25 @@ $this->registerCss("
 		$content = Html::button($label1,$options1);		
 		return $content;
 	}
-	function tombolCountBankProfileDropdownDetail($model){
-		$title1 = Yii::t('app',' Detail');
-		$options1 = [
-			'value'=>url::to(['/sistem/user-profile/account-rek-detail','ACCESS_GROUP' => $model['ACCESS_ID']]),
-			'id'=>'userprofile-button-row-bank',
-			'class'=>"btn btn-default btn-xs",    
-			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
-		];
-		$icon1 = '
-			<span class="fa-stack fa-xs">																	
-				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
-				<i class="fa fa-tags fa-stack-1x" style="color:black"></i>
-			</span>
-		';      
-		$label1 = $icon1 . '  ' . $title1;
-		$content = Html::button($label1,$options1);		
-		return '<li>'.$content.'</li>';
-		return $content;
-	}
+	// function tombolCountBankProfileDropdownDetail($model){
+	// 	$title1 = Yii::t('app',' Detail');
+	// 	$options1 = [
+	// 		'value'=>url::to(['/sistem/user-profile/account-rek-detail','ACCESS_GROUP' => $model['ACCESS_ID']]),
+	// 		'id'=>'userprofile-button-row-bank',
+	// 		'class'=>"btn btn-default btn-xs",    
+	// 		'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+	// 	];
+	// 	$icon1 = '
+	// 		<span class="fa-stack fa-xs">																	
+	// 			<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+	// 			<i class="fa fa-tags fa-stack-1x" style="color:black"></i>
+	// 		</span>
+	// 	';      
+	// 	$label1 = $icon1 . '  ' . $title1;
+	// 	$content = Html::button($label1,$options1);		
+	// 	return '<li>'.$content.'</li>';
+	// 	return $content;
+	// }
 	function tombolCountBankProfileDropdownUpdate($model){
 		$title1 = Yii::t('app',' Update');
 		$options1 = [
@@ -592,6 +592,21 @@ $this->registerCss("
 		$label1 = $icon1 . '  ' . $title1;
 		$content = Html::button($label1,$options1);		
 		return '<li>'.$content.'</li>';
+		return $content;
+	}
+	function tombolCountBankProfileDropdownDetail($model){
+		
+		$title1 = Yii::t('app',' Account Bank');
+		$options1 = [
+			'value'=>url::to(['/sistem/user-profile/account-rek-detail','ACCESS_GROUP' => $model['ACCESS_ID']]),
+			'id'=>'userprofile-button-row-bank',
+			'class'=>"btn btn-success dropdown-toggle btn-md",
+		];
+		$icon1 = '
+		<span class="fa fa-credit-card fa-lg"></span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
 		return $content;
 	}
 	
