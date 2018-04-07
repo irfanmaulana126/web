@@ -533,14 +533,14 @@ echo $this->render('modal_store'); //echo difinition
 			<?php if(empty($dataProviderekening)){
 				echo tombolCountBankProfile($dataProvider);
 			}else{
-				echo Html::beginTag('div', ['class'=>'btn-group']);
-				echo Html::button('<span class="fa fa-credit-card fa-lg"></span> Account Bank <span class="caret"></span></button>', 
-				['type'=>'button', 'class'=>'btn btn-success dropdown-toggle btn-md', 'data-toggle'=>'dropdown']);
-				echo Html::beginTag('ul', ['class'=>'dropdown-menu','role'=>'menu']);
+				// echo Html::beginTag('div', ['class'=>'btn-group']);
+				// echo Html::button('<span class="fa fa-credit-card fa-lg"></span> Account Bank <span class="caret"></span></button>', 
+				// ['type'=>'button', 'class'=>'btn btn-success dropdown-toggle btn-md', 'data-toggle'=>'dropdown']);
+				// echo Html::beginTag('ul', ['class'=>'dropdown-menu','role'=>'menu']);
 					echo tombolCountBankProfileDropdownDetail($dataProvider);
-					echo tombolCountBankProfileDropdownUpdate($dataProvider);
-				echo Html::endTag('ul');
-				echo Html::endTag('div');
+					// echo tombolCountBankProfileDropdownUpdate($dataProvider);
+				// echo Html::endTag('ul');
+				// echo Html::endTag('div');
 			}?>
 		</div>
 		

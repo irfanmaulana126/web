@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use kartik\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
 use frontend\backend\sistem\models\Bank;
@@ -20,30 +20,84 @@ if(!empty($modelImage->IMAGE)){
 }else{
     $datas='';
 }
-
+$warnaLabel='rgba(21, 175, 213, 0.14)';
+$widthLabel='125px';
 ?>
 
 <div class="dompet-rekening-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'NAMA_LENGKAP')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'NAMA_LENGKAP',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span ><b>NAMA</b></span>',
+							'options'=>['style' =>'
+											background-color:'.$warnaLabel.';
+											width:'.$widthLabel.';
+											text-align:right;
+											border-top-left-radius:5px;
+											border-bottom-left-radius:5px;
+										']
+						]
+					]
+				])->textInput(['maxlength' => true,'style'=>'width: 445px;'])->label(false); ?>
 
-    <?= $form->field($model, 'BANK')->textInput(['maxlength' => true])->widget(Select2::classname(), [
+    <?= $form->field($model, 'BANK',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span ><b>BANK</b></span>',
+							'options'=>['style' =>'
+											background-color:'.$warnaLabel.';
+											width:'.$widthLabel.';
+											text-align:right;
+											border-top-left-radius:5px;
+											border-bottom-left-radius:5px;
+										']
+						]
+					]
+				])->textInput(['maxlength' => true])->widget(Select2::classname(), [
             'data' => ArrayHelper::map(Bank::find()->all(),'BANK_NM','BANK_NM'),
             'language' => 'EN',
-            'options' => ['placeholder' => 'Select a Bank ...'],
+            'options' => ['placeholder' => 'Select a Bank ...','style'=>'width: 445px;'],
             'pluginOptions' => [
                 'allowClear' => true
             ],
-        ]) ?>
+        ])->label(false); ?>
 
-    <?= $form->field($model, 'NO_REK')->textInput(['type' => 'number']) ?>
+    <?= $form->field($model, 'NO_REK',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span ><b>NO REK</b></span>',
+							'options'=>['style' =>'
+											background-color:'.$warnaLabel.';
+											width:'.$widthLabel.';
+											text-align:right;
+											border-top-left-radius:5px;
+											border-bottom-left-radius:5px;
+										']
+						]
+					]
+				])->textInput(['type' => 'number','style'=>'width: 445px;'])->label(false); ?>
 
 
-    <?= $form->field($model, 'TLP')->widget(MaskedInput::classname(),[
+    <?= $form->field($model, 'TLP',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span ><b>TLP</b></span>',
+							'options'=>['style' =>'
+											background-color:'.$warnaLabel.';
+											width:'.$widthLabel.';
+											text-align:right;
+											border-top-left-radius:5px;
+											border-bottom-left-radius:5px;
+										']
+						]
+					]
+				])->widget(MaskedInput::classname(),[
         'mask' => '9',
-        'clientOptions' => ['repeat' => 12, 'greedy' => false]]) ?>
+        'options'=>['class'=>'form-control','style'=>'width: 445px;'],
+        'clientOptions' => ['repeat' => 12, 'greedy' => false]])->label(false); ?>
 
     <?= $form->field($model, 'ALAMAT')->textarea(['rows' => 4]) ?>
 

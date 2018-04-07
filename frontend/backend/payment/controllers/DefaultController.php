@@ -4,6 +4,8 @@ namespace frontend\backend\payment\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 use frontend\backend\sistem\models\Corp;
 use frontend\backend\sistem\models\CorpSearch;
 use frontend\backend\sistem\models\CorpImage;
@@ -17,6 +19,49 @@ use frontend\backend\payment\models\StoreKasirSearch;
 
 class DefaultController extends Controller
 {
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
+    }    
+    public function beforeAction($action){
+        $modulIndentify=4; //OUTLET
+       // Check only when the user is logged in.
+       // Author piter Novian [ptr.nov@gmail.com].
+       if (!Yii::$app->user->isGuest){
+           if (Yii::$app->session['userSessionTimeout']< time() ) {
+               // timeout
+               Yii::$app->user->logout();
+               return $this->goHome(); 
+           } else {	
+               //add Session.
+               Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
+               //check validation [access/url].
+               $checkAccess=Yii::$app->getUserOpt->UserMenuPermission($modulIndentify);
+               if($checkAccess['modulMenu']['MODUL_STS']==0 OR $checkAccess['ModulPermission']['STATUS']==0){				
+                   $this->redirect(array('/site/alert'));
+               }else{
+                   if($checkAccess['PageViewUrl']==true){						
+                       return true;
+                   }else{
+                       $this->redirect(array('/site/alert'));
+                   }					
+               }			 
+           }
+       }else{
+           Yii::$app->user->logout();
+           return $this->goHome(); 
+       }
+   }
     public function actionIndex()
     {
        
@@ -50,33 +95,4 @@ class DefaultController extends Controller
             'dataProviderperangkat' => $dataProviderperangkat,
         ]);
     }
-    public function beforeAction($action){
-        $modulIndentify=4; //OUTLET
-       // Check only when the user is logged in.
-       // Author piter Novian [ptr.nov@gmail.com].
-       if (!Yii::$app->user->isGuest){
-           if (Yii::$app->session['userSessionTimeout']< time() ) {
-               // timeout
-               Yii::$app->user->logout();
-               return $this->goHome(); 
-           } else {	
-               //add Session.
-               Yii::$app->session->set('userSessionTimeout', time() + Yii::$app->params['sessionTimeoutSeconds']);
-               //check validation [access/url].
-               $checkAccess=Yii::$app->getUserOpt->UserMenuPermission($modulIndentify);
-               if($checkAccess['modulMenu']['MODUL_STS']==0 OR $checkAccess['ModulPermission']['STATUS']==0){				
-                   $this->redirect(array('/site/alert'));
-               }else{
-                   if($checkAccess['PageViewUrl']==true){						
-                       return true;
-                   }else{
-                       $this->redirect(array('/site/alert'));
-                   }					
-               }			 
-           }
-       }else{
-           Yii::$app->user->logout();
-           return $this->goHome(); 
-       }
-   }
 }

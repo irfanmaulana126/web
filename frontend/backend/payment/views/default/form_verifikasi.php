@@ -1,5 +1,13 @@
 <?php
 use kartik\detail\DetailView;
+if(!empty($modelRek->gambar)){
+    $data=unserialize($modelRek->gambar);
+    foreach ($data as $key) {
+            $datas[]='<img src="'.$key.'" alt="Your Avatar" style="width:160px;align:center">';
+        }
+}else{
+    $datas='';
+}
 ?>
 <div class="row">
     <div class="col-md-6 col-md-6">
@@ -122,16 +130,18 @@ use kartik\detail\DetailView;
 </div>
 </div>
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Dokumen</h3>
+                </div>
                 <div class="box-body">
+                    <?php
+                    foreach($datas as $data){
+                        echo $data.'&nbsp&nbsp&nbsp';
+                    }
+                    ?>
                 </div>
             </div>
-    </div>
-    <div class="col-md-6">
-        <div class="box box-danger">
-                <div class="box-body">
-                </div>
-        </div>
     </div>
 </div>

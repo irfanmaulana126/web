@@ -27,6 +27,7 @@ $vewBreadcrumb=Breadcrumbs::widget([
     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
 ]);
 $this->registerJs($this->render('presensi.js'),View::POS_READY);
+echo $this->render('modal');
 	$this->registerCss("
 	.process-step .btn:focus{outline:none}
 	.process{display:table;width:100%;position:relative}
@@ -67,7 +68,12 @@ $this->registerJs($this->render('presensi.js'),View::POS_READY);
   <div class="tab-content">
    <div id="menu1" class="tab-pane fade active in">
         <div class="container-fluid">
-            <?=$this->render('form_create');?>
+            <?=$this->render('form_create',[
+                'modelRek' => $modelRek,
+                'modelcorpImg' => $modelcorpImg,
+                'modelcorp' => $modelcorp,
+                'modelRekImg' => $modelRekImg,
+            ]);?>
         </div>
     </div>
    <div id="menu2" class="tab-pane fade">
