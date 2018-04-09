@@ -176,17 +176,14 @@ class UserProfileController extends Controller
             'model' => $model,
         ]);
     }
-    public function actionAccountRek($ACCESS_GROUP)
+    public function actionAccountRek()
     {   
-        $model = DompetRekening::findOne(['ACCESS_GROUP'=>$ACCESS_GROUP]);
-        $modelImage = DompetRekeningImage::findOne(['ACCESS_GROUP'=>$ACCESS_GROUP]);
-        // print_r($modelImage);die();
-        if (empty($model) && empty($modelImage)) {
+            $ACCESS_GROUP=Yii::$app->user->identity->ACCESS_GROUP;
             $model = new DompetRekening();
             $modelImage = new DompetRekeningImage();
-        }
         if ($model->load(Yii::$app->request->post())) {
             $model->ACCESS_GROUP=$ACCESS_GROUP;
+            $model->STATUS=1;
             $model->save(false);
             $modelImage->IMAGE = UploadedFile::getInstances($modelImage, 'IMAGE');
             
@@ -203,7 +200,7 @@ class UserProfileController extends Controller
                 $models->save(false);
             }
             Yii::$app->session->setFlash('success', "Data Berhasil dirubah");
-            return $this->redirect(['index']);  
+            return $this->redirect(['/payment']);  
         }
         return $this->renderAjax('_form_rek', [
             'model' => $model,
@@ -238,7 +235,7 @@ class UserProfileController extends Controller
                     UPDATE dompet_rekening_image SET IMAGE='".$models->IMAGE."',STATUS='0' WHERE ACCESS_GROUP='". $models->ACCESS_GROUP=$ACCESS_GROUP."'")->execute();
             }
             Yii::$app->session->setFlash('success', "Data Berhasil dirubah");
-            return $this->redirect(['index']);  
+            return $this->redirect(['/payment']);  
         }
         return $this->renderAjax('_form_rek', [
             'model' => $model,

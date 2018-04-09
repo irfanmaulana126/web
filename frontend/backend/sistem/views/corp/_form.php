@@ -8,7 +8,16 @@ $data=$image->CORP_64;
 		$datas='<img src="'.$image->CORP_64.'" alt="Your Avatar" style="width:160px;align:center">';
 	} else {
 		$datas='<img src="https://www.mautic.org/media/images/default_avatar.png" alt="Your Avatar" style="width:160px;align:center">';
-	}
+    }
+    if(!empty($image->BERKAS_IMG)){
+        $data=unserialize($image->BERKAS_IMG);
+        foreach ($data as $key) {
+                $berkas[]='<img src="'.$key.'" alt="Your Avatar" style="width:160px;align:center">';
+            }
+    }else{
+        $berkas='';
+    }
+    $retVal = ($model['STATUS']!=0) ? 'false' : 'true' ;
 /* @var $this yii\web\View */
 /* @var $model frontend\backend\ppob\models\PpobHeader */
 /* @var $form yii\widgets\ActiveForm */
@@ -140,7 +149,7 @@ $this->registerJS('
             marker = new google.maps.Marker({
                 map: map,
                 position: myLatlng,
-                draggable: true 
+                draggable: '.$retVal.',
             }); 
 
             geocoder.geocode({"latLng": myLatlng }, function(results, status) {
@@ -155,7 +164,7 @@ $this->registerJS('
                     }
                 }
             });
-
+            if('.$retVal.'==true){
             google.maps.event.addListener(marker, "dragend", function() {
 
             geocoder.geocode({"latLng": marker.getPosition()}, function(results, status) {
@@ -187,6 +196,7 @@ $this->registerJS('
                             }
                         });
             });
+        }
             google.maps.event.addDomListener(window, "load", initAutocomplete);    
             }      
             $("#edit-modal").on("shown.bs.modal", function(){
@@ -199,8 +209,8 @@ $this->registerJS('
 <div class="corp-form">
 
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
-
-    <?= $form->field($model, 'CORP_NM',[					
+    
+    <?php if ($model['STATUS']==2){ echo $form->field($model, 'CORP_NM',[					
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span ><b>PERUSAHAAN</b></span>',
@@ -213,7 +223,22 @@ $this->registerJS('
 										']
 						]
 					]
-				])->textInput(['style'=>'width: 422px;'])->label(false); ?>
+				])->textInput(['readOnly'=>true,'style'=>'width: 422px;'])->label(false);}else{
+                    echo $form->field($model, 'CORP_NM',[					
+                        'addon' => [
+                            'prepend' => [
+                                'content'=>'<span ><b>PERUSAHAAN</b></span>',
+                                'options'=>['style' =>'
+                                                background-color:'.$warnaLabel.';
+                                                width:'.$widthLabel.';
+                                                text-align:right;
+                                                border-top-left-radius:5px;
+                                                border-bottom-left-radius:5px;
+                                            ']
+                            ]
+                        ]
+                    ])->textInput(['style'=>'width: 422px;'])->label(false); 
+                } ?>
 <div class="row">
 <div class="col-md-12">
     <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
@@ -244,7 +269,7 @@ $this->registerJS('
                 
     </div>
     </div>
-    <?= $form->field($model, 'ALAMAT',[					
+    <?php if($model['STATUS']==2){ echo $form->field($model, 'ALAMAT',[					
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span ><b>ALAMAT</b></span>',
@@ -257,7 +282,23 @@ $this->registerJS('
 										']
 						]
 					]
-				])->textInput(['id'=>'address','style'=>'width: 425px;'])->label(false) ?>
+                ])->textInput(['readOnly'=>true,'id'=>'address','style'=>'width: 425px;'])->label(false);
+                        }else{
+                    echo $form->field($model, 'ALAMAT',[					
+                        'addon' => [
+                            'prepend' => [
+                                'content'=>'<span ><b>ALAMAT</b></span>',
+                                'options'=>['style' =>'
+                                                background-color:'.$warnaLabel.';
+                                                width:'.$widthLabel.';
+                                                text-align:right;
+                                                border-top-left-radius:5px;
+                                                border-bottom-left-radius:5px;
+                                            ']
+                            ]
+                        ]
+                    ])->textInput(['id'=>'address','style'=>'width: 425px;'])->label(false); 
+                } ?>
     
     <?=  $form->field($image, 'CORP_64')->widget(FileInput::classname(), [
 				'name'=>'item-input-file',
@@ -287,10 +328,37 @@ $this->registerJS('
 				]
 			])->label('LOGO') ; 
 			?>
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= $form->field($image, 'BERKAS_IMG[]')->widget(FileInput::classname(), [
+        'options'=>[
+                'width'=>'100px',
+                'accept'=>'image/*',
+                'multiple'=>true
+            ],				
+        'pluginOptions'=>[
+            'allowedFileExtensions'=>['jpg','gif','png'],					
+            'showCaption' => false,
+            'showRemove' => true,
+            'showUpload' => false,
+            'showClose' =>false,
+            'showDrag' =>false,
+            'browseLabel' => 'Select Photo',
+            'removeLabel' => '',
+            'removeIcon'=> '<i class="glyphicon glyphicon-remove"></i>',
+            'removeTitle'=> 'Clear Selected File',
+            'defaultPreviewContent' => $berkas,
+            'maxFileSize'=>800 //10KB
+            
+        ],
+        'pluginEvents' => [
+            'fileclear' => 'function() { log("fileclear"); }',
+            'filereset' => 'function() { log("filereset"); }',
+        ]        
+    ]); ?>
+    <?php if($model['STATUS']=='0'){ ?>
+    <div class="form-group text-right">
+        <?= Html::submitButton('Create', ['class' => 'btn btn-primary']) ?>
     </div>
-
+    <?php } ?>
     <?php ActiveForm::end(); ?>
 
 </div>

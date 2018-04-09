@@ -222,18 +222,18 @@ $this->registerCss("
 			'hapus' =>function($url, $model,$key){
 				return  tombolHapusProduk($url, $model);
 			},
-			'discount' =>function($url, $model,$key){
-				return  tombolDiscount($url, $model);
-			},
-			'promo' =>function($url, $model,$key){
-				return  tombolPromo($url, $model);
-			},
-			'harga' =>function($url, $model,$key){
-				return  tombolHarga($url, $model);
-			},
-			'stock' =>function($url, $model,$key){
-				return  tombolStock($url, $model);
-			}
+			// 'discount' =>function($url, $model,$key){
+			// 	return  tombolDiscount($url, $model);
+			// },
+			// 'promo' =>function($url, $model,$key){
+			// 	return  tombolPromo($url, $model);
+			// },
+			// 'harga' =>function($url, $model,$key){
+			// 	return  tombolHarga($url, $model);
+			// },
+			// 'stock' =>function($url, $model,$key){
+			// 	return  tombolStock($url, $model);
+			// }
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
 		'contentOptions'=>Yii::$app->gv->gvContainBody('center','10px',''),

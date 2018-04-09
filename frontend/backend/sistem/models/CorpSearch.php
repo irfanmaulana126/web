@@ -19,7 +19,7 @@ class CorpSearch extends Corp
     {
         return [
             [['ID', 'STATUS'], 'integer'],
-            [['ACCESS_ID', 'CORP_NM', 'ALAMAT', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT'], 'safe'],
+            [['ACCESS_ID','BERKAS_IMG', 'CORP_NM', 'ALAMAT', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT'], 'safe'],
             [['MAP_LAG', 'MAP_LAT'], 'number'],
         ];
     }
@@ -70,6 +70,7 @@ class CorpSearch extends Corp
 
         $query->andFilterWhere(['like', 'ACCESS_ID', $this->ACCESS_ID])
             ->andFilterWhere(['like', 'CORP_NM', $this->CORP_NM])
+            ->andFilterWhere(['like', 'BERKAS_IMG', $this->BERKAS_IMG])
             ->andFilterWhere(['like', 'ALAMAT', $this->ALAMAT])
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY]);

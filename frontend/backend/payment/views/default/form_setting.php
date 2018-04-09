@@ -2,7 +2,19 @@
 use kartik\slider\Slider;
 use yii\helpers\Html;
 use kartik\grid\GridView;
+use kartik\editable\Editable;
 $this->registerCss("
+	:link {
+		color: #fdfdfd;
+	}
+	/* mouse over link */
+	a:hover {
+		color: #5a96e7;
+	}
+	/* selected link */
+	a:active {
+		color: blue;
+	}
 	#gv-perangkat .kv-grid-container{
 		height:200px
 	}	
@@ -47,6 +59,50 @@ $headerColor='rgba(128, 179, 178, 1)';
 					'mergeHeader'=>false,
 					'format'=>'html',
 					'noWrap'=>false,
+					'format'=>'raw',
+					'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
+					'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
+				],
+				[
+					'class' => 'kartik\grid\EditableColumn',
+					'attribute'=>'KASIR_STT',
+					'label'=>'PEMABAYARAN',
+					'refreshGrid'=>true,
+					'filterType'=>true,
+					'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','250px'),
+					'hAlign'=>'right',
+					'vAlign'=>'middle',
+					'readonly' => function($model, $key, $index, $widget) {
+						return ($model['KASIR_STT']=='0'); // do not allow editing of inactive records
+					},
+					'editableOptions'=> [
+						'header'=>'STATUS PEMBAYARAN', 
+						'size'=>'md',
+						'inputType' => \kartik\editable\Editable::INPUT_SWITCH,
+						'options' => [
+							'pluginOptions' => [
+								'items'=>[
+									'value'=>empty($model->KASIR_STT) ? '1' :'2','uncheck'=>'2'
+								],
+								'uncheck'=>'2'
+								],
+						]
+				],
+					'mergeHeader'=>false,
+					'format'=>'html',
+					'noWrap'=>false,
+					'value'=>function($model)
+					{
+						if ($model['KASIR_STT']=='1') {
+							return 'ACTIVE';
+						}elseif($model['KASIR_STT']=='2'){
+							return 'DEACTIVE';
+						}elseif($model['KASIR_STT']=='0'){
+							return'TRIAL/DEMO';
+						}else{
+							return'-';
+						}
+					},
 					'format'=>'raw',
 					'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
 					'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),

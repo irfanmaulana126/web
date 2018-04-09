@@ -120,25 +120,102 @@ class CorpController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        $image = CorpImage::find()->where(['ACCESS_ID'=>$model['ACCESS_ID']])->one();
-        // print_r($image);die();
-        if(empty($image)){
+        $user=Yii::$app->user->identity->ACCESS_ID;
+        if(empty($id)){
             $image = new CorpImage();
+            $model = new Corp();
+            if ($model->load(Yii::$app->request->post())) {
+            
+                if (!empty(UploadedFile::getInstance($image, 'CORP_64'))||!empty(UploadedFile::getInstances($image, 'BERKAS_IMG'))) {
+                    $transaction = Yii::$app->db->beginTransaction();
+                    $image->ACCESS_ID=$model['ACCESS_ID'];
+                    $upload_file = $image->uploadImage();
+                    $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                    if(!empty($data_base64)){
+                        $image->CORP_64 = 'data:image/*;charset=utf-8;base64,'.$data_base64;
+                    }else{
+                        $image->CORP_64 ='';
+                    }
+                    if(!empty(UploadedFile::getInstances($image, 'BERKAS_IMG'))){
+                        foreach (UploadedFile::getInstances($image, 'BERKAS_IMG') as $img) {
+                            $upload_file = $img;
+                            $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                            $images[]= 'data:image/*;charset=utf-8;base64,'.$data_base64;
+                        }
+                        $image->BERKAS_IMG=serialize($images);
+                    }else{
+                        $image->BERKAS_IMG='';
+                    }                
+                    // print_r($image->CORP_64);die();
+                    // print_r($image->BERKAS_IMG);die();
+                    if(!empty($image->BERKAS_IMG) && !empty($image->CORP_64)){
+                        Yii::$app->db->createCommand("
+                        INSERT INTO corp_64 (`ACCESS_ID`,`CORP_NM`,`CORP_64`,`BERKAS_IMG`) VALUES ('".$user."','".$model->CORP_NM."','".$image->CORP_64."','".$image->BERKAS_IMG."')")->execute();
+                        $transaction->commit();
+                    }elseif(!empty($image->CORP_64)){
+                        Yii::$app->db->createCommand("
+                        INSERT INTO corp_64 (`ACCESS_ID`,`CORP_NM`,`CORP_64`) VALUES ('".$user."','".$model->CORP_NM."','".$image->CORP_64."')")->execute();
+                        $transaction->commit();
+                    }elseif (!empty($image->BERKAS_IMG)) {
+                        Yii::$app->db->createCommand("
+                        INSERT INTO corp_64 (`ACCESS_ID`,`CORP_NM`,`BERKAS_IMG`) VALUES ('".$user."','".$model->CORP_NM."','".$image->BERKAS_IMG."')")->execute();
+                        $transaction->commit();
+                    }
+                }
+                $model->ACCESS_ID=$user;
+                $model->save(false);
+                Yii::$app->session->setFlash('success', "Perubahan Data Berhasil");
+                return $this->redirect(['/payment']);
+            } else {
+                return $this->renderAjax('update', [
+                    'model' => $model,
+                    'image' => $image,
+                ]);
+            }
+        }else{
+            $model = $this->findModel($id);
+            $image = CorpImage::find()->where(['ACCESS_ID'=>$model['ACCESS_ID']])->one();
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if (!empty(UploadedFile::getInstance($image, 'CORP_64'))) {
+
+            if (!empty(UploadedFile::getInstance($image, 'CORP_64'))||!empty(UploadedFile::getInstances($image, 'BERKAS_IMG'))) {
                 $transaction = Yii::$app->db->beginTransaction();
                 $image->ACCESS_ID=$model['ACCESS_ID'];
                 $upload_file = $image->uploadImage();
                 $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
-                $image->CORP_64 = 'data:image/*;charset=utf-8;base64,'.$data_base64;
-                Yii::$app->db->createCommand("
-                UPDATE corp_64 SET CORP_64='".$image->CORP_64."' WHERE ACCESS_ID='".$image->ACCESS_ID."'")->execute();
-                $transaction->commit();
+                if(!empty($data_base64)){
+                    $image->CORP_64 = 'data:image/*;charset=utf-8;base64,'.$data_base64;
+                }else{
+                    $image->CORP_64 ='';
+                }
+                if(!empty(UploadedFile::getInstances($image, 'BERKAS_IMG'))){
+                    foreach (UploadedFile::getInstances($image, 'BERKAS_IMG') as $img) {
+                        $upload_file = $img;
+                        $data_base64 = $upload_file != ''? $this->saveimage(file_get_contents($upload_file->tempName)): ''; //call function saveimage using base64
+                        $images[]= 'data:image/*;charset=utf-8;base64,'.$data_base64;
+                    }
+                    $image->BERKAS_IMG=serialize($images);
+                }else{
+                    $image->BERKAS_IMG='';
+                }                
+                // print_r($image->CORP_64);die();
+                // print_r($image->BERKAS_IMG);die();
+                if(!empty($image->BERKAS_IMG) && !empty($image->CORP_64)){
+                    Yii::$app->db->createCommand("
+                    UPDATE corp_64 SET CORP_64='".$image->CORP_64."',BERKAS_IMG='".$image->BERKAS_IMG."' WHERE ACCESS_ID='".$image->ACCESS_ID."'")->execute();
+                    $transaction->commit();
+                }elseif(!empty($image->CORP_64)){
+                    Yii::$app->db->createCommand("
+                    UPDATE corp_64 SET CORP_64='".$image->CORP_64."' WHERE ACCESS_ID='".$image->ACCESS_ID."'")->execute();
+                    $transaction->commit();
+                }elseif (!empty($image->BERKAS_IMG)) {
+                    Yii::$app->db->createCommand("
+                    UPDATE corp_64 SET BERKAS_IMG='".$image->BERKAS_IMG."' WHERE ACCESS_ID='".$image->ACCESS_ID."'")->execute();
+                    $transaction->commit();
+                }
             }
         Yii::$app->session->setFlash('success', "Perubahan Data Berhasil");
-            return $this->redirect(['/sistem/user-profile']);
+            return $this->redirect(['/payment']);
         } else {
             return $this->renderAjax('update', [
                 'model' => $model,
