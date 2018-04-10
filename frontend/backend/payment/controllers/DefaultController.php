@@ -16,6 +16,8 @@ use frontend\backend\sistem\models\DompetRekeningImage;
 use frontend\backend\sistem\models\DompetRekeningImageSearch;
 use frontend\backend\payment\models\StoreKasir;
 use frontend\backend\payment\models\StoreKasirSearch;
+use yii\helpers\Json;
+use yii\web\Response;
 
 class DefaultController extends Controller
 {
@@ -85,6 +87,31 @@ class DefaultController extends Controller
         $searchModelperangkat = new StoreKasirSearch(['ACCESS_GROUP'=>$user]);
         $dataProviderperangkat = $searchModelperangkat->search(Yii::$app->request->queryParams);
         
+        if (Yii::$app->request->post('hasEditable')) {
+            $settingId=\Yii::$app->request->post('editableKey');
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+                if (!empty($_POST['StoreKasir'])) {
+                        $data = json_decode($settingId, true);
+                        $setting = StoreKasir::find()->where(['KASIR_ID'=>$settingId])->one();
+            
+                        $out= Json::encode(['output'=>'','message'=>'']);
+                        $post = [];
+                        $posted = current($_POST['StoreKasir']);
+                        $post['StoreKasir'] = $posted;
+                        if ($setting->load($post)) { 
+                            if($setting->KASIR_STT==0){
+                                $setting->KASIR_STT=2;
+                            }
+                            $setting->save();
+                            $output = $setting->KASIR_STT;
+                        }
+                    }
+            
+            $out = Json::encode(['output'=>$output, 'message'=>'']);
+            echo $out;
+            return;
+        }
         return $this->render('index', [
             'modelcorp' => $modelcorp,
             'modelcorpImg' => $modelcorpImg,

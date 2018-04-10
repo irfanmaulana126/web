@@ -1,5 +1,6 @@
 <?php
 use kartik\detail\DetailView;
+use kartik\editable\Editable;
 if(!empty($modelRek->gambar)){
     $data=unserialize($modelRek->gambar);
     foreach ($data as $key) {
@@ -8,7 +9,59 @@ if(!empty($modelRek->gambar)){
 }else{
     $datas='';
 }
+if(!empty($modelcorpImg->BERKAS_IMG)){
+    $corps=unserialize($modelcorpImg->BERKAS_IMG);
+    foreach ($corps as $key) {
+            $corpss[]='<img src="'.$key.'" alt="Your Avatar" style="width:160px;align:center">';
+        }
+}else{
+    $corpss='';
+}
+
+switch ($modelRek->STATUS) {
+    case '0':
+            $stt ='<span class="fa-stack fa-xl">
+            <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+            <i class="fa fa fa-refresh fa-spin fa-stack-1x" style="color:#ee0b0b"></i>
+          </span> Proses';
+        break;
+    case '1':
+            $stt ='<span class="fa-stack fa-xl">
+            <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+            <i class="fa fa fa-check fa-stack-1x" style="color:#ffc107"></i>
+          </span> Pendding';
+        break;
+    case '2':
+            $stt ='<span class="fa-stack fa-xl">
+            <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+            <i class="fa fa-check fa-stack-1x" style="color:#4caf50"></i>
+          </span> Success';
+        break;
+    case '2':
+            $stt ='<span class="fa-stack fa-xl">
+            <i class="fa fa-circle-thin fa-stack-2x"  style="color:#25ca4f"></i>
+            <i class="fa fa-close fa-stack-1x" style="color:#4caf50"></i>
+          </span> Gagal';
+        break;
+    default:
+            $stt ='-';
+    break;
+}
 ?>
+<?php if($modelcorp['STATUS']!='2'){?>
+        <div class="col-md-12">
+        <?php if($modelcorp['STATUS']=='0'){?>
+            <h3 class="text-center text-danger">MAAF ANDA PERUSAHAAN ANDA BELUM TERDAFTAR DIDATABASE KAMI</h3>
+        <?php }elseif($modelcorp['STATUS']=='1') {?>
+            <h3 class="text-center text-success">KAMI SEDANG VERIVIKASI</h3>
+            <?php } ?>
+            <?php if($modelcorp['STATUS']=='0'){?>
+            <div class="text-right">
+                <button type="button" data-toggle="tab" href="#menu1" class="btn btn-primary">Daftar</button>
+            </div>
+            <?php } ?>
+        </div>
+<?php }else{ ?>
 <div class="row">
     <div class="col-md-6 col-md-6">
     <?= 
@@ -105,6 +158,15 @@ if(!empty($modelRek->gambar)){
                 'value'=>$modelRek->TLP,
             ],
             ],
+        ],[
+            'columns' => [
+                [
+                    'attribute'=>'STATUS',
+                    'valueColOptions'=>['style'=>'width:90%'],
+                    'value'=>$stt,
+                    'format'=>'raw'
+                ],
+            ],
         ],
         [
             'columns' => [
@@ -116,6 +178,7 @@ if(!empty($modelRek->gambar)){
                 ],
             ],
         ],
+        
         ],
         'hover'=>true,
         'panel'=>[
@@ -133,7 +196,7 @@ if(!empty($modelRek->gambar)){
     <div class="col-md-12">
         <div class="box box-info">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Dokumen</h3>
+                    <h3 class="box-title">Dokumen Bank</h3>
                 </div>
                 <div class="box-body">
                     <?php
@@ -144,4 +207,19 @@ if(!empty($modelRek->gambar)){
                 </div>
             </div>
     </div>
+    <div class="col-md-12">
+        <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Dokumen PERUSAHAAN</h3>
+                </div>
+                <div class="box-body">
+                    <?php
+                    foreach($corpss as $dok){
+                        echo $dok.'&nbsp&nbsp&nbsp';
+                    }
+                    ?>
+                </div>
+            </div>
+    </div>
 </div>
+                <?php } ?>

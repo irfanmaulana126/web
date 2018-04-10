@@ -2,6 +2,7 @@
 
 use kartik\helpers\Html;
 use kartik\detail\DetailView;
+use kartik\editable\Editable;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use kartik\widgets\Spinner;

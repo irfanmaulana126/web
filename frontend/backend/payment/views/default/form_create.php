@@ -25,7 +25,11 @@ use yii\helpers\Url;
             <div class="col-md-12 w3-card-2 w3-round w3-white">
                 <h3>Form Daftar Bank</h3>
                 <p>Form yang ditujukan untuk mengetahui bank apa yang digunakan untuk memlakukan transaksi.</p>
-                <?=Html::button('Detail',['id'=>'userprofile-button-row-bank','value'=>url::to(['/sistem/user-profile/account-rek-update','ACCESS_GROUP'=>$modelRek['ACCESS_GROUP']]),'data-pjax' => true,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+                <?php if(empty($modelRek->ACCESS_GROUP)){?>
+                    <?=Html::button('Detail',['id'=>'userprofile-button-row-bank','value'=>url::to(['/sistem/user-profile/account-rek']),'data-pjax' => true,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+                <?php } else {?>
+                    <?=Html::button('Detail',['id'=>'userprofile-button-row-bank','value'=>url::to(['/sistem/user-profile/account-rek-update','ACCESS_GROUP'=>$modelRek['ACCESS_GROUP']]),'data-pjax' => true,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+                <?php } ?>
             </div>
         </div>      
     </div>

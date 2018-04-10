@@ -127,10 +127,14 @@ $(document).on('click','#databarang-button-row-edit', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
-$('#databarang-button-row-edit-modal').on('hidden.bs.modal', function (e) {
-	// reload page when modal closed
-	location.reload(true);
-  });
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-row-edit-porduk', function(ehead){ 			  
+	$('#databarang-button-row-edit-porduk-modal').modal('show')
+	.find('#databarang-button-row-edit-porduk-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
 /*
  * BUTTON Discount KARYAWAN
 */

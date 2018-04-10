@@ -46,7 +46,7 @@ class ProductSearch extends Product
     public function search($params)
     {
         $query = Product::find();
-
+        $query->joinWith(['store']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -77,12 +77,13 @@ class ProductSearch extends Product
             'INDUSTRY_GRP_ID' => $this->INDUSTRY_GRP_ID,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'STATUS' => 1,
+            'product.STATUS' => 1,
+            'store.STATUS' => 1,
             'YEAR_AT' => $this->YEAR_AT,
             'MONTH_AT' => $this->MONTH_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+        $query->andFilterWhere(['like', 'product.ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'GROUP_ID', $this->GROUP_ID])
             ->andFilterWhere(['like', 'PRODUCT_ID', $this->PRODUCT_ID])

@@ -11,6 +11,7 @@ use yii\web\UploadedFile;
  * @property string $ID
  * @property string $CORP_NM
  * @property string $CORP_64
+ * @property string $BERKAS_IMG
  * @property string $CREATE_BY
  * @property string $CREATE_AT
  * @property string $UPDATE_BY
@@ -32,8 +33,9 @@ class CorpImage extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CORP_64','ACCESS_ID'], 'string'],
+            [['CORP_64','BERKAS_IMG','ACCESS_ID'], 'string'],
             [['CORP_64'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png'],
+            [['BERKAS_IMG'], 'file','skipOnEmpty'=>TRUE,'maxFiles'=>5,'extensions'=>'jpg, png', 'mimeTypes'=>'image/jpeg, image/png'],
             [['CREATE_AT', 'UPDATE_AT','ACCESS_ID'], 'safe'],
             [['CORP_NM'], 'string', 'max' => 255],
             [['CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
@@ -49,6 +51,7 @@ class CorpImage extends \yii\db\ActiveRecord
             'ID' => 'ID',
             'CORP_NM' => 'Corp  Nm',
             'CORP_64' => 'Corp 64',
+            'BERKAS_IMG' => 'BERKAS IMG',
             'CREATE_BY' => 'Create  By',
             'CREATE_AT' => 'Create  At',
             'UPDATE_BY' => 'Update  By',

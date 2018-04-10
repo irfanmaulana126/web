@@ -407,7 +407,7 @@ $this->registerCss("
 		$title1 = Yii::t('app',' Edit');
 		$options1 = [
 			'value'=>url::to(['/master/store/updateproduk','id'=>$model['ID']]),
-			'id'=>'databarang-button-row-edit',
+			'id'=>'databarang-button-row-edit-porduk',
 			'class'=>"btn btn-default btn-xs",    
 			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
 		];
