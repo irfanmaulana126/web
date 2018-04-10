@@ -113,7 +113,7 @@ $this->registerCss("
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
-			'filter'=>ArrayHelper::map(Product::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>1])->orderBy(['PRODUCT_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
+			'filter'=>ArrayHelper::map(Product::find()->joinWith('store','store.STORE_ID=product.STORE_ID')->where(['product.ACCESS_GROUP'=>$user,'store.STATUS'=>1,'product.STATUS'=>1])->orderBy(['PRODUCT_ID'=>SORT_DESC,'STORE_ID'=>SORT_DESC])->all(),'PRODUCT_NM','PRODUCT_NM'),
 			'filterType'=>GridView::FILTER_SELECT2,
 			'filterWidgetOptions'=>['pluginOptions'=>['allowClear'=>true]],	
 			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
