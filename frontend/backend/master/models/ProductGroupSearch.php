@@ -42,6 +42,7 @@ class ProductGroupSearch extends ProductGroup
     public function search($params)
     {
         $query = ProductGroup::find();
+        $query->joinWith(['store']);
 
         // add conditions that should always apply here
 
@@ -62,12 +63,13 @@ class ProductGroupSearch extends ProductGroup
             'ID' => $this->ID,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'STATUS' => $this->STATUS,
+            'product_group.STATUS' => $this->STATUS,
+            'store.STATUS' => 1,
             'YEAR_AT' => $this->YEAR_AT,
             'MONTH_AT' => $this->MONTH_AT,
         ]);
 
-        $query->andFilterWhere(['like', 'ACCESS_GROUP', $this->ACCESS_GROUP])
+        $query->andFilterWhere(['like', 'product_group.ACCESS_GROUP', $this->ACCESS_GROUP])
             ->andFilterWhere(['like', 'STORE_ID', $this->STORE_ID])
             ->andFilterWhere(['like', 'GROUP_ID', $this->GROUP_ID])
             ->andFilterWhere(['like', 'GROUP_NM', $this->GROUP_NM])

@@ -80,9 +80,13 @@ class StockMasukController extends Controller
 		$cari=['thn'=>$paramCari];	
 		
 		//DINAMIK MODEL PARAMS
+		// print_r($cari);die();
 		$searchModel = new StockMasukSearch($cari);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 		//LOAD DEFAULT INDEX
+		if(empty($dataProvider->allModels)){
+			Yii::$app->session->setFlash('error', "Data Tidak ada");
+		}
 		return $this->render('index', [
 			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
