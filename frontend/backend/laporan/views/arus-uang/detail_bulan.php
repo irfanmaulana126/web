@@ -53,7 +53,7 @@ $this->registerCss("
 	]);
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
-	$pageNm='<b>PRODUCT</b>
+	$pageNm='<b>PRODUCT GLOBAL</b>
 	';
 	
 	$colorHeader='rgba(230, 230, 230, 1)';
@@ -610,6 +610,7 @@ $this->registerCss("
 	$gvAllStoreItem=GridView::widget([
 		'id'=>'gv-all-data-prodak-item',
 		'dataProvider' => $dataProvider,
+		'summary'=>false,
 		'filterRowOptions'=>['style'=>'background-color:'.$colorHeader.'; align:center'],
 		'beforeHeader'=>[
 			'0'=>[					
@@ -630,12 +631,58 @@ $this->registerCss("
 		'bordered'=>true,
 		'striped'=>true,
 		'autoXlFormat'=>true,
-		'export' => false,
-		'panel'=>[''],
-		'toolbar' => false,
+		// 'export' => false,
+		// 'panel'=>[''],
+		// 'toolbar' => false,
+		'export'=>[
+			'fontAwesome' => true,
+			'showConfirmAlert' => false,
+			'target' => GridView::TARGET_BLANK,
+			// 'target' => GridView::TARGET_POPUP,
+			// 'target' => GridView::TARGET_SELF,
+		],
+		'exportConfig' => [
+			kartik\export\ExportMenu::EXCEL => true,
+			GridView::PDF => [
+				'showHeader' => true,
+				'mime' => 'application/pdf',
+				'filename' => 'ExportArusUang',
+				'config' => [
+					'mode' => 'c',
+					'format' => 'A4-L',
+					'destination' =>true,
+					'marginTop' => 10,
+					'marginBottom' => 20,									
+					'options' => [
+						'title' =>'KontrolGampang-Export',
+					],
+					 'methods' => [
+						'SetHeader' => [
+							['odd' => 'aaa', 'even' => 'bbb'],
+						],
+						'SetFooter' => [
+							['odd' =>'cccc', 'even' =>'dddd'],
+						],
+					],
+					'contentBefore'=>'
+						<div style="text-align:center;font-family: tahoma ;font-size: 10pt;">	
+							<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>
+						</div>	
+						<br>									
+					',
+					'contentAfter'=>''
+				],
+				'showFooter' => false,
+				'showCaption' => false,
+			
+			],
+		],  
+		'toolbar' => [
+			'{export}','{toggleData}'
+		],  
 		'panel' => [
 			// 'heading'=>false,
-			'heading'=>'<div class="pull-right"></div>'.$pageNm,
+			'heading'=>'<div class="pull-right">{export}</div>'.$pageNm,
 			'type'=>'default',
 			'before'=>false,
 			'showFooter'=>false,

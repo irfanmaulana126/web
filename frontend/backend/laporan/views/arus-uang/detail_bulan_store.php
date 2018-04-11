@@ -43,6 +43,7 @@ $this->registerCss("
 	$splt=0;
 	$this->title="Detail Ringkasan Arus Keuangan Toko ".strtoupper($store->STORE_NM)."";
 	$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+	$this->params['breadcrumbs'][] = ['label'=>'Arus Uang', 'url' => ['/laporan/arus-uang']];
 	$this->params['breadcrumbs'][] = ['label'=>'Ringkasan Arus Keuangan Per-Toko', 'url' => ['/laporan/arus-uang/store-arus?tgl='.date('Y-m').'']];
 	$this->params['breadcrumbs'][] =  $this->title;
 	$vewBreadcrumb=Breadcrumbs::widget([
@@ -54,7 +55,7 @@ $this->registerCss("
 	]);
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
     $bColor='rgb(76, 131, 255)';
-	$pageNm='<b>PRODUCT</b>
+	$pageNm='<b>PRODUCT TOKO :'.strtoupper($store->STORE_NM).'</b>
 	';
 	$colorHeader='rgba(230, 230, 230, 1)';
 	$colorHeader1='rgba(140, 140, 140, 1)';
@@ -616,6 +617,7 @@ $this->registerCss("
 			]
 		],
 		'columns' =>$attDinamikField,
+		'summary'=>false,
 		'pjax'=>true,
 		'pjaxSettings'=>[
 			'options'=>[
@@ -629,12 +631,56 @@ $this->registerCss("
 		'bordered'=>true,
 		'striped'=>true,
 		'autoXlFormat'=>true,
-		'export' => false,
-		'panel'=>[''],
+		'export'=>[
+			'fontAwesome' => true,
+			'showConfirmAlert' => false,
+			'target' => GridView::TARGET_BLANK,
+			// 'target' => GridView::TARGET_POPUP,
+			// 'target' => GridView::TARGET_SELF,
+		],
+		'exportConfig' => [
+			kartik\export\ExportMenu::EXCEL => true,
+			GridView::PDF => [
+				'showHeader' => true,
+				'mime' => 'application/pdf',
+				'filename' => 'ExportArusUang',
+				'config' => [
+					'mode' => 'c',
+					'format' => 'A4-L',
+					'destination' =>true,
+					'marginTop' => 10,
+					'marginBottom' => 20,									
+					'options' => [
+						'title' =>'KontrolGampang-Export',
+					],
+					 'methods' => [
+						'SetHeader' => [
+							['odd' => 'aaa', 'even' => 'bbb'],
+						],
+						'SetFooter' => [
+							['odd' =>'cccc', 'even' =>'dddd'],
+						],
+					],
+					'contentBefore'=>'
+						<div style="text-align:center;font-family: tahoma ;font-size: 10pt;">	
+							<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>
+						</div>	
+						<br>									
+					',
+					'contentAfter'=>''
+				],
+				'showFooter' => false,
+				'showCaption' => false,
+			
+			],
+		],  
+		'toolbar' => [
+			'{export}','{toggleData}'
+		],  
 		'toolbar' => false,
 		'panel' => [
 			// 'heading'=>false,
-			'heading'=>'<div class="pull-right"></div>'.$pageNm,
+			'heading'=>'<div class="pull-right"> {export} </div> '.$pageNm,
 			'type'=>'default',
 			'before'=>false,
 			'showFooter'=>false,

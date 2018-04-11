@@ -28,6 +28,20 @@ use yii\widgets\Breadcrumbs;
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
 // print_r($dataProvider->getModels());
 // die();
+$this->registerJs("
+// var x = document.getElementById('tahun').value;
+// console.log(x);
+$('#tahun').change(function() { 
+    var x = document.getElementById('tahun').value;
+    $.pjax.reload({
+        url:'/laporan/jurnal-transaksi-bulan/index?tgl='+x, 
+        container: '#jurnal-transaksi',
+        timeout: 1000,
+    })
+});
+",View::POS_READY);
+$paramCari=Yii::$app->getRequest()->getQueryParam('id');
+$tanggal = (empty($paramCari)) ? date('Y-n') : $paramCari ;
     $this->registerCss("
     :link {
 		color: #fdfdfd;
@@ -51,11 +65,28 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 	#jurnal-transaksi .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	#w2 {
+		z-index: 100000 !important;
+	  }
 	");
 	$this->registerJs($this->render('jurnal_script.js'),View::POS_READY);
 	echo $this->render('jurnal_button'); //echo difinition
     echo $this->render('jurnal_modal'); //echo difinition
-    $bColor='rgb(76, 131, 255)';	
+	$bColor='rgb(76, 131, 255)';
+	$btn_srchChart1=DatePicker::widget([
+		'name' => 'check_issue_date', 
+		'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
+		'convertFormat' => true,
+		// 'value'=>$tanggal,
+		'pluginOptions' => [
+			'autoclose'=>true,
+			'startView'=>'years',
+			'minViewMode'=>'months',
+			'format' => 'yyyy-n',
+			// 'todayHighlight' => true,
+			 'todayHighlight' => true
+		]
+	]);	
     $gvAttProdakDiscountItem=[
 		[
 			'class'=>'kartik\grid\SerialColumn',
@@ -76,7 +107,7 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 			'mergeHeader'=>false,
             'group'=>true,
             'value'=>'store.STORE_NM',
-			'groupedRow'=>FALSE,
+			'groupedRow'=>true,
 			'noWrap'=>false,
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>[
@@ -167,64 +198,64 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 			
 			
 		],	
-		[
-			'attribute'=>'TAHUN',
-			'label'=>'TAHUN',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
-			'filter'=>true,
-			'filterType'=>GridView::FILTER_DATE,
-			'filterWidgetOptions'=>['pluginOptions' => [
-					'autoclose'=>true,
-					'startView'=>'years',
-					'minViewMode'=>'years',
-					// 'todayHighlight' => true,
-						'format' => 'yyyy'
-				],],	
-			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
-			'filterOptions'=>[],
+		// [
+		// 	'attribute'=>'TAHUN',
+		// 	'label'=>'TAHUN',
+		// 	'filterType'=>true,
+		// 	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+		// 	'hAlign'=>'right',
+		// 	'vAlign'=>'middle',
+		// 	'mergeHeader'=>false,
+		// 	'noWrap'=>false,
+		// 	//gvContainHeader($align,$width,$bColor)
+		// 	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
+		// 	'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
+		// 	'filter'=>true,
+		// 	'filterType'=>GridView::FILTER_DATE,
+		// 	'filterWidgetOptions'=>['pluginOptions' => [
+		// 			'autoclose'=>true,
+		// 			'startView'=>'years',
+		// 			'minViewMode'=>'years',
+		// 			// 'todayHighlight' => true,
+		// 				'format' => 'yyyy'
+		// 		],],	
+		// 	'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+		// 	'filterOptions'=>[],
 			
-		],
-		[
-			'attribute'=>'BULAN',
-			'label'=>'BULAN',
-			'filterType'=>true,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>false,
-			'value'=>function($model){
-				return date('F', strtotime($model->BULAN.'-'.$model->BULAN.'-01'));	
-			},
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
-			'filter'=>true,
-			'filterType'=>GridView::FILTER_DATE,
-			'filterWidgetOptions'=>['pluginOptions' => [
-					'autoclose'=>true,
-					'startView'=>'months',
-					'minViewMode'=>'months',
-					// 'todayHighlight' => true,
-						'format' => 'mm'
-				],],	
-			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
-			'filterOptions'=>[],
+		// ],
+		// [
+		// 	'attribute'=>'BULAN',
+		// 	'label'=>'BULAN',
+		// 	'filterType'=>true,
+		// 	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+		// 	'hAlign'=>'right',
+		// 	'vAlign'=>'middle',
+		// 	'mergeHeader'=>false,
+		// 	'noWrap'=>false,
+		// 	'value'=>function($model){
+		// 		return date('F', strtotime($model->BULAN.'-'.$model->BULAN.'-01'));	
+		// 	},
+		// 	//gvContainHeader($align,$width,$bColor)
+		// 	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$bColor,'#ffffff'),
+		// 	'contentOptions'=>Yii::$app->gv->gvContainBody('center','50px',''),
+		// 	'filter'=>true,
+		// 	'filterType'=>GridView::FILTER_DATE,
+		// 	'filterWidgetOptions'=>['pluginOptions' => [
+		// 			'autoclose'=>true,
+		// 			'startView'=>'months',
+		// 			'minViewMode'=>'months',
+		// 			// 'todayHighlight' => true,
+		// 				'format' => 'mm'
+		// 		],],	
+		// 	'filterInputOptions'=>['placeholder'=>'-Pilih-'],
+		// 	'filterOptions'=>[],
 			
-		],	
+		// ],	
 	];
 	$pageNm='<span class="fa-stack fa-xs text-left" style="float:left">
 			  <b class="fa fa-list-alt fa-stack-2x" style="color:#000000"></b>
 			 </span> <div style="float:left;padding:10px 20px 0px 5px"><b>PENCATATAN JURNAL (IDR)</b></div> 
-			 <div class="pull-right" style="">'.tombolViewAkun().' '.tombolViewGroup().'</div>';	
+			 <div class="pull-right" style=""> {export} '.tombolViewAkun().' '.tombolViewGroup().'</div>';	
 	// $leftButton=$this->render('button_list');
 	$gvInvOut= GridView::widget([
 		'id'=>'jurnal-transaksi',
@@ -241,10 +272,10 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 			'before'=>false,
 			'after'=>false			
 		],
-		'pjax'=>false,
+		'pjax'=>true,
 	    'pjaxSettings'=>[
 			'options'=>[
-				'enablePushState'=>false,
+				'enablePushState'=>true,
 				'id'=>'jurnal-transaksi',
 			],
 		],
@@ -254,12 +285,52 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 		'bordered'=>true,
 		'striped'=>'4px',
 		'autoXlFormat'=>true,
-		'export' => false,
-		'export'=>[//export like view grid --ptr.nov-
-			'fontAwesome'=>true,
-			'showConfirmAlert'=>false,
-			'target'=>GridView::TARGET_BLANK
+		'export'=>[
+			'fontAwesome' => true,
+			'showConfirmAlert' => false,
+			'target' => GridView::TARGET_BLANK,
+			// 'target' => GridView::TARGET_POPUP,
+			// 'target' => GridView::TARGET_SELF,
 		],
+		'exportConfig' => [
+			kartik\export\ExportMenu::EXCEL => true,
+			GridView::PDF => [
+				'showHeader' => true,
+				'mime' => 'application/pdf',
+				'filename' => 'ExportArusUang',
+				'config' => [
+					'mode' => 'c',
+					'format' => 'A4-L',
+					'destination' =>true,
+					'marginTop' => 10,
+					'marginBottom' => 20,									
+					'options' => [
+						'title' =>'KontrolGampang-Export',
+					],
+					'methods' => [
+						'SetHeader' => [
+							['odd' => 'aaa', 'even' => 'bbb'],
+						],
+						'SetFooter' => [
+							['odd' =>'cccc', 'even' =>'dddd'],
+						],
+					],
+					'contentBefore'=>'
+						<div style="text-align:center;font-family: tahoma ;font-size: 10pt;">	
+							<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>
+						</div>	
+						<br>									
+					',
+					'contentAfter'=>''
+				],
+				'showFooter' => false,
+				'showCaption' => false,
+			
+			],
+		],  
+		'toolbar' => [
+			'{export}','{toggleData}'
+		], 
 		'summary'=>false,
 		//'floatHeader'=>false,
 		// 'floatHeaderOptions'=>['scrollingTop'=>'200'] 
@@ -296,8 +367,10 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
 		<div class="col-md-12">
 		<div style="margin-top: -10px">
 		<h5><?=$vewBreadcrumb ?></h5>
-		<div class="pull-right">
-				<?php //= tombolViewAkun().' '.tombolViewGroup();?>
+		<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
+		<div class="row">
+				<?php echo $btn_srchChart="<div style='padding-bottom:10px'>".$btn_srchChart1."</div>";//= tombolViewAkun().' '.tombolViewGroup();?>
+		</div>
 			</div>
 	</div>
 			
