@@ -208,6 +208,25 @@ $this->registerJS('
 
 <div class="corp-form">
 
+            <div class="callout callout-danger">
+       <h4>PENTING BERKAS YANG HARUS DISIAPKAN!</h4>
+       <div class="row">
+       <div class="col-md-6">
+                <ul>
+                    <li>SIUP</li>
+                    <li>KTP</li>
+                    <li>NPWP</li>
+                </ul> 
+       </div>
+       <div class="col-md-6">
+            <ul>
+                <li>AKTE NOTARIS</li>
+                <li>SPT PAJAK</li>
+                <li>TDP</li>
+            </ul> 
+       </div>
+       </div>
+        </div>
     <?php $form = ActiveForm::begin(['options'=>['enctype'=>'multipart/form-data']]); ?>
     
     <?php if ($model['STATUS']==2){ echo $form->field($model, 'CORP_NM',[					
@@ -346,7 +365,8 @@ $this->registerJS('
             'removeIcon'=> '<i class="glyphicon glyphicon-remove"></i>',
             'removeTitle'=> 'Clear Selected File',
             'defaultPreviewContent' => $berkas,
-            'maxFileSize'=>800 //10KB
+            'maxFileSize'=>500, //10KB
+            'maxFile'=>6 //10KB
             
         ],
         'pluginEvents' => [

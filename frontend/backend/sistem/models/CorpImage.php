@@ -35,7 +35,7 @@ class CorpImage extends \yii\db\ActiveRecord
         return [
             [['CORP_64','BERKAS_IMG','ACCESS_ID'], 'string'],
             [['CORP_64'],'file','skipOnEmpty'=>TRUE,'extensions'=>'jpg, png'],
-            [['BERKAS_IMG'], 'file','skipOnEmpty'=>TRUE,'maxFiles'=>5,'extensions'=>'jpg, png', 'mimeTypes'=>'image/jpeg, image/png'],
+            [['BERKAS_IMG'], 'file','skipOnEmpty'=>TRUE,'maxFiles'=>6,'extensions'=>'jpg, png', 'mimeTypes'=>'image/jpeg, image/png'],
             [['CREATE_AT', 'UPDATE_AT','ACCESS_ID'], 'safe'],
             [['CORP_NM'], 'string', 'max' => 255],
             [['CREATE_BY', 'UPDATE_BY'], 'string', 'max' => 50],
