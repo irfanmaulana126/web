@@ -68,7 +68,7 @@ use yii\widgets\Breadcrumbs;
 			'ACCESS_GROUP'=>Yii::$app->getUserOpt->user()['ACCESS_GROUP'],
 			'TGL'=>date("Y-m-d"),
 		],
-		'type'=>'mscombidy2d',						
+		'type'=>'mscombi2d',						
 		'renderid'=>'detail-sales-bulanan',				
 		'autoRender'=>true,
 		'width'=>'100%',
@@ -125,7 +125,7 @@ use yii\widgets\Breadcrumbs;
 			
 			</div>	
 			<div class="row">
-				<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
+				<div class="w3-card-2 w3-round  w3-center" style="margin-top:10px">	
 					<?php //echo = Html::encode($this->title) ?>								
 					<div style="min-height:265px">
 						<div style="height:300px;">
@@ -138,10 +138,10 @@ use yii\widgets\Breadcrumbs;
 			<div class="row">
 				<div class="col-sm-4 col-md-4 col-lg-4">
 					<div class="row">
-						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
-							<div style="min-height:265px">
-								<div style="height:300px;">
-									<div style="padding-top:50px">
+						<div class="w3-card-2 w3-round w3-center" style="margin-top:10px">	
+							<div style="min-height:200px">
+								<div style="height:250px;">
+									<div style="padding-top:0px">
 										<?=$viewDoughnut3d?>
 									</div>
 								</div>
@@ -152,9 +152,9 @@ use yii\widgets\Breadcrumbs;
 				<div class="col-sm-8 col-md-8 col-lg-8">	
 					<div class="row">
 						<div class="w3-card-2 w3-round w3-white w3-center" style="margin-top:10px">	
-							<div style="min-height:265px">
-								<div style="height:300px;">
-									<div style="padding-top:10px">
+							<div style="min-height:200px">
+								<div style="height:250px;">
+									<div style="padding-top:0px">
 										<?=$viewPie3d ?>
 									</div>
 								</div>
