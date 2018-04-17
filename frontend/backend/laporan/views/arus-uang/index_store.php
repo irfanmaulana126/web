@@ -17,6 +17,7 @@ use yii\widgets\Breadcrumbs;
 
 $this->title="Ringkasan Arus Keuangan Per-Toko";
 $this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+$this->params['breadcrumbs'][] = ['label'=>'Arus Uang', 'url' => ['/laporan/arus-uang']];
 	$this->params['breadcrumbs'][] =  $this->title;
 	$vewBreadcrumb=Breadcrumbs::widget([
 		'homeLink' => [
@@ -33,7 +34,7 @@ $this->registerJs("
 		var y = document.getElementById('store').value;
 		$.pjax.reload({
 			url:'/laporan/arus-uang/store-arus?tgl='+x+'&store='+y, 
-			container: '#arus-masuk-monthofyear',
+			container: '#arus-masuk-store',
 			//timeout: 1000,
 		});
 		
@@ -77,10 +78,10 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">
 		<div class="col-xs-12 col-sm-12 col-lg-12">
+				<?=$btn_srchChart2?>
 			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
 				<?=$btn_srchChart?>
 			</div>		
-				<?=$btn_srchChart2?>
 			<div style="float:right">
 				<?php
 				$title= Yii::t('app','');
@@ -151,7 +152,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 				// $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 				$modelView =$dataProvider->getModels();
 				 echo GridView::widget([					 
-					'id'=>'arus-masuk-monthofyear',
+					'id'=>'arus-masuk-store',
 					'dataProvider' => $dataProvider,
 					'summary'=>false,
 					//'showHeader'=>false,
@@ -164,7 +165,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 					'pjaxSettings'=>[
 						'options'=>[
 							'enablePushState'=>true,
-							'id'=>'arus-masuk-monthofyear',
+							'id'=>'arus-masuk-store',
 						],
 					],			
 					'bordered'=>true,
@@ -190,6 +191,57 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 						'type'=>false,
 						'heading'=>false
 					],      */
+					'export'=>[
+						'fontAwesome' => true,
+						'showConfirmAlert' => false,
+						'target' => GridView::TARGET_BLANK,
+						// 'target' => GridView::TARGET_POPUP,
+						// 'target' => GridView::TARGET_SELF,
+					],
+					'exportConfig' => [
+						kartik\export\ExportMenu::EXCEL => true,
+						GridView::PDF => [
+							'showHeader' => true,
+							'mime' => 'application/pdf',
+							'filename' => 'ExportArusUang',
+							'config' => [
+								'mode' => 'c',
+								'format' => 'A4-L',
+								'destination' =>true,
+								'marginTop' => 10,
+								'marginBottom' => 20,									
+								'options' => [
+									'title' =>'KontrolGampang-Export',
+								],
+								 'methods' => [
+									'SetHeader' => [
+										['odd' => 'aaa', 'even' => 'bbb'],
+									],
+									'SetFooter' => [
+										['odd' =>'cccc', 'even' =>'dddd'],
+									],
+								],
+								'contentBefore'=>'
+									<div style="text-align:center;font-family: tahoma ;font-size: 10pt;">	
+										<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>
+									</div>	
+									<br>									
+								',
+								'contentAfter'=>''
+							],
+							'showFooter' => false,
+							'showCaption' => false,
+						
+						],
+					],  
+					'toolbar' => [
+						'{export}','{toggleData}'
+					],  
+					'panel'=>[
+						'type'=>false,
+						'heading'=>false,
+						'footer'=>false
+					], 
 					'columns' => [
 							/* [	
 								'class' => 'kartik\grid\ExpandRowColumn',
@@ -273,7 +325,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'value'=>
 								function($model)use($store,$cari){
 									//$icon='<span class="fa fa fa-circle-o">  '.Html::a($model->AKUN_NM,'/laporan/arus-uang/detail-bulan?akunkode='.$model->AKUN_CODE.'&bulan='.$model->YEAR_AT.'-'.$model->MONTH_AT.'&store='.$store.'').' </span>';
-									return Html::tag('div', $model['AKUN_NM'], ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+									return Html::tag('div', $model['AKUN_NM'], ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;color:blue']);				
 									// return Html::a($model['AKUN_NM'],'/laporan/arus-uang/detail-bulan-store?akunkode='.$model['AKUN_CODE'].'&bulan='.$cari['TAHUN'].'-'.$cari['BULAN'].'&store='.$store->STORE_ID.'');
 								},	
 								'headerOptions'=>[

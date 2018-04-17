@@ -73,11 +73,11 @@ class ProductGroup extends \yii\db\ActiveRecord
     }
     public function getStore()
     {
-        if ($this->STORE_ID){
+        // if ($this->STORE_ID){
             return $this->hasOne(Store::className(),['STORE_ID'=>'STORE_ID']);
-        }else{
-            return '';
-        }
+        // }else{
+        //     return '';
+        // }
     }
     public function getSTORE_NM(){
         $result=$this->store;

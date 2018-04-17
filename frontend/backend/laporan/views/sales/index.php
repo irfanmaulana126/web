@@ -30,21 +30,28 @@ $('#tahun, #store').change(function() {
     var x = document.getElementById('tahun').value;
     var y = document.getElementById('store').value;
     $.pjax.reload({
-        url:'/laporan/arus-uang/index?store='+y+'&id='+x, 
+        url:'/laporan/sales/index?store='+y+'&id='+x, 
         container: '#arus-masuk-monthofyear',
         timeout: 1000,
-    })
+    }).done(function() {
+		$.pjax.reload({container:'#tahun'})
+	
+	})
     
     console.log('Changed!'+x+y); 
 });
 ",View::POS_READY);
+
+$paramCari=Yii::$app->getRequest()->getQueryParam('id');
+$tanggal = (empty($paramCari)) ? date('Y-n') : $paramCari ;
 $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
 $btn_srchChart1=DatePicker::widget([
     'name' => 'check_issue_date', 
     'options' => ['placeholder' => 'Pilih Tahun ...','id'=>'tahun'],
     'convertFormat' => true,
+	'value'=>$tanggal,
     'pluginOptions' => [
-        'autoclose'=>true,
+		'autoclose'=>true,
         'startView'=>'years',
         'minViewMode'=>'months',
         'format' => 'yyyy-n',
@@ -71,20 +78,22 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 		<h5><?=$vewBreadcrumb ?></h5>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">	
+				<?=$btn_srchChart2?>			
 			<div class="col-xs-4 col-sm-4 col-lg-4 pull-right">
 				<?=$btn_srchChart?>
 			</div>
-				<?=$btn_srchChart2?>			
 		</div>
 		<br>
 	</div>
 	<div class="col-xs-12 col-sm-12 col-lg-12" style="font-family: tahoma ;font-size: 8pt;">
 		<div class="row">	
 			<div style="height:20px;text-align:center;font-family: tahoma ;font-size: 10pt;;padding-top:10px">	
-                    <?php		                    
-                        $tanggal=explode('-',$cari);				
-						echo '<b>RINGKASAN PENJUALAN <br>'.$retVal.' '.date('F',$tanggal[1]).' '.$tanggal[0].'</b>';				
-					?>		
+                   <div class="tahun">
+				    <?php		                    
+                        $tanggals=explode('-',$tanggal);				
+						echo '<b>RINGKASAN PENJUALAN <br>'.$retVal.' '.date("F",strtotime($tanggal)).' '.$tanggals[0].'</b>';				
+						?>		
+				</div>
 			</div>
 			<br>
 			<br>			
@@ -104,7 +113,62 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 							'enablePushState'=>true,
 							'id'=>'arus-masuk-monthofyear',
 						],
+					], 
+					'export'=>[
+						'fontAwesome' => true,
+						'showConfirmAlert' => false,
+						'target' => GridView::TARGET_BLANK,
+						// 'target' => GridView::TARGET_POPUP,
+						// 'target' => GridView::TARGET_SELF,
 					],
+					'exportConfig' => [
+						kartik\export\ExportMenu::EXCEL => true,
+						GridView::PDF => [
+							'showHeader' => true,
+							'mime' => 'application/pdf',
+							'filename' => 'ExportArusUang',
+							'config' => [
+								'mode' => 'c',
+								'format' => 'A4-L',
+								'destination' =>true,
+								'marginTop' => 10,
+								'marginBottom' => 20,									
+								'options' => [
+									'title' =>'KontrolGampang-Export',
+								],
+								'methods' => [
+									'SetHeader' => [
+										['odd' => 'aaa', 'even' => 'bbb'],
+									],
+									'SetFooter' => [
+										['odd' =>'cccc', 'even' =>'dddd'],
+									],
+								],
+								'contentBefore'=>'
+									<div style="text-align:center;font-family: tahoma ;font-size: 10pt;">	
+										<b><h5><b>RINGKASAN ARUS KEUANGAN</b></h5><div id="tanggal">'.date("F",strtotime($tanggal)).' '.date("Y",strtotime($tanggal)).'<div>
+									</div>	
+									<br>									
+								',
+								'contentAfter'=>''
+							],
+							'showFooter' => false,
+							'showCaption' => false,
+						
+						],
+					],  
+					'toolbar' => [
+						'{export}','{toggleData}'
+					],  
+					'panel' => [
+						// 'heading'=>false,
+						'heading'=>'<div class="pull-right">{export}</div>',
+						'type'=>'primary',
+						'before'=>false,
+						'showFooter'=>false,
+						'after'=>false,
+						// 'before'=> tombolReqStore(),
+					],   
 					'columns' => [
 							[	
 								'class' => 'kartik\grid\ExpandRowColumn',
@@ -131,7 +195,7 @@ $retValid = (empty($store->STORE_ID)) ? '' : $store->STORE_ID ;
 								'expandIcon'=>'<span class="fa fa-file-text"></span>',
 								'collapseIcon'=>'<span class="fa fa-file-text-o"></span>',
 								//'enableRowClick'=>false,
-							],        
+							],     
 							[
 								'attribute' => 'RPT_TITLE_NM',
 								'label' => false,

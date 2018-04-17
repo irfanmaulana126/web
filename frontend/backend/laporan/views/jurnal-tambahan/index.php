@@ -30,6 +30,15 @@ $valPay = ArrayHelper::map($arypay, 'STT_PAY', 'STT_PAY_NM');
 // print_r($dataProvider->getModels());
 // die();
 $this->title = 'Jurnal Tambahan Biaya Opratioan lain - lain';
+$this->params['breadcrumbs'][] = ['label'=>'Laporan Menu', 'url' => ['/laporan']];
+$this->params['breadcrumbs'][] =  $this->title;
+$vewBreadcrumb=Breadcrumbs::widget([
+	'homeLink' => [
+		'label' => Html::encode(Yii::t('yii', 'Home')),
+		'url' => Yii::$app->homeUrl,
+	],
+	'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+]);
 $this->registerCss("
     :link {
 		color: #fdfdfd;
@@ -291,13 +300,14 @@ $this->registerCss("
 		'floatHeader'=>true,
 	]);
 ?>
-<div class="container-fluid" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
+<div class="container-fluid" >
+<?=$vewBreadcrumb?>
 <div class="pull-right">
         <?= tombolViewAkun().' '.tombolViewGroup();?>
 </div>
 <br>
 <br>
-<div class="jurnal-tambahan-index">
+<div class="jurnal-tambahan-index" style="font-family: verdana, arial, sans-serif ;font-size: 8pt">
 <?php if (Yii::$app->session->hasFlash('success')){ ?>
 			<?php
 				echo Alert::widget([

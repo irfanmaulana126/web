@@ -31,8 +31,11 @@ use kartik\field\FieldRange;
 
     <?= $form->field($model, 'STT_PAY')->dropDownList(['1'=>'TUNAI','2'=>'NON TUNAI'],['prompt'=>'Select Option']) ?>
 
-    <?= $form->field($model, 'AKUN_CODE')->widget(Select2::classname(),[
-            'data'=>ArrayHelper::map(JurnalAkun::find()->all(),'AKUN_CODE','AKUN_NM'),'language' => 'en',
+     <?= $form->field($model, 'AKUN_CODE')->widget(Select2::classname(),[
+            'data'=>ArrayHelper::map(JurnalAkun::find()->all(),'AKUN_CODE',function ($model)
+            {
+                return $model['AKUN_CODE'].' / '.$model['AKUN_NM'];
+            }),'language' => 'en',
             'options' => ['placeholder'=>'Select Category....'],
             'pluginOptions' => [
                 'allowClear' => true

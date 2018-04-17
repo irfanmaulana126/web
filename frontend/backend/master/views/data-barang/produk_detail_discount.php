@@ -28,7 +28,7 @@ $this->registerCss("
 		color: blue;
 	}
 	#gv-all-data-prodak-item .kv-grid-container{
-		height:400px
+		height:470px
 	}
 	#gv-all-data-prodak-item .panel-heading {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);

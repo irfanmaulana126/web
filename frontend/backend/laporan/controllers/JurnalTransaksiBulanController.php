@@ -66,8 +66,23 @@ class JurnalTransaksiBulanController extends Controller
     public function actionIndex()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;    
-
-        $searchModel = new JurnalTransaksiBulanSearch(['ACCESS_GROUP'=>$user,'TAHUN'=>date('Y'),'BULAN'=>date('n')]);
+        $paramCari=Yii::$app->getRequest()->getQueryParam('tgl');
+		if ($paramCari!=''){
+			$ambilTgl=date('Y-n-d',strtotime($paramCari.'-01'));
+			$cari=[
+				'TAHUN'=>date('Y',strtotime($ambilTgl)),
+				'BULAN'=>date('n',strtotime($ambilTgl)),
+				'ACCESS_GROUP'=>$user
+			];			
+		}else{
+			//$cari=date('Y-n');
+			$cari=[
+				'TAHUN'=>date('Y'),//'2018',
+				'BULAN'=>date('n'),//'2'
+				'ACCESS_GROUP'=>$user//'2'
+			];
+		};
+        $searchModel = new JurnalTransaksiBulanSearch($cari);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

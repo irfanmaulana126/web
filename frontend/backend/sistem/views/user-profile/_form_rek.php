@@ -25,7 +25,17 @@ $widthLabel='125px';
 ?>
 
 <div class="dompet-rekening-form">
-
+<div class="callout callout-danger">
+       <h4>PENTING BERKAS YANG HARUS DISIAPKAN!</h4>
+       <div class="row">
+       <div class="col-md-6">
+                <ul>
+                    <li>KTP</li>
+                    <li>KARTU ATM bagian depan</li>
+                </ul> 
+       </div>
+       </div>
+        </div>
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'NAMA_LENGKAP',[					
@@ -119,8 +129,8 @@ $widthLabel='125px';
             'removeIcon'=> '<i class="glyphicon glyphicon-remove"></i>',
             'removeTitle'=> 'Clear Selected File',
             'defaultPreviewContent' => $datas,
-            'maxFileSize'=>800 //10KB
-            
+            'maxFileSize'=>30, //10KB
+            'maxFiles'=>2
         ],
         'pluginEvents' => [
             'fileclear' => 'function() { log("fileclear"); }',

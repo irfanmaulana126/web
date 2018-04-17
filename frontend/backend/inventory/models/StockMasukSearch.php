@@ -41,6 +41,7 @@ class StockMasukSearch extends DynamicModel
       	$accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
 		$TGL=$this->thn!=''?$this->thn:date('Y-m-d');
 		//  $TGL='2017-10-30';
+		// print_r($TGL);die();
 		$sql="
 			SET SESSION GROUP_CONCAT_MAX_LEN = 1000000;
 			SET @tglIN=concat(date_format(LAST_DAY('".$TGL."' - interval 0 month),'%Y-%m-'),'01');
@@ -80,17 +81,17 @@ class StockMasukSearch extends DynamicModel
 		$rsltField=$dpFieldtext->getModels()[0]['@fildText'];
 		
 		$qrySql= Yii::$app->production_api->createCommand("
-			SELECT 
-				rslt1.ACCESS_GROUP,rslt1.STORE_ID,st.STORE_NM,rslt1.PRODUCT_ID,rslt1.PRODUCT_NM,rslt1.INPUT_DATE,rslt1.INPUT_STOCK,".$rsltField." 
-			FROM
+		SELECT 
+		rslt1.ACCESS_GROUP,rslt1.STORE_ID,st.STORE_NM,rslt1.PRODUCT_ID,rslt1.PRODUCT_NM,rslt1.INPUT_DATE,rslt1.INPUT_STOCK,".$rsltField." 
+		FROM
 			(
 				SELECT 
 					(CASE WHEN x1.ACCESS_GROUP IS NOT NULL THEN x1.ACCESS_GROUP ELSE x2.ACCESS_GROUP END) AS ACCESS_GROUP,
 					(CASE WHEN x1.STORE_ID IS NOT NULL THEN x1.STORE_ID ELSE x2.STORE_ID END) AS STORE_ID,
 					(CASE WHEN x1.PRODUCT_ID IS NOT NULL THEN x1.PRODUCT_ID ELSE x2.PRODUCT_ID END) AS PRODUCT_ID,
-				(CASE WHEN x2.INPUT_STOCK IS NOT NULL THEN x2.INPUT_STOCK ELSE 0 END) AS INPUT_STOCK,
-					 x1.PRODUCT_NM,x2.INPUT_DATE
-			  FROM
+				(CASE WHEN x2.INPUT_STOCK IS NOT NULL THEN x2.INPUT_STOCK END) AS INPUT_STOCK,
+					x1.PRODUCT_NM,x2.INPUT_DATE
+			FROM
 				(	SELECT ACCESS_GROUP,STORE_ID,PRODUCT_ID,PRODUCT_NM 
 					FROM product  
 					#WHERE ACCESS_GROUP='170726220936' AND STORE_ID='170726220936.0001'
@@ -105,7 +106,7 @@ class StockMasukSearch extends DynamicModel
 				GROUP BY STORE_ID,PRODUCT_ID,INPUT_DATE
 				ORDER BY STORE_ID,INPUT_DATE
 				) x2 on x2.PRODUCT_ID=x1.PRODUCT_ID
-			) rslt1 left join store st on st.STORE_ID=rslt1.STORE_ID
+			) rslt1 left join store st on st.STORE_ID=rslt1.STORE_ID WHERE INPUT_STOCK IS NOT NULL
 			GROUP BY rslt1.STORE_ID,rslt1.PRODUCT_ID,month(rslt1.INPUT_DATE);
 			ORDER BY rslt1.PRODUCT_ID ASC
 		")->queryAll(); 	
@@ -201,7 +202,7 @@ class StockMasukSearch extends DynamicModel
 				GROUP BY STORE_ID,PRODUCT_ID,INPUT_DATE
 				ORDER BY STORE_ID,INPUT_DATE
 				) x2 on x2.PRODUCT_ID=x1.PRODUCT_ID
-			) rslt1 left join store st on st.STORE_ID=rslt1.STORE_ID
+			) rslt1 left join store st on st.STORE_ID=rslt1.STORE_ID WHERE INPUT_STOCK IS NOT NULL
 			GROUP BY rslt1.STORE_ID,rslt1.PRODUCT_ID,month(rslt1.INPUT_DATE);
 			ORDER BY rslt1.PRODUCT_ID ASC
 		")->queryAll(); 	

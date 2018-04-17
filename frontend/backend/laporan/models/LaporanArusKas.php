@@ -446,7 +446,7 @@ class LaporanArusKas extends Model
 			  GROUP BY STORE_ID,PRODUCT_ID,TGL
 			  ORDER BY STORE_ID,TGL
 			  ) x2 on x2.PRODUCT_ID=x1.PRODUCT_ID
-		  ) rslt1 left join store st on st.STORE_ID=rslt1.STORE_ID
+		  ) rslt1 left join store st on st.STORE_ID=rslt1.STORE_ID WHERE rslt1.TGL IS NOT NULL
 		  GROUP BY rslt1.STORE_ID,rslt1.PRODUCT_ID,month(rslt1.TGL);
 		  ORDER BY rslt1.PRODUCT_ID ASC
 	  ")->queryAll(); 	
