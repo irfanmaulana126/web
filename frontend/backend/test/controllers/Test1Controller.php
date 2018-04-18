@@ -2,123 +2,84 @@
 
 namespace frontend\backend\test\controllers;
 
-use Yii;
+use yii;
+use yii\helpers\Json;
+use yii\rest\ActiveController;
+use yii\data\ActiveDataProvider;
+use yii\filters\auth\CompositeAuth;
+use yii\filters\auth\QueryParamAuth;
+use yii\filters\auth\HttpBasicAuth;
+use yii\filters\auth\HttpBearerAuth;
+use yii\filters\ContentNegotiator;
+use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\helpers\ArrayHelper;
+use yii\web\HttpException;
 use frontend\backend\test\models\Item;
 use frontend\backend\test\models\ItemSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 
 /**
  * ItemController implements the CRUD actions for Item model.
  */
-class Test1Controller extends Controller
+class Test1Controller extends \yii\rest\ActiveController
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+	public $modelClass = 'frontend\backend\test\models\Item';
+	 public function behaviors()    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'authenticator' => 
+            [
+                'class' => CompositeAuth::className(),
+				'authMethods' => 
+                [
+                    #Hapus Tanda Komentar Untuk Autentifikasi Dengan Token               
+                   // ['class' => HttpBearerAuth::className()],
+                   // ['class' => QueryParamAuth::className(), 'tokenParam' => 'access-token'],
                 ],
+                'except' => ['options']
             ],
-        ];
-    }
+			'bootstrap'=> 
+            [
+				'class' => ContentNegotiator::className(),
+				'formats' => 
+                [
+					'application/json' => Response::FORMAT_JSON,
+					'charset' => 'utf8_encode',
+				],
+				
+			],
+			'corsFilter' => [
+				'class' => \yii\filters\Cors::className(),
+				'cors' => [
+					// restrict access to
+					//'Origin' => ['http://lukisongroup.com', 'http://lukisongroup.int','http://localhost','http://103.19.111.1','http://202.53.354.82'],
+					'Origin' => ['*'],
+					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+					//'Access-Control-Request-Headers' => ['*'],
+					'Access-Control-Request-Headers' => ['*'],
+					// Allow only headers 'X-Wsse'
+					'Access-Control-Allow-Credentials' => false,
+					// Allow OPTIONS caching
+					'Access-Control-Max-Age' => 3600,
 
-    /**
-     * Lists all Item models.
-     * @return mixed
-     */
-    public function actionIndex()
+					]		 
+			],
+			/* 'corsFilter' => [
+				'class' => \yii\filters\Cors::className(),
+				'cors' => [
+					'Origin' => ['*'],
+					'Access-Control-Allow-Headers' => ['X-Requested-With','Content-Type'],
+					'Access-Control-Request-Method' => ['POST', 'GET', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+					//'Access-Control-Request-Headers' => ['*'],					
+					'Access-Control-Allow-Credentials' => true,
+					'Access-Control-Max-Age' => 3600,
+					'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page']
+					]		 
+			], */
+        ]);		
+    }
+    public function actionTest()
     {
-        $searchModel = new ItemSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Item model.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Item model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Item();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Updates an existing Item model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->ID]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Deletes an existing Item model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Item model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Item the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Item::findOne($id)) !== null) {
-            return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
+        return ['field1', 'field2'];
+    }   
 }
