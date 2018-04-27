@@ -191,8 +191,8 @@ $this->registerCss("
 			'showFooter'=>false,
 			'after'=>false,
 		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
 	]); 	
 	$produk=$this->render('_index_product_ppob',[
 		'searchModelKtg' => $searchModelKtg,

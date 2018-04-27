@@ -277,8 +277,8 @@ $dscLabel='<b>* STATUS</b> : '.sttMsgDscp(0).'=Pending. '.sttMsgDscp(1).'=Active
 			'before'=>$dscLabel.'<div class="pull-right">'.tombolDiscount($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
 			'showFooter'=>false,
 		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
 	]);
 	$produk=$this->render('produk_detail_discount',[
 		'searchModel' => $searchModel,

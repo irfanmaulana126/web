@@ -203,8 +203,8 @@ $this->registerCss("
 			'after'=>false,
 			// 'before'=> tombolReqStore(),
 		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
 	]); 	
 ?>
 

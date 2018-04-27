@@ -298,8 +298,8 @@ function sttMsgDscp($stt){
 			'before'=>$dscLabel.'<div class="pull-right">'.tombolHarga($product->ACCESS_GROUP,$product->PRODUCT_ID,$product->STORE_ID).'</div>',
 			'showFooter'=>false,
 		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
 	]); 	
 	$produk=$this->render('produk_detail_harga',[
 		'searchModel' => $searchModel,

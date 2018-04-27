@@ -117,8 +117,8 @@ $this->registerCss("
 			'showFooter'=>false,
 			'after'=>false,
 		],
-		// 'floatOverflowContainer'=>true,
-		// 'floatHeader'=>true,
+		'floatOverflowContainer'=>true,
+		'floatHeader'=>true,
 	]); 	
 ?>
 	<?=$gvAllStoreItem?>

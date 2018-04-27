@@ -50,9 +50,12 @@ use yii\helpers\Url;
             ],
         ])->label(false); ?>
 
-    <div class="form-group text-right">
+	<div style="float:left">
+		<?= Html::Button('Daftar Paket', ['class' => 'btn btn-warning','value'=>Url::toRoute(['/master/store/paket']),'id'=>'paket']) ?>
+	</div>
+
+    <div class="text-right">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-        <?= Html::Button('Daftar Paket', ['class' => 'btn btn-warning','value'=>Url::toRoute(['/master/store/paket']),'id'=>'paket']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

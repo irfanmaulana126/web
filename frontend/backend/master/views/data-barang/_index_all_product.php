@@ -51,6 +51,12 @@ $this->registerCss("
 	#gv-all-data-prodak-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	td.kv-group-odd {
+		background-color: #70c0ff!important;
+	}
+	td.kv-group-even {
+		background-color: #70c0ff!important;
+	}
 ");
 	$colorPluginOptions =  [
 		'showPalette' => true,
@@ -102,7 +108,7 @@ $this->registerCss("
 				if (empty($model->STORE_NM)) {
 					return '-';
 				} else {
-					return "Nama Toko : <span class='label label-success'>".$model->STORE_NM."</span> ";
+					return "Nama Toko : <span class='label label-success' style='font-size: 7pt;'>".strtoupper($model->STORE_NM)."</span> ";
 				}
 			},
 			//gvContainHeader($align,$width,$bColor)
@@ -110,7 +116,6 @@ $this->registerCss("
 			'contentOptions'=>[
 				'style'=>[
 					'text-align'=>'left',
-					'color'=>'red',
 					'font-family'=>'tahoma, arial, sans-serif',						
 					'font-weight'=>'bold',
 				],
@@ -120,6 +125,9 @@ $this->registerCss("
 		[
 			'attribute'=>'PRODUCT_NM',
 			'label'=>'Produk',
+			'value'=> function ($model, $key, $index, $widget) {
+				return strtoupper($model->PRODUCT_NM);
+			},
 			'filterType'=>true,
 			'format'=>'raw',
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
