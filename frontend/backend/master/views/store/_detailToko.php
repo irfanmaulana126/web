@@ -194,7 +194,7 @@ $this->registerCss("
 			'format'=>'raw',
 			'label'=>'STATUS',
 			//'value'=>$modelToko->STATUS==0?'Disable':($modelToko->STATUS==1?'Enable':'Unknown'),
-			'value'=>sttMsg($modelToko['STATUS']),
+			'value'=>sttMsg((empty($modelToko['STATUS']))?'':$modelToko['STATUS']),
 			'type'=>DetailView::INPUT_SELECT2,
 			'widgetOptions'=>[
 				'data'=>Yii::$app->gv->gvStatusArray(),//$valStt

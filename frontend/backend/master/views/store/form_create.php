@@ -270,7 +270,7 @@ $this->registerJS('
 						]
 					]
 				])->widget(MaskedInput::classname(),
-        ['mask' => '(999) 9999999'])->label(false) ?>
+        ['mask' => '999999999999'])->label(false) ?>
     </div>
     <div class="col-md-4">
         <?= $form->field($model, 'FAX',[					
@@ -281,7 +281,7 @@ $this->registerJS('
 						]
 					]
 				])->widget(MaskedInput::classname(),
-        ['mask' => '(999) 9999999'])->label(false) ?>    
+        ['mask' => '(999) 99999999'])->label(false) ?>    
     </div>
     </div>
     

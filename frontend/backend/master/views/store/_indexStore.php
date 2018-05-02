@@ -66,7 +66,8 @@ echo $this->render('modal_store'); //echo difinition
 	];	
 	$valStt = ArrayHelper::map($aryStt, 'STATUS', 'STT_NM');
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
-	$createStore = (empty(Yii::$app->user->identity->ACCESS_LEVEL=='OWNER')) ? '' : tombolReqStore();
+	$LEVEL = (empty(Yii::$app->user->identity->ACCESS_LEVEL)) ? '' : Yii::$app->user->identity->ACCESS_LEVEL;
+	$createStore = (empty($LEVEL=='OWNER')) ? '' : tombolReqStore();
     
 	function sttMsgDscp($stt){
 		if($stt==0){ //TRIAL
@@ -176,62 +177,136 @@ echo $this->render('modal_store'); //echo difinition
 				'filterInputOptions'=>['placeholder'=>'Cari STORE'],
 				'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 				'value'=>function($data) {				
-						return Html::tag('div', $data->STORE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+						return Html::tag('div',strtoupper($data->STORE_NM), ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
 				},
-				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','250px',$headerColor),
-				'contentOptions'=>Yii::$app->gv->gvContainBody('left','250px',''),
+				'headerOptions'=>Yii::$app->gv->gvContainHeader('center','150px',$headerColor),
+				'contentOptions'=>Yii::$app->gv->gvContainBody('left','150px',''),
 				
 			],		
 		
 		//PROVINCE
 		[
-			'attribute'=>'PROVINCE_NM',
-			'label'=>'PROVINSI',
+			'attribute'=>'PIC',
+			'label'=>'PIC',
 			// 'filter' => $aryProvinsi,
-			'filter' => ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'PROVINCE_NM','PROVINCE_NM'),
-			'filterType'=>GridView::FILTER_SELECT2,
-			'filterWidgetOptions'=>[
-				'id'=>'access',
-				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			],
-			'filterInputOptions'=>['placeholder'=>'Cari Provinsi','id'=>'provinsi'],
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			// 'filter' => ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'PROVINCE_NM','PROVINCE_NM'),
+			// 'filterType'=>GridView::FILTER_SELECT2,
+			// 'filterWidgetOptions'=>[
+			// 	'id'=>'access',
+			// 	'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+			// ],
+			// 'filterInputOptions'=>['placeholder'=>'Cari Provinsi','id'=>'provinsi'],
+			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
 			'value'=>function($data) {				
-					return Html::tag('div', $data->PROVINCE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+					return Html::tag('div', strtoupper($data->PIC), ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
 			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$headerColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
 		],		
-		//CITY
 		[
-			'attribute'=>'CITY_NAME',
-			'label'=>'KOTA',
-			// 'filter' => $aryKota,
-			// 'filter' => TRUE,
-			'filterType'=>GridView::FILTER_SELECT2,
-			'filterWidgetOptions'=>[
-				'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
-			],
-			'filterInputOptions'=>['placeholder'=>'Cari Kota','id'=>'kota'],	
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),						
+			'attribute'=>'ALAMAT',
+			'label'=>'ALAMAT',
+			// 'filter' => $aryProvinsi,
+			// 'filter' => ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'PROVINCE_NM','PROVINCE_NM'),
+			// 'filterType'=>GridView::FILTER_SELECT2,
+			// 'filterWidgetOptions'=>[
+			// 	'id'=>'access',
+			// 	'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+			// ],
+			// 'filterInputOptions'=>['placeholder'=>'Cari Provinsi','id'=>'provinsi'],
+			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
 			'noWrap'=>false,
 			'format'=>'raw',
-			'value'=>function($data) {				
-					return Html::tag('div', $data->CITY_NAME, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			'value'=>function($data) {	
+					$datas = explode(',',$data->ALAMAT);
+					$alamat = $datas[0].''.((empty($datas[2]))?'':', '.$datas[2]).''.((empty($datas[3]))?'':', '.$datas[3]);		
+					return Html::tag('div', strtoupper($alamat), ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
 			},
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$headerColor),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
 			
 		],		
+		[
+			'attribute'=>'TLP',
+			'label'=>'TLP',
+			// 'filter' => $aryProvinsi,
+			// 'filter' => ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'PROVINCE_NM','PROVINCE_NM'),
+			// 'filterType'=>GridView::FILTER_SELECT2,
+			// 'filterWidgetOptions'=>[
+			// 	'id'=>'access',
+			// 	'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+			// ],
+			// 'filterInputOptions'=>['placeholder'=>'Cari Provinsi','id'=>'provinsi'],
+			// 'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>false,
+			'format'=>'raw',
+			'value'=>function($data) {	
+					return Html::tag('div', strtoupper($data->TLP), ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+			},
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$headerColor),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
+			
+		],		
+		// [
+		// 	'attribute'=>'PROVINCE_NM',
+		// 	'label'=>'PROVINSI',
+		// 	// 'filter' => $aryProvinsi,
+		// 	'filter' => ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->orderBy(['STATUS'=>SORT_ASC])->all(),'PROVINCE_NM','PROVINCE_NM'),
+		// 	'filterType'=>GridView::FILTER_SELECT2,
+		// 	'filterWidgetOptions'=>[
+		// 		'id'=>'access',
+		// 		'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+		// 	],
+		// 	'filterInputOptions'=>['placeholder'=>'Cari Provinsi','id'=>'provinsi'],
+		// 	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),
+		// 	'hAlign'=>'right',
+		// 	'vAlign'=>'middle',
+		// 	'mergeHeader'=>false,
+		// 	'noWrap'=>false,
+		// 	'format'=>'raw',
+		// 	'value'=>function($data) {				
+		// 			return Html::tag('div', $data->PROVINCE_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+		// 	},
+		// 	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$headerColor),
+		// 	'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
+			
+		// ],		
+		//CITY
+		// [
+		// 	'attribute'=>'CITY_NAME',
+		// 	'label'=>'KOTA',
+		// 	// 'filter' => $aryKota,
+		// 	// 'filter' => TRUE,
+		// 	'filterType'=>GridView::FILTER_SELECT2,
+		// 	'filterWidgetOptions'=>[
+		// 		'pluginOptions' =>Yii::$app->gv->gvPliginSelect2(),
+		// 	],
+		// 	'filterInputOptions'=>['placeholder'=>'Cari Kota','id'=>'kota'],	
+		// 	'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','50px'),						
+		// 	'hAlign'=>'right',
+		// 	'vAlign'=>'middle',
+		// 	'mergeHeader'=>false,
+		// 	'noWrap'=>false,
+		// 	'format'=>'raw',
+		// 	'value'=>function($data) {				
+		// 			return Html::tag('div', $data->CITY_NAME, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'Double click to Outlet Items ','style'=>'cursor:default;']);				
+		// 	},
+		// 	'headerOptions'=>Yii::$app->gv->gvContainHeader('center','50px',$headerColor),
+		// 	'contentOptions'=>Yii::$app->gv->gvContainBody('left','50px',''),
+			
+		// ],		
 		//INDUSTRY_GRP_NM
 		/* [
 			'attribute'=>'INDUSTRY_GRP_NM',
@@ -490,7 +565,7 @@ echo $this->render('modal_store'); //echo difinition
 				<span class="fa-stack fa-sm">
 				  <i class="fa fa-circle-thin fa-stack-2x" style="color:#25ca4f"></i>
 				  <i class="fa fa-text-width fa-stack-1x"></i>
-				</span> LIST TOKO'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;"> </div></div> ',  
+				</span> <b>LIST TOKO</b>'.'  <div style="float:right"><div style="font-family: tahoma ;font-size: 8pt;"> </div></div> ',  
 			'type'=>'info',
 			'before'=>false,
 			'after'=>false,
