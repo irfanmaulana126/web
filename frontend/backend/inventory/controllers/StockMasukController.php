@@ -11,6 +11,7 @@ use yii\base\DynamicModel;
 use yii\web\Response;
 use yii\web\UploadedFile;
 use frontend\backend\inventory\models\StockMasukSearch;
+use frontend\backend\master\models\SupplierSearch;
 use ptrnov\postman4excel\Postman4ExcelBehavior;
 use frontend\backend\inventory\models\StockDayOfMonthly; //CARD STOCK
 
@@ -122,24 +123,22 @@ class StockMasukController extends Controller
 	* @since 1.2
 	* ====================================
 	*/
+	
 	public function actionCardStock(){
-		$modelPeriode = new \yii\base\DynamicModel([
-			'TAHUNBULAN','TAHUN','BULAN'
-		]);		
-		$modelPeriode->addRule(['TAHUNBULAN'], 'required')
-         ->addRule(['TAHUNBULAN','TAHUN','BULAN'], 'safe');
-		 
-		if ($modelPeriode->load(Yii::$app->request->post())) {
-			$hsl = \Yii::$app->request->post();	
-			$paramCari=$hsl['DynamicModel']['TAHUNBULAN']."-02";
-			//PUBLIC PARAMS	
-			$cari=['thn'=>$paramCari];	
+			$cari=['thn'=>DATE('Y-m-d')];	
+				$searchModelsupplier = new SupplierSearch();
+				$dataProviderSupplier = $searchModelsupplier->searchExcelExport(Yii::$app->request->queryParams);
+				$dinamikFieldSupplier=$dataProviderSupplier->allModels;
+				$excel_dataProdukSupplier = Postman4ExcelBehavior::excelDataFormat($dinamikFieldSupplier);
+				$excel_titleProdukSupplier = $excel_dataProdukSupplier['excel_title'];
+				$excel_ceilsProdukSupplier = $excel_dataProdukSupplier['excel_ceils'];
 			
-			//DINAMIK MODEL PARAMS
 			$searchModel = new StockMasukSearch($cari);
-			$dataProvider = $searchModel->searchExport(Yii::$app->request->queryParams);
+			//DINAMIK MODEL PARAMS
+			$dataProvider = $searchModel->searchExportImport(Yii::$app->request->queryParams);
 			//LOAD DEFAULT INDEX
 			$dinamikField=$dataProvider->allModels;
+			// print_r($dinamikField);die();
 		
 			$headerMerge[]=['DATA_PRODUK'=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'15']];
 			$headerMerge[]=['DATA_PRODUK1'=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'17']];
@@ -148,22 +147,34 @@ class StockMasukController extends Controller
 			$aryFieldColomn[]="NAMA_TOKO";
 			$aryFieldColomn[]="KODE PRODUK";
 			$aryFieldColomn[]="NAMA PRODUK";
-			$aryFieldColomnHeader[]="DATA_PRODUK";
-			$aryFieldColomnHeader[]="DATA_PRODUK1";	
-			$aryFieldColomnHeader[]="DATA_PRODUK2";	
+			$aryFieldColomn[]="TANGGAL STOCK LALU";
+			$aryFieldColomn[]="STOCK LALU";
+		$aryFieldColomnHeader[]="DATA_PRODUK";
+		$aryFieldColomnHeader[]="DATA_PRODUK1";	
+		$aryFieldColomnHeader[]="DATA_PRODUK2";	
+		$aryFieldColomnHeader[]="TANGGAL STOCK LALU";	
+		$aryFieldColomnHeader[]="STOCK LALU";	
 
 		if($dinamikField){
 			foreach($dinamikField[0] as $rows => $val){
 				//unset($splt);
 				//$ambilField[]=$rows; 		
 				$splt=explode('_',$rows);
-				if($splt[0]=='IN'){
+				if ($splt[0]=='QTY') {
 					//sheet_title-row1
 					$aryFieldColomnHeader[]=$splt[1];
 					//headerStyle-row1
 					$headerMerge[]=[$splt[1]=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'2,0','width'=>'7']];				
 					//sheet_title-row2
-					$aryFieldColomn[]='QTY MASUK';
+					$aryFieldColomn[]='STOCK INPUT';
+				};
+				if ($splt[0]=='SUPPLIER-ID') {
+					//sheet_title-row1
+					$aryFieldColomnHeader[]='SUPPLIER_ID';
+					//headerStyle-row1
+					$headerMerge[]=[$splt[1]=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'2,0','width'=>'7']];				
+					//sheet_title-row2
+					$aryFieldColomn[]='SUPPLIER_ID';
 				};
 			};
 		 } 	
@@ -174,39 +185,52 @@ class StockMasukController extends Controller
 		// print_r($setHeaderMerge);
 		// die();
 		
+		
 		$excel_dataProdukStok = Postman4ExcelBehavior::excelDataFormat($dinamikField);
         $excel_titleProdukStok = $excel_dataProdukStok['excel_title'];
         $excel_ceilsProdukStok = $excel_dataProdukStok['excel_ceils'];
-		
-		// print_r($excel_ceilsProdukStok);
+		// print_r($aryFieldColomn);
 		// die();
 		//DATA IMPORT
 		$excel_content = [
 			[
-				'sheet_name' => 'Produk-Stok-Masuk',
-                'sheet_title' => [
-					$aryFieldColomnHeader,
-					$aryFieldColomn,
+				'sheet_name' => 'SUPPLIER_ID',
+				'sheet_title' => [$excel_titleProdukSupplier,
 				],
-			    'ceils' => $excel_ceilsProdukStok,
-				'freezePane' => 'A3',
+				'ceils' => $excel_ceilsProdukSupplier,
+				'freezePane' => 'A2',
 				'autoSize'=>false,
-				'unlockCell'=>'D,AG,'.(count($excel_ceilsProdukStok)+2).'',
 				'columnGroup'=>false,
 				'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
 				// 'headerStyle'=>$setHeaderMerge,
 				// 'contentStyle'=>$setHeaderMerge,
-               'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
-               'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
+			   'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+			   'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
+			],[
+			'sheet_name' => 'Produk-Stok-Masuk',
+			'sheet_title' => [
+				// $aryFieldColomnHeader,
+				$aryFieldColomn,
 			],
+			'ceils' => $excel_ceilsProdukStok,
+			'freezePane' => 'A2',
+			'autoSize'=>false,
+			'unlockCell'=>'F,G,'.(count($excel_ceilsProdukStok)+2).'',
+			'columnGroup'=>false,
+			'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
+			// 'headerStyle'=>$setHeaderMerge,
+			// 'contentStyle'=>$setHeaderMerge,
+		'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+		'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
+		],
 		];
 		$excel_file = "ProdukStockMasuk";
 		$this->export4excel($excel_content, $excel_file,0);
-		}else{
-			return $this->renderAjax('form_card',[
-				'modelPeriode' => $modelPeriode
-			]);
-		}
+		// }else{
+		// 	return $this->renderAjax('form_card',[
+		// 		'modelPeriode' => $modelPeriode
+		// 	]);
+		// }
 	}
 	/**====================================
 	* EXPORT DATA
@@ -327,13 +351,26 @@ class StockMasukController extends Controller
 				}catch(Exception $e){
 					die('error');
 				}
-				$sheet = $objPHPExcel->getSheet(0);
+				$sheet = $objPHPExcel->getSheet(1);
 				$highestRow = $sheet->getHighestRow();
 				$highestColumn=$sheet->getHighestColumn();
-				// print_r($highestRow);die();
 				for($row = 1; $row <= $highestRow; $row++){
 					$rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
-
+					if ($row==1) {
+                        continue;
+                    }
+                    if (!empty($rowData[0][1])) {
+                        $store_id = explode('.',$rowData[0][1]);
+                        if (!empty($store_id[1])) {
+						$stock = new StockMasukSearch;
+						$stock->ACCESS_GROUP =$store_id[0];	
+						$stock->STORE_ID =$store_id[0].'.'.$store_id[1];	
+						$stock->PRODUCT_ID =$rowData[0][1];	
+						$stock->INPUT_STOCK =$rowData[0][5];	
+						$stock->SUPPLIER_ID =$rowData[0][6];
+						$stock->save(false);
+						}	
+                    }  
 				}
 				unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
 				return $this->redirect(['index']);

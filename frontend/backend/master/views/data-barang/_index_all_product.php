@@ -16,7 +16,7 @@ use kartik\date\DatePicker;
 use yii\web\View;
 use kartik\widgets\Alert;
 use frontend\backend\master\models\Product;
-$this->title="All Prodak";
+$this->title="All PRODUK";
 $this->registerJs($this->render('databarang_script.js'),View::POS_READY);
 $this->params['breadcrumbs'][] = ['label'=>'Produk', 'url' => ['/master/data-barang']];
 $this->params['breadcrumbs'][] =  $this->title;
@@ -81,7 +81,7 @@ $this->registerCss("
     $bColor='rgb(76, 131, 255)';
 	$pageNm='<span class="fa-stack fa-xs text-right">				  
 				  <i class="fa fa-share fa-1x"></i>
-				</span><b>All-PRODUCT</b>
+				</span><b>All-PRODUK</b>
 	';
 	$gvAttProdakItem=[
 		[
@@ -124,13 +124,13 @@ $this->registerCss("
 		//PRODUK NAME
 		[
 			'attribute'=>'PRODUCT_NM',
-			'label'=>'Produk',
+			'label'=>'PRODUK',
 			'value'=> function ($model, $key, $index, $widget) {
 				return strtoupper($model->PRODUCT_NM);
 			},
 			'filterType'=>true,
 			'format'=>'raw',
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','200px'),
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
 			'vAlign'=>'middle',
 			'mergeHeader'=>false,
@@ -141,56 +141,9 @@ $this->registerCss("
 			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
 			'filterOptions'=>[],
 			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('left','200px',''),			
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('left','100px',''),			
 		],	
-		//GARGA HPP
-		[
-			'attribute'=>'CURRENT_HPP',
-			'label'=>'HPP',
-			'filterType'=>false,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>true,
-			'format'=>'raw',
-			'value' => function ($model, $key, $index, $widget) {
-				if (empty($model->CURRENT_PRICE)) {
-					return 0;
-				} else {
-					return $model->CURRENT_PRICE;
-				}
-			},
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-		],		
-		//GARGA JUAL
-		[
-			'attribute'=>'CURRENT_PRICE',
-			'label'=>'Harga Jual',
-			'filterType'=>false,
-			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
-			'hAlign'=>'right',
-			'vAlign'=>'middle',
-			'mergeHeader'=>false,
-			'noWrap'=>true,
-			'format'=>'raw',
-			'value' => function ($model, $key, $index, $widget) {
-				if (empty($model->CURRENT_PRICE)) {
-					return 0;
-				} else {
-					return $model->CURRENT_PRICE;
-				}
-			},
-			//gvContainHeader($align,$width,$bColor)
-			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
-			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
-			
-		],		
-		
 		//SATUAN
 		[
 			'attribute'=>'PRODUCT_WARNA',
@@ -266,7 +219,7 @@ $this->registerCss("
 		],
 		[
 			'attribute'=>'PRODUCT_SIZE_UNIT',
-			//'label'=>'Cutomer',
+			'label'=>'SIZE UNIT',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -316,7 +269,7 @@ $this->registerCss("
 		],		
 		[
 			'attribute'=>'STOCK_LEVEL',
-			//'label'=>'Cutomer',
+			'label'=>'MINIMAL STOCK',
 			'filterType'=>true,
 			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
 			'hAlign'=>'right',
@@ -357,7 +310,53 @@ $this->registerCss("
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
 			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
 			
+		],
+		//GARGA HPP
+		[
+			'attribute'=>'CURRENT_HPP',
+			'label'=>'HPP',
+			'filterType'=>false,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>true,
+			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->CURRENT_PRICE)) {
+					return 0;
+				} else {
+					return $model->CURRENT_PRICE;
+				}
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
 		],		
+		//GARGA JUAL
+		[
+			'attribute'=>'CURRENT_PRICE',
+			'label'=>'HARGA JUAL',
+			'filterType'=>false,
+			'filterOptions'=>Yii::$app->gv->gvFilterContainHeader('0','100px'),
+			'hAlign'=>'right',
+			'vAlign'=>'middle',
+			'mergeHeader'=>false,
+			'noWrap'=>true,
+			'format'=>'raw',
+			'value' => function ($model, $key, $index, $widget) {
+				if (empty($model->CURRENT_PRICE)) {
+					return 0;
+				} else {
+					return $model->CURRENT_PRICE;
+				}
+			},
+			//gvContainHeader($align,$width,$bColor)
+			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','100px',$bColor,'#ffffff'),
+			'contentOptions'=>Yii::$app->gv->gvContainBody('right','100px',''),
+			
+		],				
 	];
 	
 	$gvAttProdakItem[]=[			

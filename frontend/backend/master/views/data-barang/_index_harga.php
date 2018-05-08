@@ -335,6 +335,13 @@ function sttMsgDscp($stt){
 		<?php//tombolKembali()?>
 	</div>
 	<div class="row">
+		<div class="col-md-12 text-right">
+			<?=tombolExportExcelharga()?>
+			<?=tombolImportExcelharga()?>
+		</div>
+	</div>
+	<br>
+	<div class="row">
 	<div class="col-md-4">
 		<?=$produk?>
 	</div>

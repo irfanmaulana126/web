@@ -37,6 +37,12 @@ $this->registerCss("
 	#gv-all-data-prodak-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	td.kv-group-odd {
+		background-color: #70c0ff!important;
+	}
+	td.kv-group-even {
+		background-color: #70c0ff!important;
+	}
 ");
 	$colorPluginOptions =  [
 		'showPalette' => true,
@@ -88,7 +94,7 @@ $this->registerCss("
 				if (empty($model->STORE_NM)) {
 					return '-';
 				} else {
-					return "Nama Toko : <span class='label label-success'>".$model->STORE_NM."</span> ";
+					return "Nama Toko : <span class='label label-success' style='font-size: 7pt;'>".strtoupper($model->STORE_NM)."</span> ";
 				}
 			},
 			//gvContainHeader($align,$width,$bColor)
@@ -96,12 +102,11 @@ $this->registerCss("
 			'contentOptions'=>[
 				'style'=>[
 					'text-align'=>'left',
-					'color'=>'red',
 					'font-family'=>'tahoma, arial, sans-serif',						
 					'font-weight'=>'bold',
 				],
 			]
-		],		
+		],			
 		//ITEM NAME
 		[
 			'attribute'=>'PRODUCT_NM',
@@ -119,7 +124,7 @@ $this->registerCss("
 			'filterInputOptions'=>['placeholder'=>'-Pilih-'],
 			'filterOptions'=>[],
 			'value'=>function($data) {				
-				return Html::tag('div', $data->PRODUCT_NM, ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'click to Product Items ','style'=>'cursor:default;']);				
+				return Html::tag('div', strtoupper($data->PRODUCT_NM), ['data-toggle'=>'tooltip','data-placement'=>'left','title'=>'click to Product Items ','style'=>'cursor:default;']);				
 			},	
 			//gvContainHeader($align,$width,$bColor)
 			'headerOptions'=>Yii::$app->gv->gvContainHeader('center','200px',$bColor,'#ffffff'),

@@ -59,7 +59,7 @@ $data=$image->PRODUCT_IMAGE;
 						]
 					]
 				])->widget(Select2::classname(), [
-					'data' => ArrayHelper::map(ProductGroup::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>1])->all(),'GROUP_ID','GROUP_NM'),
+					'data' => ArrayHelper::map(ProductGroup::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STORE_ID'=>$model->STORE_ID,'STATUS'=>1])->all(),'GROUP_ID','GROUP_NM'),
 					'language' => 'en',
 					'options' => ['placeholder' => 'Select a state ...'],
 					'pluginOptions' => [

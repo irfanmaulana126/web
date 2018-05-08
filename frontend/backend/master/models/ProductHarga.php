@@ -28,6 +28,8 @@ use frontend\backend\master\models\Store;
 class ProductHarga extends \yii\db\ActiveRecord
 {
     public $margin;
+
+    public $uploadExport;
     /**
      * @inheritdoc
      */
@@ -50,6 +52,7 @@ class ProductHarga extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['uploadExport'], 'file', 'skipOnEmpty' => false, 'extensions' => 'xlsx, xls'],
             [['PRODUCT_ID', 'YEAR_AT', 'margin','MONTH_AT','PERIODE_TGL1', 'PERIODE_TGL2','HPP', 'HARGA_JUAL','PPN'], 'required'],
             [['PERIODE_TGL1', 'PERIODE_TGL2', 'START_TIME', 'CREATE_AT', 'UPDATE_AT'], 'safe'],
             [['HARGA_JUAL','PPN','margin'], 'number'],
@@ -113,4 +116,15 @@ class ProductHarga extends \yii\db\ActiveRecord
         $result=$this->store;
         return $result!=''?$result->STORE_NM:'';
     }
+    public function upload()
+    {
+        if (!$this->validate()) {
+            $this->uploadExport->saveAs('uploads/' . $this->uploadExport->baseName . '.' . $this->uploadExport->extension);
+            // print_r('true');die();
+            return true;
+        } else {
+            // print_r('false');die();
+            return false;
+        }
+    } 
 }

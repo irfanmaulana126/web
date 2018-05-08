@@ -63,14 +63,14 @@ $this->title="Prodak";
             <?= Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-produk']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
         </div>
         <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
-            <h3>Dicount produk</h3>
-            <p>Merupakan data produk yang memilki discount serta bertujuan untuk menambahkan discount disetiap produk yang dinginkan berdasarkan tanggal yang diinginkan</p>
-            <?= Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-discount']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
-        </div>
-        <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
             <h3>Stock Produk</h3>
             <p>Merupakan menu yang ditujukan untuk menambahkan stok pada setiap produk serta dapa melihat jumlah produk yang dimiliki</p>
             <?= Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-stock']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+        </div>
+        <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
+            <h3>Dicount produk</h3>
+            <p>Merupakan data produk yang memilki discount serta bertujuan untuk menambahkan discount disetiap produk yang dinginkan berdasarkan tanggal yang diinginkan</p>
+            <?= Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-discount']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
         </div>
         <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
             <h3>Customer</h3>
@@ -86,14 +86,14 @@ $this->title="Prodak";
     <div class="col-md-6">
 		<div class="row">
 			<div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
-				<h3>Promo Produk</h3>
-				<p>Merupakan data produk yang memiliki promo serta dapat menambahkan promo pada setiap produk berdasarkan tanggal yang diinginkan</p>
-				<?= Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-promo']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
-			</div>
-			<div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
 				<h3>Harga Produk</h3>
 				<p>Merupakan menu yang digunkan untuk melakukan pengaturan harga berdasarkan tanggal yang diinginkan</p>
 				<?= Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-harga']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
+			</div>
+            <div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
+				<h3>Promo Produk</h3>
+				<p>Merupakan data produk yang memiliki promo serta dapat menambahkan promo pada setiap produk berdasarkan tanggal yang diinginkan</p>
+				<?= Html::button('Detail',['onclick'=>"window.location.href = '" . \Yii::$app->urlManager->createUrl(['/master/data-barang/index-promo']) . "';",'id'=>'jurnal-button-akun','data-pjax' => false,'class'=>"btn bg-purple btn-flat margin",'title'=>'Detail']);?>
 			</div>
 			<div class="w3-card-2 w3-round w3-white w3-left col-md-12" style="margin-bottom:15px">
 				<h3>Group Produk</h3>

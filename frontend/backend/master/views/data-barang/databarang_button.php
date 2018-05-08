@@ -710,7 +710,7 @@ use yii\base\DynamicModel;
 				$url = Url::toRoute(['/master/data-barang/export-harga']);
 				$options1 = [
 							'id'=>'store-button-export-excel',
-							'data-pjax' => true,
+							'data-pjax' => 0,
 							'class'=>"btn btn-primary btn-xs"  
 				];
 				$icon1 = '<span class="fa-stack fa-sm text-left">
@@ -730,7 +730,7 @@ use yii\base\DynamicModel;
 		$title= Yii::t('app','Import Excel');
 		$url = Url::toRoute(['/master/data-barang/upload-file-harga']);
 		$options1 = ['value'=>$url,
-					'id'=>'databarang-button-upload',
+					'id'=>'databarang-button-upload-harga',
 					'data-pjax' => 0,
 					'class'=>"btn btn-warning btn-xs",
 					'title'=>'Upload Data Actual Stock'
