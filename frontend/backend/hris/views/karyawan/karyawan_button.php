@@ -118,6 +118,77 @@ use yii\base\DynamicModel;
 		$content = Html::button($label1,$options1);		
 		return '<li>'.$content.'</li>';
 	}
-	
+	function tombolDisable($url, $model){
+		$title1 = Yii::t('app',' non Aktif');
+		$options1 = [
+			'href'=>url::to(['/hris/karyawan/disable','id'=>$model->ID]),
+			'class'=>"btn btn-default btn-xs",
+			'data'=>['confirm'=>'Apakah kamu yakin ingin mengapus data ini','method'=>'post',],    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-close fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	function tombolEneble($url, $model){
+		$title1 = Yii::t('app',' Aktif');
+		$options1 = [
+			'href'=>url::to(['/hris/karyawan/eneble','id'=>$model->ID]),
+			'class'=>"btn btn-default btn-xs",
+			'data'=>['confirm'=>'Apakah kamu yakin ingin mengapus data ini','method'=>'post',],    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-check fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	function tombolHapus($url, $model){
+		$title1 = Yii::t('app',' Hapus');
+		$options1 = [
+			'href'=>url::to(['/hris/karyawan/hapus','id'=>$model->ID]),
+			'class'=>"btn btn-default btn-xs",
+			'data'=>['confirm'=>'Apakah kamu yakin ingin mengapus data ini','method'=>'post',],    
+			'style'=>['text-align'=>'left','width'=>'100%', 'height'=>'25px','border'=> 'none'],
+		];
+		$icon1 = '
+			<span class="fa-stack fa-xs">																	
+				<i class="fa fa-circle-thin fa-stack-2x " style="color:#FF5F00"></i>
+				<i class="fa fa-trash fa-stack-1x" style="color:black"></i>
+			</span>
+		';      
+		$label1 = $icon1 . '  ' . $title1;
+		$content = Html::button($label1,$options1);		
+		return '<li>'.$content.'</li>';
+	}
+	function tombolRestore(){
+		$title = Yii::t('app', 'Restore Delete');
+		$url =  Url::toRoute(['/hris/karyawan/restore']);
+		$options = [
+			'value'=>$url,
+			'id'=>'karyawan-button-restore',
+			'data-pjax' => 0,
+			'class'=>"btn btn-warning btn-xs",
+			];
+		$icon = '
+		<span class="fa-stack fa-sm text-left">
+				  <b class="fa fa-circle fa-stack-2x" style="color:#ffffff"></b>
+				  <b class="fa fa-undo fa-stack-1x" style="color:#000000"></b>
+				</span>';
+		$label = $icon . ' ' . $title;
+
+		return $content = Html::button($label,$options);
+	}
 	
 ?>

@@ -90,7 +90,7 @@ class KaryawanController extends Controller
         $model = new Karyawan();
 
         if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
-            return $this->redirect(['index', 'ID' => $model->ID, 'STORE_ID' => $model->STORE_ID, 'KARYAWAN_ID' => $model->KARYAWAN_ID, 'YEAR_AT' => $model->YEAR_AT, 'MONTH_AT' => $model->MONTH_AT]);
+            return $this->redirect(['index']);
         } else {
             return $this->renderAjax('form_create', [
 				'model' => $model,
@@ -119,11 +119,71 @@ class KaryawanController extends Controller
 	public function actionEdit($id)
     {
 		$model= Karyawan::findOne(['ID' => $id]);
-        return $this->renderAjax('form_edit', [
-            'model' => $model,
-        ]);
+		if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+            return $this->redirect(['index']);
+        } else {
+			return $this->renderAjax('form_edit', [
+				'model' => $model,
+			]);
+        }
     }
-
+	public function actionHapus($id)
+    {
+		$model= Karyawan::findOne(['ID' => $id]);
+		$model->STATUS='3';
+		$model->save(false);
+		return $this->redirect(['index']);
+    }
+	public function actionDisable($id)
+    {
+		$model= Karyawan::findOne(['ID' => $id]);
+		$model->STATUS='0';
+		$model->save(false);
+		return $this->redirect(['index']);
+    }
+	public function actionEneble($id)
+    {
+		$model= Karyawan::findOne(['ID' => $id]);
+		$model->STATUS='1';
+		$model->save(false);
+		return $this->redirect(['index']);
+    }
+	public function actionRestore(){
+       
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        // print_r($user);die();
+        $modelPeriode = new Karyawan();
+        $datas = KaryawanSearch::find()->where(['and','ACCESS_GROUP='.$user.'','STATUS=3'])->all();
+        $items = ArrayHelper::map($datas, 'KARYAWAN_ID', function($datas)
+		{
+			return $datas->NAMA_DPN.' '.$datas->NAMA_TGH.' '.$datas->NAMA_BLK.'/'.$datas->KTP;
+		});
+        // print_r($items);die();
+		if ($modelPeriode->load(Yii::$app->request->post())) {
+                // $modelPeriode;
+                // print_r($modelPeriode);die();
+            foreach ($modelPeriode['STATUS'] as $value) {
+                $datas = Karyawan::findOne(['KARYAWAN_ID' => $value]);
+                $datas->STATUS=0;
+                // print_r($datas);die();
+                $datas->save(false);
+            }
+            
+	// $id=Yii::$app->request->cookies;
+    //         $storeId=$id->getValue('KARYAWAN_ID');
+    //         print_r($storeId);die();
+            $tes=Yii::$app->response->cookies->remove('KARYAWAN_ID');
+            // print_r($tes);die();
+            
+            Yii::$app->session->setFlash('success', "Restore Berhasil");
+            return $this->redirect('/hris/karyawan');
+        }else {
+            return $this->renderAjax('form_restore',[
+				'modelPeriode' => $modelPeriode,
+                'items'=>$items
+			]);
+	   }
+	}
    public function actionExport()
     {
 		$searchModel = new KaryawanSearch();

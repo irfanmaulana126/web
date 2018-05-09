@@ -42,3 +42,9 @@ $(document).on('click','#karyawan-button-row-edit', function(ehead){
 	//.load(ehead.target.value);
 	.load($(this).attr('value'));
 });
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};	
+$(document).on('click','#karyawan-button-restore', function(ehead){ 			  
+	$('#karyawan-button-restore-modal').modal('show')
+	.find('#karyawan-button-restore-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	.load(ehead.target.value);
+});
