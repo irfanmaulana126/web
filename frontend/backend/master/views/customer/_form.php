@@ -59,7 +59,7 @@ use yii\widgets\MaskedInput;
 						]
 					]
 				])->widget(MaskedInput::classname(),
-        ['mask' => '(999) 9999999'])->label('Phone')->label(false) ?>
+        ['mask' => '999999999999'])->label('Phone')->label(false) ?>
 
     <?= $form->field($model, 'DCRP_DETIL')->textarea(['rows' => 6]) ?>
 

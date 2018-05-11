@@ -19,7 +19,7 @@ use yii\helpers\Url;
 /* @var $model app\backend\master\models\ItemFdiscount */
 /* @var $form yii\widgets\ActiveForm */
 $warnaLabel='rgba(21, 175, 213, 0.14)';
-$widthLabel='125px';
+$widthLabel='155px';
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -41,26 +41,43 @@ $widthLabel='125px';
 					]
 				])->widget(Select2::classname(),[
             'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>Yii::$app->user->identity->ACCESS_GROUP,'STATUS'=>['1','0']])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
-            'options' => ['placeholder'=>'Pilih Toko....'],
+            'options' => ['placeholder'=>'Pilih Toko....','id'=>'store'],
             'pluginOptions' => [
                 'allowClear' => true
             ], 
         ])->label(false)?>
-			
+		
+		<?= $form->field($model, 'GROUP_ID',[					
+					'addon' => [
+						'prepend' => [
+							'content'=>'<span ><b>GROUP PPRODUK</b></span>',
+							'options'=>['style' =>' border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:157px;']
+						]
+					]
+				])->widget(DepDrop::classname(), [
+					'type'=>DepDrop::TYPE_SELECT2,
+					'options'=>['id'=>'group'],
+					'pluginOptions'=>[
+						'depends'=>['store'],
+						'placeholder'=>'Select...',
+						'url'=>Url::to(['/master/data-barang/group'])
+					]
+				])->label(false) ; ?>
+
 			<?= $form->field($model, 'PRODUCT_NM',[					
 					'addon' => [
 						'prepend' => [
 							'content'=>'<span ><b>Produk</b></span>',
 							'options'=>['style' =>' 
 											background-color:'.$warnaLabel.';
-											width:'.$widthLabel.';
+											width:450px;
 											text-align:right;
 											border-top-left-radius:5px;
 											border-bottom-left-radius:5px;
 										']
 						]
 					]
-				])->textInput(['style'=>'text-transform:uppercase'])->label(false) ?>
+				])->textInput(['style'=>'text-transform:uppercase;width:410px'])->label(false) ?>
 
 		<div class="form-group text-right">
 			<?= Html::submitButton($model->isNewRecord ? 'Save' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -163,7 +163,7 @@ echo $this->render('karyawan_column'); //echo difinition
 	$attDinamikField[]=[			
 		//ACTION
 		'class' => 'kartik\grid\ActionColumn',
-		'template' => '{view}{edit}{reminder}{deny}',
+		'template' => '{view}{edit}{disable}{deny}{hapus}',
 		'header'=>'ACTION',
 		'dropdown' => true,
 		'dropdownOptions'=>[
@@ -184,8 +184,15 @@ echo $this->render('karyawan_column'); //echo difinition
 				return  tombolEdit($url, $model);
 				//}					
 			},
-			'deny' =>function($url, $model,$key){
-				//return  tombolDeny($url, $model);
+			'disable' =>function($url, $model,$key){
+				if($model->STATUS==1){ //Jika sudah close tidak bisa di edit.
+					return  tombolDisable($url, $model);
+				}else{
+					return  tombolEneble($url, $model);
+				}					
+			},
+			'hapus' =>function($url, $model,$key){
+				return  tombolHapus($url, $model);
 			}
 		],
 		'headerOptions'=>Yii::$app->gv->gvContainHeader('center','10px',$bColor,'#ffffff'),
@@ -216,7 +223,7 @@ $gvItem=GridView::widget([
 	'panel' => [
 		//'heading'=>false,
 		//'heading'=>tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',  
-		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolExportExcel().'</div>',  
+		'heading'=>$pageNm.'<div style="float:right;padding:0px 10px 0px 5px">'.tombolCreate().' '.tombolRestore().' '.tombolExportExcel().'</div>',  
 		'type'=>'info',
 		//'before'=> tombolBack().'<div style="float:right"> '.tombolCreate().' '.tombolExportExcel().'</div>',
 		'before'=>false,

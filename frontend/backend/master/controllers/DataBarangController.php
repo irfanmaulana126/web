@@ -335,8 +335,10 @@ class DataBarangController extends Controller
     public function actionCreate()
     {
         $model = new Product();
+        $modelharga = new ProductHarga();
+        $modelstock = new ProductStock();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $modelharga->load(Yii::$app->request->post()) && $modelstock->load(Yii::$app->request->post())) {
             $model->CREATE_AT=date('Y-m-d H:i:s');
             $product=strtoupper($model->PRODUCT_NM);
             $model->PRODUCT_NM=$product;
@@ -348,6 +350,22 @@ class DataBarangController extends Controller
             if($model->save(false)) {                
                 $C=$model->getPrimaryKey();
                 $modelCari=Product::find()->where(['ID'=>$C['ID']])->one();
+                $modelstock->PRODUCT_ID=$modelCari->PRODUCT_ID;
+                $modelstock->ACCESS_GROUP=$modelCari->ACCESS_GROUP;
+                $modelstock->STORE_ID=$modelCari->STORE_ID;
+                date_default_timezone_set('Asia/Jakarta');
+                $modelstock->INPUT_TIME=date('H:i:s');
+                $modelstock->INPUT_DATE=date('Y-m-d');
+                $modelstock->save(false);
+                $C=$model->getPrimaryKey();
+                $modelCari=Product::find()->where(['ID'=>$C['ID']])->one();
+                $modelharga->ACCESS_GROUP=$modelCari->ACCESS_GROUP;
+                $modelharga->STORE_ID=$modelCari->STORE_ID;
+                $modelharga->PRODUCT_ID=$modelCari->PRODUCT_ID;
+                date_default_timezone_set('Asia/Jakarta');
+                $modelharga->START_TIME=date('H:i:s');
+                $modelharga->save(false);
+
                 Yii::$app->session->setFlash('success', "Penyimpanan PRODUK <b>".$model->PRODUCT_NM."</b> Berhasil");
                 return $this->redirect(['index-produk']);
             }
@@ -356,8 +374,10 @@ class DataBarangController extends Controller
             }
         } else {
     //   print_r($store_id);die();
-            return $this->renderAjax('_form', [
+            return $this->renderAjax('create', [
                 'model' => $model,
+                'modelharga' => $modelharga,
+                'modelstock' => $modelstock,
             ]);
         }
     }
@@ -655,6 +675,29 @@ class DataBarangController extends Controller
         }
         echo Json::encode(['output'=>'', 'selected'=>'']);
     }
+    /**
+     * Depdrop Group - depedence Province
+     * @author Piter
+     * @since 1.1.0
+     * @return mixed
+     */
+    public function actionGroup() {
+        $out = [];
+            if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+                if ($parents != null) {
+                    $id = $parents[0];
+                    $model = ProductGroup::find()->asArray()->where(['STORE_ID'=>$id,'STATUS'=>'1'])->all();														
+                                                            
+                    foreach ($model as $key => $value) {
+                    $out[] = ['id'=>$value['GROUP_ID'],'name'=> $value['GROUP_NM']];
+                    } 
+                    echo json_encode(['output'=>$out, 'selected'=>'']);
+                    return;
+            }
+        }
+        echo Json::encode(['output'=>'', 'selected'=>'']);
+    }
     
 /**====================================
 	* UPLOAD OPNAME - FORMAT
@@ -743,11 +786,11 @@ class DataBarangController extends Controller
                                     // Yii::$app->session->setFlash('warning', "Terdapat Kode prodak yang kosong dan Data telah diperbarui");
                                     // return $this->redirect('index-produk');
                                 }
-                                // else{
-                                //     unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
-                                //     Yii::$app->session->setFlash('success', "Data telah diperbarui");
-                                //     return $this->redirect('index-produk');
-                                // }
+                                else{
+                                    unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+                                    Yii::$app->session->setFlash('success', "Data telah diperbarui");
+                                    return $this->redirect('index-produk');
+                                }
                                 // print_r($branch->getErrors());
                                 // print_r($rowData);
                             }
@@ -1036,6 +1079,141 @@ class DataBarangController extends Controller
 
 		// return $this->redirect(['index']);
     }
+    public function actionExportHarga()
+    {
+        $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
+        $cari=['thn'=>DATE('Y-m-d')];
+        $searchModel = new ProductHargaSearch($cari);
+        $dataProvider = $searchModel->searchExcelExport(Yii::$app->request->queryParams);
+		$model=$dataProvider->allModels;
+		
+		$dinamikField=$dataProvider->allModels;
+			// print_r($dinamikField);die();
+		
+			// $headerMerge[]=['DATA_PRODUK'=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'1,0','width'=>'15']];
+			// $headerMerge[]=['DATA_PRODUK1'=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'17']];
+			// $headerMerge[]=['DATA_PRODUK2'=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','width'=>'17']];
+		
+			$aryFieldColomn[]="NAMA_TOKO";
+			$aryFieldColomn[]="KODE PRODUK";
+			$aryFieldColomn[]="NAMA PRODUK";
+			$aryFieldColomn[]="TANGGAL AKHIR INPUT HARGA";
+			$aryFieldColomn[]="HPP LALU";
+			$aryFieldColomn[]="HARGA LALU";	
+
+		if($dinamikField){
+			foreach($dinamikField[0] as $rows => $val){
+				//unset($splt);
+				//$ambilField[]=$rows; 		
+				$splt=explode('_',$rows);
+				if ($splt[0]=='HARGAs') {
+					//sheet_title-row1
+					//headerStyle-row1
+					// $headerMerge[]=[$splt[1]=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'2,0','width'=>'7']];				
+					//sheet_title-row2
+					$aryFieldColomn[]='HARGA INPUT';
+				};
+				if ($splt[0]=='HPPs') {
+					//sheet_title-row1
+					//headerStyle-row1
+					// $headerMerge[]=[$rows=>['font-size'=>'1','align'=>'center','color-font'=>'FFFFFF','color-background'=>'519CC6','merge'=>'2,0','width'=>'7']];				
+					//sheet_title-row2
+					$aryFieldColomn[]='HPP INPUT';
+				};
+			};
+		 } 	
+		// $setHeaderMerge=[];
+		// foreach($headerMerge as $key=>$val){
+		// 	$setHeaderMerge=array_merge($setHeaderMerge,$headerMerge[$key]);			
+		// }	
+		// print_r($setHeaderMerge);
+		// die();
+		
+		$excel_dataProdukStok = Postman4ExcelBehavior::excelDataFormat($dinamikField);
+        $excel_titleProdukStok = $excel_dataProdukStok['excel_title'];
+        $excel_ceilsProdukStok = $excel_dataProdukStok['excel_ceils'];
+		
+		// print_r($aryFieldColomn);
+		// die();
+		//DATA IMPORT
+		$excel_content = [
+			[
+				'sheet_name' => 'HARGA PRODUK',
+                'sheet_title' => [
+					// $aryFieldColomnHeader,
+					$aryFieldColomn,
+				],
+			    'ceils' => $excel_ceilsProdukStok,
+				'freezePane' => 'A2',
+				'autoSize'=>false,
+				'unlockCell'=>'G,H,'.(count($excel_ceilsProdukStok)+2).'',
+				'columnGroup'=>false,
+				'headerColor' => Postman4ExcelBehavior::getCssClass("header"),
+				// 'headerStyle'=>$setHeaderMerge,
+				// 'contentStyle'=>$setHeaderMerge,
+               'oddCssClass' => Postman4ExcelBehavior::getCssClass("odd"),
+               'evenCssClass' => Postman4ExcelBehavior::getCssClass("even"),
+			],
+		];
+		// print_r($excel_ceilsDatakaryawan);
+		// die();
+		$excel_file = "Data-HARGA-Produk-".$user."";
+		$this->export4excel($excel_content, $excel_file,0); 
+
+		// return $this->redirect(['index']);
+    }
+    public function actionUploadFileHarga(){
+		$modelPeriode = new ProductHarga;
+		 
+		if ($modelPeriode->load(Yii::$app->request->post())) {
+			$modelPeriode->uploadExport = UploadedFile::getInstance($modelPeriode, 'uploadExport');
+			// print_r($fileType);die();	
+            if ($modelPeriode->upload()) {			
+				$file='uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension.'';
+				try{
+					$FileType = \PHPExcel_IOFactory::identify($file);
+					$objReader = \PHPExcel_IOFactory::createReader($FileType);
+					$objPHPExcel = $objReader->load($file);
+				}catch(Exception $e){
+					die('error');
+				}
+				$sheet = $objPHPExcel->getSheet(0);
+				$highestRow = $sheet->getHighestRow();
+				$highestColumn=$sheet->getHighestColumn();
+				// print_r($highestRow);die();
+				for($row = 1; $row <= $highestRow; $row++){
+                    $rowData = $sheet->rangeToArray('A'.$row.':'.$highestColumn.$row,NULL,TRUE,FALSE);
+                    if ($row==1) {
+                        continue;
+                    }
+                    if ($rowData[0][3]<=date('Y-m-d')) {
+                        $store_id = explode('.',$rowData[0][1]);
+                        if (!empty($store_id[1])) {
+                            $harga = new ProductHarga;
+                            $harga->ACCESS_GROUP = $store_id[0];
+                            $harga->STORE_ID = $store_id[0].'.'.$store_id[1];
+                            $harga->PRODUCT_ID = $rowData[0][1];
+                            date_default_timezone_set('Asia/Jakarta');
+                            $harga->PERIODE_TGL1 = date('Y-m-d');
+                            $harga->PERIODE_TGL2 = date('Y-m-d', strtotime('+1 days', strtotime(date('Y-m-d'))));
+                            $harga->START_TIME=date('H:i:s');
+                            $harga->HARGA_JUAL = $rowData[0][6];
+                            $harga->HPP = $rowData[0][7];                            
+                            $harga->save(false);
+                            // $datas[]=$modelPeriode;
+                        }
+                    }                    
+				}
+                // print_r($datas);die();
+				unlink('uploads/'.$modelPeriode->uploadExport->baseName.'.'.$modelPeriode->uploadExport->extension);
+				return $this->redirect(['/master/data-barang/index-harga']);
+            }
+		}else{
+			return $this->renderAjax('form_upload_harga',[
+				'modelPeriode' => $modelPeriode
+			]);
+		}
+	}
     public function actionDownloadTemplate()
     {
         $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;

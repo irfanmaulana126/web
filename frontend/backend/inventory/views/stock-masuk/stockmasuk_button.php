@@ -43,9 +43,10 @@ use yii\base\DynamicModel;
 	function tombolCardStock(){
 		$title= Yii::t('app','');
 		$url = Url::toRoute(['/inventory/stock-masuk/card-stock']);
-		$options1 = ['value'=>$url,
-					'id'=>'stockmasuk-button-card',
-					'data-pjax' => false,
+		$options1 = [
+					// 'value'=>$url,
+					// 'id'=>'stockmasuk-button-card',
+					'data-pjax' => 0,
 					'class'=>"btn btn-success btn-xs",
 					'title'=>'Card Stock Product'
 		];
@@ -55,7 +56,7 @@ use yii\base\DynamicModel;
 				</span>
 		';
 		$label1 = $icon1.' '.$title ;
-		$content = Html::button($label1,$options1);
+		$content = Html::a($label1,$url,$options1);
 		return $content;		
 	}
 	/*

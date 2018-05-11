@@ -18,7 +18,9 @@ $this->registerCss("
 	.modal-content { 
 		border-radius: 5px;
 	}
-	
+	#karyawan-button-row-view-modal .modal-header {
+		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
+	}
 ");
 
 /**

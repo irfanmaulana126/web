@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\backend\master\models\ProductHarga;
+use yii\data\ArrayDataProvider;
 
 /**
  * ProductHargaSearch represents the model behind the search form of `frontend\backend\master\models\ProductHarga`.
@@ -16,6 +17,7 @@ class ProductHargaSearch extends ProductHarga
      * @inheritdoc
      */
     public $PRODUCT_NM;
+    public $thn;
     public function rules()
     {
         return [
@@ -87,4 +89,66 @@ class ProductHargaSearch extends ProductHarga
             $query->orderBy(['CREATE_AT'=>SORT_DESC]);
         return $dataProvider;
     }
+    
+    public function searchExcelExport($params){
+		
+    $accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
+      $TGL=$this->thn!=''?$this->thn:date('Y-m-d');
+      $qrySql= Yii::$app->production_api->createCommand("
+      select 
+      inv.STORE_NM,
+		inv.PRODUCT_ID,
+		inv.PRODUCT_NM,
+		inv.PERIODE_TGL2,
+		inv.HPP,
+        inv.HARGA_JUAL,
+        MAX(CASE WHEN DATE_FORMAT(inv.PERIODE_TGL2,'%Y-%m-%d') >= '".$TGL."' THEN inv.HARGA_JUAL ELSE '' END) AS 'HARGAs_".$TGL."',
+        MAX(CASE WHEN DATE_FORMAT(inv.PERIODE_TGL2,'%Y-%m-%d') >= '".$TGL."' THEN inv.HPP ELSE '' END) AS 'HPPs_".$TGL."'
+      from
+      (
+        SELECT
+            a2.PRODUCT_ID,																								
+            a2.PRODUCT_NM,																							
+            a3.STORE_NM,
+            a1.PERIODE_TGL2,
+            a1.HPP,
+            a1.HARGA_JUAL
+        FROM product as a2
+        left join (SELECT ID,PRODUCT_ID,PERIODE_TGL2,HPP,HARGA_JUAL
+        FROM product_harga
+        WHERE ID IN (
+            SELECT MAX(ID)
+                FROM product_harga
+            GROUP BY PRODUCT_ID
+                )) a1 on a2.PRODUCT_ID=a1.PRODUCT_ID 
+        left join store a3 on a3.STORE_ID=a2.STORE_ID
+        WHERE a2.ACCESS_GROUP='".$accessGroup."'			
+      ) inv
+      GROUP BY inv.PRODUCT_ID")->queryAll(); 	
+
+      // print_r($qrySql);die();
+      $dataProvider= new ArrayDataProvider([	
+          'allModels'=>$qrySql,	
+          'pagination' => [
+              'pageSize' =>10000,
+          ],			
+      ]);
+      
+      if (!($this->load($params) && $this->validate())) {
+           return $dataProvider;
+       }
+      
+      $filter = new Filter();
+       $this->addCondition($filter, 'ACCESS_GROUP', true);	
+      $this->addCondition($filter, 'STORE_ID', true);	
+      $this->addCondition($filter, 'STORE_NM', true);	
+      $this->addCondition($filter, 'PERIODE_TGL2', true);
+       $this->addCondition($filter, 'HPP', true);	
+       $this->addCondition($filter, 'PRODUCT_ID', true);	
+       $this->addCondition($filter, 'PRODUCT_NM', true);	 		
+       $this->addCondition($filter, 'HARGA_JUAL', true);	 		
+       $dataProvider->allModels = $filter->filter($qrySql);
+      return $dataProvider;
+  } 
+  
 }

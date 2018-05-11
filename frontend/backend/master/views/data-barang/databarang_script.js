@@ -85,6 +85,17 @@ $(document).on('click','#databarang-button-upload', function(ehead){
 	.load($(this).attr('value'));
 });
 /*
+ * BUTTON UPLOAD FORMAT.
+*/
+$.fn.modal.Constructor.prototype.enforceFocus = function(){};
+//$.fn.modal.prototype.constructor.Constructor.DEFAULTS.backdrop = 'static';	
+$(document).on('click','#databarang-button-upload-harga', function(ehead){ 			  
+	$('#databarang-button-upload-harga-modal').modal('show')
+	.find('#databarang-button-upload-harga-content').html('<i class=\"fa fa-2x fa-spinner fa-spin\"></i>')
+	//.load(ehead.target.value);
+	.load($(this).attr('value'));
+});
+/*
  * BUTTON CREATE GROUP PRODUCT
 */
 $.fn.modal.Constructor.prototype.enforceFocus = function(){};

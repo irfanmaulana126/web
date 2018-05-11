@@ -23,7 +23,7 @@ $user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user-
                 'options'=>['style' =>'border-radius: 5px 0px 0px 5px;background-color: rgba(21, 175, 213, 0.14);text-align:right;width:98px']
                 ]
 				]])->widget(Select2::classname(),[
-       'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
+       'data'=>ArrayHelper::map(Store::find()->where(['ACCESS_GROUP'=>$user,'STATUS'=>'1'])->all(),'STORE_ID','STORE_NM'),'language' => 'en',
        'options' => ['placeholder'=>'Select Category....'],
         'pluginOptions' => [
             'allowClear' => true

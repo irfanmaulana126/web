@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use frontend\backend\master\models\Supplier;
+use yii\data\ArrayDataProvider;
 
 /**
  * SupplierSearch represents the model behind the search form of `frontend\backend\master\models\Supplier`.
@@ -18,7 +19,8 @@ class SupplierSearch extends Supplier
     public function rules()
     {
         return [
-            [['SUPPLIER_ID', 'SUPPLIER_NM', 'ACCESS_GROUP', 'ALAMAT', 'EMAIL', 'NO_TLP', 'PIC', 'PHONE', 'DCRP_DETIL', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT'], 'safe'],
+            [[ 'SUPPLIER_NM', 'ACCESS_GROUP', 'ALAMAT', 'EMAIL', 'NO_TLP', 'PIC', 'PHONE', 'DCRP_DETIL', 'CREATE_BY', 'CREATE_AT', 'UPDATE_BY', 'UPDATE_AT'], 'safe'],
+            [['SUPPLIER_ID'],'string'],
             [['STATUS', 'YEAR_AT', 'MONTH_AT'], 'integer'],
         ];
     }
@@ -78,6 +80,18 @@ class SupplierSearch extends Supplier
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY]);
         $query->orderBy(['SUPPLIER_ID'=>SORT_DESC]);
+
+        return $dataProvider;
+    }
+    public function searchExcelExport($params)
+    {
+        $accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];
+        $query = "SELECT `SUPPLIER_ID`,`SUPPLIER_NM` FROM supplier WHERE ACCESS_GROUP=".$accessGroup." AND STATUS='1'";
+        $qrySql= Yii::$app->db->createCommand($query)->queryAll();
+        // print_r($qrySql);die();
+        $dataProvider = new ArrayDataProvider([
+            'allModels' => $qrySql,
+        ]);
 
         return $dataProvider;
     }

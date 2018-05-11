@@ -229,6 +229,55 @@ class StockMasukSearch extends DynamicModel
  		$dataProvider->allModels = $filter->filter($qrySql);
         return $dataProvider;
 	} 
+	public function searchExportImport($params){
+		
+      	$accessGroup=Yii::$app->getUserOpt->user()['ACCESS_GROUP'];//'170726220936';
+		$TGL=$this->thn!=''?$this->thn:date('Y-m-d');
+		$TGL2=date('Y-m-d', strtotime('-1 days', strtotime($TGL)));
+		$qrySql= Yii::$app->production_api->createCommand("
+		select 
+		#===========================PR =========================================
+		#=== 1. STOK REFUND - pengembalian stock karena cancel Transaksi     ===
+		#=== 2. STOCK OPNAME (BALANCE OPNAME, sisa stock closing dan actual) ===
+		#===========================PR =========================================
+		inv.STORE_NM,
+		inv.PRODUCT_ID,
+		inv.PRODUCT_NM,
+		(CASE WHEN inv.TGL <> '' THEN inv.TGL ELSE '-' END) AS TGL,	
+		sum(STOCK_LAST_MONTH +inv.STOCK_BARU)-SUM(inv.STOCK_TERJUAL) AS TTL_STOCK_SISA,	
+		MAX(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') = '".$TGL."' THEN inv.STOCK_SISA ELSE 0 END) AS 'QTY_".$TGL."',
+		(CASE WHEN DATE_FORMAT(inv.TGL,'%Y-%m-%d') = '".$TGL."' THEN inv.SUPPLIER_ID ELSE '' END) AS 'SUPPLIER-ID_".$TGL."'
+		from
+		(
+			SELECT
+				(CASE WHEN a1.SISA <> '' THEN a1.SISA ELSE '0' END) AS STOCK_SISA,	
+				(CASE WHEN a4.INPUT_STOCK <> '' THEN a4.INPUT_STOCK ELSE '0' END) AS INPUT_STOCK,
+				(CASE WHEN a1.MASUK <> '' THEN a1.MASUK ELSE '0' END) AS STOCK_BARU,
+				(CASE WHEN a1.STOCK_LAST_MONTH <> '' THEN a1.STOCK_LAST_MONTH ELSE '0' END) AS STOCK_LAST_MONTH,
+				(CASE WHEN a1.TERJUAL <> '' THEN a1.TERJUAL ELSE '0' END) AS STOCK_TERJUAL,		
+				a2.PRODUCT_ID,																								#
+				a2.PRODUCT_NM,																							#
+				a3.STORE_NM,
+				a1.TGL,
+				a4.SUPPLIER_ID																									#															
+			FROM product as a2
+			left join ptr_kasir_inv1c a1 on a2.PRODUCT_ID=a1.PRODUCT_ID
+			left join store a3 on a3.STORE_ID=a2.STORE_ID
+			left join product_stock a4 on a4.PRODUCT_ID=a2.PRODUCT_ID
+			WHERE a2.ACCESS_GROUP='".$accessGroup."'			
+		) inv
+		GROUP BY inv.PRODUCT_ID")->queryAll(); 	
+
+		// print_r($qrySql);die();
+		$dataProvider= new ArrayDataProvider([	
+			'allModels'=>$qrySql,	
+			'pagination' => [
+				'pageSize' =>10000,
+			],			
+		]);
+        return $dataProvider;
+	} 
+	
 	
 	public function searchPrint($params){
 		

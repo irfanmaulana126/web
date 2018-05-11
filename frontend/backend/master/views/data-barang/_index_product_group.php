@@ -52,6 +52,12 @@ $this->registerCss("
 	#gv-data-prodak-group-item .panel-footer {
 		background: linear-gradient( 135deg, #2AFADF 10%, #4C83FF 100%);
 	}
+	td.kv-group-odd {
+		background-color: #70c0ff!important;
+	}
+	td.kv-group-even {
+		background-color: #70c0ff!important;
+	}
 ");
 		
 	$user = (empty(Yii::$app->user->identity->ACCESS_GROUP)) ? '' : Yii::$app->user->identity->ACCESS_GROUP;
@@ -84,7 +90,7 @@ $this->registerCss("
 				if (empty($model->STORE_NM)) {
 					return '-';
 				} else {
-					return "Nama Toko : <span class='label label-success'>".$model->STORE_NM."</span> ";
+					return "Nama Toko : <span class='label label-success' style='font-size: 7pt;'>".strtoupper($model->STORE_NM)."</span> ";
 				}
 			},
 			//gvContainHeader($align,$width,$bColor)

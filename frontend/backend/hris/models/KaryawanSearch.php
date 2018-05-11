@@ -70,7 +70,7 @@ class KaryawanSearch extends Karyawan
             'TGL_LAHIR' => $this->TGL_LAHIR,
             'CREATE_AT' => $this->CREATE_AT,
             'UPDATE_AT' => $this->UPDATE_AT,
-            'STATUS' => $this->STATUS,
+            'STATUS' => ['0','1'],
             'YEAR_AT' => $this->YEAR_AT,
             'MONTH_AT' => $this->MONTH_AT,
             'UPAH_HARIAN'=>$this->UPAH_HARIAN
@@ -99,7 +99,7 @@ class KaryawanSearch extends Karyawan
             ->andFilterWhere(['like', 'CREATE_BY', $this->CREATE_BY])
             ->andFilterWhere(['like', 'UPDATE_BY', $this->UPDATE_BY])
             ->andFilterWhere(['like', 'DCRP_DETIL', $this->DCRP_DETIL]);
-        $query->orderBy(['STORE_ID'=>SORT_ASC,'STATUS'=>SORT_ASC,'CREATE_AT'=>SORT_DESC]);
+        $query->orderBy(['STORE_ID'=>SORT_ASC,'CREATE_AT'=>SORT_DESC]);
         
         return $dataProvider;
     }

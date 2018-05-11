@@ -21,7 +21,8 @@ use kartik\checkbox\CheckboxX;
             [
                 'columns' => [
                     [
-                        'attribute'=>'NamaKaryawan', 
+                        'attribute'=>'NamaKaryawan',
+                        'label'=>'NAMA KARYAWAN',
                         'displayOnly'=>true,
                         'valueColOptions'=>['style'=>'width:80%']
                     ],
@@ -31,6 +32,7 @@ use kartik\checkbox\CheckboxX;
                 'columns' => [
                     [
                         'attribute'=>'KTP', 
+                        'label'=>'NO.KTP',
                         'displayOnly'=>true,
                         'valueColOptions'=>['style'=>'width:80%']
                     ],
@@ -40,6 +42,7 @@ use kartik\checkbox\CheckboxX;
                 'columns' => [
                     [
                         'attribute'=>'Nomer', 
+                        'label'=>'NOMER HP/TELP',
                         'valueColOptions'=>['style'=>'width:80%'], 
                         'displayOnly'=>true
                     ],
@@ -49,6 +52,7 @@ use kartik\checkbox\CheckboxX;
                 'columns' => [
                     [
                         'attribute'=>'Ttl', 
+                        'label'=>'NAMA KARYAWAN',
                         'displayOnly'=>true,
                         'valueColOptions'=>['style'=>'width:80%']
                     ],
@@ -58,6 +62,7 @@ use kartik\checkbox\CheckboxX;
                 'columns' => [
                     [
                         'attribute'=>'ALAMAT', 
+                        'label'=>'ALAMAT',
                         'displayOnly'=>true,
                         'valueColOptions'=>['style'=>'width:80%']
                     ],
@@ -67,12 +72,14 @@ use kartik\checkbox\CheckboxX;
                 'columns' => [
                     [
                         'attribute'=>'GENDER', 
+                        'label'=>'GENDER',
                         'valueColOptions'=>['style'=>'width:30%'], 
                         'displayOnly'=>true
                     ],
                     
                     [
                         'attribute'=>'STS_NIKAH', 
+                        'label'=>'STATUS NIKAH',
                         'valueColOptions'=>['style'=>'width:30%'], 
                         'displayOnly'=>true
                     ],
@@ -82,6 +89,7 @@ use kartik\checkbox\CheckboxX;
                 'columns' => [
                     [
                         'attribute'=>'EMAIL', 
+                        'label'=>'EMAIL',
                         'displayOnly'=>true,
                         'valueColOptions'=>['style'=>'width:80%']
                     ],
@@ -106,18 +114,18 @@ use kartik\checkbox\CheckboxX;
                                 'prefix'=>'Rp ',
                                 'precision' => 0
                             ],
-                        ]) ?>
+                        ])->label('UPAH HARIAN') ?>
             <div class="col-md-6">
             
             <?= $form->field($model, 'STT_POT_TELAT')->widget(CheckboxX::classname(),[
                 'value'=>empty($model->STT_POT_TELAT) ? '0' : '1',
                 'pluginOptions'=>['threeState'=>false]
-                ]); ?>
+                ])->label('POTONG TELAT'); ?>
 
             <?= $form->field($model, 'STT_POT_PULANG')->widget(CheckboxX::classname(),[
                 'value'=>empty($model->STT_POT_PULANG) ? '0' : '1',
                 'pluginOptions'=>['threeState'=>false]
-                ]); ?>
+                ])->label('POTONG PULANG'); ?>
             
             </div>
             <div class="col-md-6">
@@ -125,16 +133,16 @@ use kartik\checkbox\CheckboxX;
             <?= $form->field($model, 'STT_IZIN')->widget(CheckboxX::classname(),[
                 'value'=>empty($model->STT_IZIN) ? '0' : '1',
                 'pluginOptions'=>['threeState'=>false]
-                ]); ?>
+                ])->label('POTONG IZIN'); ?>
 
             <?= $form->field($model, 'STT_LEMBUR')->widget(CheckboxX::classname(),[
                 'value'=>empty($model->STT_LEMBUR) ? '0' : '1',
                 'pluginOptions'=>['threeState'=>false]
-                ]);?>
+                ])->label('POTONG LEMBUR');?>
 
             </div>
 
-        <div class="form-group">
+        <div class="form-group text-right">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
         </div>
 
